@@ -31,16 +31,13 @@ class AdminCategoriesController extends Controller
     public function store(Request $request)
     {
         // Xác thực dữ liệu đầu vào
-        $validated = $request->validate([
+        $validateData = $request->validate([
             'name' => 'required|string|max:255',
-        ], [
-           'name.required' => 'Tên danh mục là bắt buộc.',
-           'name.string' => 'Tên danh mục phải là chuỗi ký tự.',
         ]);
 
         // Tạo danh mục mới
         $category = Category::create([
-            'name' => $validated['name'],
+            'name' => $validateData['name'],
         ]);
 
         // Chuyển hướng về trang danh sách danh mục với thông báo thành công
@@ -61,7 +58,8 @@ class AdminCategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::FindorFail($id);
+        return view('Admin.Categories.edit', compact('category'));
     }
 
     /**
@@ -69,7 +67,15 @@ class AdminCategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $category = Category::FindorFail($id);
+
+        $category -> update([
+            'name' => $validateData['name'],
+        ]);
+        return redirect()->route('admin-categories.index')->with('status', 'Sửa danh mục thành công!');
     }
 
     /**
@@ -77,7 +83,9 @@ class AdminCategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-
+        $category = Category::FindorFail($id);
+        $category -> delete();
+        return redirect()->route('admin-categories.index');
     }
 
 }

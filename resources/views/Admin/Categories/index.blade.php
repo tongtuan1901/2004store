@@ -79,8 +79,13 @@
                                         </div>
                                     </td>
                                     <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
-                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></a>
+                                        <a href="{{ route('admin-categories.edit', $category->id) }}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
+                                         <form action="{{ route('admin-categories.destroy', $category->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+
+                                         <button onclick="return confirm('Bạn có muốn xoá danh mục này không ?')" class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">xoá</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
