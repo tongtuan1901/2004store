@@ -32,8 +32,9 @@ class AdminCategoriesController extends Controller
     {
         // Xác thực dữ liệu đầu vào
         $validateData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
         ]);
+
 
         // Tạo danh mục mới
         $category = Category::create([
