@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminCategoriesController; // Sửa ở đây
+use App\Http\Controllers\AdminCouponsController;
 use App\Http\Controllers\AdminProductsController;
+use App\Http\Controllers\AdminCouponsControllerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +21,5 @@ Route::resource('admin-products', AdminProductsController::class);
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
+// Mã giảm giá
+Route::resource('admin-coupons', AdminCouponsController::class);
