@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="w-full relative mb-4">
-    <form action="{{ route('admin-categories.update', $category->id) }}" method="POST"> <!-- Thay đổi action ở đây -->
-        @csrf <!-- Thêm token CSRF để bảo mật -->
+    <form action="{{ route('admin-categories.update', $category->id) }}" method="POST">
+        @csrf
         @method('put')
         <div class="flex-auto p-0 md:p-4">
             <div class="mb-2">

@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="w-full relative mb-4">
-    <form action="{{ route('admin-categories.store') }}" method="POST"> <!-- Thay đổi action ở đây -->
-        @csrf <!-- Thêm token CSRF để bảo mật -->
+    <form action="{{ route('admin-categories.store') }}" method="POST">
+        @csrf
         <div class="flex-auto p-0 md:p-4">
             <div class="mb-2">
                 <label for="title" class="font-medium text-sm text-slate-600 dark:text-slate-400">Tên danh mục :</label>

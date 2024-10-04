@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminCategoriesController; // Sửa ở đây
-use App\Http\Controllers\AdminProductsController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
+use App\Http\Controllers\Admin\AdminProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*

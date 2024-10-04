@@ -1,48 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminCategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+  //list
     public function index()
     {
         $listCategories = Category::all();
          return view("Admin.Categories.index",compact("listCategories"));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+// add
     public function create()
     {
         return view('Admin.Categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   //store
     public function store(Request $request)
     {
-        // Xác thực dữ liệu đầu vào
         $validateData = $request->validate([
             'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
         ]);
 
 
-        // Tạo danh mục mới
+
         $category = Category::create([
             'name' => $validateData['name'],
         ]);
 
-        // Chuyển hướng về trang danh sách danh mục với thông báo thành công
-        return redirect()->route('admin-categories.index')->with('status', 'Thêm danh mục thành công!');
+        return redirect()->route('admin-categories.index');
     }
 
 
@@ -54,18 +46,14 @@ class AdminCategoriesController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    //edit
     public function edit(string $id)
     {
         $category = Category::FindorFail($id);
         return view('Admin.Categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   // update
     public function update(Request $request, string $id)
     {
         $validateData = $request->validate([
@@ -76,12 +64,9 @@ class AdminCategoriesController extends Controller
         $category -> update([
             'name' => $validateData['name'],
         ]);
-        return redirect()->route('admin-categories.index')->with('status', 'Sửa danh mục thành công!');
+        return redirect()->route('admin-categories.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+// delete
     public function destroy(string $id)
     {
         $category = Category::FindorFail($id);
