@@ -11,16 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('assets/css/tailwind.min.css') }}" />
-<<<<<<< HEAD
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <!-- Css -->
-        <!-- Main Css -->
-         
-        <link rel="stylesheet" href="{{ asset('assets/libs/icofont/icofont.min.css') }}">
-        <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" type="text/css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('assets/css/tailwind.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-=======
+
         
         <!-- Css -->
         <!-- Main Css -->
@@ -28,5 +19,5 @@
         <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('assets/css/tailwind.min.css') }}">
 
->>>>>>> 10efc01 (admin banner)
+
     </head>
