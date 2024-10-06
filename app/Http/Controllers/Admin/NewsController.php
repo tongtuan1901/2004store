@@ -35,8 +35,8 @@ class NewsController extends Controller
             'title'=>'required',
             'content'=>'required',
         ],[
-            'title.required'=>'Vui long nhap T',
-            'content.required'=>'Vui long nhap D',
+            'title.required'=>'Vui lòng nhập tiêu đề',
+            'content.required'=>'Vui lòng nhập nội dung',
         ]);
 
         DB::table('news')->insert([
@@ -73,8 +73,8 @@ class NewsController extends Controller
             'title'=>'required',
             'content'=>'required',
         ],[
-            'title.required'=>'Vui long nhap T',
-            'content.required'=>'Vui long nhap D',
+            'title.required'=>'Vui lòng nhập tiêu đề',
+            'content.required'=>'Vui lòng nhập nội dung',
         ]);
 
         DB::table('news')->where('id', $id)->update([
