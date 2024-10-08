@@ -1,13 +1,13 @@
-<div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+<!-- <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
     <div class="container">
-      <!-- Footer Start -->
+      Footer Start
       <footer
         class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
       >
       </footer>
-      <!-- end Footer -->
+      end Footer
     </div>
-  </div>
+  </div> -->
 
 
 </div><!--end container-->

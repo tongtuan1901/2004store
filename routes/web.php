@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminCategoriesController; // Sửa ở đây
 use App\Http\Controllers\AdminCouponsController;
 use App\Http\Controllers\AdminProductsController;
 use App\Http\Controllers\AdminCouponsControllerController;
+use App\Http\Controllers\AdminOrdersController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +25,5 @@ Route::resource('admin-products', AdminProductsController::class);
 Route::resource('admin-categories', AdminCategoriesController::class);
 // Mã giảm giá
 Route::resource('admin-coupons', AdminCouponsController::class);
+// Đặt hàng
+Route::resource('admin-orders', AdminOrdersController::class);
