@@ -24,6 +24,7 @@
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/analytics-index.init.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- JAVASCRIPTS -->
 </body>
 
