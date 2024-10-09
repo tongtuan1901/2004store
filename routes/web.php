@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\client\home;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ Route::resource('admin-products', AdminProductsController::class);
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
+//home client
+Route::resource('/', home::class);

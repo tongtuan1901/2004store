@@ -24,14 +24,11 @@
                     </form>
                 </div>
                 <div>
-                    <button
-                        class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
-                        <a href="admin-add-product.html"> Thêm sản phẩm</a>
+                    <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
+                        <a class="btn" style="color: white" href="{{ route('admin-products.create') }}"> Thêm sản phẩm</a>
                     </button>
                 </div>
             </div>
-
-
             <div id="myTabContent">
                 <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-900" id="all" role="tabpanel"
                     aria-labelledby="all-tab">
@@ -98,30 +95,36 @@
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                        {{++$k}}
+                                                        {{ ++$k }}
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                        <img src="assets/images/products/02.png" alt=""
+                                                        <img src="{{ Storage::url($product->image) }}" alt=""
                                                             class="me-2 h-8 inline-block">
                                                         <div class="self-center">
                                                             <h5
                                                                 class="text-sm font-semibold text-slate-700 dark:text-gray-400">
-                                                                {{$product->name}}</h5>   
+                                                                {{ $product->name }}</h5>
                                                             <span class="block  font-medium text-slate-500">Size-04-15
                                                                 (Model
-                                                                2023)</span>
+                                                                2023)
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <h5>áo phông</h5>
+                                                    <h5>{{ $product->category_name }}</h5>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                     <span
-                                                        class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Còn
-                                                        hàng</span>
+                                                        class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">
+                                                        @if ($product->status == 0)
+                                                            Tồn hàng
+                                                        @elseif($product->status == 1)
+                                                            Hết hàng
+                                                        @endif
+                                                    </span>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                     <div>color :
@@ -140,15 +143,19 @@
                                                         <span class="mx-1">XXL</span>
                                                     </div>
                                                 </td>
-                                                <td
-                                                    class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                    $99 <del class="text-slate-500 font-normal">$130</del>
+                                                <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                    {{ $product->price_sale }}vnd <del
+                                                        class="text-slate-500 font-normal">{{ $product->price }}vnd</del>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <a href="#"><i
-                                                            class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
-                                                    <a href="#"><i
-                                                            class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></a>
+                                                    <a href="{{route('admin-products.edit',$product->id)}}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
+                                                    <form action="{{ route('admin-products.destroy',$product->id) }}"
+                                                        method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button ><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i>
+                                                        </button> 
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -17,8 +17,14 @@ return new class extends Migration
             $table->string('name', 255);
             $table->text('description')->nullable(); // Trường mô tả có thể null
             $table->decimal('price', 10, 2); // Kiểu giá tiền
+            $table->decimal('price_sale', 10, 2); // Kiểu giá tiền
             $table->string('image', 255)->nullable(); // Trường ảnh, có thể null
-            $table->integer('stock')->default(0); // Tồn kho với giá trị mặc định là 0
+            $table->string('gallery_images_one', 255)->nullable(); // Trường ảnh, có thể null
+            $table->string('gallery_images_two', 255)->nullable(); // Trường ảnh, có thể null
+            $table->string('gallery_images_three', 255)->nullable(); // Trường ảnh, có thể null
+            $table->integer('status')->default(0); // Tồn kho với giá trị mặc định là 0
+            $table->integer('quantity'); // Tồn kho với giá trị mặc định là 0
+            $table->softDeletes();
             $table->timestamps(); // Tạo trường created_at và updated_at
 
             // Thiết lập khóa ngoại cho category_id
