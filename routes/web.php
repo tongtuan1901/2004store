@@ -19,3 +19,7 @@ Route::resource('admin-products', AdminProductsController::class);
 
 Route::resource('admin-banners',AdminBannersController::class);
 
+Route::get('Admin/Banners/trash',[AdminBannersController::class,'trash']);
+
+Route::post('Admin/Banners/delete/{id}',[AdminBannersController::class,'delete']);
+

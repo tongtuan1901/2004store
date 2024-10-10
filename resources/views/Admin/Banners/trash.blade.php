@@ -26,11 +26,7 @@
                 <div>
                     <button
                         class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
-                        <a href="{{route('admin-banners.create')}}"> Thêm banner</a>
-                    </button>
-                    <button
-                        class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
-                        <a href="{{url('Admin/Banners/trash')}}"> Thung rac</a>
+                        <a href="{{route('admin-banners.index')}}"> Quay lai</a>
                     </button>
                 </div>
             </div>
@@ -106,7 +102,7 @@
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
                                                         @if ($banner->image)
-                                                            <img src="{{Storage::url($banner->image)}}" style="max-height: 150 ; max-width: 150"  alt="">
+                                                        <img src="{{asset('storage/'.$banner->image)}}" style="max-height: 150 ; max-width: 150"  alt="">
                                                         @else
                                                             Khong co anh
                                                         @endif
@@ -114,15 +110,15 @@
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <a href="{{route('admin-banners.edit',$banner->id)}}"><i
-                                                            class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
-                                                    
-                                                    {{-- <a href="{{url('Admin/Banners/delete')}}" method='post'>
-                                                        @csrf
-                                                        <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
+                                                    <a href=""><i
+                                                            class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">phuc hoi</i></a>
+                                                    {{-- <a href="{{route('admin-banners.destroy',$banner)}}" method="POST">
+                                                        <i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i>
+                                                        
                                                     </a> --}}
-                                                    <form action="{{url('Admin/Banners/delete',$banner->id)}}" method="post">
-                                                        @csrf                                               
+                                                    <form action="" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
                                                         <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
                                                     </form>
                                                 </td>

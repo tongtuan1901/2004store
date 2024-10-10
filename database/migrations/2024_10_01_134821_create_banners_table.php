@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->text('content')->nullable(); // Trường content có thể null
             $table->string('image', 255)->nullable(); // Trường image có thể null
+            $table->boolean('deleted')->default(false);
             $table->timestamps(); // Tạo trường created_at và updated_at
         });
     }

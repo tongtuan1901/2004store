@@ -16,7 +16,13 @@ class AdminBannersController extends Controller
     const PATH_VIEW  = 'Admin.banners.';
     public function index()
     {
-        $listBanners = DB::table('banners')->get();
+        $listBanners = DB::table('banners')->where('deleted',0)->get();
+
+        return view(self::PATH_VIEW . __FUNCTION__, compact("listBanners"));
+    }
+    public function trash()
+    {
+        $listBanners = DB::table('banners')->where('deleted',1)->get();
 
         return view(self::PATH_VIEW . __FUNCTION__, compact("listBanners"));
     }
@@ -103,6 +109,15 @@ class AdminBannersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function delete(string $id)
+    {
+        
+        $banner = Banners::findOrFail($id);
+        $banner->deleted= true;
+        $banner->save();
+
+        return back();
+    }
     public function destroy(string $id)
     {
         $banner = Banners::findOrFail($id);
