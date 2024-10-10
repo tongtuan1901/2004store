@@ -49,6 +49,14 @@
                                 @endif
                             </div>
                             <div class="mb-2">
+                                <label for="image" class="font-medium text-sm text-slate-600 dark:text-slate-400">Image :</label>
+                                <input type="file" name="image" class="form-control">
+                                <img src="{{Storage::url($model->image)}}" alt="" width="50" height="50">
+                                @if ($errors->has('image'))
+                                    <span class="text-red-500 text-sm">{{ $errors->first('image') }}</span>
+                                @endif  
+                            </div>
+                            <div class="mb-2">
                                 <button type="submit" class="px-2 py-2 lg:px-4 bg-brand  text-white text-sm  rounded hover:bg-brand-600 border border-brand-500">Sửa tin tức</button>
                                 <button class="px-2 py-2 lg:px-4 bg-transparent  text-brand text-sm  rounded transition hover:bg-brand-500 hover:text-white border border-brand font-medium"><a href="{{route('new.index')}}">Quay lại</a></button>
                             </div>

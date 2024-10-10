@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -34,13 +35,22 @@ class NewsController extends Controller
         $request->validate([
             'title'=>'required',
             'content'=>'required',
+            'image'=>'required',
         ],[
             'title.required'=>'Vui lòng nhập tiêu đề',
             'content.required'=>'Vui lòng nhập nội dung',
+            'image.required'=>'Vui lòng nhập ảnh',
         ]);
+
+        if($request->hasFile('image')) {
+            $url = Storage::put('new', $request->file('image'));
+        } else {
+            $url = '';
+        }
 
         DB::table('news')->insert([
             'title' => $request->title,
+            'image' => $url,
             'content' => $request->content,
         ]);
         return redirect()->route('new.index');
@@ -72,13 +82,22 @@ class NewsController extends Controller
         $request->validate([
             'title'=>'required',
             'content'=>'required',
+            'image'=>'required',
         ],[
             'title.required'=>'Vui lòng nhập tiêu đề',
             'content.required'=>'Vui lòng nhập nội dung',
+            'image.required'=>'Vui lòng nhập ảnh',
         ]);
+          
+        if($request->hasFile('image')) {
+            $url = Storage::put('new', $request->file('image'));
+        } else {
+            $url = '';
+        }
 
         DB::table('news')->where('id', $id)->update([
             'title' => $request->title,
+            'image' => $url,
             'content' => $request->content,
         ]);
         return redirect()->route('new.index');

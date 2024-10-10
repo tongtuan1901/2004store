@@ -55,6 +55,10 @@
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Content
                                             </th>
+                                            <th scope="col"
+                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                Image
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,6 +89,11 @@
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
                                                         {{$item->content}}
+                                                    </div>
+                                                </td>
+                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                                    <div class="flex items-center">
+                                                        <img src="{{Storage::url($item->image)}}" alt="" width="150" height="100">
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
