@@ -65,10 +65,17 @@
                                                 Số điện thoại
                                             </th>
                                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                Role
+                                            </th>
+                                            <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                Mật Khẩu
+                                            </th>
+                                            <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Hoạt động
                                             </th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
     @foreach ($users as $k => $user)
         <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
@@ -91,11 +98,10 @@
                 {{ $user->phone_number ?? 'N/A' }}
             </td>
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                @if($user->password)
-                    <span class="text-green-500">Password set</span>
-                @else
-                    <span class="text-red-500">No password</span>
-                @endif
+                {{ $user->role }} <!-- Hiển thị vai trò -->
+            </td>
+            <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                {{ $user->password }} <!-- Hiển thị mật khẩu đã mã hóa -->
             </td>
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 @if($user->trashed())
@@ -112,6 +118,7 @@
         </tr>
     @endforeach
 </tbody>
+
 
 
                                 </table>

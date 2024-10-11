@@ -27,7 +27,8 @@ class UserController extends Controller
         'name' => 'required',
         'email' => 'required|email|unique:users',
         'phone_number' => 'required',
-        'password' => 'required' // Validate password, adjust min length as needed
+        'password' => 'required', // Validate password, adjust min length as needed
+        'role' => 'required', // Validate role
     ]);
 
     // Create the user with hashed password
@@ -35,11 +36,13 @@ class UserController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'phone_number' => $request->phone_number,
-        'password' => Hash::make($request->password), // Hash the password
+        'password' => $request->password, // Hash the password
+        'role' => $request->role, // Lưu vai trò
     ]);
 
     return redirect()->route('users.index')->with('success', 'User created successfully.');
 }
+
 
     // Hiển thị form chỉnh sửa user
     public function edit(User $user)
@@ -50,33 +53,30 @@ class UserController extends Controller
     // Cập nhật user
     public function update(Request $request, $id)
 {
-    // Lấy user
-    $user = User::findOrFail($id);
-
-    // Xác thực dữ liệu
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'phone_number' => 'nullable|string|max:15',
-        'password' => 'nullable|string|confirmed', // Xác thực trường password và password_confirmation
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'phone_number' => 'required',
+        'password' => 'nullable', // Thay đổi nếu cần
+        'role' => 'required',
     ]);
 
-    // Cập nhật thông tin người dùng
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->phone_number = $request->input('phone_number');
-
-    // Kiểm tra xem có nhập mật khẩu mới không
+    $user = User::findOrFail($id);
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->phone_number = $request->phone_number;
+    
     if ($request->filled('password')) {
-        $user->password = Hash::make($request->input('password'));
+        $user->password = $request->password; // Chỉ cập nhật mật khẩu nếu trường này không trống
     }
 
-    // Lưu thông tin người dùng
+    $user->role = $request->role; // Cập nhật vai trò
     $user->save();
 
-    // Chuyển hướng về trang danh sách với thông báo
-    return redirect()->route('users.index')->with('success', 'Thông tin người dùng đã được cập nhật thành công.');
+    return redirect()->route('users.index')->with('success', 'User updated successfully.');
 }
+
+
 
 
 
