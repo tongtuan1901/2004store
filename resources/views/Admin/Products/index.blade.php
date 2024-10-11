@@ -113,6 +113,7 @@
                                                         Xoá
                                                     </button>
                                                 </form>
+                                                <a href="{{ route('admin-products.show', $product->id) }}" class="text-lg text-gray-500 dark:text-gray-400">Chi tiết</a>
                                             </td>
                                         </tr>
                                     @empty

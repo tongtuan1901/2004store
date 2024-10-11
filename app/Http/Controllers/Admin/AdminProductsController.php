@@ -76,11 +76,11 @@ class AdminProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
-    {
-        $product = AdminProducts::with('images')->findOrFail($id);
-        return view('Admin.Products.show', compact('product'));
-    }
+    public function show($id)
+{
+    $product = AdminProducts::with('images', 'category')->findOrFail($id);
+    return view('Admin.products.show', compact('product'));
+}
 
     /**
      * Show the form for editing the specified resource.
