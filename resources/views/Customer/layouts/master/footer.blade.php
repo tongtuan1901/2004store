@@ -1,5 +1,4 @@
 
-
 <!-- JAVASCRIPTS -->
 <!-- <div class="menu-overlay"></div> -->
 <script src="{{ asset('assets/libs/lucide/umd/lucide.min.js') }}"></script>
