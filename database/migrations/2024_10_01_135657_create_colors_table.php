@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->id(); // Trường 'id' tự động tăng
-            $table->string('color', 50); // Trường 'color' với độ dài tối đa 50 ký tự
+            
+            $table->string('name', 255); // Trường 'color' với độ dài tối đa 50 ký tự
             $table->timestamps(); // Tạo các trường 'created_at' và 'updated_at'
         });
     }
