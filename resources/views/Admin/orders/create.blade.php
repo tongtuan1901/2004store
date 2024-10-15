@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @extends('Admin/layouts/master/master')
 
 @section('content')
@@ -53,3 +54,4 @@
         </div>
     </div>
 @endsection
+

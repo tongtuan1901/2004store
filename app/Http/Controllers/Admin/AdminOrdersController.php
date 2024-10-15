@@ -111,4 +111,5 @@ public function update(Request $request, $id)
 
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
+
 }
