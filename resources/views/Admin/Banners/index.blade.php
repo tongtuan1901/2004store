@@ -63,11 +63,10 @@
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Title
                                             </th>
-                                            <th scope="col"  
-    class="w-[100px] p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-    Content
-</th>
-
+                                            <th scope="col"
+                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                Content
+                                            </th>
                                             <th scope="col"
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Image
