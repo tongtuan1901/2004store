@@ -3,13 +3,15 @@
 
 
 
-use App\Http\Controllers\Admin\AdminCategoriesController;
-use App\Http\Controllers\Admin\AdminProductsController;
-use App\Http\Controllers\AdminCouponsController;
-use App\Http\Controllers\AdminOrdersController;
 use App\Http\Controllers\client\home;
-
 use Illuminate\Support\Facades\Route;
+
+
+use App\Http\Controllers\AdminOrdersController;
+
+use App\Http\Controllers\AdminCouponsController;
+use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
