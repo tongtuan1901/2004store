@@ -99,10 +99,6 @@
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                     <a href="{{route('new.edit',$item->id)}}"><i
                                                             class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
-                                                    {{-- <a href="{{route('admin-banners.destroy',$banner)}}" method="POST">
-                                                        <i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i>
-                                                        
-                                                    </a> --}}
                                                     <a href="{{route('new.show',$item->id)}}">show</a>
                                                     <form action="{{route('new.destroy',$item->id)}}" method="post">
                                                         @csrf
