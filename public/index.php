@@ -1,5 +1,6 @@
 <?php
-
+ini_set('memory_limit', '512M');
+require __DIR__.'/../vendor/autoload.php';
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
