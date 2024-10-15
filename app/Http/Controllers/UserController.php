@@ -7,12 +7,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
-    // Hiển thị danh sách user
-    public function index()
-{
-    $users = User::withTrashed()->get();
-    return view('Customer.users.index', compact('users'));
-}
+// Hiển thị danh sách user
+public function index(Request $request)
+    {
+        $searchTerm = $request->input('search'); // Lấy từ tìm kiếm từ yêu cầu
+        $role = $request->input('role'); // Lấy vai trò từ yêu cầu
+
+        $users = User::withTrashed()
+            ->when($searchTerm, function ($query, $searchTerm) {
+                return $query->where('name', 'LIKE', "%{$searchTerm}%")
+                             ->orWhere('email', 'LIKE', "%{$searchTerm}%");
+            })
+            ->when($role, function ($query, $role) {
+                return $query->where('role', $role); // Lọc người dùng theo vai trò
+            })
+            ->get();
+
+        return view('Customer.users.index', compact('users'));
+    }
+
+//     // Hiển thị danh sách user
+//     public function index()
+// {
+//     $users = User::withTrashed()->get();
+//     return view('Customer.users.index', compact('users'));
+// }
 
     // Hiển thị form tạo mới user
     public function create()
