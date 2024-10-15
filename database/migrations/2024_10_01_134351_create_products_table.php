@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id(); // Trường id với kiểu bigint và tự động tăng
             $table->unsignedBigInteger('category_id'); // Trường category_id kiểu bigint
+
             $table->string('name', 255); // Tên sản phẩm
             $table->text('description')->nullable(); // Mô tả sản phẩm, có thể null
             $table->decimal('price', 10, 2); // Giá gốc sản phẩm
@@ -35,6 +36,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+
         Schema::dropIfExists('products'); // Xóa bảng products nếu nó tồn tại
     }
 };
+

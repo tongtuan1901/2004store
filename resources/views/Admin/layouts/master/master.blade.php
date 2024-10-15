@@ -48,6 +48,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+<<<<<<< HEAD
                                     <a href="{{ route('admin-categories.index') }}"
                                        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -57,6 +58,17 @@
 
                                 <li class="nav-item relative block">
                                     <a href="{{ route('admin-categories.create') }}"
+=======
+                                    <a href="admin-category.html"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Danh mục
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
+                                    <a href="admin-add-category.html"
+>>>>>>> 10efc01 (admin banner)
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -72,13 +84,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+<<<<<<< HEAD
                                     <a href="{{route('admin-products.create')}}"
+=======
+                                    <a href="admin-add-product.html"
+>>>>>>> 10efc01 (admin banner)
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Thêm sản phẩm
                                     </a>
                                 </li>
+<<<<<<< HEAD
 
                                 <li class="nav-item relative block">
                                     <a href="{{route('admin-products.create')}}"
@@ -89,6 +106,8 @@
                                     </a>
                                 </li>
 
+=======
+>>>>>>> 10efc01 (admin banner)
                                 <li class="nav-item relative block">
                                     <a href="admin-customers.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -98,6 +117,17 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+<<<<<<< HEAD
+=======
+                                    <a href="{{ route('admin-banners.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Banner
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
+>>>>>>> 10efc01 (admin banner)
                                     <a href="admin-customers-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
@@ -105,6 +135,7 @@
                                         Chi tiết khách hàng
                                     </a>
                                 </li>
+<<<<<<< HEAD
                                 <!-- <li class="nav-item relative block">
                                     <a href="{{ route('admin-orders.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -113,6 +144,16 @@
                                         Quản lí đơn hàng
                                     </a>
                                 </li> -->
+=======
+                                <li class="nav-item relative block">
+                                    <a href="admin-orders.html"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Đơn hàng
+                                    </a>
+                                </li>
+>>>>>>> 10efc01 (admin banner)
                                 <li class="nav-item relative block">
                                     <a href="admin-order-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -120,6 +161,7 @@
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Chi tiết đơn hàng
                                     </a>
+<<<<<<< HEAD
                                     
                                 </li>
 
@@ -141,6 +183,8 @@
                                         Quản lí đơn hàng
                                     </a>
                                     
+=======
+>>>>>>> 10efc01 (admin banner)
                                 </li>
                             </ul>
                         </div>

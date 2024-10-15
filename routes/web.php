@@ -3,28 +3,25 @@
 
 
 
+
 use App\Http\Controllers\client\home;
-use Illuminate\Support\Facades\Route;
+
 
 
 use App\Http\Controllers\AdminOrdersController;
 
 use App\Http\Controllers\AdminCouponsController;
-use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Admin\AdminBannersController;
+use App\Http\Controllers\Admin\AdminProductsController;
+use Illuminate\Support\Facades\Route;
+
+
+
 
 Route::resource('admin-products', AdminProductsController::class);
+
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
@@ -32,5 +29,8 @@ Route::resource('admin-categories', AdminCategoriesController::class);
 Route::resource('admin-coupons', AdminCouponsController::class);
 // Đặt hàng
 Route::resource('admin-orders', AdminOrdersController::class);
+
+
+Route::resource('admin-banners',AdminBannersController::class);
 
 
