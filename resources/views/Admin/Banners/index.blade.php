@@ -63,10 +63,11 @@
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Title
                                             </th>
-                                            <th scope="col"
-                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Content
-                                            </th>
+                                            <th scope="col"  
+    class="w-[100px] p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+    Content
+</th>
+
                                             <th scope="col"
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Image
@@ -98,15 +99,16 @@
                                                         {{$banner->title}}
                                                     </div>
                                                 </td>
-                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white w-[100px]">
                                                     <div class="flex items-center">
                                                         {{$banner->content}}
                                                     </div>
                                                 </td>
+                                                
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
                                                         @if ($banner->image)
-                                                            <img src="{{Storage::url($banner->image)}}" style="max-height: 150 ; max-width: 150"  alt="">
+                                                            <img src="{{asset('storage/'.$banner->image)}}" style="max-height: 150 ; max-width: 150"  alt="">
                                                         @else
                                                             Khong co anh
                                                         @endif
