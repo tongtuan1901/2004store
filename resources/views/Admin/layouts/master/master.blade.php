@@ -48,6 +48,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+
+
                                     <a href="{{ route('admin-categories.index') }}"
                                        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -57,6 +59,7 @@
 
                                 <li class="nav-item relative block">
                                     <a href="{{ route('admin-categories.create') }}"
+
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -72,6 +75,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+
                                     <a href="{{route('admin-products.create')}}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
@@ -80,7 +84,7 @@
                                     </a>
                                 </li>
 
-<<<<<<< HEAD
+
                                 <li class="nav-item relative block">
                                     <a href="{{route('admin-products.create')}}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -90,8 +94,6 @@
                                     </a>
                                 </li>
 
-=======
->>>>>>> 1fb31cf40c7ad28b5c10ac64dbf1adec6f15dc04
                                 <li class="nav-item relative block">
                                     <a href="{{route('admin-products.create')}}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -110,6 +112,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
+                                    <a href="{{ route('admin-banners.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Banner
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
                                     <a href="admin-customers-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
@@ -117,14 +127,16 @@
                                         Chi tiết khách hàng
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item relative block">
-                                    <a href="{{ route('admin-orders.index') }}"
+
+                                <li class="nav-item relative block">
+                                    <a href="admin-orders.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Quản lí đơn hàng
+                                        Đơn hàng
                                     </a>
-                                </li> -->
+                                </li>
+
                                 <li class="nav-item relative block">
                                     <a href="admin-order-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -153,6 +165,16 @@
                                         Quản lí đơn hàng
                                     </a>
                                     
+
+
+                                </li>
+                                <li class="nav-item relative block">
+                                    <a href="{{url('new')}}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        News
+                                    </a>
                                 </li>
                             </ul>
                         </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+
+use App\Models\News;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +34,9 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         //
+
         $request->validate([
+
             'title'=>'required',
             'content'=>'required',
             'image'=>'required',
@@ -61,7 +65,10 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $new = News::all()->where('id',$id);
+        return view('admin/new/show',compact('new'));
+
     }
 
     /**
