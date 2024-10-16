@@ -1,7 +1,6 @@
 <?php
-
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\AdminCoupons;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -93,7 +92,6 @@ class AdminCouponsController extends Controller
      {
          $coupon = AdminCoupons::findOrFail($id);
          $coupon->delete();
- 
          return redirect()->route('admin-coupons.index')
                           ->with('success', 'Mã giảm giá đã bị xóa.');
      }

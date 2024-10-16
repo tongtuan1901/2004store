@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\News;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         //
-        $validate=$request->validate([
+
+        $request->validate([
+
             'title'=>'required',
             'content'=>'required',
             'image'=>'required',
@@ -48,7 +51,7 @@ class NewsController extends Controller
         } else {
             $url = '';
         }
-        
+
         DB::table('news')->insert([
             'title' => $request->title,
             'image' => $url,
@@ -62,8 +65,10 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
+
         $new = News::all()->where('id',$id);
         return view('admin/new/show',compact('new'));
+
     }
 
     /**
