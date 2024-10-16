@@ -5,14 +5,14 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class home extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('Client.home');
+        return view('Client.ClientNews.ListNews');
     }
 
     /**
@@ -36,7 +36,7 @@ class home extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('Client.ClientNews.DetailNews');
     }
 
     /**
