@@ -3,6 +3,9 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    # Đặt giới hạn bộ nhớ PHP
+    php_value memory_limit 512M
+
     RewriteEngine On
 
     # Handle Authorization Header

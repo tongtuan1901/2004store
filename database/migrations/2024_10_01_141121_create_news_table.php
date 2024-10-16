@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id(); // Trường 'id' tự động tăng
             $table->string('title'); // Tiêu đề tin tức
             $table->text('content'); // Nội dung tin tức
+            $table->string('image')->nullable(); // Hình ảnh tin tức
             $table->timestamps(); // Tạo các trường 'created_at' và 'updated_at'
         });
     }

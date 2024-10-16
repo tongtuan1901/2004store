@@ -1,6 +1,7 @@
 @extends('Admin/layouts/master/master')
 
 @section('content')
+
 <div class="w-full relative mb-4">
     <form action="{{ route('admin-categories.store') }}" method="POST">
         @csrf
@@ -17,16 +18,9 @@
                         {{ $message }}
                      </div>
                  @enderror
+                 <button type="submit" class="btn btn-primary mt-3">Lưu</button>
             </div>
 
-            <div class="">
-                <button type="submit" class="px-2 py-2 lg:px-4 bg-brand text-white text-sm rounded hover:bg-brand-600 border border-brand-500">Thêm sản phẩm</button>
-                <button type="button" class="px-2 py-2 lg:px-4 bg-transparent text-brand text-sm rounded transition hover:bg-brand-500 hover:text-white border border-brand font-medium">
-                    <a href="{{ route('admin-categories.index') }}">Quay lại</a>
-                </button>
-            </div>
-        </div><!--end card-body-->
-    </form>
-</div><!--end card-->
+
 
 @endsection

@@ -1,7 +1,8 @@
 @extends('Admin/layouts/master/master')
+
 @section('content')
 <div class="container">
-    <h2 class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">Chỉnh sửa sản phẩm: {{ $product->name }}</h2>
+    <h2 class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">Chỉnh sửa sản phẩm</h2>
 
     <form action="{{ route('admin-products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -9,32 +10,20 @@
         <div class="row mb-3">
             <div class="col-md-4">
                 <h4>Hình ảnh sản phẩm</h4>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Hình ảnh chính</label>
-                    <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="img-fluid mb-2">
-                    <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                <div id="image-upload-container">
+                    @foreach($product->images as $image)
+                        <div class="mb-3">
+                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Product Image" style="max-width: 100%; height: auto;">
+                            <input type="checkbox" name="delete_images[]" value="{{ $image->id }}"> Xóa
+                        </div>
+                    @endforeach
+                    <div class="mb-3">
+                        <label for="images[]" class="form-label">Thêm hình ảnh mới</label>
+                        <input type="file" name="images[]" class="form-control" accept="image/*">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="gallery_images_one" class="form-label">Ảnh Gallery 1</label>
-                    @if($product->gallery_images_one)
-                        <img src="{{ asset('storage/images/products/' . $product->gallery_images_one) }}" alt="Gallery 1" class="img-fluid mb-2">
-                    @endif
-                    <input type="file" name="gallery_images_one" id="gallery_images_one" class="form-control" accept="image/*">
-                </div>
-                <div class="mb-3">
-                    <label for="gallery_images_two" class="form-label">Ảnh Gallery 2</label>
-                    @if($product->gallery_images_two)
-                        <img src="{{ asset('storage/images/products/' . $product->gallery_images_two) }}" alt="Gallery 2" class="img-fluid mb-2">
-                    @endif
-                    <input type="file" name="gallery_images_two" id="gallery_images_two" class="form-control" accept="image/*">
-                </div>
-                <div class="mb-3">
-                    <label for="gallery_images_three" class="form-label">Ảnh Gallery 3</label>
-                    @if($product->gallery_images_three)
-                        <img src="{{ asset('storage/images/products/' . $product->gallery_images_three) }}" alt="Gallery 3" class="img-fluid mb-2">
-                    @endif
-                    <input type="file" name="gallery_images_three" id="gallery_images_three" class="form-control" accept="image/*">
-                </div>
+                <button type="button" class="btn btn-secondary" id="add-image">Thêm hình ảnh</button>
+                <small class="text-muted">Bạn có thể thêm nhiều hình ảnh cho sản phẩm.</small>
             </div>
             <div class="col-md-8">
                 <div class="mb-3">
@@ -42,9 +31,7 @@
                     <select name="category_id" id="category_id" class="form-select" required>
                         <option value="">Chọn danh mục</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
+                            <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -71,10 +58,30 @@
 
                 <div class="mb-3">
                     <label for="status" class="form-label">Trạng thái</label>
-                    <select name="status" id="status" class="form-select">
-                        <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Tồn hàng</option>
+                    <select name="status" id="status" class="form-select" required>
+                        <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Còn hàng</option>
                         <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Hết hàng</option>
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sizes" class="form-label">Kích thước</label>
+                    @foreach($sizes as $size)
+                        <div class="form-check">
+                            <input type="checkbox" name="sizes[]" value="{{ $size }}" id="size_{{ $size }}" class="form-check-input" {{ in_array($size, $product->sizes) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="size_{{ $size }}">{{ $size }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="mb-3">
+                    <label for="colors" class="form-label">Màu sắc</label>
+                    @foreach($colors as $color)
+                        <div class="form-check">
+                            <input type="checkbox" name="colors[]" value="{{ $color }}" id="color_{{ $color }}" class="form-check-input" {{ in_array($color, $product->colors) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="color_{{ $color }}">{{ $color }}</label>
+                        </div>
+                    @endforeach
                 </div>
 
                 <div class="mb-3">
@@ -87,4 +94,17 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('add-image').addEventListener('click', function() {
+        const container = document.getElementById('image-upload-container');
+        const newImageInput = document.createElement('div');
+        newImageInput.className = 'mb-3';
+        newImageInput.innerHTML = `
+            <label for="images[]" class="form-label">Hình ảnh</label>
+            <input type="file" name="images[]" class="form-control" accept="image/*">
+        `;
+        container.appendChild(newImageInput);
+    });
+</script>
 @endsection
