@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminProducts extends Model
@@ -39,3 +40,4 @@ class AdminProducts extends Model
     return 'products';
 }
 }
+

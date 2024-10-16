@@ -4,19 +4,20 @@
 
 
 
+
 use App\Http\Controllers\client\home;
 
 
 
 use App\Http\Controllers\AdminOrdersController;
-
+use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
-
-use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\admin\NewsController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -32,6 +33,11 @@ Route::resource('admin-coupons', AdminCouponsController::class);
 Route::resource('admin-orders', AdminOrdersController::class);
 
 
+
+
+Route::resource('admin-products', AdminProductsController::class);
+
+
 Route::resource('admin-banners',AdminBannersController::class);
 
 Route::get('Admin/Banners/trash',[AdminBannersController::class,'trash']);
@@ -45,5 +51,4 @@ Route::post('/new/store', [NewsController::class, 'store'])->name('new.store');
 Route::put('/new/{id}/update', [NewsController::class, 'update'])->name('new.update');
 Route::delete('/new/{id}', [NewsController::class, 'destroy'])->name('new.destroy');
 Route::get('/new/show/{id}',[NewsController::class,'show'])->name('new.show');
-
 

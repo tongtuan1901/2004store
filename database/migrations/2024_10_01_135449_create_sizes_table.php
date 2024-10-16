@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id(); // Trường id tự động tăng
 
 
+
             $table->string('size', 50); // Trường size
+
 
             $table->timestamps(); // Tạo trường created_at và updated_at
         });

@@ -14,6 +14,7 @@ class StoreAdminProductsRequest extends FormRequest
 
         return true;
 
+
     }
 
     /**

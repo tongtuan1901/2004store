@@ -1,5 +1,6 @@
 @extends('Admin/layouts/master/master')
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 @section('content')
 <div class="w-full relative mb-4">
@@ -136,6 +137,8 @@
 </div>
 @endsection
 =======
+=======
+>>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572
 @section('content')
     <div class="w-full relative mb-4">
         <div class="flex-auto p-0 md:p-4">
@@ -303,4 +306,7 @@
     </div><!--end col-->
     </div> <!--e  qnd grid-->
 @endsection
+<<<<<<< HEAD
 >>>>>>> 10efc01 (admin banner)
+=======
+>>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572

@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 
 <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
     <div class="container">
       <!-- Footer Start -->
 
+=======
+<div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+    <div class="container">
+      <!-- Footer Start -->
+>>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572
       <footer
         class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
       >
@@ -12,7 +18,10 @@
   </div>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572
 </div><!--end container-->
 </div>
 </div>

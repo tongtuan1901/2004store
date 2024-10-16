@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sizes')->nullable(); // Lưu trữ các kích thước, có thể null
             $table->string('colors')->nullable(); // Lưu trữ các màu sắc, có thể null
             $table->softDeletes(); // Thêm tính năng xóa mềm
+
             $table->timestamps(); // Tạo trường created_at và updated_at
 
             // Thiết lập khóa ngoại cho category_id
@@ -37,7 +38,9 @@ return new class extends Migration
     public function down(): void
     {
 
+
         Schema::dropIfExists('products'); // Xóa bảng products nếu nó tồn tại
     }
 };
+
 
