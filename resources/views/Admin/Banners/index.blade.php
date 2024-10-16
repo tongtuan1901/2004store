@@ -116,12 +116,9 @@
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                     <a href="{{route('admin-banners.edit',$banner->id)}}"><i
-                                                            class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
+                                                        class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i>
+                                                    </a>
                                                     
-                                                    {{-- <a href="{{url('Admin/Banners/delete')}}" method='post'>
-                                                        @csrf
-                                                        <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
-                                                    </a> --}}
                                                     <form action="{{url('Admin/Banners/delete',$banner->id)}}" method="post">
                                                         @csrf                                               
                                                         <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
