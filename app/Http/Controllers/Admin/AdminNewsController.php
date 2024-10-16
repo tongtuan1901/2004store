@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class NewsController extends Controller
+class AdminNewsController extends Controller
 {
     /**
      * Display a listing of the resource.

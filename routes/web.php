@@ -2,29 +2,33 @@
 
 
   use App\Http\Controllers\client\home;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminCategoriesController;
-use App\Http\Controllers\Admin\AdminProductsController;
+
+
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\client\CardController;
-use App\Http\Controllers\client\ClientCategories;
+
 use App\Http\Controllers\client\HomeController;
-use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\NewsController;
-use App\Http\Controllers\client\ProductsController;
-use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
 
-use App\Http\Controllers\Admin\AdminProductsController;
+
+use App\Http\Controllers\client\ClientCategories;
+use App\Http\Controllers\admin\AdminNewsController;
+
+
+
+use App\Http\Controllers\client\ProductsController;
+use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\AdminCouponsController;
+use App\Http\Controllers\Admin\AdminCouponsController;
+use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 
-use App\Http\Controllers\admin\NewsController;
-use Illuminate\Support\Facades\Route;
-
-
-
-
+use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 Route::resource('admin-products', AdminProductsController::class);
 // Danh mục
@@ -39,15 +43,16 @@ Route::resource('client-register', RegisterController::class);
 Route::resource('client-products', ProductsController::class);
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
-Route::resource('admin-customers', UserController::class);
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::get('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+Route::resource('admin-customers', AdminUserController::class);
+
+Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
 
 // Danh mục
@@ -70,11 +75,11 @@ Route::get('Admin/Banners/trash',[AdminBannersController::class,'trash']);
 
 Route::post('Admin/Banners/delete/{id}',[AdminBannersController::class,'delete']);
 
-Route::get('/new', [NewsController::class, 'index'])->name('new.index');
-Route::get('/new/create', [NewsController::class, 'create'])->name('new.create');
-Route::get('/new/{id}/edit', [NewsController::class, 'edit'])->name('new.edit');
-Route::post('/new/store', [NewsController::class, 'store'])->name('new.store');
-Route::put('/new/{id}/update', [NewsController::class, 'update'])->name('new.update');
-Route::delete('/new/{id}', [NewsController::class, 'destroy'])->name('new.destroy');
-Route::get('/new/show/{id}',[NewsController::class,'show'])->name('new.show');
+Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
+Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
+Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.edit');
+Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
+Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
+Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
+Route::get('/new/show/{id}',[AdminNewsController::class,'show'])->name('new.show');
 
