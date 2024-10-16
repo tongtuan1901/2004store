@@ -97,7 +97,8 @@ class AdminProductsController extends Controller
 
     public function edit(int $id)
     {
-        $product = AdminProducts::with('images')->findOrFail($id);$product->sizes = explode(',', $product->sizes); // Chuyển đổi chuỗi thành mảng
+        $product = AdminProducts::with('images')->findOrFail($id);
+        $product->sizes = explode(',', $product->sizes); // Chuyển đổi chuỗi thành mảng
         $product->colors = explode(',', $product->colors); // Chuyển đổi chuỗi thành mảng
 
         $categories = Category::all(); 
