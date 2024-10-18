@@ -10,12 +10,26 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
 {
-
-    public function index()
-    {
+    
+    public function index(Request $request)
+{
+    $status = $request->query('status'); // Lấy giá trị status từ query string
+    
+    if ($status) {
+        // Nếu có giá trị status, lọc các đơn hàng theo trạng thái
+        $orders = AdminOrder::where('status', $status)->get();
+    } else {
+        // Nếu không có giá trị status, lấy tất cả đơn hàng
         $orders = AdminOrder::all();
-        return view('Admin.orders.index', compact('orders'));
     }
+
+    return view('Admin.orders.index', compact('orders'));
+}
+    // public function index()
+    // {
+    //     $orders = AdminOrder::all();
+    //     return view('Admin.orders.index', compact('orders'));
+    // }
 
 
     public function create()
