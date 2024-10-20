@@ -1,5 +1,6 @@
 @extends('Admin/layouts/master/header')
 @extends('Admin/layouts/master/master')
+
 @section('content')
 <div class="container">
     <h2>Danh Sách Mã Giảm Giá</h2>

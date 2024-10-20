@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminProducts extends Model
 {
-
-    use HasFactory, SoftDeletes;
-    use HasFactory, SoftDeletes; 
     use HasFactory, SoftDeletes; 
 
     protected $fillable = [
@@ -23,8 +20,11 @@ class AdminProducts extends Model
         'quantity',
         'sizes',
         'colors',
+
+        // Thêm các trường khác nếu cần
     ];
 
+    // Quan hệ với Category
 
     public function category()
     {
@@ -32,12 +32,13 @@ class AdminProducts extends Model
     }
 
 
+    // Quan hệ với ProductImage
 
-    // Quan hệ với ProductImag
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
+
 
 
     public function orders()
@@ -64,3 +65,4 @@ class AdminProducts extends Model
 }
 
 }
+

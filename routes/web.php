@@ -1,7 +1,9 @@
 <?php
 
 
+
 use App\Http\Controllers\client\home;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +34,9 @@ use App\Http\Controllers\admin\AdminInventoryController;
 
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+
 use App\Models\AdminOrder;
+
 
 Route::resource('admin-products', AdminProductsController::class);
 // Danh mục
@@ -58,10 +62,17 @@ Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users
 Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
+Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
+
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
 // Mã giảm giá
-
 // Định nghĩa resource cho admin-coupons
 Route::resource('admin-coupons', AdminCouponsController::class);
 
@@ -75,6 +86,7 @@ Route::get('Admin/approved',[AdminOrdersController::class,'showApproved'])->name
 Route::post('Admin/Cancel/{id}',[AdminOrdersController::class,'cancel'])->name('order.cancel');
 Route::get('Admin/order/history',[AdminOrdersController::class,'history'])->name('order.history');
 Route::put('Admin/order/updateStatus/{id}',[AdminOrdersController::class,'updateStatus'])->name('order.updateStatus');
+
 // Route quản lý tồn kho
 Route::resource('inventory', AdminInventoryController::class);
 

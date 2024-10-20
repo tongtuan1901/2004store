@@ -35,6 +35,7 @@ class AdminCouponsController extends Controller
         ]);
 
         AdminCoupons::create($request->all());
+
         return redirect()->route('admin-coupons.index')->with('success', 'Mã giảm giá đã được tạo thành công!');
     }
 
@@ -75,5 +76,4 @@ class AdminCouponsController extends Controller
         return response()->json($products);
     }
 }
-
 

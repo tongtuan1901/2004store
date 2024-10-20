@@ -114,6 +114,7 @@ public function update(Request $request, $id)
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
 
+
 public function approve(string $id)
 {
     $order = AdminOrder::findOrFail($id);
@@ -147,3 +148,4 @@ public function updateStatus(Request $request, AdminOrder $order){
     return back();   
 }
 }
+

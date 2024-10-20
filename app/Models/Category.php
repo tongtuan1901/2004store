@@ -15,7 +15,6 @@ class Category extends Model
         'name',
     ];
 
-
     public function products()
     {
         return $this->hasMany(AdminProducts::class);
@@ -26,5 +25,4 @@ class Category extends Model
         return $this->hasMany(AdminCoupons::class);
     }
 }
-
 

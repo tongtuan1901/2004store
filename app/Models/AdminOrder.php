@@ -26,6 +26,7 @@ class AdminOrder extends Model
         'status'
     ];
 
+
     public function getStatusLabelAttribute()
     {
         switch ($this->status) {
@@ -44,8 +45,10 @@ class AdminOrder extends Model
         }
     }
 
+
     public function products()
     {
         return $this->belongsToMany(AdminProducts::class, 'order_product', 'order_id', 'product_id')->withPivot('quantity');
     }
+
 }

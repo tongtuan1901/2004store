@@ -1,7 +1,10 @@
 @extends('Admin/layouts/master/header')
 @extends('Admin/layouts/master/master')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 262426b0f91bf6c6183b507f2d6cd7edb752a350
 @section('content')
 <div class="container">
     <h2>Thêm Mã Giảm Giá</h2>
@@ -31,7 +34,10 @@
         </div>
         <div class="mb-3">
             <label for="type" class="form-label">Loại</label>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 262426b0f91bf6c6183b507f2d6cd7edb752a350
             <select class="form-control" id="type" name="type" required>
                 <option value="fixed">Giá trị cố định</option>
                 <option value="percentage">Theo phần trăm</option>
@@ -83,4 +89,7 @@
 @endsection
 
 @extends('Admin/layouts/master/footer')
+<<<<<<< HEAD
 
+=======
+>>>>>>> 262426b0f91bf6c6183b507f2d6cd7edb752a350
