@@ -94,17 +94,19 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item relative block">
+
+                                <!-- <li class="nav-item relative block">
                                     <a href="{{route('admin-products.create')}}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Chi tiết sản phẩm
                                     </a>
-                                </li>
+
+                                </li> -->
 
                                 <li class="nav-item relative block">
-                                    <a href="<?php echo e(route('admin-customers.index')); ?>"
+                                    <a href="{{route('users.index')}}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -119,14 +121,15 @@
                                         Banner
                                     </a>
                                 </li>
-                                <li class="nav-item relative block">
+                                <!-- <li class="nav-item relative block">
                                     <a href="admin-customers-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Chi tiết khách hàng
                                     </a>
-                                </li>
+                                </li> -->
+
 
                                 <li class="nav-item relative block">
                                     <a href="admin-orders.html"
@@ -169,12 +172,24 @@
 
                                 </li>
                                 <li class="nav-item relative block">
-                                    <a href="{{url('new')}}"
+                                    <a href="{{ route('new.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         News
                                     </a>
+                                </li>
+
+                                <li class="nav-item relative block">
+                                    <a href="{{ route('inventory.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Quản lí Tồn kho
+                                    </a>
+                                    
+
+
                                 </li>
                             </ul>
                         </div>
@@ -419,7 +434,7 @@
                 <div class="flex items-center py-4 w-full">
                     <div class="w-full">
                         <div class="">
-                            <div class="flex flex-wrap justify-between">
+                            <!-- <div class="flex flex-wrap justify-between">
                                 <div class="items-center ">
                                     <h1 class="font-medium text-3xl block dark:text-slate-100">Thống kê</h1>
                                     <ol class="list-reset flex text-sm">
@@ -440,7 +455,8 @@
                                             required="">
                                     </div>
                                 </div>
-                            </div>
+
+                            </div> -->
                         </div>
                     </div>
                 </div>

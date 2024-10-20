@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminOrder;
 use App\Models\AdminProducts;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
@@ -13,7 +16,7 @@ class AdminOrdersController extends Controller
 
     public function index()
     {
-        $orders = AdminOrder::all();
+        $orders = AdminOrder::with('products')->where('status',AdminOrder::STATUS_PENDING)->get();
         return view('Admin.orders.index', compact('orders'));
     }
 
@@ -33,7 +36,6 @@ class AdminOrdersController extends Controller
         'email' => 'required|email|max:255',
         'phone' => 'required|string|max:15',
         'address' => 'required|string|max:255',
-        'status' => 'required|string|max:50',
         'products' => 'required|array',
         'products.*' => 'exists:products,id',
         'quantities' => 'required|array',
@@ -46,7 +48,7 @@ class AdminOrdersController extends Controller
         'phone' => $validated['phone'],
         'address' => $validated['address'],
         'total' => 0,
-        'status' => $validated['status'],
+        'status' => AdminOrder::STATUS_PENDING   
     ]);
 
 
@@ -112,4 +114,36 @@ public function update(Request $request, $id)
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
 
+public function approve(string $id)
+{
+    $order = AdminOrder::findOrFail($id);
+    $order->status = AdminOrder::STATUS_APPROVED;
+    $order->save();
+    return back();
+}
+public function showApproved(){
+    $approved = AdminOrder::with('products')->where('status',AdminOrder::STATUS_APPROVED)->get();
+    return view('Admin.orders.approved', compact('approved'));
+}
+public function cancel(string $id)
+{
+    $order = AdminOrder::findOrFail($id);
+    $order->status = AdminOrder::STATUS_CANCELED;
+    $order->save();
+    return back();
+}
+public function history()
+{
+    $orders = AdminOrder::with('products')->where('status',AdminOrder::STATUS_CANCELED,AdminOrder::STATUS_DELIVERED)->get();
+    return view('Admin.orders.history', compact('orders'));
+}
+public function updateStatus(Request $request, AdminOrder $order){ 
+   
+    $request->validate([
+        'status' => 'required|string',
+    ]);
+    $order->status = $request->input('status');
+    $order->save();
+    return back();   
+}
 }
