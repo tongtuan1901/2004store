@@ -4,11 +4,8 @@
     <div class="container">
         <h1>Danh sách đơn hàng</h1>
         <a href="{{ route('admin-orders.create') }}" class="btn btn-primary">Thêm đơn hàng mới</a>
-<<<<<<< HEAD
-=======
         <a href="{{ route('order.approved') }}" class="btn btn-primary">Don da duyet</a>
         <a href="{{ route('order.history') }}" class="btn btn-primary">Lich su</a>
->>>>>>> 5e1647e (luong duyet huy don hang)
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
