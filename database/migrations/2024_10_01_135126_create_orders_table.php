@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone', 255); // Số điện thoại khách hàng
             $table->text('address'); // Địa chỉ giao hàng
             $table->decimal('total', 15, 2); // Tổng số tiền đơn hàng
-            $table->string('status', 255); // Trạng thái đơn hàng
+            $table->string('status');// Trạng thái đơn hàng
             $table->timestamps(); // Tạo trường created_at và updated_at
         });
     }

@@ -31,4 +31,5 @@ class AdminCoupons extends Model
     {
         return $this->belongsTo(AdminProducts::class);
     }
+
 }

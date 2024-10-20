@@ -20,24 +20,37 @@ class AdminProducts extends Model
         'quantity',
         'sizes',
         'colors',
+
         // Thêm các trường khác nếu cần
     ];
 
     // Quan hệ với Category
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+
     // Quan hệ với ProductImage
+
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
+
+
+
+    public function orders()
+    {
+        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
+    }
+
     public function getTable()
-{
-    return 'products';
-}
+    {
+        return 'products';
+    }
+
 
     // kết nối quản lí tồn kho
     public function inventoryLogs()
@@ -52,3 +65,4 @@ class AdminProducts extends Model
 }
 
 }
+

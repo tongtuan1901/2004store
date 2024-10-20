@@ -48,5 +48,4 @@
     </table>
 </div>
 @endsection
-
 @extends('Admin/layouts/master/footer')
