@@ -15,6 +15,14 @@ class AdminOrdersController extends Controller
     public function index()
     {
         $orders = AdminOrder::all();
+        // Trong phương thức index
+foreach ($orders as $order) {
+    // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
+    if ($order->status === 'Chờ xử lý') {
+        // Hiển thị nút duyệt
+    }
+}
+
         return view('Admin.orders.index', compact('orders'));
     }
 
@@ -121,6 +129,28 @@ public function update(Request $request, $id)
     }
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
+public function approve($id)
+{
+    $order = AdminOrder::findOrFail($id);
+    // $order->status = 'Đã xử lý'; // Hoặc trạng thái bạn muốn
+    // $order->save();
+
+    return view('admin.orders.approve', compact('order'));
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $order = AdminOrder::findOrFail($id);
+
+    // Kiểm tra trạng thái và cập nhật
+    if ($order->status === 'Chờ xử lý') {
+        $order->update(['status' => 'Đã xử lý']);
+        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được duyệt thành công!');
+    }
+
+    return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
+}
+
 
 
 }

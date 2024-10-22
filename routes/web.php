@@ -53,6 +53,11 @@ Route::prefix('admin')->group(function () {
 
  // Mã giảm giá
  Route::resource('admin-coupons', AdminCouponsController::class);
+//  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
+
+ 
+
+
     
  // Sản phẩm
  Route::resource('admin-products', AdminProductsController::class);
@@ -68,6 +73,12 @@ Route::prefix('admin')->group(function () {
  
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
+ // Route để hiển thị trang duyệt đơn hàng
+Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
+
+// Route để cập nhật trạng thái đơn hàng
+Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
+
  
  // Thống kê
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');

@@ -38,4 +38,8 @@ class AdminProducts extends Model
 {
     return 'products';
 }
+public function coupons()
+{
+    return $this->hasMany(AdminCoupons::class);
+}
 }

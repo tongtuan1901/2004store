@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 @extends('Admin/layouts/master/master')
 
 @section('content')
