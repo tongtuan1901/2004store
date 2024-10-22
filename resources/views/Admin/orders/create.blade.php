@@ -26,7 +26,7 @@
                         <label for="address" class="form-label">Địa chỉ</label>
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="status" class="form-label">Trạng thái</label>
                         <select class="form-control" id="status" name="status" required>
                             <option value="Chờ xử lý">Chờ xử lý</option>
@@ -34,7 +34,7 @@
                             <option value="Đã giao hàng">Đã giao hàng</option>
                             <option value="Đã nhận hàng">Đã nhận hàng</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="products" class="form-label">Sản phẩm</label>
                         <select class="form-control" id="products" name="products[]" multiple required>

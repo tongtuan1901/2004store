@@ -6,17 +6,18 @@
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\client\CardController;
-
 use App\Http\Controllers\client\HomeController;
+
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
-
-
 use App\Http\Controllers\client\ClientCategories;
+
+
 use App\Http\Controllers\admin\AdminNewsController;
+use App\Http\Controllers\Admin\AdminUserController;
+
 
 
 
@@ -26,9 +27,12 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminProductsController;
-use App\Http\Controllers\Admin\AdminCategoriesController;
 
+use App\Http\Controllers\admin\AdminInventoryController;
+
+use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use App\Models\AdminOrder;
 
 Route::resource('admin-products', AdminProductsController::class);
 // Danh mục
@@ -58,14 +62,20 @@ Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
 // Mã giảm giá
+// Định nghĩa resource cho admin-coupons
 Route::resource('admin-coupons', AdminCouponsController::class);
+
+// Route để lấy sản phẩm theo danh mục
+Route::get('admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
+  
 // Đặt hàng
 Route::resource('admin-orders', AdminOrdersController::class);
-// in pdf
-Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
-
-
-
+Route::post('Admin/approve/{id}',[AdminOrdersController::class,'approve'])->name('order.approve');
+Route::get('Admin/approved',[AdminOrdersController::class,'showApproved'])->name('order.approved');
+Route::post('Admin/cancelOrder/{id}',[AdminOrdersController::class,'cancelOrder'])->name('order.cancelOrder');
+Route::get('Admin/canceled',[AdminOrdersController::class,'showCancelOrder'])->name('order.showCanceled');
+// Route quản lý tồn kho
+Route::resource('inventory', AdminInventoryController::class);
 
 
 

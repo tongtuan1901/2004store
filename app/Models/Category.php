@@ -8,10 +8,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'categories';
     protected $fillable = [
         'name',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(AdminProducts::class);
+    }
+
+    public function coupons()
+    {
+        return $this->hasMany(AdminCoupons::class);
+    }
 }
+

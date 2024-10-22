@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
+        <h1>Danh sách đơn hàng</h1>
         <a href="{{ route('admin-orders.create') }}" class="btn btn-primary">Thêm đơn hàng mới</a>
+        <a href="{{ route('order.approved') }}" class="btn btn-success">Đơn đã duyệt</a>
+        <a href="{{ route('order.showCanceled') }}" class="btn btn-danger">Đơn đã hủy</a>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -25,7 +28,7 @@
                         <td>{{ $order->email }}</td>
                         <td>{{ $order->phone }}</td>
                         <td>{{ $order->address }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td> {{ $order->status }}</td>
                         <td>
                             <ul>
                                 @foreach ($order->products as $product)
@@ -34,8 +37,14 @@
                             </ul>
                         </td>
                         <td>
-                            <a href="{{ route('admin-orders.edit', $order) }}" class="btn btn-warning">Sửa</a>
-                            <a href="{{ route('admin-orders.show', $order) }}" class="btn btn-info">Chi tiết</a>
+                            <form action="{{ route('order.approve', $order->id) }}" method="POST">
+                                @csrf
+                                <button class="btn btn-info">Duyet</button>
+                            </form>
+                            <form action="{{ route('order.cancelOrder', $order->id) }}" method="POST">
+                                @csrf
+                                <button onclick="confirm('Ban co muon huy don hang nay khong?')" class="btn btn-danger">Huy</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
