@@ -23,7 +23,7 @@
                 @endif
 
                 <div class="text-center mb-4">
-                    <img src="" alt="Logo" class="img-fluid" style="max-width: 150px;">
+                    <img src="assets/images/2004Store.png" alt="Logo" class="img-fluid" style="max-width: 150px;">
                 </div>
 
                 <form action="{{ route('admin.login.submit') }}" method="POST" class="bg-light p-4 rounded shadow">

@@ -135,7 +135,7 @@
 </div>
 @endsection
 
-@section('content')
+<!-- @section('content')
     <div class="w-full relative mb-4">
         <div class="flex-auto p-0 md:p-4">
             <div class="flex flex-wrap gap-4 mb-3">
@@ -301,5 +301,5 @@
     </div><!--end card-->
     </div><!--end col-->
     </div> <!--e  qnd grid-->
-@endsection
+@endsection -->
 
