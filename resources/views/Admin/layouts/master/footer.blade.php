@@ -1,6 +1,6 @@
 
-<!-- <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
-    <div class="container"> -->
+<div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+    <div class="container">
       <!-- Footer Start -->
 
       <footer
@@ -10,6 +10,11 @@
       <!-- end Footer -->
     </div>
   </div>
+
+
+
+
+
 </div><!--end container-->
 </div>
 </div>

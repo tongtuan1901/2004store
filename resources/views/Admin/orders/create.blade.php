@@ -1,7 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e1647e (luong duyet huy don hang)
 @extends('Admin/layouts/master/master')
 
 @section('content')
@@ -30,7 +27,6 @@
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="mb-3">
-<<<<<<< HEAD
                         <label for="status" class="form-label">Trạng thái</label>
                         <select class="form-control" id="status" name="status" required>
                             <option value="Chờ xử lý">Chờ xử lý</option>
@@ -40,8 +36,6 @@
                         </select>
                     </div>
                     <div class="mb-3">
-=======
->>>>>>> 5e1647e (luong duyet huy don hang)
                         <label for="products" class="form-label">Sản phẩm</label>
                         <select class="form-control" id="products" name="products[]" multiple required>
                             @foreach ($products as $product)
