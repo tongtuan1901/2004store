@@ -30,6 +30,7 @@
         </div>
     </form>
 
+<<<<<<< HEAD
     <div id="myTabContent">
         <div class="active p-4 bg-gray-50 rounded-lg dark:bg-gray-900" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="grid grid-cols-1 p-0 md:p-4">
@@ -92,6 +93,57 @@
                 </div>
             </div>
         </div>
+=======
+    <!-- Bảng tồn kho -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">STT</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Sản phẩm</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Danh mục</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Tồn kho</th> <!-- Cột Tồn kho -->
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thay đổi số lượng</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Ghi chú</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thời gian</th>
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Hoạt động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($inventoryLogs as $index => $log)
+                    <tr class="hover:bg-gray-100 border-b">
+                        <td class="py-2 px-4 text-sm text-gray-500">{{ $index + 1 }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-500">
+                            {{ $log->product->name }}
+                        </td>
+                        <td class="py-2 px-4 text-sm text-gray-500">
+                            {{ $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
+                        </td>
+                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->product->quantity }} sản phẩm</td> <!-- Hiển thị số lượng tồn kho -->
+                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-500">
+                            <a href="{{ route('inventory.edit', $log->id) }}" class="text-blue-600 hover:underline">Sửa</a>
+                            <form action="{{ route('inventory.destroy', $log->id) }}" method="post" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');">
+                                    Xoá
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+
+                @if ($inventoryLogs->isEmpty())
+                    <tr>
+                        <td colspan="8" class="py-2 px-4 text-center text-gray-500">Không có bản ghi tồn kho nào.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+>>>>>>> 9be44c7bba0ba33bd8d8ae0681dd5c1fc4068506
     </div>
 </div>
 @endsection

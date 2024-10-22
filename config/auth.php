@@ -69,6 +69,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\UserStaff::class, // Cập nhật model cho UserStaff
+    ],
     ],
 
     /*
