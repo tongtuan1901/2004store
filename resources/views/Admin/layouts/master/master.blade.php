@@ -36,11 +36,12 @@
                             <i
                                 class="icofont-thin-down ms-auto inline-block text-[14px] transform transition-transform duration-300 text-slate-800 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400 fc-collapse-open:rotate-180 "></i>
                         </a>
+                        
 
                         <div id="Admin-flush" class="hidden  overflow-hidden">
                             <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
                                 <li class="nav-item relative block">
-                                    <a href="index.html"
+                                    <a href="{{ route('admin.statistics') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400 "></i>
@@ -85,23 +86,9 @@
                                 </li>
 
 
-                                <li class="nav-item relative block">
-                                    <a href="{{route('admin-products.create')}}"
-                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
-                                        <i
-                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Chi tiết sản phẩm
-                                    </a>
-                                </li>
+                               
 
-                                <!-- <li class="nav-item relative block">
-                                    <a href="{{route('admin-products.create')}}"
-                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
-                                        <i
-                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Chi tiết sản phẩm
-                                    </a>
-                                </li> -->
+                               
 
                                 <li class="nav-item relative block">
                                     <a href="{{route('users.index')}}"
@@ -119,14 +106,7 @@
                                         Banner
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item relative block">
-                                    <a href="admin-customers-details.html"
-                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
-                                        <i
-                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Chi tiết khách hàng
-                                    </a>
-                                </li> -->
+                               
 
                                 <li class="nav-item relative block">
                                     <a href="admin-orders.html"
@@ -188,11 +168,46 @@
 
 
                                 </li>
+                 
+
+            
+                              
+                 
+                                    
+                                
+                  
                             </ul>
                         </div>
 
 
                     </div>
+                  
+                    <div id="parent-accordion" data-fc-type="accordion">
+                    <a href="#"
+                            class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 "
+                            data-fc-type="collapse" data-fc-parent="parent-accordion">
+                            <span data-lucide="home"
+                                class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
+                            <span>nhân viên</span>
+                            <i
+                                class="icofont-thin-down ms-auto inline-block text-[14px] transform transition-transform duration-300 text-slate-800 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400 fc-collapse-open:rotate-180 "></i>
+                        </a>
+
+                        <div id="Admin-flush" class="hidden  overflow-hidden">
+                        <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
+                        <li class="nav-item relative block">
+    <a href="{{ route('user-staff.index') }}"
+        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+        <i
+            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+        Quản lí nhân viên
+    </a>
+</li>
+                        </ul>
+                        </div>
+
+                    </div>
+
         </div>
         </li>
         </ul>
@@ -361,63 +376,69 @@
                     </ul>
                 </div>
             </div>
-            <div class="me-2  dropdown relative">
-                <button type="button"
-                    class="dropdown-toggle flex items-center rounded-full text-sm
-            focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
-                    id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
-                    <img class="h-8 w-8 rounded-full" src="assets/images/users/avatar-1.png" alt="user photo" />
-                    <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
-                        <span class="block font-medium text-slate-600 dark:text-gray-300">Maria Gibson</span>
-                        <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">Admin</span>
-                    </span>
-                </button>
+            <div class="me-2 dropdown relative">
+    <button type="button"
+        class="dropdown-toggle flex items-center rounded-full text-sm
+        focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
+        id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
+        <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}" alt="user photo" />
+        <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
+            <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::user()->name }}</span>
+            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::user()->role }}</span>
+        </span>
+    </button>
 
-                <div class="left-auto right-0 z-50 my-1 hidden list-none
-            divide-y divide-gray-100 rounded border border-slate-700/10
-            text-base shadow dark:divide-gray-600 bg-white dark:bg-slate-800 w-40"
-                    id="navUserdata">
+    <div class="left-auto right-0 z-50 my-1 hidden list-none
+        divide-y divide-gray-100 rounded border border-slate-700/10
+        text-base shadow dark:divide-gray-600 bg-white dark:bg-slate-800 w-40"
+        id="navUserdata">
 
-                    <ul class="py-1" aria-labelledby="navUserdata">
-                        <li>
-                            <a href="#"
-                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
-                  dark:text-gray-200 dark:hover:bg-gray-900/20
-                  dark:hover:text-white">
-                                <span data-lucide="user"
-                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                                Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
-                  dark:text-gray-200 dark:hover:bg-gray-900/20
-                  dark:hover:text-white">
-                                <span data-lucide="settings"
-                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                                Settings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
-                  dark:text-gray-200 dark:hover:bg-gray-900/20
-                  dark:hover:text-white">
-                                <span data-lucide="dollar-sign"
-                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                                Earnings</a>
-                        </li>
-                        <li>
-                            <a href="auth-lockscreen.html"
-                                class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
-                  dark:text-red-500 dark:hover:bg-gray-900/20
-                  dark:hover:text-red-500">
-                                <span data-lucide="power"
-                                    class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
-                                Sign out</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <ul class="py-1" aria-labelledby="navUserdata">
+            <li>
+                <a href="#"
+                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                    dark:text-gray-200 dark:hover:bg-gray-900/20
+                    dark:hover:text-white">
+                    <span data-lucide="user"
+                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                    Profile</a>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                    dark:text-gray-200 dark:hover:bg-gray-900/20
+                    dark:hover:text-white">
+                    <span data-lucide="settings"
+                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                    Settings</a>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                    dark:text-gray-200 dark:hover:bg-gray-900/20
+                    dark:hover:text-white">
+                    <span data-lucide="dollar-sign"
+                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                    Earnings</a>
+            </li>
+            <li>
+                <form action="{{ route('admin.logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
+                        dark:text-red-500 dark:hover:bg-gray-900/20
+                        dark:hover:text-red-500">
+                        <span data-lucide="power"
+                            class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
+                        Sign out
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+            
         </div>
     </div>
 </nav>
