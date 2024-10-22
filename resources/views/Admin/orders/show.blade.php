@@ -3,35 +3,41 @@
 @section('content')
     <div class="container my-5">
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">Chi tiết Đơn Hàng</h2>
-                <i class="fa fa-shopping-cart fa-2x"></i>
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+                style="height: 70px;">
+                <h1 class="mb-0" style="font-size: 1.5rem;">Chi Tiết Đơn Hàng</h1>
+                <a href="{{ url()->previous() }}" class="btn btn-warning text-white">Trở Lại</a>
             </div>
             <div class="card-body">
-                @if (isset($order))
-                    <div class="mb-3">
-                        <strong>ID Đơn Hàng:</strong> <span class="badge bg-secondary">{{ $order->id }}</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 style="font-size: 1.5rem;">Chi tiết Vận Chuyển</h4>
+                        <br>
+                        <hr> <br>
+                        <div class="mb-3">
+                            <strong>ID Đơn Hàng:</strong> <span class="badge bg-secondary">{{ $order->id }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Tên khách hàng:</strong> <span>{{ $order->name }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Email:</strong> <span>{{ $order->email }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Số điện thoại:</strong> <span>{{ $order->phone }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Địa chỉ:</strong> <span>{{ $order->address }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Trạng thái:</strong> <span>{{ $order->status }}</span>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <strong>Tên khách hàng:</strong> <span>{{ $order->name }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Email:</strong> <span>{{ $order->email }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Số điện thoại:</strong> <span>{{ $order->phone }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Địa chỉ:</strong> <span>{{ $order->address }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Tổng cộng:</strong> <span class="badge bg-success">{{ $order->total }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Trạng thái:</strong> <span class="badge bg-warning">{{ $order->status }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Sản phẩm:</strong>
+                    <div class="col-md-6">
+                        <h4 style="font-size: 1.5rem;">Chi Tiết Đơn Hàng</h4>
+                        <br>
+                        <hr>
+                        <br>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -79,43 +85,54 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mb-3">
+                            <strong style="font-size: 1.5rem;">Tổng cộng:</strong> <span
+                                style="font-size: 20px">{{ number_format($order->total) }} VNĐ</span>
+                        </div>
+                        <form action="{{ route('admin-orders.update', $order->id) }}" method="POST" class="mb-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Cập nhật Trạng thái</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Chờ xử lý" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý
+                                    </option>
+                                    <option value="Đã xử lý" {{ $order->status == 'processed' ? 'selected' : '' }}>Đã xử lý
+                                    </option>
+                                    <option value="Đã giao hàng" {{ $order->status == 'shipped' ? 'selected' : '' }}>Đã
+                                        giao hàng</option>
+                                    <option value="Đã nhận hàng" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã
+                                        nhận hàng</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
+                                <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
+                                    <i class="fa fa-file-pdf"></i> Tải PDF
+                                </a>
+                            </div>
+                        </form>
+
                     </div>
-                @else
-                    <div class="alert alert-danger">
-                        Đơn hàng không tồn tại.
-                    </div>
-                @endif
-            </div>
-            <div class="card-footer d-flex justify-content-between">
-                <a class="btn btn-secondary" href="{{ route('admin-orders.index') }}">
-                    <i class="fa fa-arrow-left"></i> Trở lại danh sách đơn hàng
-                </a>
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-<style>
-    .product-carousel {
-        max-width: 200px;
-        margin: auto;
-    }
+    <style>
+        .product-carousel {
+            max-width: 200px;
+            margin: auto;
+        }
 
-    .product-carousel .carousel-inner img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
+        .product-carousel .carousel-inner img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
 
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        background-color: #000;
-    }
-
-    .carousel-caption {
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
-</style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #000;
+        }
+    </style>

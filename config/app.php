@@ -14,7 +14,21 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'providers' => [
 
+        // Các providers khác...
+
+        /*
+         * Package Service Providers...
+         */
+        Barryvdh\DomPDF\ServiceProvider::class, // Thêm dòng này nếu bạn sử dụng Laravel dưới 5.5
+
+        // Các providers khác...
+    ],
+
+    'aliases' => Facade::defaultAliases()->merge([
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class, // Đảm bảo dòng này có trong file config
+    ])->toArray(),
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

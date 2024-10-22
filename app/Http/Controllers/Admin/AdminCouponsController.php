@@ -1,79 +1,98 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use App\Models\AdminCoupons;
 use Illuminate\Http\Request;
-use App\Models\AdminProducts;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class AdminCouponsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $coupons = AdminCoupons::with(['category', 'product'])->get();
+        //
+        $coupons = AdminCoupons::all();
         return view('admin.coupons.index', compact('coupons'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.coupons.create', compact('categories'));
+        //
+        return view('admin.coupons.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
+        //
         $request->validate([
             'code' => 'required|string|max:50',
-            'type' => 'required|string|in:fixed,percentage',
+            'type' => 'required|string|max:50',
             'value' => 'required|numeric',
-            'category_id' => 'nullable|exists:categories,id',
-            'product_id' => 'nullable|exists:products,id',
-            'starts_at' => 'nullable|date',
-            'expires_at' => 'nullable|date|after:starts_at',
+            'starts_at' => 'required|date',
+            'expires_at' => 'required|date|after:starts_at',
         ]);
 
         AdminCoupons::create($request->all());
 
-        return redirect()->route('admin-coupons.index')->with('success', 'Mã giảm giá đã được tạo thành công!');
+        return redirect()->route('admin-coupons.index')
+                         ->with('success', 'Mã giảm giá được tạo thành công.');
     }
 
-    public function edit(AdminCoupons $admin_coupon)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $categories = Category::all();
-        $products = AdminProducts::where('category_id', $admin_coupon->category_id)->get();
-        return view('admin.coupons.edit', compact('admin_coupon', 'categories', 'products'));
+        //
     }
 
-    public function update(Request $request, AdminCoupons $admin_coupon)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        $request->validate([
-            'code' => 'required|string|max:50',
-            'type' => 'required|string|in:fixed,percentage',
-            'value' => 'required|numeric',
-            'category_id' => 'nullable|exists:categories,id',
-            'product_id' => 'nullable|exists:products,id',
-            'starts_at' => 'nullable|date',
-            'expires_at' => 'nullable|date|after:starts_at',
-        ]);
-
-        $admin_coupon->update($request->all());
-
-        return redirect()->route('admin-coupons.index')->with('success', 'Mã giảm giá đã được cập nhật thành công!');
+        // dd($coupon);
+        $coupon = AdminCoupons::findOrFail($id);
+        return view('admin.coupons.edit', compact('coupon'));
     }
 
-    public function destroy(AdminCoupons $admin_coupon)
-    {
-        // Xóa mềm
-        $admin_coupon->delete();
-        return redirect()->route('admin-coupons.index')->with('success', 'Mã giảm giá đã được xóa thành công!');
-    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request,$id)
+{
+    $request->validate([
+        'code' => 'required|string|max:50',
+        'type' => 'required|string|max:50',
+        'value' => 'required|numeric',
+        'starts_at' => 'required|date',
+        'expires_at' => 'required|date|after:starts_at',
+    ]);
 
-    public function getProductsByCategory($categoryId)
-    {
-        $products = AdminProducts::where('category_id', $categoryId)->get();
-        return response()->json($products);
-    }
+    $coupon = AdminCoupons::findOrFail($id);
+    $coupon->update($request->all());
+
+    return redirect()->route('admin-coupons.index')
+                     ->with('success', 'Mã giảm giá được cập nhật thành công.');
 }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+     // Xóa mã giảm giá
+     public function destroy($id)
+     {
+         $coupon = AdminCoupons::findOrFail($id);
+         $coupon->delete();
+         return redirect()->route('admin-coupons.index')
+                          ->with('success', 'Mã giảm giá đã bị xóa.');
+     }
+}

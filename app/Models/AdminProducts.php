@@ -38,17 +38,4 @@ class AdminProducts extends Model
 {
     return 'products';
 }
-
-    // kết nối quản lí tồn kho
-    public function inventoryLogs()
-    {
-        return $this->hasMany(InventoryLog::class, 'product_id');
-    }
-
-    //kết nối mã giảm giá
-    public function coupons()
-{
-    return $this->hasMany(AdminCoupons::class);
-}
-
 }

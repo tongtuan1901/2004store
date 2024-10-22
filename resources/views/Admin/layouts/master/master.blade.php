@@ -157,6 +157,7 @@
                                     </a>
                                 </li>
 
+
                                 <li class="nav-item relative block">
                                     <a href="{{ route('inventory.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -176,6 +177,7 @@
                                     
                                 
                   
+
                             </ul>
                         </div>
 
@@ -452,7 +454,7 @@
                 <div class="flex items-center py-4 w-full">
                     <div class="w-full">
                         <div class="">
-                            <!-- <div class="flex flex-wrap justify-between">
+                            <div class="flex flex-wrap justify-between">
                                 <div class="items-center ">
                                     <h1 class="font-medium text-3xl block dark:text-slate-100">Thống kê</h1>
                                     <ol class="list-reset flex text-sm">
@@ -473,7 +475,7 @@
                                             required="">
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
