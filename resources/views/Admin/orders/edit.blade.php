@@ -33,10 +33,10 @@
                 <div class="mb-3">
                     <label for="status" class="form-label">Trạng thái</label>
                     <select class="form-control" id="status" name="status" required>
-                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
-                        <option value="processed" {{ $order->status == 'processed' ? 'selected' : '' }}>Đã xử lý</option>
-                        <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Đã giao hàng</option>
-                        <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã nhận hàng</option>
+                        <option value="Chờ xử lý" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
+                        <option value="Đã xử lý" {{ $order->status == 'processed' ? 'selected' : '' }}>Đã xử lý</option>
+                        <option value="Đã giao hàng" {{ $order->status == 'shipped' ? 'selected' : '' }}>Đã giao hàng</option>
+                        <option value="Đã nhận hàng" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã nhận hàng</option>
                     </select>
                 </div>
                 <div class="mb-3">

@@ -32,5 +32,9 @@ Route::resource('admin-categories', AdminCategoriesController::class);
 Route::resource('admin-coupons', AdminCouponsController::class);
 // Đặt hàng
 Route::resource('admin-orders', AdminOrdersController::class);
+// in pdf
+Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+
+
 
 

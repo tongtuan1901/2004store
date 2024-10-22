@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminOrder;
@@ -17,13 +18,18 @@ class AdminOrdersController extends Controller
         return view('Admin.orders.index', compact('orders'));
     }
 
-
     public function create()
     {
         $products = AdminProducts::all();
         return view('admin.orders.create', compact('products'));
     }
 
+    public function generatePDF($id)
+    {
+        $order = AdminOrder::with('products')->findOrFail($id);
+        $pdf = PDF::loadView('admin.orders.pdf', compact('order'));
+        return $pdf->download('order_' . $order->id . '.pdf');
+    }
 
 
     public function store(Request $request)
@@ -57,8 +63,6 @@ class AdminOrdersController extends Controller
         $order->products()->attach($productId, ['quantity' => $quantity]);
         $total += $product->price * $quantity;
     }
-
-    // Cập nhật tổng cộng
     $order->update(['total' => $total]);
 
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được tạo thành công!');
@@ -86,6 +90,17 @@ class AdminOrdersController extends Controller
 
 public function update(Request $request, $id)
 {
+    // Fetch the order first
+    $order = AdminOrder::findOrFail($id);
+
+    if ($request->has('status')) {
+        $validated = $request->validate([
+            'status' => 'required|string|max:50',
+        ]);
+        $order->update(['status' => $validated['status']]);
+        return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
+    }
+
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
@@ -99,16 +114,16 @@ public function update(Request $request, $id)
         'quantities.*' => 'integer|min:1',
     ]);
 
-
-    $order = AdminOrder::findOrFail($id);
-
     $order->update($validated);
-
     $order->products()->detach();
     foreach ($validated['products'] as $index => $productId) {
         $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
     }
-
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 }
