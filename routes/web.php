@@ -75,6 +75,11 @@ Route::prefix('admin')->group(function () {
  Route::resource('admin-orders', AdminOrdersController::class);
  // Route để hiển thị trang duyệt đơn hàng
 Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
+Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
+Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
+Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
+Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
+
 
 // Route để cập nhật trạng thái đơn hàng
 Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
@@ -82,6 +87,8 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
  
  // Thống kê
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
+ Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
+
  
  // Route cho tin tức
  Route::resource('new', AdminNewsController::class);

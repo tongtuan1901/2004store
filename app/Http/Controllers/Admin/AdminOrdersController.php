@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class AdminOrdersController extends Controller
 {
 
+     
     public function index()
     {
         $orders = AdminOrder::all();
@@ -25,6 +26,15 @@ foreach ($orders as $order) {
 
         return view('Admin.orders.index', compact('orders'));
     }
+
+    public function approveIndex()
+{
+    // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
+    $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
+
+    return view('Admin.orders.approve_index', compact('orders'));
+}
+
 
     public function create()
     {
@@ -73,7 +83,7 @@ foreach ($orders as $order) {
     }
     $order->update(['total' => $total]);
 
-    return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được tạo thành công!');
+    return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được tạo thành công!');
 }
 
 
@@ -150,6 +160,35 @@ public function updateStatus(Request $request, $id)
 
     return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
 }
+public function destroy($id)
+{
+    $order = AdminOrder::findOrFail($id);
+    $order->delete();
+
+    return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
+}
+public function deletedOrders()
+{
+    $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
+    return view('Admin.orders.deleted', compact('deletedOrders'));
+}
+public function restore($id)
+{
+    $order = AdminOrder::onlyTrashed()->findOrFail($id);
+    $order->restore();
+
+    return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được khôi phục thành công!');
+}
+
+public function forceDelete($id)
+{
+    $order = AdminOrder::onlyTrashed()->findOrFail($id);
+    $order->forceDelete();
+
+    return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được xóa vĩnh viễn thành công!');
+}
+
+
 
 
 

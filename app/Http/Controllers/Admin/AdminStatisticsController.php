@@ -36,32 +36,37 @@ class AdminStatisticsController extends Controller
             ->where('created_at', '<=', $endOfDay)
             ->count();
 
+        // Tính doanh thu hôm nay
+        $totalRevenueToday = AdminOrder::where('created_at', '>=', $startOfDay)
+            ->where('created_at', '<=', $endOfDay)
+            ->sum('total');
+
         // Lọc theo tháng nếu có
         $month = $request->input('month');
+        $revenueData = array_fill(0, 31, 0); // Khởi tạo mảng doanh thu
+
         if ($month) {
-            $startOfMonth = Carbon::parse($date)->month($month)->startOfMonth();
-            $endOfMonth = Carbon::parse($date)->month($month)->endOfMonth();
+            $year = date('Y'); // Năm hiện tại
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); // Số ngày trong tháng
 
-            // Cập nhật thống kê theo tháng
-            $totalProductsAddedToday = AdminProducts::where('created_at', '>=', $startOfMonth)
-                ->where('created_at', '<=', $endOfMonth)
-                ->count();
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                $startOfDay = Carbon::createFromDate($year, $month, $day)->startOfDay();
+                $endOfDay = Carbon::createFromDate($year, $month, $day)->endOfDay();
 
-            $totalOrdersToday = AdminOrder::where('created_at', '>=', $startOfMonth)
-                ->where('created_at', '<=', $endOfMonth)
-                ->count();
-
-            $totalUsersRegisteredToday = User::where('created_at', '>=', $startOfMonth)
-                ->where('created_at', '<=', $endOfMonth)
-                ->count();
+                $revenueData[$day - 1] = AdminOrder::where('created_at', '>=', $startOfDay)
+                    ->where('created_at', '<=', $endOfDay)
+                    ->sum('total');
+            }
         }
 
         return view('admin.statistics.index', compact(
             'totalProductsAddedToday',
             'totalOrdersToday',
             'totalUsersRegisteredToday',
+            'totalRevenueToday',
             'date',
-            'month'
+            'month',
+            'revenueData'
         ));
     }
 }

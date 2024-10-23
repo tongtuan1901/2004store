@@ -3,28 +3,37 @@
 
 @section('content')
 <div class="container">
-    <h2>Chỉnh sửa Mã Giảm Giá</h2>
+    <h2>Chỉnh Sửa Mã Giảm Giá</h2>
+
+    <form action="{{ route('admin-coupons.update', $admin_coupon->id) }}" method="POST" id="coupon-form">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Danh Mục</label>
+            <select class="form-control" id="category_id" name="category_id" required onchange="this.form.submit()">
+                <option value="">-- Chọn Danh Mục --</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $admin_coupon->category_id == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </form>
 
     <form action="{{ route('admin-coupons.update', $admin_coupon->id) }}" method="POST">
         @csrf
         @method('PUT')
-        
-        <div class="mb-3">
-            <label for="category_id" class="form-label">Danh Mục</label>
-            <select class="form-control" id="category_id" name="category_id" required>
-                <option value="">-- Chọn Danh Mục --</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $admin_coupon->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
+        <input type="hidden" name="category_id" value="{{ old('category_id', $admin_coupon->category_id) }}"> 
         <div class="mb-3">
             <label for="product_id" class="form-label">Sản Phẩm</label>
             <select class="form-control" id="product_id" name="product_id" required>
                 <option value="">-- Chọn Sản Phẩm --</option>
                 @foreach ($products as $product)
-                    <option value="{{ $product->id }}" {{ $admin_coupon->product_id == $product->id ? 'selected' : '' }}>{{ $product->name }}</option>
+                    <option value="{{ $product->id }}" {{ $admin_coupon->product_id == $product->id ? 'selected' : '' }}>
+                        {{ $product->name }}
+                    </option>
                 @endforeach
             </select>
         </div>

@@ -22,7 +22,9 @@
 
     <form action="{{ route('admin-coupons.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="category_id" value="{{ request('category_id') }}"> 
         <div class="mb-3">
+        
             <label for="product_id" class="form-label">Sản Phẩm</label>
             <select class="form-control" id="product_id" name="product_id" required>
                 <option value="">-- Chọn Sản Phẩm --</option>

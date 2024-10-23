@@ -5,13 +5,13 @@
         class=" text-center border-b bg-[#603dc3] border-r h-[64px] flex justify-center items-center brand-logo dark:bg-[#603dc3] dark:border-slate-700/40 group-data-[sidebar=dark]:bg-[#603dc3] group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:bg-brand group-[.dark]:group-data-[sidebar=brand]:bg-[#603dc3] group-data-[sidebar=brand]:border-slate-700/40">
         <a href="index.html" class="logo">
             <span>
-                <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm h-8 align-middle inline-block">
+                <img src="assets/images/2004Store.png" alt="logo-small" class="logo-sm h-20 align-middle inline-block" height="100%">
             </span>
             <span>
-                <img src="assets/images/logo.png" alt="logo-large"
+                <!-- <img src="assets/images/logo.png" alt="logo-large"
                     class="logo-lg h-[28px] logo-light hidden dark:inline-block ms-1 group-data-[sidebar=dark]:inline-block group-data-[sidebar=brand]:inline-block">
                 <img src="assets/images/logo.png" alt="logo-large"
-                    class="logo-lg h-[28px] logo-dark inline-block dark:hidden ms-1 group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden">
+                    class="logo-lg h-[28px] logo-dark inline-block dark:hidden ms-1 group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden"> -->
             </span>
         </a>
     </div>
@@ -157,6 +157,7 @@
                                     </a>
                                 </li>
 
+
                                 <li class="nav-item relative block">
                                     <a href="{{ route('inventory.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
@@ -176,6 +177,7 @@
                                     
                                 
                   
+
                             </ul>
                         </div>
 
@@ -452,7 +454,7 @@
                 <div class="flex items-center py-4 w-full">
                     <div class="w-full">
                         <div class="">
-                            <!-- <div class="flex flex-wrap justify-between">
+                            <div class="flex flex-wrap justify-between">
                                 <div class="items-center ">
                                     <h1 class="font-medium text-3xl block dark:text-slate-100">Thống kê</h1>
                                     <ol class="list-reset flex text-sm">
@@ -473,7 +475,7 @@
                                             required="">
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
