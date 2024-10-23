@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-class UserController extends Controller
+class AdminUserController extends Controller
 {
 // Hiển thị danh sách user
 public function index(Request $request)
     {
-        $searchTerm = $request->input('search'); // Lấy từ tìm kiếm từ yêu cầu
-        $role = $request->input('role'); // Lấy vai trò từ yêu cầu
+        $searchTerm = $request->input('search');
+        $role = $request->input('role');
 
         $users = User::withTrashed()
             ->when($searchTerm, function ($query, $searchTerm) {
@@ -19,21 +20,19 @@ public function index(Request $request)
                              ->orWhere('email', 'LIKE', "%{$searchTerm}%");
             })
             ->when($role, function ($query, $role) {
-                return $query->where('role', $role); // Lọc người dùng theo vai trò
+                return $query->where('role', $role);
             })
             ->get();
 
         return view('Customer.users.index', compact('users'));
     }
 
-//     // Hiển thị danh sách user
 //     public function index()
 // {
 //     $users = User::withTrashed()->get();
 //     return view('Customer.users.index', compact('users'));
 // }
 
-    // Hiển thị form tạo mới user
     public function create()
     {
         return view('Customer.Users.create');
@@ -46,24 +45,22 @@ public function index(Request $request)
         'name' => 'required',
         'email' => 'required|email|unique:users',
         'phone_number' => 'required',
-        'password' => 'required', // Validate password, adjust min length as needed
-        'role' => 'required', // Validate role
+        'password' => 'required',
+        'role' => 'required',
     ]);
 
-    // Create the user with hashed password
     User::create([
         'name' => $request->name,
         'email' => $request->email,
         'phone_number' => $request->phone_number,
-        'password' => $request->password, // Hash the password
-        'role' => $request->role, // Lưu vai trò
+        'password' => $request->password,
+        'role' => $request->role,
     ]);
 
     return redirect()->route('users.index')->with('success', 'User created successfully.');
 }
 
 
-    // Hiển thị form chỉnh sửa user
     public function edit(User $user)
     {
         return view('Customer.Users.edit', compact('user'));
@@ -76,7 +73,7 @@ public function index(Request $request)
         'name' => 'required',
         'email' => 'required|email|unique:users,email,' . $id,
         'phone_number' => 'required',
-        'password' => 'nullable', // Thay đổi nếu cần
+        'password' => 'nullable',
         'role' => 'required',
     ]);
 
@@ -84,12 +81,12 @@ public function index(Request $request)
     $user->name = $request->name;
     $user->email = $request->email;
     $user->phone_number = $request->phone_number;
-    
+
     if ($request->filled('password')) {
-        $user->password = $request->password; // Chỉ cập nhật mật khẩu nếu trường này không trống
+        $user->password = $request->password;
     }
 
-    $user->role = $request->role; // Cập nhật vai trò
+    $user->role = $request->role;
     $user->save();
 
     return redirect()->route('users.index')->with('success', 'User updated successfully.');
@@ -97,20 +94,16 @@ public function index(Request $request)
 
 
 
-
-
-    // Xóa mềm user
     public function destroy(User $user)
     {
-        $user->delete();  // Xóa mềm
+        $user->delete();
         return redirect()->route('users.index')->with('success', 'User soft deleted successfully.');
     }
 
-    // Khôi phục user đã bị xóa mềm
     public function restore($id)
     {
-        $user = User::withTrashed()->findOrFail($id);  // Tìm user đã bị xóa mềm
-        $user->restore();  // Khôi phục user
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
         return redirect()->route('users.index')->with('success', 'User restored successfully.');
     }
 }

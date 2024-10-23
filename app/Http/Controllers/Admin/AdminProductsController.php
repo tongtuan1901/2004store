@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
@@ -10,11 +11,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 
+
 class AdminProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $categories = Category::all();
@@ -25,21 +28,32 @@ class AdminProductsController extends Controller
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
+           // Xử lý lọc theo khoảng giá
+    if ($request->filled('price_range')) {
+        $priceRange = explode('-', $request->price_range);
+        if (count($priceRange) === 2) {
+            $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
+        } elseif ($priceRange[0] === '500000+') {
+            $query->where('price_sale', '>', 500000);
+        }
+    }
     
         // Phân trang sản phẩm
         $listProducts = $query->paginate(10);
         return view('Admin.Products.index', compact('listProducts', 'categories'));
-    }
 
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+
         $categories = DB::table('categories')->get();
         $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
         $colors = ['Đỏ', 'Xanh', 'Vàng', 'Trắng', 'Đen'];
         return view("Admin.Products.create", compact("categories", 'sizes', 'colors'));
+
     }
 
     /**
@@ -47,6 +61,7 @@ class AdminProductsController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -71,20 +86,24 @@ class AdminProductsController extends Controller
         $this->uploadImages($request, $product->id);
 
         return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được thêm thành công.');
+
     }
 
     /**
      * Display the specified resource.
      */
+
     public function show($id)
 {
     $product = AdminProducts::with('images', 'category')->findOrFail($id);
     return view('Admin.products.show', compact('product'));
 }
 
+
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(int $id)
     {
         $product = AdminProducts::with('images')->findOrFail($id);
@@ -96,11 +115,13 @@ class AdminProductsController extends Controller
         $colors = ['Đỏ', 'Xanh', 'Vàng', 'Trắng', 'Đen'];
         
         return view("Admin.Products.edit", compact('product', 'categories', 'sizes', 'colors'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -137,6 +158,7 @@ class AdminProductsController extends Controller
         $this->uploadImages($request, $product->id);
 
         return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được cập nhật thành công.');
+
     }
 
     /**
@@ -144,6 +166,7 @@ class AdminProductsController extends Controller
      */
     public function destroy(string $id)
     {
+
         $product = AdminProducts::findOrFail($id);
         $product->delete();
 
@@ -166,3 +189,4 @@ class AdminProductsController extends Controller
         }
     }
 }
+
