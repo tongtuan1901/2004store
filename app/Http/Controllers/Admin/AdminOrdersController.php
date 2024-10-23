@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
 {
-
-     
     public function index()
     {
         $orders = AdminOrder::all();

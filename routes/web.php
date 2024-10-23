@@ -14,6 +14,28 @@ use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
 
+use App\Http\Controllers\Admin\AdminCouponsController;
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\HomeAdminController;
+use App\Http\Controllers\UserController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+//View Admin
+Route::resource('admin-home', HomeAdminController::class);
+Route::resource('admin-products', AdminProductsController::class);
+// Danh mục
+Route::resource('admin-categories', AdminCategoriesController::class);
+
+
 
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\admin\AdminNewsController;
@@ -35,7 +57,6 @@ use App\Http\Controllers\Admin\AdminStatisticsController;
 
 
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
-
 
 
 
