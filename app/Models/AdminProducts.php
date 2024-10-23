@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminProducts extends Model
 {
-<<<<<<< HEAD
     use HasFactory, SoftDeletes;
-=======
-    use HasFactory, SoftDeletes; 
->>>>>>> 1fb31cf40c7ad28b5c10ac64dbf1adec6f15dc04
 
     protected $fillable = [
         'category_id',
@@ -24,32 +20,19 @@ class AdminProducts extends Model
         'quantity',
         'sizes',
         'colors',
-<<<<<<< HEAD
 
     ];
 
 
-=======
-        // Thêm các trường khác nếu cần
-    ];
-
-    // Quan hệ với Category
->>>>>>> 1fb31cf40c7ad28b5c10ac64dbf1adec6f15dc04
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-<<<<<<< HEAD
-
-=======
-    // Quan hệ với ProductImage
->>>>>>> 1fb31cf40c7ad28b5c10ac64dbf1adec6f15dc04
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
-<<<<<<< HEAD
 
     public function orders()
     {
@@ -60,10 +43,4 @@ class AdminProducts extends Model
     {
         return 'products';
     }
-=======
-    public function getTable()
-{
-    return 'products';
->>>>>>> 1fb31cf40c7ad28b5c10ac64dbf1adec6f15dc04
-}
 }
