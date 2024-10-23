@@ -42,4 +42,9 @@ public function coupons()
 {
     return $this->hasMany(AdminCoupons::class);
 }
+public function orders()
+{
+    return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
+        ->withPivot('quantity', 'price');
+}
 }

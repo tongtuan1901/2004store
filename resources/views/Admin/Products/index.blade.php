@@ -92,8 +92,8 @@
                                                 </div>
                                             </td>
                                             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                <h5>{{ $product->name }}</h5>
-                                            </td>
+    <h5 class="text-truncate" style="max-width: 150px;">{{ $product->name }}</h5>
+</td>
                                             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                 @if($product->images->isNotEmpty())
                                                     <img src="{{ Storage::url($product->images->first()->image_path) }}" alt="{{ $product->name }}" style="width: 100px; height: auto;">

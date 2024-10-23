@@ -89,6 +89,7 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
  Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
+
  
  // Route cho tin tức
  Route::resource('new', AdminNewsController::class);

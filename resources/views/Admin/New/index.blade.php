@@ -93,7 +93,8 @@
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                        <img src="{{Storage::url($item->image)}}" alt="" width="150" height="100">
+                                                    <img src="{{ Storage::url($item->image) }}" alt="" width="150" height="100">
+
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">

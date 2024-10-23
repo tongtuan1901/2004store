@@ -19,6 +19,6 @@
         <link rel="stylesheet" href="{{ asset('assets/libs/icofont/icofont.min.css') }}">
         <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('assets/css/tailwind.min.css') }}">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
 
     </head>

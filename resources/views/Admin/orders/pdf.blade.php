@@ -64,7 +64,7 @@
 </head>
 
 <body>
-    <h1>Chi Tiết Đơn Hàng</h1>
+    <h1>Hóa đơn</h1>
 
     <div>
         <strong>ID Đơn Hàng:</strong> <span class="badge bg-secondary">{{ $order->id }}</span>
