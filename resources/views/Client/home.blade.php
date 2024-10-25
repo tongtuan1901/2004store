@@ -1,36 +1,42 @@
 @extends('Client.layouts.paginate.master')
 @section('contentClient')
-    <main class="main-layout">
+    
+<main class="main-layout">
+    <div id="bannerCarousel" class="carousel slide section_index--slider section-distance" data-ride="carousel" data-interval="2000">
+        <div class="carousel-inner">
+            @foreach ($banners as $index => $banner)
+                <div class="carousel-item @if ($index === 0) active @endif">
+                    <a href="collections/all.html" aria-label="{{ $banner->title }}" title="{{ $banner->title }}">
+                        <img src="{{ asset('storage/' . $banner->image) }}" 
+                            alt="{{ $banner->title }}" class="d-block w-100 slide-image" loading="eager" decoding="sync">
+                    </a>
+                </div>
+            @endforeach
+        </div>
 
-        <home-slider class="section_index--slider section-distance">
-            <div class="section_index--slider-items">
-                <div class="section_index--slider-item">
-                    <a href="collections/all.html" aria-label="New Arrival" title="New Arrival">
-                        <picture>
-                            <source width="1920" height="960" media="(min-width: 768px)"
-                                srcset="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_desktop_1b1ed.jpg') }}">
-                            <source width="800" height="800" media="(min-width: 0)"
-                                srcset="{{ asset('bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_mobile_1.jpg') }}">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_desktop_1b1ed.jpg') }}"
-                                alt="New Arrival" width="1920" height="960" loading="eager" decoding="sync"
-                                fetchpriority="high">
-                        </picture>
-                    </a>
-                </div>
-                <div class="section_index--slider-item">
-                    <a href="collections/all.html" aria-label="Hot Trend" title="Hot Trend">
-                        <picture>
-                            <source width="1920" height="960" media="(min-width: 768px)"
-                                srcset="//bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_desktop_2.jpg">
-                            <source width="800" height="800" media="(min-width: 0)"
-                                srcset="//bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_mobile_2.jpg">
-                            <img src="../bizweb.dktcdn.net/100/520/624/themes/959507/assets/home_slider_item_image_desktop_2b1ed.jpg"
-                                alt="Hot Trend" width="1920" height="960" loading="lazy" decoding="async"
-                                fetchpriority="low">
-                        </picture>
-                    </a>
-                </div>
-            </div>
+        <a class="carousel-control-prev" href="#bannerCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#bannerCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</main>
+
+<!-- Thêm Bootstrap JS và jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Thêm CSS để thiết lập chiều cao cho hình ảnh -->
+<style>`
+    .slide-image {
+        height: 100px; /* Thay đổi chiều cao theo yêu cầu */
+        object-fit: cover; /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
+    }
+</style>
         </home-slider>
         <div class="home-about section-distance">
             <div class="container">

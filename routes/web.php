@@ -44,9 +44,9 @@ use App\Http\Controllers\admin\AdminNewsController;
 use App\Http\Controllers\client\ProductsController;
 use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminOrdersController;
+
 use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\Admin\AdminCouponsController;
+
 use App\Http\Controllers\Admin\AdminProductsController;
 
 use App\Http\Controllers\admin\AdminInventoryController;
