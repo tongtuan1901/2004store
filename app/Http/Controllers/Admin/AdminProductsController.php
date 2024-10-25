@@ -28,6 +28,15 @@ class AdminProductsController extends Controller
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
+           // Xử lý lọc theo khoảng giá
+    if ($request->filled('price_range')) {
+        $priceRange = explode('-', $request->price_range);
+        if (count($priceRange) === 2) {
+            $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
+        } elseif ($priceRange[0] === '500000+') {
+            $query->where('price_sale', '>', 500000);
+        }
+    }
     
         // Phân trang sản phẩm
         $listProducts = $query->paginate(10);

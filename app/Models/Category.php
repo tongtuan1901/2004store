@@ -14,4 +14,8 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+    public function coupons()
+{
+    return $this->hasMany(AdminCoupons::class);
+}
 }

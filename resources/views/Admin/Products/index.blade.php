@@ -1,35 +1,49 @@
 @extends('Admin/layouts/master/master')
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 @section('content')
 <div class="w-full relative mb-4">
     <div class="flex-auto p-0 md:p-4">
         <div class="flex flex-wrap gap-4 mb-3">
-            <div class="mb-2 w-44">
-                <label for="category" class="form-label">Danh mục</label>
-                <select id="category" name="category_id" 
-                    class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700">
-                    <option value="">Tất cả danh mục</option>
-                    @foreach($categories as $category) 
-                        <option value="{{ $category->id }}" class="dark:text-slate-700">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="ms-auto">
-                <form action="{{ route('admin-products.index') }}" method="GET">
-                    <div class="relative">
-                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
-                        </div>
-                        <input type="search" id="productSearch" name="search"
-                            class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5"
-                            placeholder="Tìm kiếm sản phẩm">
-                    </div>
-                </form>
-            </div>
+        <form action="{{ route('admin-products.index') }}" method="GET" class="flex items-center w-full mb-4">
+    <div class="mb-2 w-1/4 flex flex-col">
+        <label for="category" class="form-label">Danh mục</label>
+        <select id="category" name="category_id" class="form-select">
+            <option value="">Tất cả danh mục</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }} class="dark:text-slate-700">{{ $category->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="mb-2 w-1/4 flex flex-col">
+        <label for="price_range" class="form-label">Khoảng giá</label>
+        <select id="price_range" name="price_range" class="form-select">
+            <option value="">Tất cả khoảng giá</option>
+            <option value="0-100000" {{ request('price_range') === '0-100000' ? 'selected' : '' }}>0đ - 100k</option>
+            <option value="100000-500000" {{ request('price_range') === '100000-500000' ? 'selected' : '' }}>100k - 500k</option>
+            <option value="500000+" {{ request('price_range') === '500000+' ? 'selected' : '' }}>Trên 500k</option>
+        </select>
+    </div>
+
+    <div class="mb-2 w-1/4 flex flex-col">
+    <label for="productSearch" class="form-label">Tìm kiếm sản phẩm</label>
+    <div class="relative">
+        <input type="search" id="productSearch" name="search" class="form-input pl-10" placeholder="Tìm kiếm sản phẩm" value="{{ request('search') }}">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
+        </div>
+    </div>
+</div>
+
+    <button type="submit" class="ml-2 inline-block bg-brand-500 text-white hover:bg-brand-600 text-md font-medium py-2 px-4 rounded">
+        Tìm kiếm
+    </button>
+
+   
+</form>
+
             <div>
-                <a href="{{ route('admin-products.create') }}" class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white text-md font-medium py-2 px-4 rounded">
+                <a href="{{ route('admin-products.create') }}" class="inline-block bg-brand-500 text-white hover:bg-brand-600 text-md font-medium py-2 px-4 rounded">
                     Thêm sản phẩm
                 </a>
             </div>
@@ -130,16 +144,15 @@
                 </div>
             </div>
             <div class="mt-4">
-            {{ $listProducts->appends(request()->input())->links() }}
+                {{ $listProducts->appends(request()->input())->links() }}
             </div>
         </div>
     </div>
 </div>
 @endsection
-=======
-=======
->>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572
-@section('content')
+
+
+<!-- @section('content')
     <div class="w-full relative mb-4">
         <div class="flex-auto p-0 md:p-4">
             <div class="flex flex-wrap gap-4 mb-3">
@@ -248,7 +261,7 @@
                                                         <div class="self-center">
                                                             <h5
                                                                 class="text-sm font-semibold text-slate-700 dark:text-gray-400">
-                                                                {{$product->name}}</h5>   
+                                                                {{$product->name}}</h5>
                                                             <span class="block  font-medium text-slate-500">Size-04-15
                                                                 (Model
                                                                 2023)</span>
@@ -305,8 +318,5 @@
     </div><!--end card-->
     </div><!--end col-->
     </div> <!--e  qnd grid-->
-@endsection
-<<<<<<< HEAD
->>>>>>> 10efc01 (admin banner)
-=======
->>>>>>> 629ac23ef24e98d42058547843aa17541b4a5572
+@endsection -->
+

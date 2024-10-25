@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2); // Tổng số tiền đơn hàng
             $table->string('status', 255); // Trạng thái đơn hàng
             $table->timestamps(); // Tạo trường created_at và updated_at
+            $table->softDeletes();
         });
     }
 

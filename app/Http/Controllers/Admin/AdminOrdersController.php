@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminOrder;
@@ -10,26 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
 {
-    
-    public function index(Request $request)
-{
-    $status = $request->query('status'); // Lấy giá trị status từ query string
-    
-    if ($status) {
-        // Nếu có giá trị status, lọc các đơn hàng theo trạng thái
-        $orders = AdminOrder::where('status', $status)->get();
-    } else {
-        // Nếu không có giá trị status, lấy tất cả đơn hàng
-        $orders = AdminOrder::all();
-    }
 
-    return view('Admin.orders.index', compact('orders'));
-}
-    // public function index()
-    // {
-    //     $orders = AdminOrder::all();
-    //     return view('Admin.orders.index', compact('orders'));
-    // }
+    public function index()
+    {
+        $orders = AdminOrder::all();
+        return view('Admin.orders.index', compact('orders'));
+    }
 
 
     public function create()
@@ -38,6 +25,12 @@ class AdminOrdersController extends Controller
         return view('admin.orders.create', compact('products'));
     }
 
+    public function generatePDF($id)
+    {
+        $order = AdminOrder::with('products')->findOrFail($id);
+        $pdf = PDF::loadView('admin.orders.pdf', compact('order'));
+        return $pdf->download('order_' . $order->id . '.pdf');
+    }
 
 
     public function store(Request $request)
@@ -71,11 +64,9 @@ class AdminOrdersController extends Controller
         $order->products()->attach($productId, ['quantity' => $quantity]);
         $total += $product->price * $quantity;
     }
-
-    // Cập nhật tổng cộng
     $order->update(['total' => $total]);
 
-    return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được tạo thành công!');
+    return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được tạo thành công!');
 }
 
 
@@ -100,6 +91,17 @@ class AdminOrdersController extends Controller
 
 public function update(Request $request, $id)
 {
+    // Fetch the order first
+    $order = AdminOrder::findOrFail($id);
+
+    if ($request->has('status')) {
+        $validated = $request->validate([
+            'status' => 'required|string|max:50',
+        ]);
+        $order->update(['status' => $validated['status']]);
+        return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
+    }
+
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
@@ -113,17 +115,64 @@ public function update(Request $request, $id)
         'quantities.*' => 'integer|min:1',
     ]);
 
-
-    $order = AdminOrder::findOrFail($id);
-
     $order->update($validated);
-
     $order->products()->detach();
     foreach ($validated['products'] as $index => $productId) {
         $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
     }
-
     return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
 }
+public function approve($id)
+{
+    $order = AdminOrder::findOrFail($id);
+    // $order->status = 'Đã xử lý'; // Hoặc trạng thái bạn muốn
+    // $order->save();
+
+    return view('admin.orders.approve', compact('order'));
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $order = AdminOrder::findOrFail($id);
+
+    // Kiểm tra trạng thái và cập nhật
+    if ($order->status === 'Chờ xử lý') {
+        $order->update(['status' => 'Đã xử lý']);
+        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được duyệt thành công!');
+    }
+
+    return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
+}
+public function destroy($id)
+{
+    $order = AdminOrder::findOrFail($id);
+    $order->delete();
+
+    return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
+}
+public function deletedOrders()
+{
+    $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
+    return view('Admin.orders.deleted', compact('deletedOrders'));
+}
+public function restore($id)
+{
+    $order = AdminOrder::onlyTrashed()->findOrFail($id);
+    $order->restore();
+
+    return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được khôi phục thành công!');
+}
+
+public function forceDelete($id)
+{
+    $order = AdminOrder::onlyTrashed()->findOrFail($id);
+    $order->forceDelete();
+
+    return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được xóa vĩnh viễn thành công!');
+}
+
+
+
+
 
 }
