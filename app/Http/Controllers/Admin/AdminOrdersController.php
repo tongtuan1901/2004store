@@ -11,27 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
 {
+
     public function index()
     {
         $orders = AdminOrder::all();
-        // Trong phương thức index
-foreach ($orders as $order) {
-    // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
-    if ($order->status === 'Chờ xử lý') {
-        // Hiển thị nút duyệt
-    }
-}
-
         return view('Admin.orders.index', compact('orders'));
     }
-
-    public function approveIndex()
-{
-    // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
-    $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
-
-    return view('Admin.orders.approve_index', compact('orders'));
-}
 
 
     public function create()
