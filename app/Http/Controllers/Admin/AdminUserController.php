@@ -24,7 +24,7 @@ public function index(Request $request)
             })
             ->get();
 
-        return view('Customer.users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
 //     public function index()
@@ -35,7 +35,7 @@ public function index(Request $request)
 
     public function create()
     {
-        return view('Customer.Users.create');
+        return view('admin.Users.create');
     }
 
     // Lưu user mới
@@ -63,7 +63,7 @@ public function index(Request $request)
 
     public function edit(User $user)
     {
-        return view('Customer.Users.edit', compact('user'));
+        return view('admin.Users.edit', compact('user'));
     }
 
     // Cập nhật user

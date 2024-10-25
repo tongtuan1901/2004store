@@ -383,16 +383,17 @@
                 </div>
             </div>
             <div class="me-2 dropdown relative">
-    <button type="button"
+            <button type="button"
         class="dropdown-toggle flex items-center rounded-full text-sm
         focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
         id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
         <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}" alt="user photo" />
         <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
-            <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::user()->name }}</span>
-            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::user()->role }}</span>
+            <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::guard('user_staff')->user()->name }}</span>
+            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::guard('user_staff')->user()->role }}</span>
         </span>
-    </button>
+</button>
+
 
     <div class="left-auto right-0 z-50 my-1 hidden list-none
         divide-y divide-gray-100 rounded border border-slate-700/10

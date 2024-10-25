@@ -8,7 +8,8 @@ use App\Models\AdminProducts;
 use App\Models\Dashboard;
 use App\Models\OderItem;
 use Carbon\Carbon;
-use DB;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class HomeAdminController extends Controller
@@ -47,7 +48,7 @@ class HomeAdminController extends Controller
 
         // sản phẩm bán chayk
         $salesDataSPBanChay = OderItem::join('products', 'order_items.product_id', '=', 'products.id')
-            ->select('products.name', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+            ->select('products.name', DB::raw('SUM(order_items.quantity) as total_quantity'))
             ->groupBy('products.name')
             ->orderBy('total_quantity', 'desc')
             ->get();
@@ -68,7 +69,7 @@ class HomeAdminController extends Controller
         $endOfThisMonth = Carbon::now()->endOfMonth();
 
         $top5Products = OderItem::join('products', 'order_items.product_id', '=', 'products.id')
-            ->select('products.name', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+            ->select('products.name', DB::raw('SUM(order_items.quantity) as total_quantity'))
             ->whereBetween('order_items.created_at', [$startOfThisMonth, $endOfThisMonth])
             ->groupBy('products.name')
             ->orderBy('total_quantity', 'desc')
@@ -108,7 +109,7 @@ class HomeAdminController extends Controller
         //end
 
         //top khách hàng
-        $topKH = AdminOrder::select('name', \DB::raw('SUM(total) as total_spent'))
+        $topKH = AdminOrder::select('name', DB::raw('SUM(total) as total_spent'))
             ->groupBy('name')
             ->orderBy('total_spent', 'desc')
             ->limit(5) 

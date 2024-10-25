@@ -1,4 +1,4 @@
-@extends('Customer.layouts.master.master')
+@extends('Admin/layouts/master/master')
 
 @section('content')
 @error('password')
@@ -72,18 +72,7 @@
                 @enderror
             </div>
 
-            <!-- Trường Chọn Vai Trò -->
-            <div class="mb-4">
-                <label for="role" class="block text-sm font-medium text-gray-700">Vai trò</label>
-                <select name="role" id="role" class="form-select mt-1 block w-full rounded-md border-slate-300 shadow-sm">
-                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                    <!-- Thêm các vai trò khác nếu cần -->
-                </select>
-                @error('role')
-                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                @enderror
-            </div>
+          
 
             <button type="submit"
                     class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">

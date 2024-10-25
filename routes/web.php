@@ -14,8 +14,8 @@ use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
 
-use App\Http\Controllers\Admin\AdminCouponsController;
-use App\Http\Controllers\Admin\AdminOrdersController;
+
+
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\UserController;
 
@@ -30,10 +30,7 @@ use App\Http\Controllers\UserController;
 |
 */
 //View Admin
-Route::resource('admin-home', HomeAdminController::class);
-Route::resource('admin-products', AdminProductsController::class);
-// Danh mục
-Route::resource('admin-categories', AdminCategoriesController::class);
+
 
 
 
@@ -76,7 +73,8 @@ Route::prefix('admin')->group(function () {
  Route::resource('admin-coupons', AdminCouponsController::class);
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
- 
+Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
+
 
 
     
@@ -124,10 +122,13 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
     // dang nhap admin và nhân viên
 
 // Route cho view client
-Route::resource('/', HomeController::class);
+Route::resource('client-home', HomeController::class);
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
+// đăng xuất khách hàng
+Route::post('client-logout', [LoginController::class, 'logout'])->name('client-logout');
+//
 Route::resource('client-register', RegisterController::class);
 Route::resource('client-products', ProductsController::class);
 
