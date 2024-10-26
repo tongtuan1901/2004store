@@ -48,7 +48,7 @@ use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminBannersController;
 
 use App\Http\Controllers\Admin\AdminProductsController;
-
+use App\Http\Controllers\admin\Customeraddress;
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
@@ -179,5 +179,9 @@ Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.stor
 Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
 Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
 Route::get('/new/show/{id}',[AdminNewsController::class,'show'])->name('new.show');
+
+
+Route::get('/customeraddress', [Customeraddress::class, 'index'])->name('customeraddress.index');
+Route::get('/customeraddress/show/{id}',[Customeraddress::class,'show'])->name('customeraddress.show');
 
 
