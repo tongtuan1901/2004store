@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('remember_token', 100)->nullable();
             $table->string('phone_number', 20)->nullable();
             $table->timestamps(); // Tạo trường created_at và updated_at
+            $table->softDeletes();
         });
     }
 

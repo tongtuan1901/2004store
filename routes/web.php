@@ -15,6 +15,25 @@ use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
 
 
+
+use App\Http\Controllers\Admin\HomeAdminController;
+use App\Http\Controllers\UserController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+//View Admin
+
+
+
+
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\admin\AdminNewsController;
 
@@ -40,7 +59,6 @@ use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
 
-
    
 // quản lí admin và nhân viên
 Route::prefix('admin')->group(function () {
@@ -55,7 +73,8 @@ Route::prefix('admin')->group(function () {
  Route::resource('admin-coupons', AdminCouponsController::class);
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
- 
+Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
+
 
 
     
@@ -104,10 +123,13 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
     // dang nhap admin và nhân viên
 
 // Route cho view client
-Route::resource('/', HomeController::class);
+Route::resource('client-home', HomeController::class);
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
+// đăng xuất khách hàng
+Route::post('client-logout', [LoginController::class, 'logout'])->name('client-logout');
+//
 Route::resource('client-register', RegisterController::class);
 Route::resource('client-products', ProductsController::class);
 
