@@ -8,7 +8,7 @@ use App\Models\AdminProducts;
 use App\Models\Dashboard;
 use App\Models\OderItem;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class HomeAdminController extends Controller
@@ -47,7 +47,7 @@ class HomeAdminController extends Controller
 
         // sản phẩm bán chayk
         $salesDataSPBanChay = OderItem::join('products', 'order_items.product_id', '=', 'products.id')
-            ->select('products.name', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+            ->select('products.name', DB::raw('SUM(order_items.quantity) as total_quantity'))
             ->groupBy('products.name')
             ->orderBy('total_quantity', 'desc')
             ->get();
@@ -68,7 +68,7 @@ class HomeAdminController extends Controller
         $endOfThisMonth = Carbon::now()->endOfMonth();
 
         $top5Products = OderItem::join('products', 'order_items.product_id', '=', 'products.id')
-            ->select('products.name', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+            ->select('products.name', DB::raw('SUM(order_items.quantity) as total_quantity'))
             ->whereBetween('order_items.created_at', [$startOfThisMonth, $endOfThisMonth])
             ->groupBy('products.name')
             ->orderBy('total_quantity', 'desc')
@@ -99,8 +99,8 @@ class HomeAdminController extends Controller
         $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth();
         $salesThisMonth = AdminOrder::whereBetween('created_at', [$startOfThisMonth, $endOfThisMonth])->count();
         $salesLastMonth = AdminOrder::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
-        $labelsDonHangThang = ['Tháng trước','Tháng này'];
-        $dataDonHangThang = [$salesLastMonth,$salesThisMonth];
+        $labelsDonHangThang = ['Tháng trước', 'Tháng này'];
+        $dataDonHangThang = [$salesLastMonth, $salesThisMonth];
         //end
 
         //số lượng sản phẩm bán ra hôm nay
@@ -108,10 +108,10 @@ class HomeAdminController extends Controller
         //end
 
         //top khách hàng
-        $topKH = AdminOrder::select('name', \DB::raw('SUM(total) as total_spent'))
+        $topKH = AdminOrder::select('name', DB::raw('SUM(total) as total_spent'))
             ->groupBy('name')
             ->orderBy('total_spent', 'desc')
-            ->limit(5) 
+            ->limit(5)
             ->get();
         //end
 
@@ -119,7 +119,7 @@ class HomeAdminController extends Controller
         // dd($doanhThuThangTruoc);
         // dd($labelsSPBanChay);
         // dd($dataSPBanChay);
-        return view('Admin.HomeAdmin', compact('das', 'total', 'quantity', 'doanhThuThangTruoc', 'labels', 'data', 'productNamesSPBanChay', 'quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai','doanhThuNgayHomNay','labelsDonHangThang','dataDonHangThang','soLuongBanHomNay','topKH','labelstop5Products','datatop5Products'));
+        return view('Admin.HomeAdmin', compact('das', 'total', 'quantity', 'doanhThuThangTruoc', 'labels', 'data', 'productNamesSPBanChay', 'quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai', 'doanhThuNgayHomNay', 'labelsDonHangThang', 'dataDonHangThang', 'soLuongBanHomNay', 'topKH', 'labelstop5Products', 'datatop5Products'));
         // return view('Admin.layouts.master.footer', compact('das'));
     }
     // public function top5SanPhamBanChay()

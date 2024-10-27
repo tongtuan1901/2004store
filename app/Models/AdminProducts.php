@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminProducts extends Model
 {
-
-
-    use HasFactory, SoftDeletes; 
-
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'category_id',
@@ -21,9 +18,6 @@ class AdminProducts extends Model
         'price_sale',
         'status',
         'quantity',
-        'sizes',
-        'colors',
-
     ];
 
     public function category()
@@ -31,31 +25,33 @@ class AdminProducts extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-
-    // Quan hệ với ProductImage
-
+    // Relationship with ProductImage
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 
-
+    // Relationship with AdminOrder
     public function orders()
     {
         return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
     }
 
+    // Relationship with AdminCoupons
+    public function coupons()
+    {
+        return $this->hasMany(AdminCoupons::class);
+    }
+
+    // Relationship with ProductVariation
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class, 'product_id');
+    }
+
+    // Override the table name if needed
     public function getTable()
     {
         return 'products';
     }
-
-    public function getTable()
-{
-    return 'products';
-}
-public function coupons()
-{
-    return $this->hasMany(AdminCoupons::class);
-
 }

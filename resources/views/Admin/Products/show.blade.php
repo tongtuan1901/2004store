@@ -49,7 +49,8 @@
                     <div class="mb-3">
                         <strong>Giá khuyến mãi:</strong>
                         <p class="text-danger"><del>{{ number_format($product->price, 2) }} VND</del>
-                            <span>{{ number_format($product->price_sale, 2) }} VND</span></p>
+                            <span>{{ number_format($product->price_sale, 2) }} VND</span>
+                        </p>
                     </div>
                 @endif
 
@@ -60,16 +61,18 @@
 
                 <div class="mb-3">
                     <strong>Trạng thái:</strong>
-                    <p class="text-muted">{{ $product->status == 0 ? 'Còn hàng' : 'Hết hàng' }}</p>
+                    <p class="text-muted">{{ $product->status == 0 ? 'Hiển thị' : 'Ẩn' }}</p>
                 </div>
 
                 <div class="mb-3">
                     <strong>Kích thước:</strong>
                     <p class="text-muted">
-                        @if (is_array($product->sizes))
-                            {{ implode(', ', $product->sizes) }}
+                        @if ($product->variations->count() > 0)
+                            @foreach ($product->variations as $variation)
+                                {{ $variation->size->size }} ({{ $variation->quantity }} sản phẩm)<br>
+                            @endforeach
                         @else
-                            {{ $product->sizes }}
+                            Không có kích thước nào.
                         @endif
                     </p>
                 </div>
@@ -77,10 +80,12 @@
                 <div class="mb-3">
                     <strong>Màu sắc:</strong>
                     <p class="text-muted">
-                        @if (is_array($product->colors))
-                            {{ implode(', ', $product->colors) }}
+                        @if ($product->variations->count() > 0)
+                            @foreach ($product->variations as $variation)
+                                {{ $variation->color->color }} ({{ $variation->quantity }} sản phẩm)<br>
+                            @endforeach
                         @else
-                            {{ $product->colors }}
+                            Không có màu sắc nào.
                         @endif
                     </p>
                 </div>
