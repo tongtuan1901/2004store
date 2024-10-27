@@ -9,6 +9,8 @@ use App\Models\Dashboard;
 use App\Models\OderItem;
 use Carbon\Carbon;
 
+
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -100,8 +102,8 @@ class HomeAdminController extends Controller
         $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth();
         $salesThisMonth = AdminOrder::whereBetween('created_at', [$startOfThisMonth, $endOfThisMonth])->count();
         $salesLastMonth = AdminOrder::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
-        $labelsDonHangThang = ['Tháng trước','Tháng này'];
-        $dataDonHangThang = [$salesLastMonth,$salesThisMonth];
+        $labelsDonHangThang = ['Tháng trước', 'Tháng này'];
+        $dataDonHangThang = [$salesLastMonth, $salesThisMonth];
         //end
 
         //số lượng sản phẩm bán ra hôm nay
@@ -112,7 +114,7 @@ class HomeAdminController extends Controller
         $topKH = AdminOrder::select('name', DB::raw('SUM(total) as total_spent'))
             ->groupBy('name')
             ->orderBy('total_spent', 'desc')
-            ->limit(5) 
+            ->limit(5)
             ->get();
         //end
 
@@ -120,7 +122,7 @@ class HomeAdminController extends Controller
         // dd($doanhThuThangTruoc);
         // dd($labelsSPBanChay);
         // dd($dataSPBanChay);
-        return view('Admin.HomeAdmin', compact('das', 'total', 'quantity', 'doanhThuThangTruoc', 'labels', 'data', 'productNamesSPBanChay', 'quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai','doanhThuNgayHomNay','labelsDonHangThang','dataDonHangThang','soLuongBanHomNay','topKH','labelstop5Products','datatop5Products'));
+        return view('Admin.HomeAdmin', compact('das', 'total', 'quantity', 'doanhThuThangTruoc', 'labels', 'data', 'productNamesSPBanChay', 'quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai', 'doanhThuNgayHomNay', 'labelsDonHangThang', 'dataDonHangThang', 'soLuongBanHomNay', 'topKH', 'labelstop5Products', 'datatop5Products'));
         // return view('Admin.layouts.master.footer', compact('das'));
     }
     // public function top5SanPhamBanChay()

@@ -86,37 +86,74 @@
                             </tbody>
                         </table>
                         <div class="mb-3">
+                            <strong style="font-size: 1.5rem;">Tổng cộng:</strong>
+                            @if(session('new_total') && session('dis'))
+                                <p>Số tiền giảm giá: {{ number_format(session('dis')) }} VNĐ</p>
+                                <span style="font-size: 20px">Sau khi giảm giá: {{ number_format(session('new_total')) }} VNĐ</span>
+                            @else
+                                <span style="font-size: 20px">{{ number_format($order->total) }} VNĐ</span>
+                            @endif
+                        </div>
+                        
+                        
+                        {{-- <div class="mb-3">
                             <strong style="font-size: 1.5rem;">Tổng cộng:</strong> <span
                                 style="font-size: 20px">{{ number_format($order->total) }} VNĐ</span>
-                        </div>
-                        <form action="{{ route('admin-orders.update', $order->id) }}" method="POST" class="mb-3">
-    @csrf
-    @method('PUT')
-    <div class="mb-3">
-        <label for="status" class="form-label">Cập nhật Trạng thái</label>
-        <select class="form-control" id="status" name="status" required>
-            <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
-            <option value="Đã xử lý" {{ $order->status == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý</option>
-            <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
-            <option value="Đã nhận hàng" {{ $order->status == 'Đã nhận hàng' ? 'selected' : '' }}>Đã nhận hàng</option>
-        </select>
-    </div>
-    <div class="d-flex justify-content-between align-items-center">
-        <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
-        @if ($order->status == 'Chờ xử lý')
-            <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt Đơn Hàng</a>
-        @endif
-        <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
-            <i class="fa fa-file-pdf"></i> Tải PDF
-        </a>
-    </div>
-</form>
+                        </div> --}}
+                        @if(session('success'))
+                                <div>{{ session('success') }}</div>
+                            @endif
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endsection
+                            @if($errors->any())
+                                <div>{{ $errors->first() }}</div>
+                            @endif
+
+                            <form action="{{ route('apply.discount') }}" method="POST">
+                                @csrf
+                                <div>
+                                    <label for="discount_code">Nhập mã giảm giá:</label>
+                                    <input type="text" id="discount_code" name="discount_code" required>
+                                    <button type="submit">Áp dụng</button>
+                                </div>
+                            </form>
+
+                            @if(session('discount'))
+                                <div>
+                                    <p>Mã giảm giá đang áp dụng: {{ session('discount') }}</p>
+                                    <form action="{{ route('remove.discount') }}" method="POST">
+                                        @csrf
+                                        <button type="submit">Xóa mã giảm giá</button>
+                                    </form>
+                                </div>
+                            @endif
+                        <form action="{{ route('admin-orders.update', $order->id) }}" method="POST" class="mb-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Cập nhật Trạng thái</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
+                                    <option value="Đã xử lý" {{ $order->status == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý</option>
+                                    <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
+                                    <option value="Đã nhận hàng" {{ $order->status == 'Đã nhận hàng' ? 'selected' : '' }}>Đã nhận hàng</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
+                                @if ($order->status == 'Chờ xử lý')
+                                    <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt Đơn Hàng</a>
+                                @endif
+                                <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
+                                    <i class="fa fa-file-pdf"></i> Tải PDF
+                                </a>
+                            </div>
+                        </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endsection
 
     <style>
         .product-carousel {

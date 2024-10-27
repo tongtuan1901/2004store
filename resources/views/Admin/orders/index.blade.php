@@ -2,10 +2,12 @@
 
 @section('content')
     <div class="container">
+        <h1>Danh sách đơn hàng</h1>
         <a href="{{ route('admin-orders.create') }}" class="btn btn-primary">Thêm đơn hàng mới</a>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+
         <table class="table">
             <thead>
                 <tr>

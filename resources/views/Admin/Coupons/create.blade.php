@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    <h2>Thêm Mã Giảm Giá</h2>
+    <h2>Thêm khuyến mãi</h2>
 
     <form action="{{ route('admin-coupons.create') }}" method="GET">
         @csrf
