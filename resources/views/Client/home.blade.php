@@ -31,7 +31,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Thêm CSS để thiết lập chiều cao cho hình ảnh -->
-<style>`
+<style>
     .slide-image {
         height: 100px; /* Thay đổi chiều cao theo yêu cầu */
         object-fit: cover; /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
