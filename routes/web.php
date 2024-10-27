@@ -31,6 +31,11 @@ use App\Http\Controllers\UserController;
 */
 //View Admin
 
+Route::resource('admin-home', HomeAdminController::class);
+// Route::resource('admin-products', AdminProductsController::class);
+// Danh mục
+// Route::resource('admin-categories', AdminCategoriesController::class);
+
 
 
 
@@ -51,15 +56,19 @@ use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
-
-
-
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
 
 
 
+
+
+Route::resource('discount', DiscountController::class);
+Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
+Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
 
 // quản lí admin và nhân viên
 Route::prefix('admin')->group(function () {
@@ -74,7 +83,15 @@ Route::prefix('admin')->group(function () {
     Route::resource('admin-coupons', AdminCouponsController::class);
     //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
+    Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::prefix('admin')->middleware('auth')->group(function () {
+        Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+        Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
+    });
+
+
     Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
+
 
 
 
@@ -160,7 +177,11 @@ Route::resource('admin-comments', AdminCommentsController::class);
 
 Route::resource('admin-banners', AdminBannersController::class);
 
+
+Route::resource('admin-banners', AdminBannersController::class);
+
 Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
+
 
 Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 

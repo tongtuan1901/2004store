@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminProducts extends Model
 {
+
+
     use HasFactory, SoftDeletes;
+
 
     protected $fillable = [
         'category_id',
@@ -54,4 +57,8 @@ class AdminProducts extends Model
     {
         return 'products';
     }
+    public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
 }

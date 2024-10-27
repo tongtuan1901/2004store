@@ -14,7 +14,26 @@ class AdminCouponsController extends Controller
     {
         // Lấy tất cả mã giảm giá cùng với thông tin danh mục và sản phẩm liên quan
         $coupons = AdminCoupons::with(['category', 'product'])->get();
-        $categories = Category::all();
+        foreach ($coupons as $coupon) {
+            if ($coupon->product) {
+                // Giá gốc của sản phẩm
+                $originalPrice = $coupon->product->price;
+    
+                // Tính toán giá sau khi áp dụng mã giảm giá
+                if ($coupon->type === 'fixed') {
+                    $discountedPrice = max($originalPrice - $coupon->value, 0); // Không cho phép giá âm
+                } elseif ($coupon->type === 'percentage') {
+                    $discountedPrice = max($originalPrice - ($originalPrice * $coupon->value / 100), 0);
+                } else {
+                    $discountedPrice = $originalPrice;
+                }
+    
+                // Thêm giá vào từng mã giảm giá
+                $coupon->original_price = $originalPrice;
+                $coupon->discounted_price = $discountedPrice;
+                // dd($coupon->original_price, $coupon->discounted_price);die;
+            }
+        }
         return view('admin.coupons.index', compact('coupons'));
     }
 
