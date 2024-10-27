@@ -10,7 +10,7 @@ class AdminProducts extends Model
 {
 
 
-    use HasFactory, SoftDeletes; 
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = [
@@ -49,13 +49,12 @@ class AdminProducts extends Model
     {
         return 'products';
     }
-
-    public function getTable()
+    public function coupons()
+    {
+        return $this->hasMany(AdminCoupons::class);
+    }
+    public function reviews()
 {
-    return 'products';
+    return $this->hasMany(Review::class);
 }
-public function coupons()
-{
-    return $this->hasMany(AdminCoupons::class);
-
 }
