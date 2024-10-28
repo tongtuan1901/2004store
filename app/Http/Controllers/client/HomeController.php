@@ -25,15 +25,24 @@ class HomeController extends Controller
             }
             return $product;
         });
-        $top4SPBanChay = AdminProducts::select('products.*')
+        $bestSaller = AdminProducts::select('products.*')
             ->join('order_items', 'products.id', '=', 'order_items.product_id')
             ->selectRaw('SUM(order_items.quantity) as total_quantity')
             ->groupBy('products.id')
             ->orderBy('total_quantity', 'desc')
             ->limit(4)
             ->get();
+            $bestSaller->transform(function ($productSeller) {
+                if ($productSeller->price > 0) {
+                    $productSeller->discount_percentage = 100 - (($productSeller->price_sale / $productSeller->price) * 100);
+                } else {
+                    $productSeller->discount_percentage = 0;
+                }
+                return $productSeller;
+            });
+
         // dd($products);
-        return view('Client.home',compact('listCategories','productsSale','top4SPBanChay'));
+        return view('Client.home',compact('listCategories','productsSale','bestSaller'));
     }
 
     public function show(string $id)
