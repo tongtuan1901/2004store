@@ -18,4 +18,8 @@ class Category extends Model
 {
     return $this->hasMany(AdminCoupons::class);
 }
+public function products()
+    {
+        return $this->hasMany(AdminProducts::class);
+    }
 }
