@@ -48,8 +48,8 @@
                 <div class="col-md-6">
                     <label for="status" class="form-label">Trạng thái</label>
                     <select name="status" class="form-select" required>
-                        <option value="1">Hiển thị</option>
-                        <option value="0">Ẩn</option>
+                        <option value="1">Hết hàng</option>
+                        <option value="0">Còn hàng</option>
                     </select>
                 </div>
                 <div class="col-md-6">

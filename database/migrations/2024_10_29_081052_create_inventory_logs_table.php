@@ -11,8 +11,9 @@ class CreateInventoryLogsTable extends Migration
         Schema::create('inventory_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->integer('quantity_change'); // Thay đổi số lượng (+ hoặc -)
-            $table->string('note')->nullable(); // Ghi chú về thay đổi
+            $table->foreignId('variation_id')->constrained('product_variations');
+            $table->integer('quantity_change'); 
+            $table->string('note')->nullable(); 
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

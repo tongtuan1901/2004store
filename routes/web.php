@@ -75,7 +75,7 @@ Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->
 // quản lí admin và nhân viên
 Route::prefix('admin')->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
-
+    
     // Đăng nhập admin và nhân viên
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
@@ -90,10 +90,10 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
 
 
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::prefix('admin')->middleware('auth')->group(function () {
+   
         Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
         Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
-    });
+    
 
 
 
@@ -137,8 +137,8 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
 
 
     // Thống kê
-    Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
-    Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
+    // Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
+    // Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
 
     // Route cho tin tức
@@ -147,6 +147,12 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
     Route::resource('users', AdminUserController::class);
     //
     Route::resource('inventory', AdminInventoryController::class);
+
+    // in pdf
+Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+Route::resource('admin-products', AdminProductsController::class);
+//bình luận
+Route::resource('admin-comments', AdminCommentsController::class);
 });
 
 
@@ -186,11 +192,7 @@ Route::resource('admin-categories', AdminCategoriesController::class);
 Route::resource('admin-coupons', AdminCouponsController::class);
 // Đặt hàng
 Route::resource('admin-orders', AdminOrdersController::class);
-// in pdf
-Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
-Route::resource('admin-products', AdminProductsController::class);
-//bình luận
-Route::resource('admin-comments', AdminCommentsController::class);
+
 
 Route::resource('admin-banners', AdminBannersController::class);
 

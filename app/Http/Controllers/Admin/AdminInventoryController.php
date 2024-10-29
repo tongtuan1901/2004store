@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AdminProducts;
+use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\InventoryLog;
 use Illuminate\Http\Request;
+use App\Models\AdminProducts;
+use App\Models\ProductVariation;
+use App\Http\Controllers\Controller;
 
 class AdminInventoryController extends Controller
 {
@@ -31,13 +33,30 @@ class AdminInventoryController extends Controller
             $query->where('created_at', '<=', $endDate . ' 23:59:59');
         }
 
-        // Lấy các bản ghi tồn kho
-        $inventoryLogs = $query->with(['product', 'product.category'])->get();
+        // Lấy các bản ghi tồn kho với biến thể
+        $inventoryLogs = $query->with('variation')->get();
 
-        // Lấy danh sách sản phẩm nếu cần
-        $products = AdminProducts::all();
-        
-        return view('admin.inventory.index', compact('inventoryLogs', 'products'));
+        // Lấy danh sách sản phẩm
+        $products = AdminProducts::with(['variations.size', 'variations.color'])->get();
+
+        // Tạo mảng để chứa thông tin sản phẩm cần cảnh báo
+        $lowStockItems = [];
+
+        foreach ($products as $product) {
+            foreach ($product->variations as $variation) {
+                if ($variation->quantity < 10) {
+                    $lowStockItems[] = [
+                        'product_name' => $product->name,
+                        'size' => $variation->size ? $variation->size->size : 'N/A',
+                        'color' => $variation->color ? $variation->color->color : 'N/A',
+                        'quantity' => $variation->quantity,
+                        'category' => $product->category ? $product->category->name : 'Không có danh mục'
+                    ];
+                }
+            }
+        }
+
+        return view('admin.inventory.index', compact('inventoryLogs', 'products', 'lowStockItems'));
     }
 
     /**
@@ -45,7 +64,8 @@ class AdminInventoryController extends Controller
      */
     public function create()
     {
-        $products = AdminProducts::all();
+        // Lấy danh sách sản phẩm cùng với biến thể và thông tin màu sắc, kích thước
+        $products = AdminProducts::with(['variations.color', 'variations.size'])->get();
         $categories = Category::all(); // Lấy danh sách danh mục
         return view('admin.inventory.create', compact('products', 'categories')); // Truyền cả sản phẩm và danh mục
     }
@@ -55,45 +75,49 @@ class AdminInventoryController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate request data
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'category_id' => 'required',
+            'product_id' => 'required',
+            'variation_id' => 'required',
             'quantity_change' => 'required|integer',
             'note' => 'nullable|string',
+            'date' => 'required|date',
         ]);
-    
-        // Tạo bản ghi tồn kho mới
-        $inventoryLog = new InventoryLog();
-        $inventoryLog->product_id = $request->product_id;
-        $inventoryLog->quantity_change = $request->quantity_change;
-        $inventoryLog->note = $request->note;
-        $inventoryLog->save();
-    
-        // Cập nhật số lượng sản phẩm
-        $product = AdminProducts::find($request->product_id);
-    
-        // Kiểm tra số lượng không âm
-        if ($product->quantity + $request->quantity_change < 0) {
-            return redirect()->back()->withErrors('Số lượng sản phẩm không thể âm.');
-        }
-    
-        $product->quantity += $request->quantity_change; // Cộng thêm số lượng thay đổi
-        $product->save();
-    
-        return redirect()->route('inventory.index')->with('success', 'Bản ghi tồn kho đã được thêm và số lượng sản phẩm đã được cập nhật.');
+
+        // Create a new inventory log entry
+        InventoryLog::create([
+            'product_id' => $request->product_id,
+            'variation_id' => $request->variation_id,
+            'quantity_change' => $request->quantity_change,
+            'note' => $request->note,
+            'created_at' => $request->date,
+        ]);
+
+        // Update the quantity of the selected variation
+        $variation = ProductVariation::findOrFail($request->variation_id);
+        $variation->quantity += $request->quantity_change; // Update the quantity based on change
+        $variation->save();
+
+        return redirect()->route('inventory.index')->with('success', 'Bản ghi tồn kho đã được thêm thành công.');
     }
-    
 
     /**
      * Hiển thị form chỉnh sửa tồn kho
      */
     public function edit($id)
     {
-        $inventoryLog = InventoryLog::findOrFail($id);
-    $products = AdminProducts::all();
-    $categories = Category::all();
-    $selectedProductId = $inventoryLog->product_id; // Lấy ID sản phẩm từ bản ghi tồn kho
+        // Tìm bản ghi tồn kho theo ID
+        $inventoryLog = InventoryLog::with(['product.variations', 'product.category'])->findOrFail($id);
 
-    return view('admin.inventory.edit', compact('inventoryLog', 'products', 'categories', 'selectedProductId'));
+        // Lấy danh sách tất cả các danh mục
+        $categories = Category::all();
+
+        // Lấy danh sách tất cả các sản phẩm kèm theo biến thể
+        $products = AdminProducts::with(['variations.color', 'variations.size'])->get();
+
+        // Trả về view với dữ liệu
+        return view('admin.inventory.edit', compact('inventoryLog', 'categories', 'products'));
     }
 
     /**
@@ -101,35 +125,28 @@ class AdminInventoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity_change' => 'required|integer',
-            'note' => 'nullable|string',
+        $inventoryLog = InventoryLog::findOrFail($id);
+        
+        // Lấy thông tin biến thể và số lượng thay đổi
+        $variation = ProductVariation::findOrFail($request->variation_id);
+        $quantityChange = $request->quantity_change;
+    
+        // Cập nhật số lượng trong kho
+        $variation->quantity += $quantityChange; // Hoặc nếu bạn muốn giảm thì dùng -=
+    
+        // Lưu thay đổi
+        $variation->save();
+    
+        // Cập nhật bản ghi tồn kho
+        $inventoryLog->update([
+            'category_id' => $request->category_id,
+            'product_id' => $request->product_id,
+            'variation_id' => $request->variation_id,
+            'quantity_change' => $quantityChange,
+            'note' => $request->note,
         ]);
     
-        // Lấy bản ghi tồn kho cũ
-        $inventoryLog = InventoryLog::find($id);
-        $oldQuantityChange = $inventoryLog->quantity_change;
-    
-        // Cập nhật thông tin bản ghi tồn kho
-        $inventoryLog->quantity_change = $request->quantity_change;
-        $inventoryLog->note = $request->note;
-        $inventoryLog->save();
-    
-        // Tính toán lại số lượng sản phẩm
-        $product = AdminProducts::find($request->product_id);
-    
-        // Kiểm tra số lượng không âm
-        if ($product->quantity - $oldQuantityChange + $request->quantity_change < 0) {
-            return redirect()->back()->withErrors('Số lượng sản phẩm không thể âm.');
-        }
-    
-        // Trừ số lượng cũ và cộng số lượng mới
-        $product->quantity -= $oldQuantityChange;
-        $product->quantity += $request->quantity_change;
-        $product->save();
-    
-        return redirect()->route('inventory.index')->with('success', 'Bản ghi tồn kho đã được cập nhật và số lượng sản phẩm đã được điều chỉnh.');
+        return redirect()->route('inventory.index')->with('success', 'Cập nhật thành công!');
     }
     
 
