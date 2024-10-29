@@ -177,11 +177,7 @@ class AdminOrdersController extends Controller
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
     }
-    public function deletedOrders()
-    {
-        $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
-        return view('Admin.orders.deleted', compact('deletedOrders'));
-    }
+   
     public function restore($id)
     {
         $order = AdminOrder::onlyTrashed()->findOrFail($id);
@@ -190,6 +186,7 @@ class AdminOrdersController extends Controller
         return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được khôi phục thành công!');
     }
 
+
     public function forceDelete($id)
     {
         $order = AdminOrder::onlyTrashed()->findOrFail($id);
@@ -197,4 +194,25 @@ class AdminOrdersController extends Controller
 
         return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được xóa vĩnh viễn thành công!');
     }
+
+    // return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
+
+
+public function deletedOrders()
+{
+    $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
+    return view('Admin.orders.deleted', compact('deletedOrders'));
 }
+
+
+
+public function listDonHangDaHuy(){
+    $donHangBiHuy = AdminOrder::where('status', 'Hủy')
+                    ->with('orderItems.product')
+                    ->get();
+                    // dd($donHangBiHuy);
+    return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
+}
+}
+
+

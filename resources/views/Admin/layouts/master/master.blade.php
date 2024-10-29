@@ -44,6 +44,12 @@
                                 <li class="nav-item relative block">
 
                                     <a href="{{ route('admin-home.index') }}"
+<<<<<<< HEAD
+=======
+
+                                    {{-- <a href="{{ route('admin.statistics') }}" --}}
+
+>>>>>>> phuoc34740
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400 "></i>
@@ -199,7 +205,7 @@
 
 
                                 <li class="nav-item relative block">
-                                    <a href="{{ route('inventory.index') }}"
+                                    {{-- <a href="{{ route('inventory.index') }}" --}}
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -236,6 +242,7 @@
                         </a>
 
                         <div id="Admin-flush" class="hidden  overflow-hidden">
+<<<<<<< HEAD
                             <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
                                 <li class="nav-item relative block">
                                     <a href="{{ route('user-staff.index') }}"
@@ -246,6 +253,18 @@
                                     </a>
                                 </li>
                             </ul>
+=======
+                        <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
+                        <li class="nav-item relative block">
+    {{-- <a href="{{ route('user-staff.index') }}" --}}
+        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+        <i
+            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+        Quản lí nhân viên
+    </a>
+</li>
+                        </ul>
+>>>>>>> phuoc34740
                         </div>
 
                     </div>
@@ -422,10 +441,20 @@
                 <button type="button"
                     class="dropdown-toggle flex items-center rounded-full text-sm
         focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
+<<<<<<< HEAD
                     id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
                     <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}"
                         alt="user photo" />
                     <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
+=======
+        id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
+        <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}" alt="user photo" />
+        <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
+            {{-- <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::user()->name }}</span>
+            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::user()->role }}</span> --}}
+        </span>
+    </button>
+>>>>>>> phuoc34740
 
                         <span
                             class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::guard('user_staff')->user()->name }}</span>
@@ -465,6 +494,7 @@
                                 class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
                     dark:text-gray-200 dark:hover:bg-gray-900/20
                     dark:hover:text-white">
+<<<<<<< HEAD
                                 <span data-lucide="dollar-sign"
                                     class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
                                 Earnings</a>
@@ -474,6 +504,17 @@
                                 @csrf
                                 <button type="submit"
                                     class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
+=======
+                    <span data-lucide="dollar-sign"
+                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                    Earnings</a>
+            </li>
+            <li>
+                {{-- <form action="{{ route('admin.logout') }}" method="POST"> --}}
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
+>>>>>>> phuoc34740
                         dark:text-red-500 dark:hover:bg-gray-900/20
                         dark:hover:text-red-500">
                                     <span data-lucide="power"

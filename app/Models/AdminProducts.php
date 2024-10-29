@@ -12,7 +12,7 @@ class AdminProducts extends Model
 
     use HasFactory, SoftDeletes;
 
-
+protected  $table = "products";
     protected $fillable = [
         'category_id',
         'name',
@@ -52,6 +52,7 @@ class AdminProducts extends Model
         return $this->hasMany(ProductVariation::class, 'product_id');
     }
 
+
     // Override the table name if needed
     public function getTable()
     {
@@ -71,10 +72,14 @@ class AdminProducts extends Model
         return $this->hasMany(Review::class);
     }
 
+//     public function getTable()
+//     {
+//         return 'products';
+//     }
 
-    public function orders()
-    {
-        return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
-            ->withPivot('quantity', 'price');
-    }
+//     public function getTable()
+// {
+//     return 'products';
+// }
+
 }
