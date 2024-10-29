@@ -3,8 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Danh sách đơn hàng</h1>
-        <a href="{{ route('admin-orders.create') }}" class="btn btn-primary">Thêm đơn hàng mới</a>
-        <a href="{{ route('admin-orders.received') }}" class="btn btn-success">đơn hàng thành công</a>
+        <a href="{{ route('admin-orders.index') }}" class="btn btn-gray">Quay lại</a>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif

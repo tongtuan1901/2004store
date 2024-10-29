@@ -18,7 +18,6 @@ class AdminCouponsController extends Controller
             if ($coupon->product) {
                 // Giá gốc của sản phẩm
                 $originalPrice = $coupon->product->price;
-    
                 // Tính toán giá sau khi áp dụng mã giảm giá
                 if ($coupon->type === 'fixed') {
                     $discountedPrice = max($originalPrice - $coupon->value, 0); // Không cho phép giá âm
@@ -27,11 +26,6 @@ class AdminCouponsController extends Controller
                 } else {
                     $discountedPrice = $originalPrice;
                 }
-    
-                // Thêm giá vào từng mã giảm giá
-                $coupon->original_price = $originalPrice;
-                $coupon->discounted_price = $discountedPrice;
-                // dd($coupon->original_price, $coupon->discounted_price);die;
             }
         }
         return view('admin.coupons.index', compact('coupons'));

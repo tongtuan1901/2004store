@@ -27,13 +27,16 @@ class AdminOrdersController extends Controller
     }
 
     public function approveIndex()
-{
-    // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
-    $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
-    // session()->put('cart_total', $orders->total);  
-    return view('Admin.orders.approve_index', compact('orders'));
-}
+    {
+        // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
+        $orders = AdminOrder::where('status', 'Chờ xử lý')->get();  
+        return view('Admin.orders.approve_index', compact('orders'));
+    }
 
+    public function receivedIndex(){
+        $orders = AdminOrder::where('status','Đã nhận hàng')->get();
+        return view('Admin.orders.received_index',compact('orders'));
+    }
 
     public function create()
     {
