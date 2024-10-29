@@ -52,7 +52,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminProductsController;
-
+use App\Http\Controllers\admin\Customeraddress;
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
