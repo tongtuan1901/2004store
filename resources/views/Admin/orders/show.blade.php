@@ -89,28 +89,35 @@
                             <strong style="font-size: 1.5rem;">Tổng cộng:</strong> <span
                                 style="font-size: 20px">{{ number_format($order->total) }} VNĐ</span>
                         </div>
-                        <form action="{{ route('admin-orders.update', $order->id) }}" method="POST" class="mb-3">
-    @csrf
-    @method('PUT')
-    <div class="mb-3">
-        <label for="status" class="form-label">Cập nhật Trạng thái</label>
-        <select class="form-control" id="status" name="status" required>
-            <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
-            <option value="Đã xử lý" {{ $order->status == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý</option>
-            <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
-            <option value="Đã nhận hàng" {{ $order->status == 'Đã nhận hàng' ? 'selected' : '' }}>Đã nhận hàng</option>
-        </select>
-    </div>
-    <div class="d-flex justify-content-between align-items-center">
-        <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
-        @if ($order->status == 'Chờ xử lý')
-            <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt Đơn Hàng</a>
-        @endif
-        <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
-            <i class="fa fa-file-pdf"></i> Tải PDF
-        </a>
-    </div>
-</form>
+                        <form action="{{ route('admin-ordersdangvanchuyen.update', $order->id) }}" method="POST"
+                            class="mb-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Cập nhật Trạng thái</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử
+                                        lý</option>
+                                    <option value="Đã xử lý" {{ $order->status == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý
+                                    </option>
+                                    <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>
+                                        Đã giao hàng</option>
+                                    <option value="Đã nhận hàng" {{ $order->status == 'Đã nhận hàng' ? 'selected' : '' }}>
+                                        Đã nhận hàng</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
+                                @if ($order->status == 'Chờ xử lý')
+                                    <a href="{{ route('admin-ordersdangvanchuyen.approve', $order->id) }}"
+                                        class="btn btn-success">Duyệt
+                                        Đơn Hàng</a>
+                                @endif
+                                <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
+                                    <i class="fa fa-file-pdf"></i> Tải PDF
+                                </a>
+                            </div>
+                        </form>
 
                     </div>
                 </div>

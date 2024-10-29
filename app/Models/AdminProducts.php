@@ -54,4 +54,8 @@ class AdminProducts extends Model
     {
         return 'products';
     }
+    public function brand()
+    {
+        return $this->hasOne(Brand::class); 
+    }
 }

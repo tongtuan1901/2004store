@@ -51,9 +51,7 @@ use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
-
-
-
+use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
@@ -92,7 +90,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('admin-banners', AdminBannersController::class);
 
     // Đặt hàng
-    Route::resource('admin-orders', AdminOrdersController::class);
+    Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
     // Route để hiển thị trang duyệt đơn hàng
     Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
     Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
@@ -157,7 +155,8 @@ Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF
 Route::resource('admin-products', AdminProductsController::class);
 //bình luận
 Route::resource('admin-comments', AdminCommentsController::class);
-
+// thương hiệu
+Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-banners', AdminBannersController::class);
 
 Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
