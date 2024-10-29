@@ -185,7 +185,13 @@ public function forceDelete($id)
 
     return redirect()->route('admin-orders.deleted')->with('success', 'Đơn hàng đã được xóa vĩnh viễn thành công!');
 }
-
+public function listDonHangDaHuy(){
+    $donHangBiHuy = AdminOrder::where('status', 'Hủy')
+                    ->with('orderItems.product')
+                    ->get();
+                    // dd($donHangBiHuy);
+    return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
+}
 
 
 
