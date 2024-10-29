@@ -22,20 +22,29 @@ class AdminCategoriesController extends Controller
     }
 
    //store
-    public function store(Request $request)
-    {
-        $validateData = $request->validate([
-            'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
-        ]);
+   public function store(Request $request)
+{
+    $validateData = $request->validate([
+        'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
+        'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Thêm phần validation cho ảnh
+    ]);
 
-
-
-        $category = Category::create([
-            'name' => $validateData['name'],
-        ]);
-
-        return redirect()->route('admin-categories.index');
+    // Kiểm tra nếu có file ảnh được upload
+    if ($request->hasFile('image')) {
+        // Lưu file ảnh vào thư mục 'categories' trong 'storage/app/public'
+        $imagePath = $request->file('image')->store('categories', 'public');
+        $validateData['image'] = $imagePath; // Lưu đường dẫn tương đối vào cơ sở dữ liệu
     }
+
+    // Tạo mới category với tên và (nếu có) đường dẫn ảnh
+    $category = Category::create([
+        'name' => $validateData['name'],
+        'image' => $validateData['image'] ?? null, // Lưu đường dẫn ảnh hoặc null nếu không có
+    ]);
+
+    return redirect()->route('admin-categories.index')->with('success', 'Category created successfully.');
+}
+
 
 
     /**

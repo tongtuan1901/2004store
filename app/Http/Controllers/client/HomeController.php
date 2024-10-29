@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banners;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,14 +15,15 @@ class HomeController extends Controller
     public function index()
     {
         // Lấy danh sách banner từ cơ sở dữ liệu
-        $banners = Banners::where('deleted', false)->get();// Có thể thay đổi thành phương thức lọc hoặc sắp xếp tùy theo nhu cầu
-
-        // Truyền dữ liệu banner vào view
-        return view('Client.home', compact('banners'));
+        $banners = Banners::where('deleted', false)->get();
+    
+        // Lấy danh sách categories
+        $categories = Category::all();
+    
+        // Truyền dữ liệu banner và categories vào view
+        return view('Client.home', compact('banners', 'categories'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         //

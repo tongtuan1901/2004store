@@ -52,7 +52,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminProductsController;
-
+use App\Http\Controllers\admin\Customeraddress;
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
@@ -159,7 +159,11 @@ Route::resource('admin-comments', AdminCommentsController::class);
 // dang nhap admin và nhân viên
 
 // Route cho view client
+
+
+
 Route::resource('client-home', HomeController::class);
+
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
