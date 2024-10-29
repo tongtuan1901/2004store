@@ -13,5 +13,5 @@ class UserStaff extends Model implements AuthenticatableContract
     use HasFactory, SoftDeletes, Authenticatable;
     protected $table = 'users_staff';
 
-    protected $fillable = ['name', 'email', 'password', 'role']; // Các thuộc tính có thể gán
+    protected $fillable = ['name', 'email', 'password', 'role'];
 }

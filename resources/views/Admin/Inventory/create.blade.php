@@ -17,22 +17,28 @@
             </select>
         </div>
 
-        <div class="mb-4">
+       <div class="mb-4">
     <label for="product_id" class="block text-sm font-medium">Chọn Sản Phẩm</label>
-    <select id="product_id" name="product_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+    <select id="product_id" name="product_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" onchange="populateVariations(this)">
         <option value="">-- Chọn Sản Phẩm --</option>
         @foreach ($products as $product)
-            <option value="{{ $product->id }}" data-category-id="{{ $product->category_id }}">
-                {{ $product->name }} (Còn lại: {{ $product->quantity }})
+            <option value="{{ $product->id }}" data-category-id="{{ $product->category_id }}" data-variations='{{ json_encode($product->variations) }}'>
+                {{ $product->name }} 
             </option>
         @endforeach
     </select>
 </div>
 
+        <div class="mb-4">
+            <label for="variation_id" class="block text-sm font-medium">Chọn Biến Thể</label>
+            <select id="variation_id" name="variation_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                <option value="">-- Chọn Biến Thể --</option>
+            </select>
+        </div>
 
         <div class="mb-4">
-            <label for="quantity_change" class="block text-sm font-medium">Số Lượng Thay Đổi</label>
-            <input type="number" id="quantity_change" name="quantity_change" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <label for="quantity_change" class="block text-sm font-medium">Số Lượng Thay Đổi (Biến Thể)</label>
+            <input type="number" id="quantity_change" name="quantity_change" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" min="1">
         </div>
 
         <div class="mb-4">
@@ -50,6 +56,25 @@
 </div>
 
 <script>
+    function populateVariations(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const variations = JSON.parse(selectedOption.getAttribute('data-variations'));
+    const variationSelect = document.getElementById('variation_id');
+
+    variationSelect.innerHTML = '<option value="">-- Chọn Biến Thể --</option>';
+
+    variations.forEach(variation => {
+        const option = document.createElement('option');
+        option.value = variation.id;
+
+        const colorName = variation.color ? variation.color.color : 'Chưa xác định';
+        const sizeName = variation.size ? variation.size.size : 'Chưa xác định';
+
+        option.textContent = `Màu: ${colorName}, Kích thước: ${sizeName}, Số lượng: ${variation.quantity}`;
+        variationSelect.appendChild(option);
+    });
+}
+
     document.getElementById('category_id').addEventListener('change', function () {
         const selectedCategoryId = this.value;
         const productSelect = document.getElementById('product_id');
@@ -65,8 +90,9 @@
             }
         });
 
-        // Reset chọn sản phẩm khi thay đổi danh mục
+        // Reset chọn sản phẩm và biến thể khi thay đổi danh mục
         productSelect.value = "";
+        document.getElementById('variation_id').innerHTML = '<option value="">-- Chọn Biến Thể --</option>';
     });
 </script>
 @endsection

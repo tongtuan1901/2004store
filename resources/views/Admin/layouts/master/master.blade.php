@@ -5,7 +5,7 @@
         class=" text-center border-b bg-[#603dc3] border-r h-[64px] flex justify-center items-center brand-logo dark:bg-[#603dc3] dark:border-slate-700/40 group-data-[sidebar=dark]:bg-[#603dc3] group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:bg-brand group-[.dark]:group-data-[sidebar=brand]:bg-[#603dc3] group-data-[sidebar=brand]:border-slate-700/40">
         <a href="index.html" class="logo">
             <span>
-                <img src="assets/images/2004Store.png" alt="logo-small" class="logo-sm h-20 align-middle inline-block" height="100%">
+                <img src="{{ asset('assets/images/2004Store.png') }}"alt="logo-small" class="logo-sm h-20 align-middle inline-block" height="100%">
             </span>
             <span>
                 <!-- <img src="assets/images/logo.png" alt="logo-large"
@@ -44,7 +44,7 @@
 
                                     <a href="{{ route('admin-home.index') }}"
 
-                                    <a href="{{ route('admin.statistics') }}"
+                                    
 
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i

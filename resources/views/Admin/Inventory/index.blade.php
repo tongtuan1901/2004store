@@ -4,6 +4,19 @@
 @section('content')
 <div class="w-full relative mb-4">
     <h1 class="text-2xl font-semibold">Quản Lý Tồn Kho</h1>
+    
+    @if(!empty($lowStockItems))
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+        <p class="font-bold">Cảnh Báo: Các sản phẩm sau sắp hết hàng!</p>
+        <ul>
+            @foreach($lowStockItems as $item)
+                <li>
+                    <strong>{{ $item['product_name'] }}</strong> - Size: {{ $item['size'] }}, Màu sắc: {{ $item['color'] }}, Số lượng: {{ $item['quantity'] }}, Danh mục: {{ $item['category'] }}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <!-- Nút thêm bản ghi tồn kho -->
     <div class="mb-4">
@@ -38,7 +51,7 @@
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">STT</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Sản phẩm</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Danh mục</th>
-                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Tồn kho</th> <!-- Cột Tồn kho -->
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Biến thể sản phẩm</th> <!-- Cột Biến thể sản phẩm -->
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thay đổi số lượng</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Ghi chú</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thời gian</th>
@@ -55,7 +68,17 @@
                         <td class="py-2 px-4 text-sm text-gray-500">
                             {{ $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
                         </td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->product->quantity }} sản phẩm</td> <!-- Hiển thị số lượng tồn kho -->
+                        <td class="py-2 px-4 text-sm text-gray-500">
+    @if($log->variation) <!-- Kiểm tra xem có biến thể nào không -->
+        Size: {{ $log->variation->size ? $log->variation->size->size : 'N/A' }},
+        Màu sắc: {{ $log->variation->color ? $log->variation->color->color : 'N/A' }},
+        Số lượng: {{ $log->variation->quantity }}
+    @else
+        Không có biến thể
+    @endif
+</td>
+
+ <!-- Hiển thị thông tin biến thể -->
                         <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
                         <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
                         <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
