@@ -16,24 +16,29 @@
         <div class="flex-auto p-0 md:p-4">
             <div class="flex flex-wrap gap-4 mb-3">
                 <div class="mb-2 w-44">
-                    <select id="Category"
-                        class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700">
-                        <option class="dark:text-slate-700">Tất cả danh mục</option>
-                        <option class="dark:text-slate-700">Admin</option>
-                        <option class="dark:text-slate-700">User</option>
-                    </select>
+                    <form method="GET" action="{{ route('users.index') }}">
+                        <select name="role" id="Category"
+                            class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700"
+                            onchange="this.form.submit()">
+                            <option class="dark:text-slate-700" value="">Tất cả vai trò</option>
+                            <option class="dark:text-slate-700" value="Admin" {{ request('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                            <option class="dark:text-slate-700" value="User" {{ request('role') == 'User' ? 'selected' : '' }}>User</option>
+                        </select>
+                    </form>
                 </div>
                 <div class="ms-auto">
-                    <form>
-                        <div class="relative">
-                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
+                    <div class="ms-auto">
+                        <form action="{{ route('users.index') }}" method="GET"> <!-- Thêm method GET -->
+                            <div class="relative">
+                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                    <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
+                                </div>
+                                <input type="search" name="search" id="userSearch" 
+                                    class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5"
+                                    placeholder="Search users" value="{{ request('search') }}"> <!-- Giữ lại giá trị tìm kiếm -->
                             </div>
-                            <input type="search" id="userSearch"
-                                class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5"
-                                placeholder="Search users">
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
                 <div>
                     <button

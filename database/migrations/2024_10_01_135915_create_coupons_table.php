@@ -6,25 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('coupons', function (Blueprint $table) {
-            $table->id(); // Trường 'id' tự động tăng
-            $table->string('code', 50); // Mã coupon
-            $table->string('type', 50); // Loại coupon (ví dụ: percentage, fixed)
-            $table->decimal('value', 10, 2); // Giá trị của coupon
-            $table->timestamp('starts_at')->nullable(); // Thời gian bắt đầu
-            $table->timestamp('expires_at')->nullable(); // Thời gian hết hạn
-            $table->timestamps(); // Tạo các trường 'created_at' và 'updated_at'
+            $table->id();
+            $table->string('code', 50);
+            $table->enum('type', ['fixed', 'percentage']);
+            $table->decimal('value', 10, 2);
+            $table->foreignId('category_id')->nullable()->constrained('categories');
+            $table->foreignId('product_id')->nullable()->constrained('products');
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->softDeletes(); // Thêm dòng này để hỗ trợ xóa mềm
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('coupons');

@@ -53,6 +53,32 @@ class AdminProductsController extends Controller
      }
      
     
+    public function index(Request $request)
+    {
+        $categories = Category::all();
+        $listProducts = AdminProducts::with(['category', 'images'])->withTrashed()->select('products.*')->get();
+        $query = AdminProducts::query();
+
+        // Nếu có tìm kiếm, áp dụng bộ lọc
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+           // Xử lý lọc theo khoảng giá
+    if ($request->filled('price_range')) {
+        $priceRange = explode('-', $request->price_range);
+        if (count($priceRange) === 2) {
+            $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
+        } elseif ($priceRange[0] === '500000+') {
+            $query->where('price_sale', '>', 500000);
+        }
+    }
+    
+        // Phân trang sản phẩm
+        $listProducts = $query->paginate(10);
+        return view('Admin.Products.index', compact('listProducts', 'categories'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -198,6 +224,8 @@ class AdminProductsController extends Controller
             }
         }
     }
-    
+
+
 }
+                
 
