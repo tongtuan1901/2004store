@@ -60,6 +60,7 @@ use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
@@ -75,7 +76,7 @@ Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->
 // quản lí admin và nhân viên
 Route::prefix('admin')->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
-    
+
     // Đăng nhập admin và nhân viên
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
@@ -86,14 +87,14 @@ Route::prefix('admin')->group(function () {
     //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
 
-Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
+    Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
 
 
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-   
-        Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
-        Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
-    
+
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
+
 
 
 
@@ -104,9 +105,9 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
 
 
 
- 
- // Route cho tin tức
- Route::resource('new', AdminNewsController::class);
+
+    // Route cho tin tức
+    Route::resource('new', AdminNewsController::class);
 
 
 
@@ -123,14 +124,14 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
     Route::resource('admin-banners', AdminBannersController::class);
 
     // Đặt hàng
-    Route::resource('admin-orders', AdminOrdersController::class);
+    Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
     // Route để hiển thị trang duyệt đơn hàng
     Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
     Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
     Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
     Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
     Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
-    Route::get('/admin/orders/approve',[AdminOrdersController::class,'receivedIndex'])->name('admin-orders.received');
+    Route::get('/admin/orders/approve', [AdminOrdersController::class, 'receivedIndex'])->name('admin-orders.received');
 
     // Route để cập nhật trạng thái đơn hàng
     Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
@@ -149,10 +150,10 @@ Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-ho
     Route::resource('inventory', AdminInventoryController::class);
 
     // in pdf
-Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
-Route::resource('admin-products', AdminProductsController::class);
-//bình luận
-Route::resource('admin-comments', AdminCommentsController::class);
+    Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+    Route::resource('admin-products', AdminProductsController::class);
+    //bình luận
+    Route::resource('admin-comments', AdminCommentsController::class);
 });
 
 
@@ -200,7 +201,13 @@ Route::resource('admin-orders', AdminOrdersController::class);
 
 Route::resource('admin-banners', AdminBannersController::class);
 
-
+// in pdf
+Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+Route::resource('admin-products', AdminProductsController::class);
+//bình luận
+Route::resource('admin-comments', AdminCommentsController::class);
+// thương hiệu
+Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-banners', AdminBannersController::class);
 
 Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);

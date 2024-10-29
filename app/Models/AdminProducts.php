@@ -58,22 +58,23 @@ class AdminProducts extends Model
         return 'products';
     }
 
-
- 
-public function coupons()
-{
-    return $this->hasMany(AdminCoupons::class);
-}
-
+    public function coupons()
+    {
+        return $this->hasMany(AdminCoupons::class);
+    }
+    public function brand()
+    {
+        return $this->hasOne(Brand::class);
+    }
     public function reviews()
-{
-    return $this->hasMany(Review::class);
-}
+    {
+        return $this->hasMany(Review::class);
+    }
 
 
-public function orders()
-{
-    return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
-        ->withPivot('quantity', 'price');
-}
+    public function orders()
+    {
+        return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
+            ->withPivot('quantity', 'price');
+    }
 }

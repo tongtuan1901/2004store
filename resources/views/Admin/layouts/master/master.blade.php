@@ -5,7 +5,8 @@
         class=" text-center border-b bg-[#603dc3] border-r h-[64px] flex justify-center items-center brand-logo dark:bg-[#603dc3] dark:border-slate-700/40 group-data-[sidebar=dark]:bg-[#603dc3] group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:bg-brand group-[.dark]:group-data-[sidebar=brand]:bg-[#603dc3] group-data-[sidebar=brand]:border-slate-700/40">
         <a href="index.html" class="logo">
             <span>
-                <img src="{{ asset('assets/images/2004Store.png') }}"alt="logo-small" class="logo-sm h-20 align-middle inline-block" height="100%">
+                <img src="{{ asset('assets/images/2004Store.png') }}"alt="logo-small"
+                    class="logo-sm h-20 align-middle inline-block" height="100%">
             </span>
             <span>
                 <!-- <img src="assets/images/logo.png" alt="logo-large"
@@ -36,16 +37,13 @@
                             <i
                                 class="icofont-thin-down ms-auto inline-block text-[14px] transform transition-transform duration-300 text-slate-800 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400 fc-collapse-open:rotate-180 "></i>
                         </a>
-                        
+
 
                         <div id="Admin-flush" class="hidden  overflow-hidden">
                             <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
                                 <li class="nav-item relative block">
 
                                     <a href="{{ route('admin-home.index') }}"
-
-                                    
-
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400 "></i>
@@ -56,15 +54,15 @@
 
 
                                     <a href="{{ route('admin-categories.index') }}"
-                                       class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
-                                        <i class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Danh mục
                                     </a>
                                 </li>
 
                                 <li class="nav-item relative block">
                                     <a href="{{ route('admin-categories.create') }}"
-
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -81,7 +79,7 @@
                                 </li>
                                 <li class="nav-item relative block">
 
-                                    <a href="{{route('admin-products.create')}}"
+                                    <a href="{{ route('admin-products.create') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -90,12 +88,12 @@
                                 </li>
 
 
-                               
 
-                               
+
+
 
                                 <li class="nav-item relative block">
-                                    <a href="{{route('users.index')}}"
+                                    <a href="{{ route('users.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -110,7 +108,7 @@
                                         Banner
                                     </a>
                                 </li>
-                               
+
 
                                 <!-- <li class="nav-item relative block">
                                     <a href="admin-orders.html"
@@ -128,7 +126,7 @@
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Chi tiết đơn hàng
                                     </a>
-                                    
+
                                 </li> -->
 
                                 <li class="nav-item relative block">
@@ -136,9 +134,9 @@
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                            Khuyến mãi
+                                        Khuyến mãi
                                     </a>
-                                    
+
                                 </li>
 
                                 <li class="nav-item relative block">
@@ -146,13 +144,36 @@
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                            Mã giảm giá
+                                        Mã giảm giá
                                     </a>
-                                    
-                                </li>
 
+                                </li>
                                 <li class="nav-item relative block">
-                                    <a href="{{ route('admin-orders.index') }}"
+                                    <a href="{{ route('admin-comments.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Quản lí bình luận
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
+                                    <a href="{{ route('admin-brands.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Quản lí Thương hiệu
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
+                                    <a href="{{ route('admin-ordersdangvanchuyen.index') }}"
+                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Quản lí đơn hàng
+                                    </a>
+                                </li>
+                                <li class="nav-item relative block">
+                                    <a href="{{ route('admin-ordersdangvanchuyen.index') }}"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
@@ -184,27 +205,27 @@
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Quản lí Tồn kho
                                     </a>
-                                    
+
 
 
                                 </li>
-                 
 
-            
-                              
-                 
-                                    
-                                
-                  
+
+
+
+
+
+
+
 
                             </ul>
                         </div>
 
 
                     </div>
-                  
+
                     <div id="parent-accordion" data-fc-type="accordion">
-                    <a href="#"
+                        <a href="#"
                             class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 "
                             data-fc-type="collapse" data-fc-parent="parent-accordion">
                             <span data-lucide="home"
@@ -215,16 +236,16 @@
                         </a>
 
                         <div id="Admin-flush" class="hidden  overflow-hidden">
-                        <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
-                        <li class="nav-item relative block">
-    <a href="{{ route('user-staff.index') }}"
-        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
-        <i
-            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-        Quản lí nhân viên
-    </a>
-</li>
-                        </ul>
+                            <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2">
+                                <li class="nav-item relative block">
+                                    <a href="{{ route('user-staff.index') }}"
+                                        class="nav-link hover:text-primary-500 rounded-md dark:hover:text-primary-500 relative flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
+                                        <i
+                                            class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
+                                        Quản lí nhân viên
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
 
                     </div>
@@ -398,71 +419,74 @@
                 </div>
             </div>
             <div class="me-2 dropdown relative">
-            <button type="button"
-        class="dropdown-toggle flex items-center rounded-full text-sm
+                <button type="button"
+                    class="dropdown-toggle flex items-center rounded-full text-sm
         focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
-        id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
-        <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}" alt="user photo" />
-        <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
+                    id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
+                    <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}"
+                        alt="user photo" />
+                    <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
 
-            <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::guard('user_staff')->user()->name }}</span>
-            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::guard('user_staff')->user()->role }}</span>
+                        <span
+                            class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::guard('user_staff')->user()->name }}</span>
+                        <span
+                            class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::guard('user_staff')->user()->role }}</span>
 
-        </span>
-</button>
+                    </span>
+                </button>
 
 
-    <div class="left-auto right-0 z-50 my-1 hidden list-none
+                <div class="left-auto right-0 z-50 my-1 hidden list-none
         divide-y divide-gray-100 rounded border border-slate-700/10
         text-base shadow dark:divide-gray-600 bg-white dark:bg-slate-800 w-40"
-        id="navUserdata">
+                    id="navUserdata">
 
-        <ul class="py-1" aria-labelledby="navUserdata">
-            <li>
-                <a href="#"
-                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                    <ul class="py-1" aria-labelledby="navUserdata">
+                        <li>
+                            <a href="#"
+                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
                     dark:text-gray-200 dark:hover:bg-gray-900/20
                     dark:hover:text-white">
-                    <span data-lucide="user"
-                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                    Profile</a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                                <span data-lucide="user"
+                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                                Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
                     dark:text-gray-200 dark:hover:bg-gray-900/20
                     dark:hover:text-white">
-                    <span data-lucide="settings"
-                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                    Settings</a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
+                                <span data-lucide="settings"
+                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                                Settings</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center py-2 px-3 text-sm text-gray-700 hover:bg-gray-50
                     dark:text-gray-200 dark:hover:bg-gray-900/20
                     dark:hover:text-white">
-                    <span data-lucide="dollar-sign"
-                        class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
-                    Earnings</a>
-            </li>
-            <li>
-                <form action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit"
-                        class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
+                                <span data-lucide="dollar-sign"
+                                    class="w-4 h-4 inline-block text-slate-800 dark:text-slate-400 me-2"></span>
+                                Earnings</a>
+                        </li>
+                        <li>
+                            <form action="{{ route('admin.logout') }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
                         dark:text-red-500 dark:hover:bg-gray-900/20
                         dark:hover:text-red-500">
-                        <span data-lucide="power"
-                            class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
-                        Sign out
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </div>
-</div>
+                                    <span data-lucide="power"
+                                        class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
+                                    Sign out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-            
+
         </div>
     </div>
 </nav>

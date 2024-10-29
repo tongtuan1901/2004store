@@ -3,8 +3,6 @@
 @section('content')
     <div class="container">
         <h1>Danh sách đơn hàng</h1>
-        <a href="{{ route('admin-orders.create') }}" class="btn btn-primary">Thêm đơn hàng mới</a>
-        <a href="{{ route('admin-orders.received') }}" class="btn btn-success">đơn hàng thành công</a>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -12,7 +10,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID Đơn Hàng</th> 
+                    <th>ID Đơn Hàng</th>
                     <th>Tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
@@ -25,12 +23,12 @@
             <tbody>
                 @foreach ($orders as $order)
                     <tr>
-                        <td>{{ $order->id }}</td> 
+                        <td>{{ $order->id }}</td>
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->email }}</td>
                         <td>{{ $order->phone }}</td>
                         <td>{{ $order->address }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td>Đang vận chuyển</td>
                         <td>
                             <ul>
                                 @foreach ($order->products as $product)
@@ -39,8 +37,7 @@
                             </ul>
                         </td>
                         <td>
-                            <a href="{{ route('admin-orders.edit', $order) }}" class="btn btn-warning">Sửa</a>
-                            <a href="{{ route('admin-orders.show', $order) }}" class="btn btn-info">Chi tiết</a>
+                            <a href="{{ route('admin-ordersdangvanchuyen.show', $order) }}" class="btn btn-info">Chi tiết</a>
                             @if ($order->status === 'Chờ xử lý')
                                 <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt</a>
                             @endif

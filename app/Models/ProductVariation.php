@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,12 +27,12 @@ class ProductVariation extends Model
     }
 
     public function size()
-{
-    return $this->belongsTo(Size::class, 'size_id'); // Đảm bảo tên trường 'size_id' là đúng
-}
+    {
+        return $this->belongsTo(Size::class, 'size_id'); // Đảm bảo tên trường 'size_id' là đúng
+    }
 
     public function color()
     {
-        return $this->belongsTo(Color::class,'color_id');
+        return $this->belongsTo(Color::class, 'color_id');
     }
 }
