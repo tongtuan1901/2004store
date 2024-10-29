@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    <h2>Chỉnh Sửa Mã Giảm Giá</h2>
+    <h2>Chỉnh Sửa khuyến mãi</h2>
 
     <form action="{{ route('admin-coupons.update', $admin_coupon->id) }}" method="POST" id="coupon-form">
         @csrf

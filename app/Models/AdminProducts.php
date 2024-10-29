@@ -10,7 +10,7 @@ class AdminProducts extends Model
 {
 
 
-    use HasFactory, SoftDeletes; 
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = [
@@ -21,9 +21,6 @@ class AdminProducts extends Model
         'price_sale',
         'status',
         'quantity',
-        'sizes',
-        'colors',
-
     ];
 
     public function category()
@@ -31,29 +28,52 @@ class AdminProducts extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-
-    // Quan hệ với ProductImage
-
+    // Relationship with ProductImage
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 
+    // Relationship with AdminOrder
+    // public function orders()
+    // {
+    //     return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
+    // }
 
-    public function orders()
+    // Relationship with AdminCoupons
+    // public function coupons()
+    // {
+    //     return $this->hasMany(AdminCoupons::class);
+    // }
+
+    // Relationship with ProductVariation
+    public function variations()
     {
-        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
+        return $this->hasMany(ProductVariation::class, 'product_id');
     }
 
+    // Override the table name if needed
     public function getTable()
     {
         return 'products';
     }
 
 
+ 
 public function coupons()
 {
     return $this->hasMany(AdminCoupons::class);
+}
 
+    public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+
+public function orders()
+{
+    return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
+        ->withPivot('quantity', 'price');
 }
 }
