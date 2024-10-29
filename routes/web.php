@@ -116,7 +116,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
     Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
     Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
-
+    Route::get('/admin/orders/approve',[AdminOrdersController::class,'receivedIndex'])->name('admin-orders.received');
 
     // Route để cập nhật trạng thái đơn hàng
     Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
