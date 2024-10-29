@@ -35,16 +35,16 @@ class AdminProducts extends Model
     }
 
     // Relationship with AdminOrder
-    public function orders()
-    {
-        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
-    }
+    // public function orders()
+    // {
+    //     return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
+    // }
 
     // Relationship with AdminCoupons
-    public function coupons()
-    {
-        return $this->hasMany(AdminCoupons::class);
-    }
+    // public function coupons()
+    // {
+    //     return $this->hasMany(AdminCoupons::class);
+    // }
 
     // Relationship with ProductVariation
     public function variations()
@@ -57,8 +57,23 @@ class AdminProducts extends Model
     {
         return 'products';
     }
+
+
+ 
+public function coupons()
+{
+    return $this->hasMany(AdminCoupons::class);
+}
+
     public function reviews()
 {
     return $this->hasMany(Review::class);
+}
+
+
+public function orders()
+{
+    return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')
+        ->withPivot('quantity', 'price');
 }
 }

@@ -1,4 +1,4 @@
-@extends('Customer.layouts.master.master')
+@extends('Admin/layouts/master/master')
 
 @section('content')
 <!DOCTYPE html>
@@ -39,15 +39,7 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-select" id="role" name="role" required>
-                <option value="" disabled selected>Select a role</option>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-                <!-- Thêm các vai trò khác nếu cần -->
-            </select>
-        </div>
+      
         <button type="submit" class="btn btn-info">Create</button>
     </form>
 </div>

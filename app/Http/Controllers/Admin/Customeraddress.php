@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\client;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class ClientCategories extends Controller
+class Customeraddress extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
-        return view("Client.ClientCategories.ListCategories", compact('categories'));
+        $data = DB::table('customeraddresses')->get();
+        return view('admin\customeraddress.index', compact('data'));
     }
 
     /**
@@ -62,6 +62,7 @@ class ClientCategories extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('customeraddresses')->where('id', $id)->delete();
+        return back();
     }
 }

@@ -11,30 +11,30 @@ class AdminLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.auth.login'); // Đường dẫn tới view đăng nhập
+        return view('admin.auth.login'); // Trả về form đăng nhập
     }
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        $user = UserStaff::where('email', $request->email)->first();
-
-        // Kiểm tra người dùng và mật khẩu (không mã hóa mật khẩu)
-        if ($user && $user->password === $request->password) {
-            Auth::login($user);
-            return redirect()->route('admin.statistics')->with('success', 'Đăng nhập thành công.');
+        // Xác thực thông tin người dùng
+        $credentials = $request->only('email', 'password');
+    
+        // Tìm người dùng theo email
+        $user = UserStaff::where('email', $credentials['email'])->first();
+    
+        // Kiểm tra xem người dùng có tồn tại và mật khẩu có khớp không
+        if ($user && $user->password === $credentials['password']) {
+            Auth::guard('user_staff')->login($user); // Đăng nhập người dùng
+            return redirect()->intended('admin-products'); // Chuyển hướng đến trang admin sau khi đăng nhập
         }
-
-        return back()->withErrors(['email' => 'Email hoặc mật khẩu không đúng.']);
+    
+        return redirect()->back()->withErrors(['access' => 'Thông tin đăng nhập không chính xác.']); // Thông báo lỗi
     }
+    
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('admin.login')->with('success', 'Đăng xuất thành công.');
+        Auth::guard('user_staff')->logout(); // Đăng xuất
+        return redirect()->route('admin.login'); // Chuyển hướng về trang đăng nhập
     }
 }

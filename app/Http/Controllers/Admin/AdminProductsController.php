@@ -15,6 +15,48 @@ use App\Models\Size;
 
 class AdminProductsController extends Controller
 {
+<<<<<<< HEAD
+    /**
+     * Display a listing of the resource.
+     */
+
+     public function index(Request $request)
+     {
+         $categories = Category::all();
+         $query = AdminProducts::with(['category', 'images'])->withTrashed();
+     
+         // Nếu có tìm kiếm, áp dụng bộ lọc
+         if ($request->filled('search')) {
+             $query->where('name', 'like', '%' . $request->search . '%');
+         }
+     
+         // Áp dụng bộ lọc giá nếu có
+         if ($request->filled('price_filter')) {
+            switch ($request->price_filter) {
+                case 'less_than_500000':
+                    $query->where('price_sale', '<', 500000);
+                    break;
+                case '500000_1000000':
+                    $query->whereBetween('price_sale', [500000, 1000000]);
+                    break;
+                case '1000000_2000000':
+                    $query->whereBetween('price_sale', [1000000, 2000000]);
+                    break;
+                case 'greater_than_2000000':
+                    $query->where('price_sale', '>', 2000000);
+                    break;
+            }
+        }
+     
+         // Phân trang sản phẩm
+         $listProducts = $query->paginate(10);
+         
+         return view('Admin.Products.index', compact('listProducts', 'categories'));
+     }
+     
+    
+=======
+>>>>>>> a6b011a41e0e22aa76edd639eacf05385bfcbdc7
     public function index(Request $request)
     {
         $categories = Category::all();
@@ -43,6 +85,12 @@ class AdminProductsController extends Controller
         return view('Admin.Products.index', compact('listProducts', 'categories'));
     }
 
+<<<<<<< HEAD
+    /**
+     * Show the form for creating a new resource.
+     */
+=======
+>>>>>>> a6b011a41e0e22aa76edd639eacf05385bfcbdc7
     public function create()
     {
         $categories = Category::all();
@@ -207,4 +255,12 @@ class AdminProductsController extends Controller
             }
         }
     }
+<<<<<<< HEAD
+
+
 }
+                
+
+=======
+}
+>>>>>>> a6b011a41e0e22aa76edd639eacf05385bfcbdc7

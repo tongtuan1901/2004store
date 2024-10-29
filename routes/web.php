@@ -31,10 +31,12 @@ use App\Http\Controllers\UserController;
 */
 //View Admin
 
+
 Route::resource('admin-home', HomeAdminController::class);
 // Route::resource('admin-products', AdminProductsController::class);
 // Danh mục
 // Route::resource('admin-categories', AdminCategoriesController::class);
+
 
 
 
@@ -50,7 +52,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminProductsController;
-
+use App\Http\Controllers\admin\Customeraddress;
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
@@ -83,6 +85,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('admin-coupons', AdminCouponsController::class);
     //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
+
+Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
+
+
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::prefix('admin')->middleware('auth')->group(function () {
         Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
@@ -90,9 +96,17 @@ Route::prefix('admin')->group(function () {
     });
 
 
+
     Route::get('/admin-home', [HomeAdminController::class, 'index'])->name('admin-home.index');
 
 
+
+
+
+
+ 
+ // Route cho tin tức
+ Route::resource('new', AdminNewsController::class);
 
 
 
@@ -139,10 +153,18 @@ Route::prefix('admin')->group(function () {
 // dang nhap admin và nhân viên
 
 // Route cho view client
+<<<<<<< HEAD
 Route::resource('/', HomeController::class);
+
+=======
+Route::resource('client-home', HomeController::class);
+>>>>>>> a6b011a41e0e22aa76edd639eacf05385bfcbdc7
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
+// đăng xuất khách hàng
+Route::post('client-logout', [LoginController::class, 'logout'])->name('client-logout');
+//
 Route::resource('client-register', RegisterController::class);
 Route::resource('client-products', ProductsController::class);
 

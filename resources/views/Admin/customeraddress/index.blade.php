@@ -16,10 +16,10 @@
                     </form>
                 </div>
                 <div>
-                    <button
+                    {{-- <button
                         class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
                         <a href="{{route('new.create')}}">Thêm tin tức</a>
-                    </button>
+                    </button> --}}
                 </div>
             </div>
 
@@ -49,15 +49,15 @@
                                             </th>
                                             <th scope="col"
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Title
+                                                Name
                                             </th>
                                             <th scope="col"
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Content
+                                                Address
                                             </th>
                                             <th scope="col"
                                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Image
+                                                Phone
                                             </th>
                                         </tr>
                                     </thead>
@@ -83,31 +83,28 @@
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                        {{$item->title}}
+                                                        {{$item->name}}
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                        {{$item->content}}
+                                                        {{$item->address}}
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                     <div class="flex items-center">
-                                                    <img src="{{ Storage::url($item->image) }}" alt="" width="150" height="100">
-
+                                                        {{$item->phone}}
                                                     </div>
                                                 </td>
                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <a href="{{route('new.edit',$item->id)}}"><i
-                                                            class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
 
-                                                    <a href="{{route('new.show',$item->id)}}">show</a>
+                                                    <a href="{{route('customeraddress.show',$item->id)}}">show</a>
 
-                                                    <form action="{{route('new.destroy',$item->id)}}" method="post">
+                                                    {{-- <form action="{{route('customeraddress.destroy',$item->id)}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
-                                                    </form>
+                                                    </form> --}}
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -105,14 +105,20 @@
             </div>
             <h3>List các nhóm sản phẩm nổi bật nhất</h3>
             <div class="home-collection_list-wrapper">
-                <a class="home-collection-list-item" href="collections/all.html" title="F1GENZ Model Fashion - Flash Sale">
-                    <div class="home-collection-list-item-image-holder">
-                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                            alt="F1GENZ Model Fashion - Flash Sale" title="F1GENZ Model Fashion - Flash Sale" width="480"
-                            height="480" loading="lazy" decoding="async" fetchpriority="auto">
-                    </div>
-                    <span>Flash Sale</span>
-                </a>
+                @foreach($categories as $category)
+                    <a class="home-collection-list-item" href="{{ url('collections/all') }}" title="{{ $category->name }}">
+                        <div class="home-collection-list-item-image-holder">
+                            <img src="{{  $category->image }}" alt="{{ $category->name }}" 
+                            title="{{ $category->name }}" 
+                           style="width=48px; height=480px; loading=lazy;  decoding=async; fetchpriority=auto;"
+                            >
+
+                               
+                                
+                        </div>
+                        <span>{{ $category->name }}</span>
+                    </a>
+                @endforeach
             </div>
         </section>
         <section class="home-flashsale animate section-distance ">

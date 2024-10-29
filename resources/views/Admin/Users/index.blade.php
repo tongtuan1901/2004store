@@ -1,4 +1,4 @@
-@extends('Customer.layouts.master.master')
+@extends('Admin/layouts/master/master')
 
 @section('content')
 @if(session('success'))
@@ -17,13 +17,13 @@
             <div class="flex flex-wrap gap-4 mb-3">
                 <div class="mb-2 w-44">
                     <form method="GET" action="{{ route('users.index') }}">
-                        <select name="role" id="Category"
+                        <!-- <select name="role" id="Category"
                             class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700"
                             onchange="this.form.submit()">
                             <option class="dark:text-slate-700" value="">Tất cả vai trò</option>
                             <option class="dark:text-slate-700" value="Admin" {{ request('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
                             <option class="dark:text-slate-700" value="User" {{ request('role') == 'User' ? 'selected' : '' }}>User</option>
-                        </select>
+                        </select> -->
                     </form>
                 </div>
                 <div class="ms-auto">
@@ -69,9 +69,7 @@
                                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Số điện thoại
                                             </th>
-                                            <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Role
-                                            </th>
+                                           
                                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                 Mật Khẩu
                                             </th>
@@ -102,9 +100,7 @@
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 {{ $user->phone_number ?? 'N/A' }}
             </td>
-            <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                {{ $user->role }} <!-- Hiển thị vai trò -->
-            </td>
+            
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 {{ $user->password }} <!-- Hiển thị mật khẩu đã mã hóa -->
             </td>

@@ -49,7 +49,7 @@
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400 "></i>
-                                        Bảng điều khiển
+                                        Thống kê
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
@@ -112,16 +112,16 @@
                                 </li>
                                
 
-                                <li class="nav-item relative block">
+                                <!-- <li class="nav-item relative block">
                                     <a href="admin-orders.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
                                         Đơn hàng
                                     </a>
-                                </li>
+                                </li> -->
 
-                                <li class="nav-item relative block">
+                                <!-- <li class="nav-item relative block">
                                     <a href="admin-order-details.html"
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
@@ -129,7 +129,7 @@
                                         Chi tiết đơn hàng
                                     </a>
                                     
-                                </li>
+                                </li> -->
 
                                 <li class="nav-item relative block">
                                     <a href="{{ route('admin-coupons.index') }}"
@@ -172,7 +172,7 @@
                                         class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i
                                             class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        News
+                                        Tin tức
                                     </a>
                                 </li>
 
@@ -232,7 +232,7 @@
         </div>
         </li>
         </ul>
-        <div class="rounded-md py-4 px-3 mt-12  mb-4 relative bg-primary-300/10 text-center">
+        <!-- <div class="rounded-md py-4 px-3 mt-12  mb-4 relative bg-primary-300/10 text-center">
             <a href="javascript: void(0);" class="float-right close-btn text-slate-400">
                 <i class="mdi mdi-close"></i>
             </a>
@@ -244,7 +244,7 @@
                 class="px-2 py-1 mb-2 text-orange-400 hover:text-white border border-orange-300 hover:bg-orange-300 focus:outline-none  rounded text-sm  text-center dark:border-orange-300 dark:text-orange-300 dark:hover:text-white dark:hover:bg-orange-300 ">Upgrade
                 your plan</button>
 
-        </div>
+        </div> -->
     </div>
 </div>
 </div>
@@ -398,16 +398,19 @@
                 </div>
             </div>
             <div class="me-2 dropdown relative">
-    <button type="button"
+            <button type="button"
         class="dropdown-toggle flex items-center rounded-full text-sm
         focus:bg-none focus:ring-0 dark:focus:ring-0 md:me-0"
         id="user-profile" aria-expanded="false" data-fc-autoclose="both" data-fc-type="dropdown">
         <img class="h-8 w-8 rounded-full" src="{{ asset('assets/images/users/avatar-1.png') }}" alt="user photo" />
         <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
-            {{-- <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::user()->name }}</span> --}}
-            {{-- <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::user()->role }}</span> --}}
+
+            <span class="block font-medium text-slate-600 dark:text-gray-300">{{ Auth::guard('user_staff')->user()->name }}</span>
+            <span class="-mt-0.5 block text-xs text-slate-500 dark:text-gray-400">{{ Auth::guard('user_staff')->user()->role }}</span>
+
         </span>
-    </button>
+</button>
+
 
     <div class="left-auto right-0 z-50 my-1 hidden list-none
         divide-y divide-gray-100 rounded border border-slate-700/10
@@ -473,7 +476,7 @@
                 <div class="flex items-center py-4 w-full">
                     <div class="w-full">
                         <div class="">
-                            <div class="flex flex-wrap justify-between">
+                            <!-- <div class="flex flex-wrap justify-between">
                                 <div class="items-center ">
                                     <h1 class="font-medium text-3xl block dark:text-slate-100">Thống kê</h1>
                                     <ol class="list-reset flex text-sm">
@@ -494,7 +497,7 @@
                                             required="">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
