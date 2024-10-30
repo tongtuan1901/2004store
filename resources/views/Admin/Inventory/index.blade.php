@@ -59,41 +59,45 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventoryLogs as $index => $log)
-                    <tr class="hover:bg-gray-100 border-b">
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            {{ $log->product->name }}
-                        </td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            {{ $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
-                        </td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-    @if($log->variation) <!-- Kiểm tra xem có biến thể nào không -->
-        Size: {{ $log->variation->size ? $log->variation->size->size : 'N/A' }},
-        Màu sắc: {{ $log->variation->color ? $log->variation->color->color : 'N/A' }},
-        Số lượng: {{ $log->variation->quantity }}
-    @else
-        Không có biến thể
-    @endif
-</td>
+            @foreach ($inventoryLogs as $index => $log)
+    <tr class="hover:bg-gray-100 border-b">
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $index + 1 }}</td>
 
- <!-- Hiển thị thông tin biến thể -->
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            <a href="{{ route('inventory.edit', $log->id) }}" class="text-blue-600 hover:underline">Sửa</a>
-                            <form action="{{ route('inventory.destroy', $log->id) }}" method="post" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');">
-                                    Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+        <td class="py-2 px-4 text-sm text-gray-500">
+            {{ $log->product ? $log->product->name : 'Không có sản phẩm' }}
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            {{ $log->product && $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            @if ($log->variation)
+                Size: {{ $log->variation->size ? $log->variation->size->size : 'N/A' }},
+                Màu sắc: {{ $log->variation->color ? $log->variation->color->color : 'N/A' }},
+                Số lượng: {{ $log->variation->quantity }}
+            @else
+                Không có biến thể
+            @endif
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            <a href="{{ route('inventory.edit', $log->id) }}" class="text-blue-600 hover:underline">Sửa</a>
+            <form action="{{ route('inventory.destroy', $log->id) }}" method="post" style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');">
+                    Xoá
+                </button>
+            </form>
+        </td>
+    </tr>
+@endforeach
+
 
                 @if ($inventoryLogs->isEmpty())
                     <tr>

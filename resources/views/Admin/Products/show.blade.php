@@ -61,7 +61,7 @@
 
                 <div class="mb-3">
                     <strong>Trạng thái:</strong>
-                    <p class="text-muted">{{ $product->status == 0 ? 'Hiển thị' : 'Ẩn' }}</p>
+                    <p class="text-muted">{{ $product->status == 0 ? 'Còn hàng' : 'Hết hàng' }}</p>
                 </div>
 
                 <div class="mb-3">

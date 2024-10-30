@@ -5,82 +5,88 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminCategoriesController extends Controller
 {
-  //list
+    // List categories
     public function index()
     {
         $listCategories = Category::all();
-         return view("Admin.Categories.index",compact("listCategories"));
+        return view("Admin.Categories.index", compact("listCategories"));
     }
-// add
+
+    // Show create category form
     public function create()
     {
         return view('Admin.Categories.create');
     }
 
-   //store
-   public function store(Request $request)
-{
-    $validateData = $request->validate([
-        'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
-        'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Thêm phần validation cho ảnh
-    ]);
-
-    // Kiểm tra nếu có file ảnh được upload
-    if ($request->hasFile('image')) {
-        // Lưu file ảnh vào thư mục 'categories' trong 'storage/app/public'
-        $imagePath = $request->file('image')->store('categories', 'public');
-        $validateData['image'] = $imagePath; // Lưu đường dẫn tương đối vào cơ sở dữ liệu
-    }
-
-    // Tạo mới category với tên và (nếu có) đường dẫn ảnh
-    $category = Category::create([
-        'name' => $validateData['name'],
-        'image' => $validateData['image'] ?? null, // Lưu đường dẫn ảnh hoặc null nếu không có
-    ]);
-
-    return redirect()->route('admin-categories.index')->with('success', 'Category created successfully.');
-}
-
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Store new category
+    public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validateData['image'] = $imagePath;
+        }
+
+        Category::create([
+            'name' => $validateData['name'],
+            'image' => $validateData['image'] ?? null,
+        ]);
+
+        return redirect()->route('admin-categories.index')->with('success', 'Category created successfully.');
     }
 
-    //edit
+    // Show edit category form
     public function edit(string $id)
     {
-        $category = Category::FindorFail($id);
+        $category = Category::findOrFail($id);
         return view('Admin.Categories.edit', compact('category'));
     }
 
-   // update
+    // Update category
     public function update(Request $request, string $id)
     {
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
         ]);
-        $category = Category::FindorFail($id);
 
-        $category -> update([
+        $category = Category::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            // Store new image
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validateData['image'] = $imagePath;
+        }
+
+        $category->update([
             'name' => $validateData['name'],
+            'image' => $validateData['image'] ?? $category->image, // Keep old image if no new image uploaded
         ]);
-        return redirect()->route('admin-categories.index');
+
+        return redirect()->route('admin-categories.index')->with('success', 'Category updated successfully.');
     }
-// delete
+
+    // Delete category
     public function destroy(string $id)
     {
-        $category = Category::FindorFail($id);
-        $category -> delete();
-        return redirect()->route('admin-categories.index');
+        $category = Category::findOrFail($id);
+        // Optionally delete image
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+        $category->delete();
+        return redirect()->route('admin-categories.index')->with('success', 'Category deleted successfully.');
     }
-
 }

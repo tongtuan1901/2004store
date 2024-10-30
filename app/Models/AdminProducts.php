@@ -82,4 +82,10 @@ protected  $table = "products";
 //     return 'products';
 // }
 
+public function firstImage()
+{
+    return $this->hasOne(ProductImage::class, 'product_id');
+}
+
+
 }

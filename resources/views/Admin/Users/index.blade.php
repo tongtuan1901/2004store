@@ -41,10 +41,10 @@
                     </div>
                 </div>
                 <div>
-                    <button
+                    <!-- <button
                         class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
                         <a href="{{ route('users.create') }}"> Thêm người dùng</a>
-                    </button>
+                    </button> -->
                 </div>
             </div>
 
@@ -102,13 +102,13 @@
             </td>
             
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                {{ $user->password }} <!-- Hiển thị mật khẩu đã mã hóa -->
+              ***********
             </td>
             <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 @if($user->trashed())
                     <a href="{{ route('users.restore', $user->id) }}" class="btn btn-success btn-sm">Restore</a>
                 @else
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <!-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a> -->
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
