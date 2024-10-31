@@ -6,7 +6,7 @@
     <h1>Tạo mã giảm giá</h1>
 
     <form action="{{ route('discount.store') }}" method="POST" class="p-4 border rounded">
-        @csrf
+        @csrf 
         <div class="mb-3">
             <label for="code" class="form-label">Mã giảm giá:</label>
             <input type="text" name="code" class="form-control" required>

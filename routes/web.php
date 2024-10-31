@@ -202,9 +202,3 @@ Route::resource('admin-home', HomeAdminController::class);
 route::get('admin-ui',function(){
     return view('Admin1.Orders.donHangDaHuy');
 });
-// route::get('admin-ui',function(){
-//     return view('Admin1.Home.index');
-// });
-
-// Route::resource('admin1-home',AdminHomeController ::class);
-// Route::resource('admin1-kh',AdminCustomerController ::class);

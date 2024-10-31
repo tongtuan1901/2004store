@@ -16,7 +16,7 @@
                     <th>Sản phẩm</th>
                     <th>Người dùng</th>
                     <th>Điểm đánh giá</th>
-                    <!-- <th>Bình luận</th> -->
+                    <th>Bình luận</th> 
                     <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
@@ -28,7 +28,7 @@
                         <td>{{ $review->product->name }}</td>
                         <td>{{ $review->user->name }}</td>
                         <td>{{ $review->rating }} sao</td>
-                        <!-- <td>{{ \Illuminate\Support\Str::limit($review->comment, 50) }}</td> -->
+                        <td>{{ \Illuminate\Support\Str::limit($review->comment, 50) }}</td> 
                         <td>{{ $review->created_at->format('d-m-Y') }}</td>
                         <td>
                             <a href="{{ route('admin.reviews.show', $review->id) }}" class="btn btn-primary btn-sm">Xem</a>

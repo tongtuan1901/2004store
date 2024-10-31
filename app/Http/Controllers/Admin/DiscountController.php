@@ -64,13 +64,13 @@ class DiscountController extends Controller
     public function index()
     {
         $discounts = Discount::all();
-        return view('Admin.Discounts.index', compact('discounts'));
+        return view('Admin1.Discounts.index', compact('discounts'));
     }
 
     // Hiển thị form tạo mã giảm giá
     public function create()
     {
-        return view('Admin.Discounts.create');
+        return view('Admin1.Discounts.create');
     }
 
     // Lưu mã giảm giá mới
@@ -95,7 +95,7 @@ class DiscountController extends Controller
     public function edit($id)
     {
         $discount = Discount::findOrFail($id);
-        return view('Admin.Discounts.edit', compact('discount'));
+        return view('Admin1.Discounts.edit', compact('discount'));
     }
 
     // Cập nhật mã giảm giá
