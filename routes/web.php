@@ -209,3 +209,8 @@ Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.stor
 Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
 Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
 Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
+
+Route::get('/customeraddress', [Customeraddress::class, 'index'])->name('customeraddress.index');
+Route::get('/customeraddress/show/{id}',[Customeraddress::class,'show'])->name('customeraddress.show');
+Route::get('/customeraddress/create', [Customeraddress::class, 'create'])->name('customeraddress.create');
+Route::post('/customeraddress/store', [Customeraddress::class, 'store'])->name('customeraddress.store');
