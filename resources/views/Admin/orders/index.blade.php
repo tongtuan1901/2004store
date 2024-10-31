@@ -40,9 +40,9 @@
                         <td>
                             <a href="{{ route('admin-orders.edit', $order) }}" class="btn btn-warning">Sửa</a>
                             <a href="{{ route('admin-orders.show', $order) }}" class="btn btn-info">Chi tiết</a>
-                            @if ($order->status === 'Chờ xử lý')
+                            <!-- @if ($order->status === 'Chờ xử lý')
                                 <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt</a>
-                            @endif
+                            @endif -->
                         </td>
                     </tr>
                 @endforeach

@@ -10,7 +10,5 @@ class Dashboard extends Model
     protected $table = 'dashboard';
     use HasFactory;
     protected $fillable = [
-        'products_id',
-        'so_luong',
-        'tong_tien',];
+        'id_dashboard', 'ngay_dat', 'doang_so', 'so_luong', 'so_dong_hang'];
 }

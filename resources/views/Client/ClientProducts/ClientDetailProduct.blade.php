@@ -7,10 +7,10 @@
 
 
         <div class="main-product">
-            <div class="main-product-breadcrumb" title="Áo Dây TWIST DRAPE">
+            <div class="main-product-breadcrumb" title="">
                 <div class="container">
                     <div hidden class="section-title-all">
-                        <h1>Áo Dây TWIST DRAPE</h1>
+                        <h1>{{$productDetail->name}}</h1>
                     </div>
                     <div class="breadcrumb-wrap">
                         <ol class="breadcrumb">
@@ -18,7 +18,7 @@
                                     chủ</a></li>
                             <li class="breadcrumb-item"><a href="cocktail-dresses.html" aria-label="Cocktail Dresses"
                                     title="Cocktail Dresses">Cocktail Dresses</a></li>
-                            <li class="breadcrumb-item active"><span> Áo Dây TWIST DRAPE</span></li>
+                            <li class="breadcrumb-item active"><span> {{$productDetail->name}}</span></li>
                         </ol>
                     </div>
                 </div>

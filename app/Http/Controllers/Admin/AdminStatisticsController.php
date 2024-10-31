@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\AdminOrder;
@@ -44,24 +43,23 @@ class AdminStatisticsController extends Controller
 
         // Lọc theo tháng nếu có
         $month = $request->input('month');
-        $revenueData = array_fill(0, 31, 0); // Khởi tạo mảng doanh thu
-    
+        $revenueData = [];
+        $labels = []; 
+
         if ($month) {
-            $year = date('Y'); // Năm hiện tại
-            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year); // Số ngày trong tháng
-        
+            $year = date('Y');
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 $startOfDay = Carbon::createFromDate($year, $month, $day)->startOfDay();
                 $endOfDay = Carbon::createFromDate($year, $month, $day)->endOfDay();
-        
-                $revenueData[$day - 1] = AdminOrder::where('created_at', '>=', $startOfDay)
+                $revenueData[$day] = AdminOrder::where('created_at', '>=', $startOfDay)
                     ->where('created_at', '<=', $endOfDay)
                     ->sum('total');
+                $labels[$day] = $day;
             }
+            // $data1 = array_values($revenueData); 
+            $labels = array_values($labels); 
         }
-    
-        // Ghi log để kiểm tra dữ liệu
-        // Log::info('Revenue Data: ', $revenueData);
 
         return view('admin.statistics.index', compact(
             'totalProductsAddedToday',
@@ -70,7 +68,8 @@ class AdminStatisticsController extends Controller
             'totalRevenueToday',
             'date',
             'month',
-            'revenueData'
+            'revenueData',
+       
         ));
     }
 }

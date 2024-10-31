@@ -32,9 +32,10 @@ class AdminUserStaffController extends Controller
         return redirect()->route('user-staff.index')->with('success', 'Tài khoản đã được thêm thành công.'); // Thông báo thành công
     }
 
-    public function edit(UserStaff $user)
+    public function edit($id)
     {
-        return view('admin.user_staff.edit', compact('user')); // Trả về form chỉnh sửa tài khoản
+        $user = UserStaff::findOrFail($id);
+        return view('admin.user_staff.edit', compact('user'));
     }
 
     public function update(Request $request, UserStaff $user)

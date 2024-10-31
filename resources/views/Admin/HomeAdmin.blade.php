@@ -2,13 +2,100 @@
 
 @section('content')
     <!-- Page Heading -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
+    <div class="row">
+        <p class="title-thongke">Thông kê đơn hàng doanh số</p>
+        <form autocomplete="off" style="display: flex">
+            @csrf
+            @method('POST')
+            <div class="col-md-2">
+                <p>Từ ngày: <input type="text" class="form-control" id="datepicker"></p>
+            </div>
+            <div class="col-md-2">
+                <p>Đến ngày: <input type="text" class="form-control" id="datepicker2"></p>
+            </div>
+            <div class="col-md-2">
+                <p>Lọc theo:
+                    <select class="dashboard-filter form-control">
+                        <option>--Chọn--</option>
+                        <option value="7ngay">7 ngày qua</option>
+                        <option value="thangtruoc">Tháng trước</option>
+                        <option value="thangnay">Tháng này</option>
+                        <option value="365ngayqua">1 năm qua</option>
+                    </select>
+                </p>
+            </div>
+            <button type="button" id="btn-dashboard-filter" class="" style="border: none" value="Lọc kết quả">Lọc kết
+                quả</button>
+        </form>
+        <script>
+            $(function() {
+                $("#datepicker").datepicker({
+                    dateFormat: "yy-mm-dd",
+                    preText: "Tháng trước",
+                    nextText: "Tháng sau",
+                    duration: "slow"
+                });
+            });
+            $(function() {
+                $("#datepicker2").datepicker({
+                    dateFormat: "yy-mm-dd",
+                    changeMonth: true,
+                    changeYear: true
+                });
+            });
+            $('.dashboard-filter').change(function() {
+                var dashboard_value = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                // alert(dashboard_value);
+                $.ajax({
+                    url: "{{ url('/filter-by-select') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token,
+                        dashboard_value: dashboard_value
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        bieudo.setData(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Lỗi khi tải dữ liệu:", error);
+                    }
+                });
+            })
+            $("#btn-dashboard-filter").click(function() {
+                // alert();
+                var _token = $('input[name="_token"]').val();
+                var from_date = $("#datepicker").val();
+                var to_date = $("#datepicker2").val();
+                // alert(from_date);
+                // alert(to_date);
+                $.ajax({
+                    url: "{{ url('filter-by-date') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token,
+                        from_date: from_date,
+                        to_date: to_date
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        bieudo.setData(data);
+                    }
+                });
 
-    <!-- Content Row -->
+            });
+        </script>
+    </div>
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
@@ -93,7 +180,22 @@
         </div>
     </div>
     {{-- {{$das}} --}}
-
+    <div class="col-md-12">
+        <div id="bieudo" style="height: 250px"></div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <script>
+            var bieudo = new Morris.Bar({
+                element: 'bieudo',
+                data: ['ngay_dat'],
+                parseTime: false,
+                xkey: 'ngay_dat',
+                ykeys: ['so_don_hang', 'doang_so', 'so_luong'],
+                labels: ['Đơn hàng', 'Doanh số', 'Số lượng']
+            });
+        </script>
+    </div>
     <div class="container overflow-hidden text-center">
         <div class="row gy-5">
             <div class="col-6">
@@ -241,7 +343,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $KH->name }}</td>
-                                    <td>{{ number_format($KH->total_spent, 2) }} VND</td>
+                                    {{-- <td>{{ number_format($KH->total_spent, 2) }} VND</td> --}}
+                                    <td>{{ number_format($KH->total_spent, 0, ',', '.') }} VND</td>
                                 </tr>
                             @endforeach
                         </tbody>

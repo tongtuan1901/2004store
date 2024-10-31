@@ -18,7 +18,7 @@ class CheckAdmin
     public function handle(Request $request, Closure $next)
     {
         // Kiểm tra xem người dùng đã đăng nhập và có vai trò admin
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::guard('user_staff')->check() && Auth::guard('user_staff')->user()->role === 'admin') {
             return $next($request);
         }
 

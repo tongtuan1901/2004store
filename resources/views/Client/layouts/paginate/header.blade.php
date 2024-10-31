@@ -524,8 +524,8 @@
                 </div>
                 <div class="headers3-center">
                     <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
-                        <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/medium/100/520/624/themes/959507/assets/shop_logo_imageb1ed.png') }}"
-                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion">
+                        <img src="{{ asset('assets/images/2004Store.png') }}"
+                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion" >
                     </a>
                 </div>
                 <div class="headers3-right">

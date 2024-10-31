@@ -5,9 +5,9 @@
         <div class="flex flex-wrap gap-4 mb-3">
             <div class="mb-2 w-44">
                 <select id="Category" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                    <option  class="dark:text-slate-700">Tất cả danh mục</option>
-                    <option  class="dark:text-slate-700">Áo</option>
-                    <option  class="dark:text-slate-700">Quần</option>
+                    <option class="dark:text-slate-700">Tất cả danh mục</option>
+                    <option class="dark:text-slate-700">Áo</option>
+                    <option class="dark:text-slate-700">Quần</option>
                 </select>
             </div>
             <div class="ms-auto">
@@ -21,83 +21,43 @@
                 </form>
             </div>
             <div>
-                <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
+            <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
                     <a href="{{ route('admin-categories.create') }}">Thêm danh mục</a>
                 </button>
             </div>
         </div>
 
-
-        <div id="myTabContent">
-            <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-900" id="all" role="tabpanel" aria-labelledby="all-tab">
-                <div class="grid grid-cols-1 p-0 md:p-4">
-                    <div class="sm:-mx-6 lg:-mx-8">
-                        <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                            <table class="w-full">
-                                <thead class="bg-gray-50 dark:bg-slate-700/20">
-                                    <tr>
-                                        <th scope="col" class="p-3">
-                                            <label class="custom-label">
-                                                <div class="bg-white dark:bg-slate-600/40 border border-slate-200 dark:border-slate-600 rounded w-5 h-5  inline-block  text-center -mb-[5px]">
-                                                <input type="checkbox" class="hidden" >
-                                                <i class="icofont-verification-check hidden text-ms text-brand-500 dark:text-slate-200 leading-5"></i>
-                                                </div>
-                                            </label>
-                                        </th>
-                                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                          STT
-                                        </th>
-                                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                            Thể loại
-                                        </th>
-                                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                            Hoạt động
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- 1 -->
-                                @foreach ($listCategories as $key => $category)
-                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
-                                    <td class="w-4 p-4">
-                                        <label class="custom-label">
-                                            <div class="bg-white dark:bg-slate-600/40 border border-slate-200 dark:border-slate-600 rounded w-5 h-5  inline-block  text-center -mb-[5px]">
-                                            <input type="checkbox" class="hidden" >
-                                            <i class="icofont-verification-check hidden text-ms text-brand-500 dark:text-slate-200 leading-5"></i>
-                                            </div>
-                                        </label>
-                                    </td>
-                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                        <div class="flex items-center">
-                                            <h5>{{ $key + 1 }}</h5>
-                                        </div>
-                                    </td>
-                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                        <div class="flex items-center">
-                                            <div class="self-center">
-                                                <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">{{ $category->name }}</h5>
-                                        </div>
-                                    </td>
-                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                        <a href="{{ route('admin-categories.edit', $category->id) }}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i></a>
-                                         <form action="{{ route('admin-categories.destroy', $category->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-
-                                         <button onclick="return confirm('Bạn có muốn xoá danh mục này không ?')" class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">xoá</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                    <!-- 2 -->
-
-                                </tbody>
-                            </table>
-                        </div><!--end div-->
-                    </div><!--end div-->
-                </div><!--end grid-->
-                </div>
-            </div>
-        </div>
-    </div><!--end card-body-->
-    @endsection
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="whitespace-nowrap">Tên danh mục</th>
+                    <th class="whitespace-nowrap">Ảnh</th>
+                    <th class="whitespace-nowrap">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($listCategories as $category)
+                    <tr>
+                        <td class="whitespace-nowrap">{{ $category->name }}</td>
+                        <td class="whitespace-nowrap">
+                            @if($category->image)
+                                <img src="{{ asset('storage/' . $category->image) }}" alt="Category Image" class="w-20 h-20 object-cover">
+                            @else
+                                <span>Không có ảnh</span>
+                            @endif
+                        </td>
+                        <td class="whitespace-nowrap">
+                            <a href="{{ route('admin-categories.edit', $category->id) }}" class="text-blue-500">Sửa</a>
+                            <form action="{{ route('admin-categories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?');">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection

@@ -4,6 +4,19 @@
 @section('content')
 <div class="w-full relative mb-4">
     <h1 class="text-2xl font-semibold">Quản Lý Tồn Kho</h1>
+    
+    @if(!empty($lowStockItems))
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+        <p class="font-bold">Cảnh Báo: Các sản phẩm sau sắp hết hàng!</p>
+        <ul>
+            @foreach($lowStockItems as $item)
+                <li>
+                    <strong>{{ $item['product_name'] }}</strong> - Size: {{ $item['size'] }}, Màu sắc: {{ $item['color'] }}, Số lượng: {{ $item['quantity'] }}, Danh mục: {{ $item['category'] }}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <!-- Nút thêm bản ghi tồn kho -->
     <div class="mb-4">
@@ -38,7 +51,7 @@
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">STT</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Sản phẩm</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Danh mục</th>
-                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Tồn kho</th> <!-- Cột Tồn kho -->
+                    <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Biến thể sản phẩm</th> <!-- Cột Biến thể sản phẩm -->
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thay đổi số lượng</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Ghi chú</th>
                     <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Thời gian</th>
@@ -46,31 +59,45 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventoryLogs as $index => $log)
-                    <tr class="hover:bg-gray-100 border-b">
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            {{ $log->product->name }}
-                        </td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            {{ $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
-                        </td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->product->quantity }} sản phẩm</td> <!-- Hiển thị số lượng tồn kho -->
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
-                        <td class="py-2 px-4 text-sm text-gray-500">
-                            <a href="{{ route('inventory.edit', $log->id) }}" class="text-blue-600 hover:underline">Sửa</a>
-                            <form action="{{ route('inventory.destroy', $log->id) }}" method="post" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');">
-                                    Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+            @foreach ($inventoryLogs as $index => $log)
+    <tr class="hover:bg-gray-100 border-b">
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $index + 1 }}</td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            {{ $log->product ? $log->product->name : 'Không có sản phẩm' }}
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            {{ $log->product && $log->product->category ? $log->product->category->name : 'Không có danh mục' }}
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            @if ($log->variation)
+                Size: {{ $log->variation->size ? $log->variation->size->size : 'N/A' }},
+                Màu sắc: {{ $log->variation->color ? $log->variation->color->color : 'N/A' }},
+                Số lượng: {{ $log->variation->quantity }}
+            @else
+                Không có biến thể
+            @endif
+        </td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->quantity_change }}</td>
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->note ?? 'Không có ghi chú' }}</td>
+        <td class="py-2 px-4 text-sm text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+
+        <td class="py-2 px-4 text-sm text-gray-500">
+            <a href="{{ route('inventory.edit', $log->id) }}" class="text-blue-600 hover:underline">Sửa</a>
+            <form action="{{ route('inventory.destroy', $log->id) }}" method="post" style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');">
+                    Xoá
+                </button>
+            </form>
+        </td>
+    </tr>
+@endforeach
+
 
                 @if ($inventoryLogs->isEmpty())
                     <tr>

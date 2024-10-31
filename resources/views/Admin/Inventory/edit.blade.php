@@ -23,55 +23,71 @@
 
         <div class="mb-4">
             <label for="product_id" class="block text-sm font-medium">Chọn Sản Phẩm</label>
-            <select id="product_id" name="product_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+            <select id="product_id" name="product_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required onchange="populateVariations(this)">
                 <option value="">-- Chọn Sản Phẩm --</option>
                 @foreach ($products as $product)
-                    <option value="{{ $product->id }}" data-category-id="{{ $product->category_id }}" {{ $inventoryLog->product_id == $product->id ? 'selected' : '' }}>
-                        {{ $product->name }} (Hiện có: {{ $product->quantity }} sản phẩm)
+                    <option value="{{ $product->id }}" 
+                        data-category-id="{{ $product->category_id }}" 
+                        data-variations='{{ json_encode($product->variations) }}' 
+                        {{ $inventoryLog->product_id == $product->id ? 'selected' : '' }}>
+                        {{ $product->name }} 
                     </option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-4">
-            <label for="quantity_change" class="block text-sm font-medium">Số Lượng Thay Đổi</label>
-            <input type="number" id="quantity_change" name="quantity_change" value="{{ $inventoryLog->quantity_change }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <label for="variation_id" class="block text-sm font-medium">Chọn Biến Thể</label>
+            <select id="variation_id" name="variation_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                <option value="">-- Chọn Biến Thể --</option>
+                @if ($inventoryLog->variation)
+                    <option value="{{ $inventoryLog->variation->id }}" selected>
+                        Màu: {{ $inventoryLog->variation->color ? $inventoryLog->variation->color->color : 'Chưa xác định' }},
+                        Kích thước: {{ $inventoryLog->variation->size ? $inventoryLog->variation->size->size : 'Chưa xác định' }},
+                        Số lượng: {{ $inventoryLog->variation->quantity }}
+                    </option>
+                @endif
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="quantity_change" class="block text-sm font-medium">Thay Đổi Số Lượng</label>
+            <input type="number" name="quantity_change" id="quantity_change" value="{{ $inventoryLog->quantity_change }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
         </div>
 
         <div class="mb-4">
             <label for="note" class="block text-sm font-medium">Ghi Chú</label>
-            <textarea id="note" name="note" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $inventoryLog->note }}</textarea>
+            <textarea name="note" id="note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $inventoryLog->note }}</textarea>
         </div>
 
-        <div class="mb-4">
-            <label for="date" class="block text-sm font-medium">Ngày Ghi Nhận</label>
-            <input type="date" id="date" name="date" value="{{ $inventoryLog->created_at->format('Y-m-d') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-        </div>
-
-        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Cập Nhật</button>
+        <button type="submit" class="btn btn-success">
+            Cập Nhật
+        </button>
     </form>
 </div>
 
 <script>
-    document.getElementById('category_id').addEventListener('change', function () {
-        const selectedCategoryId = this.value;
-        const productSelect = document.getElementById('product_id');
-        const options = productSelect.querySelectorAll('option');
+function populateVariations(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Hiển thị sản phẩm chỉ thuộc danh mục đã chọn
-        options.forEach(option => {
-            const optionCategoryId = option.getAttribute('data-category-id');
-            option.style.display = (selectedCategoryId === "" || optionCategoryId === selectedCategoryId) ? 'block' : 'none';
-        });
+    // Nếu không chọn sản phẩm, return
+    if (!selectedOption) return;
 
-        // Reset chọn sản phẩm khi thay đổi danh mục
-        productSelect.value = "";
+    const variations = JSON.parse(selectedOption.getAttribute('data-variations')) || [];
+    const variationSelect = document.getElementById('variation_id');
+
+    variationSelect.innerHTML = '<option value="">-- Chọn Biến Thể --</option>'; // Reset biến thể
+
+    variations.forEach(variation => {
+        const option = document.createElement('option');
+        option.value = variation.id;
+
+        const colorName = variation.color ? variation.color.color : 'Chưa xác định';
+        const sizeName = variation.size ? variation.size.size : 'Chưa xác định';
+
+        option.textContent = `Màu: ${colorName}, Kích thước: ${sizeName}, Số lượng: ${variation.quantity}`;
+        variationSelect.appendChild(option);
     });
-
-    // Gọi sự kiện 'change' một lần để hiển thị sản phẩm phù hợp khi load trang chỉnh sửa
-    document.getElementById('category_id').dispatchEvent(new Event('change'));
+}
 </script>
-
 @endsection
-
-@extends('Admin/layouts/master/footer')

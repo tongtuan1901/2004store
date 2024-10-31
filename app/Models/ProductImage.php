@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductImage extends Model
 {
+    
     use HasFactory;
-
+    protected $table = 'product_images';
     protected $fillable = [
         'product_id',
         'image_path',
@@ -18,5 +19,9 @@ class ProductImage extends Model
     public function product()
     {
         return $this->belongsTo(AdminProducts::class, 'product_id');
+    }
+    public function adminProduct()
+    {
+        return $this->belongsTo(AdminProducts::class);
     }
 }
