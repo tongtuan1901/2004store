@@ -343,7 +343,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $KH->name }}</td>
-                                    <td>{{ number_format($KH->total_spent, 2) }} VND</td>
+                                    {{-- <td>{{ number_format($KH->total_spent, 2) }} VND</td> --}}
+                                    <td>{{ number_format($KH->total_spent, 0, ',', '.') }} VND</td>
                                 </tr>
                             @endforeach
                         </tbody>

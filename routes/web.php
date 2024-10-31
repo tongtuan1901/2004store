@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin1\AdminCustomerController;
+use App\Http\Controllers\Admin1\AdminHomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -61,11 +63,10 @@ use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
 
-   
-// quản lí admin và nhân viên
+
 Route::prefix('admin')->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
-    Route::resource('admin-home', HomeAdminController::class);
+    
     // Đăng nhập admin và nhân viên
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
@@ -196,3 +197,14 @@ Route::get('/new/show/{id}',[AdminNewsController::class,'show'])->name('new.show
 
 route::post('/filter-by-date',[HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
+Route::resource('admin-home', HomeAdminController::class);
+
+route::get('admin-ui',function(){
+    return view('Admin1.Orders.donHangDaHuy');
+});
+// route::get('admin-ui',function(){
+//     return view('Admin1.Home.index');
+// });
+
+// Route::resource('admin1-home',AdminHomeController ::class);
+// Route::resource('admin1-kh',AdminCustomerController ::class);

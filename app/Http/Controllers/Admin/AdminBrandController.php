@@ -24,7 +24,7 @@ class AdminBrandController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $request->validate([
             'name' => 'required|unique:brands|max:255',

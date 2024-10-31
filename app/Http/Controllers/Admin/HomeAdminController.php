@@ -29,13 +29,13 @@ class HomeAdminController extends Controller
         $startDateOld = Carbon::now()->subMonth()->startOfMonth();
         $endDateOld = Carbon::now()->subMonth()->endOfMonth();
 
-        $total = OderItem::whereBetween('created_at', [$startDate, $endDate])->sum('price');
+        $total = AdminOrder::whereBetween('created_at', [$startDate, $endDate])->where('status', 'Thành công')->sum('total');
         $quantity = OderItem::whereBetween('created_at', [$startDate, $endDate])->sum('quantity');
 
-        $totalOld = OderItem::whereBetween('created_at', [$startDateOld, $endDateOld])->sum('price');
-        $count = OderItem::whereBetween('created_at', [$startDateOld, $endDateOld])->count();
+        $totalOld = AdminOrder::whereBetween('created_at', [$startDateOld, $endDateOld])->where('status', 'Thành công')->sum('total');
+        $count = AdminOrder::whereBetween('created_at', [$startDateOld, $endDateOld])->count();
 
-        // Tính giá bán trung bình
+
         $doanhThuThangTruoc = $count > 0 ? $totalOld / $count : 0;
         $salesData = OderItem::whereBetween('created_at', [$startDate, $endDate])
             ->select('product_id', DB::raw('COUNT(*) as total_sales'))
