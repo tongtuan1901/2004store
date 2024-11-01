@@ -86,6 +86,9 @@ public function firstImage()
 {
     return $this->hasOne(ProductImage::class, 'product_id');
 }
-
+public function review()
+{
+    return $this->hasMany(Review::class);
+}
 
 }

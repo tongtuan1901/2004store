@@ -13,22 +13,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($comments as $comment)
-                <tr>
-                    <td>{{ $comment->id }}</td>
-                    <td>{{ $comment->user->name }}</td>
-                    <td>{{ $comment->product->name }}</td>
-                    <td>{{ $comment->content }}</td>
-                    <td>
-                        <form action="{{ route('admin-comments.destroy', $comment->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-
-                         <button onclick="return confirm('Bạn có muốn xoá danh mục này không ?')" class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">xoá</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+        @foreach ($comments as $comment)
+    <tr>
+        <td>{{ $comment->id }}</td>
+        <td>{{ $comment->user ? $comment->user->name : 'Người dùng không tìm thấy' }}</td>
+        <td>{{ $comment->product ? $comment->product->name : 'Sản phẩm không tìm thấy' }}</td>
+        <td>{{ $comment->content }}</td>
+        <td>
+            <form action="{{ route('admin-comments.destroy', $comment->id) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button onclick="return confirm('Bạn có muốn xoá danh mục này không ?')" class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</button>
+            </form>
+        </td>
+    </tr>
+@endforeach
         </tbody>
     </table>
 @endsection

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\User; // Thêm model User
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash; 
 class RegisterController extends Controller
 {
     public function index()
@@ -21,15 +21,15 @@ class RegisterController extends Controller
             'phone_number' => 'nullable|string|max:20',
             'password' => 'required|string|min:6',
         ]);
-
-        // Lưu dữ liệu người dùng
+    
+        // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'password' => $request->password, // Lưu mật khẩu không mã hóa
+            'password' => Hash::make($request->password), // Mã hóa mật khẩu
         ]);
-
+    
         return redirect()->route('client-login.index')->with('success', 'Đăng ký thành công!');
     }
 }

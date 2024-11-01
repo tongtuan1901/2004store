@@ -22,19 +22,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($reviews as $review)
-                    <tr>
-                        <td>{{ $review->id }}</td>
-                        <td>{{ $review->product->name }}</td>
-                        <td>{{ $review->user->name }}</td>
-                        <td>{{ $review->rating }} sao</td>
-                        <!-- <td>{{ \Illuminate\Support\Str::limit($review->comment, 50) }}</td> -->
-                        <td>{{ $review->created_at->format('d-m-Y') }}</td>
-                        <td>
-                            <a href="{{ route('admin.reviews.show', $review->id) }}" class="btn btn-primary btn-sm">Xem</a>
-                        </td>
-                    </tr>
-                @endforeach
+            @foreach($reviews as $review)
+<tr>
+    <td>{{ $review->id }}</td>
+    <td>{{ $review->product ? $review->product->name : 'Sản phẩm không tìm thấy' }}</td>
+    <td>{{ $review->user ? $review->user->name : 'Người dùng không tìm thấy' }}</td>
+    <td>{{ $review->rating }} sao</td>
+    <td>{{ $review->created_at->format('d-m-Y') }}</td>
+    <td>
+        <a href="{{ route('admin.reviews.show', $review->id) }}" class="btn btn-primary btn-sm">Xem</a>
+    </td>
+</tr>
+@endforeach
             </tbody>
         </table>
     </div>

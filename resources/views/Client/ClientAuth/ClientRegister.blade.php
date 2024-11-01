@@ -32,6 +32,9 @@
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">ĐĂNG KÝ</button>
                                 </div>
+                                <div class="form-group text-center">
+                                    <a href="{{ route('client-password.reset') }}" class="btn btn-link">Quên mật khẩu?</a>
+                                </div>
                                 <div class="auth-back-btn">
                                     <a href="{{ route('client-login.index') }}">Đăng nhập</a>
                                 </div>

@@ -1,25 +1,25 @@
 <?php
 
-use App\Http\Controllers\Admin1\AdminCustomerController;
-use App\Http\Controllers\Admin1\AdminHomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
-
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\client\CardController;
 
 
-
 use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\client\NewsController;
+
+
+
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-
 use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
+
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\admin\AdminNewsController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\HomeAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,22 +34,22 @@ use App\Http\Controllers\admin\AdminNewsController;
 //View Admin
 
 
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\HomeAdminController;
-
-
 use App\Http\Controllers\client\ProductsController;
 use App\Http\Controllers\client\RegisterController;
-use App\Http\Controllers\Admin\AdminBrandController;
 
+
+use App\Http\Controllers\Admin1\AdminHomeController;
+use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
 
 use App\Http\Controllers\Admin\AdminOrdersController;
 
 use App\Http\Controllers\Admin\AdminBannersController;
+
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\Admin1\AdminCustomerController;
 
 
 
@@ -57,6 +57,8 @@ use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
+use App\Http\Controllers\Client\ChangePasswordController;
+use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
@@ -142,7 +144,14 @@ Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
 Route::resource('client-register', RegisterController::class);
+//quên mật khẩu
+Route::get('client-password/reset', [ForgotPasswordController::class, 'showResetForm'])->name('client-password.reset');
+Route::post('client-password/email', [ForgotPasswordController::class, 'sendResetLink'])->name('client-password.email');
 Route::resource('client-products', ProductsController::class);
+// đổi mật khẩu khách hàng
+Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
+Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
+
 
 Route::resource('client-news', NewsController::class);
 Route::resource('client-card', CardController::class);
@@ -151,6 +160,8 @@ Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
 // đăng xuất khách hàng
 Route::post('client-logout', [LoginController::class, 'logout'])->name('client-logout');
+
+
 Route::resource('admin-customers', AdminUserController::class);
 
 Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
@@ -199,9 +210,42 @@ route::post('/filter-by-date',[HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
 Route::resource('admin-home', HomeAdminController::class);
 
-route::get('admin-ui',function(){
-    return view('Admin1.Orders.donHangDaHuy');
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-products',function(){
+//     return view('Admin1.Products.create');
+// });
+
+// route::get('admin-products1',function(){
+//     return view('Admin1.Products.show');
+// });
+
+// route::get('admin-products2',function(){
+//     return view('Admin1.orders.index');
+// });
+
+// route::get('admin-products3',function(){
+//     return view('Admin1.orders.show');
+// });
+
+// route::get('admin-customer',function(){
+//     return view('Admin1.customer.show');
+// });
+route::get('admin-customer1',function(){
+    return view('Admin1.users.index');
 });
+route::get('admin-login',function(){
+    return view('Admin1.auth.login');
+});
+Route::resource('users', AdminUserController::class);
+
 // route::get('admin-ui',function(){
 //     return view('Admin1.Home.index');
 // });

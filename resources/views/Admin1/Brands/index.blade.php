@@ -6,8 +6,14 @@
             <div class="col-12 sherah-main__column">
                 <div class="sherah-body">
                     
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
+    </section>
 @endsection

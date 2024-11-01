@@ -24,7 +24,10 @@
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">ĐĂNG NHẬP</button>
                                 </div>
-                                <div class="auth-back-btn">
+                                <div class="form-group text-center">
+                                    <a href="{{ route('client-password.reset') }}" class="btn btn-link">Quên mật khẩu?</a>
+                                </div>
+                                <div class="auth-back-btn text-center">
                                     <a href="{{ route('client-register.index') }}">Đăng ký</a>
                                 </div>
                             </form>
