@@ -11,25 +11,30 @@ use App\Http\Controllers\Controller;
 class AdminCouponsController extends Controller
 {
     public function index()
-    {
-        // Lấy tất cả mã giảm giá cùng với thông tin danh mục và sản phẩm liên quan
-        $coupons = AdminCoupons::with(['category', 'product'])->get();
-        foreach ($coupons as $coupon) {
-            if ($coupon->product) {
-                // Giá gốc của sản phẩm
-                $originalPrice = $coupon->product->price;
-                // Tính toán giá sau khi áp dụng mã giảm giá
-                if ($coupon->type === 'fixed') {
-                    $discountedPrice = max($originalPrice - $coupon->value, 0); // Không cho phép giá âm
-                } elseif ($coupon->type === 'percentage') {
-                    $discountedPrice = max($originalPrice - ($originalPrice * $coupon->value / 100), 0);
-                } else {
-                    $discountedPrice = $originalPrice;
-                }
+{
+    $coupons = AdminCoupons::with(['category', 'product'])->get();
+    
+    foreach ($coupons as $coupon) {
+        if ($coupon->product) {
+            
+            $originalPrice = $coupon->product->price;
+            $coupon->original_price = $originalPrice;
+
+            if ($coupon->type === 'fixed') {
+                $discountedPrice = max($originalPrice - $coupon->value, 0);
+            } elseif ($coupon->type === 'percentage') {
+                $discountedPrice = max($originalPrice - ($originalPrice * $coupon->value / 100), 0);
+            } else {
+                $discountedPrice = $originalPrice;
             }
+            
+            $coupon->discounted_price = $discountedPrice;
         }
-        return view('admin.coupons.index', compact('coupons'));
     }
+    
+    return view('Admin1.Coupons.index', compact('coupons'));
+}
+
 
     public function create(Request $request)
     {
@@ -42,7 +47,7 @@ class AdminCouponsController extends Controller
             $products = AdminProducts::where('category_id', $request->category_id)->get();
         }
     
-        return view('admin.coupons.create', compact('categories', 'products'));
+        return view('Admin1.Coupons.create', compact('categories', 'products'));
     }
     
     public function store(Request $request)
@@ -86,7 +91,7 @@ public function edit($id, Request $request)
         $admin_coupon->category_id = $request->category_id; // Cập nhật category_id
     }
 
-    return view('admin.coupons.edit', compact('admin_coupon', 'categories', 'products'));
+    return view('Admin1.coupons.edit', compact('admin_coupon', 'categories', 'products'));
 }
 
 
