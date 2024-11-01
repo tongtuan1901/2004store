@@ -45,8 +45,9 @@ use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
 
 use App\Http\Controllers\Admin\AdminOrdersController;
-
-use App\Http\Controllers\Admin\AdminBannersController;
+//admin banner
+// use App\Http\Controllers\Admin\AdminBannersController;
+use App\Http\Controllers\Admin1\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminProductsController;
@@ -208,3 +209,34 @@ route::get('admin-ui',function(){
 
 // Route::resource('admin1-home',AdminHomeController ::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
+route::get('admin-ui',function(){
+    return view('Admin1.Products.index');
+});
+route::get('admin-ui',function(){
+    return view('Admin1.Products.index');
+});
+route::get('admin-ui',function(){
+    return view('Admin1.Products.index');
+});
+route::get('admin-products',function(){
+    return view('Admin1.Products.create');
+});
+
+route::get('admin-products1',function(){
+    return view('Admin1.Products.show');
+});
+
+route::get('admin-products2',function(){
+    return view('Admin1.orders.index');
+});
+
+route::get('admin-products3',function(){
+    return view('Admin1.orders.show');
+});
+
+route::get('admin-customer',function(){
+    return view('Admin1.customer.show');
+});
+route::get('admin-customer1',function(){
+    return view('Admin1.customer.index');
+});
