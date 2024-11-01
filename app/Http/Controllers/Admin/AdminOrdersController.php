@@ -24,14 +24,14 @@ class AdminOrdersController extends Controller
             }
         }
 
-        return view('Admin1.orders.index', compact('orders'));
+        return view('Admin.orders.index', compact('orders'));
     }
 
     public function approveIndex()
     {
         // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
         $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
-        return view('Admin1.orders.approve_index', compact('orders'));
+        return view('Admin.orders.approve_index', compact('orders'));
     }
 
     public function receivedIndex()
@@ -102,7 +102,7 @@ class AdminOrdersController extends Controller
             echo Storage::url($product->image_path);
         }
         // session()->put('cart_total', $order->total);
-        return view('admin1.orders.show', compact('order'));
+        return view('admin.orders.show', compact('order'));
     }
 
 
@@ -155,7 +155,7 @@ class AdminOrdersController extends Controller
         // $order->status = 'Đã xử lý'; // Hoặc trạng thái bạn muốn
         // $order->save();
         session()->put('cart_total', $order->total);
-        return view('admin1.orders.approve', compact('order'));
+        return view('admin.orders.approve', compact('order'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -201,7 +201,7 @@ class AdminOrdersController extends Controller
 public function deletedOrders()
 {
     $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
-    return view('Admin1.orders.deleted', compact('deletedOrders'));
+    return view('Admin.orders.deleted', compact('deletedOrders'));
 }
 
 

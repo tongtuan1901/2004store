@@ -11,12 +11,12 @@ class AdminUserStaffController extends Controller
     public function index()
     {
         $users = UserStaff::all(); // Lấy tất cả người dùng
-        return view('admin1.user_staff.index', compact('users')); // Trả về view danh sách người dùng
+        return view('admin.user_staff.index', compact('users')); // Trả về view danh sách người dùng
     }
 
     public function create()
     {
-        return view('admin1.user_staff.create'); // Trả về form thêm tài khoản
+        return view('admin.user_staff.create'); // Trả về form thêm tài khoản
     }
 
     public function store(Request $request)
@@ -35,7 +35,7 @@ class AdminUserStaffController extends Controller
     public function edit($id)
     {
         $user = UserStaff::findOrFail($id);
-        return view('admin1.user_staff.edit', compact('user'));
+        return view('admin.user_staff.edit', compact('user'));
     }
 
     public function update(Request $request, UserStaff $user)

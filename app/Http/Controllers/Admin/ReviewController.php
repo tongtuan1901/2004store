@@ -13,7 +13,7 @@ class ReviewController extends Controller
     public function index()
     {
         $reviews = Review::with('product', 'user')->paginate(10); // Phân trang 10 đánh giá mỗi trang
-        return view('Admin1.Rating.index', compact('reviews'));
+        return view('Admin.Rating.index', compact('reviews'));
     }
 
     // Hiển thị chi tiết một đánh giá

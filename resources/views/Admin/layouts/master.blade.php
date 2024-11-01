@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('Admin1.layouts.header')
+    @include('Admin.layouts.header')
 </head>
 <body>
     @yield('contentAdmin')
-    @include('Admin1.layouts.footer')
+    @include('Admin.layouts.footer')
 </body>
 </html>

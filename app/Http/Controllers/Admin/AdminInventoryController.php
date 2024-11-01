@@ -56,7 +56,7 @@ class AdminInventoryController extends Controller
             }
         }
 
-        return view('admin1.inventory.index', compact('inventoryLogs', 'products', 'lowStockItems'));
+        return view('admin.inventory.index', compact('inventoryLogs', 'products', 'lowStockItems'));
     }
 
     /**
@@ -67,7 +67,7 @@ class AdminInventoryController extends Controller
         // Lấy danh sách sản phẩm cùng với biến thể và thông tin màu sắc, kích thước
         $products = AdminProducts::with(['variations.color', 'variations.size'])->get();
         $categories = Category::all(); // Lấy danh sách danh mục
-        return view('admin1.inventory.create', compact('products', 'categories')); // Truyền cả sản phẩm và danh mục
+        return view('admin.inventory.create', compact('products', 'categories')); // Truyền cả sản phẩm và danh mục
     }
 
     /**
@@ -117,7 +117,7 @@ class AdminInventoryController extends Controller
         $products = AdminProducts::with(['variations.color', 'variations.size'])->get();
 
         // Trả về view với dữ liệu
-        return view('admin1.inventory.edit', compact('inventoryLog', 'categories', 'products'));
+        return view('admin.inventory.edit', compact('inventoryLog', 'categories', 'products'));
     }
 
     /**
