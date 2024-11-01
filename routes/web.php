@@ -44,7 +44,13 @@ use App\Http\Controllers\admin\AdminLoginController;
 
 use App\Http\Controllers\Admin\AdminOrdersController;
 
-use App\Http\Controllers\Admin\AdminBannersController;
+
+
+
+
+//admin banner
+// use App\Http\Controllers\Admin\AdminBannersController;
+use App\Http\Controllers\Admin1\AdminBannersController;
 
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminCommentsController;
@@ -255,6 +261,7 @@ Route::resource('users', AdminUserController::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
 
 
+
 // Route::get('/customeraddress', [Customeraddress::class, 'index'])->name('customeraddress.index');
 // Route::get('/customeraddress/show/{id}',[Customeraddress::class,'show'])->name('customeraddress.show');
 // Route::get('/customeraddress/create', [Customeraddress::class, 'create'])->name('customeraddress.create');
@@ -297,4 +304,7 @@ Route::resource('users', AdminUserController::class);
 // route::get('admin-new',function(){
 //     return view('admin1/new.index');
 // });
+
+
+
 

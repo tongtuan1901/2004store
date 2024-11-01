@@ -145,9 +145,16 @@
                                                         class="menu-bar__name">Thêm mới sản phẩm</span></span></a></li>
                                     </ul>
                                 </div>
+
                             </li>
 
                             <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
+
+
+                
+                                <!--banner -->
+                                <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
+
                                     data-bs-target="#menu-item_products"><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -157,12 +164,17 @@
                                                     transform="translate(-547.61 -368.076)" />
                                             </svg>
                                         </span>
+
                                         <span class="menu-bar__name">Quản lí tồn kho </span></span> <span
+
+                                        <span class="menu-bar__namee">Banner </span></span> <span
+
                                         class="sherah__toggle"></span></a></span>
                                 <!-- Dropdown Menu -->
                                 <div class="collapse sherah__dropdown" id="menu-item_products"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
+
                                         <li><a href='{{ route('inventory.index') }}'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Danh sách tồn kho</span></span></a></li>
                                         <!-- <li><a href='upload-product.html'><span class="menu-bar__text"><span
@@ -170,6 +182,15 @@
                                     </ul>
                                 </div>
                             </li>
+
+                                        <li><a href='{{ route('admin-banners.index') }}'><span class="menu-bar__text"><span
+                                                        class="menu-bar__name">Danh sách Banner</span></span></a></li>
+                                        <li><a href='{{ route('admin-banners.create') }}'><span class="menu-bar__text"><span
+                                                        class="menu-bar__name">Thêm mới Banner</span></span></a></li>
+                                    </ul>
+                                </div>
+                                
+
                             
                             <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#menu-item__orders"><span class="menu-bar__text">
