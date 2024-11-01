@@ -238,6 +238,9 @@ route::get('admin-products2',function(){
 route::get('admin-products3',function(){
     return view('Admin1.orders.show');
 });
+route::get('admin-products4',function(){
+    return view('Admin1.orders.listDonHangHuy');
+});
 
 route::get('admin-customer',function(){
     return view('Admin1.customer.show');

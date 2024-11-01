@@ -11,14 +11,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID Đơn Hàng</th> 
-                    <th>Tên</th>
-                    <th>Email</th>
+                    <th>ID Đơn Hàng  </th> 
+                    <th>Tên          </th>
+                    <th>Email        </th>
                     <th>Số điện thoại</th>
-                    <th>Địa chỉ</th>
-                    <th>Trạng thái</th>
-                    <th>Sản phẩm</th>
-                    <th>Hành động</th>
+                    <th>Địa chỉ      </th>
+                    <th>Trạng thái   </th>
+                    <th>Sản phẩm     </th>
+                    <th>Hành động    </th>
                 </tr>
             </thead>
             <tbody>
