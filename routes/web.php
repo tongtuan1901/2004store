@@ -241,6 +241,7 @@ Route::resource('admin-home', HomeAdminController::class);
 route::get('admin-customer1',function(){
     return view('Admin1.users.index');
 });
+
 route::get('admin-login',function(){
     return view('Admin1.auth.login');
 });
@@ -252,3 +253,4 @@ Route::resource('users', AdminUserController::class);
 
 // Route::resource('admin1-home',AdminHomeController ::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
+
