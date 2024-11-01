@@ -28,11 +28,11 @@ class ProductVariation extends Model
 
     public function size()
     {
-        return $this->belongsTo(Size::class);
+        return $this->belongsTo(Size::class, 'size_id'); // Đảm bảo tên trường 'size_id' là đúng
     }
 
     public function color()
     {
-        return $this->belongsTo(Color::class);
+        return $this->belongsTo(Color::class, 'color_id');
     }
 }

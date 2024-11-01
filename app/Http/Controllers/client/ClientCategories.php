@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ClientCategories extends Controller
@@ -12,7 +13,8 @@ class ClientCategories extends Controller
      */
     public function index()
     {
-        return view("Client.ClientCategories.ListCategories");
+        $categories = Category::all();
+        return view("Client.ClientCategories.ListCategories", compact('categories'));
     }
 
     /**

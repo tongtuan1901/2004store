@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminProducts;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -36,7 +37,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
+        return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
     }
 
     /**

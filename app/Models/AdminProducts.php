@@ -10,8 +10,11 @@ class AdminProducts extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'products';
+
     protected $fillable = [
         'category_id',
+        'brand_id',
         'name',
         'description',
         'price',
@@ -25,37 +28,34 @@ class AdminProducts extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // Relationship with ProductImage
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 
-    // Relationship with AdminOrder
-    public function orders()
-    {
-        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
-    }
 
-    // Relationship with AdminCoupons
-    public function coupons()
-    {
-        return $this->hasMany(AdminCoupons::class);
-    }
-
-    // Relationship with ProductVariation
     public function variations()
     {
         return $this->hasMany(ProductVariation::class, 'product_id');
     }
 
-    // Override the table name if needed
-    public function getTable()
+    public function coupons()
     {
-        return 'products';
+        return $this->hasMany(AdminCoupons::class);
     }
+
     public function brand()
     {
-        return $this->hasOne(Brand::class); 
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function firstImage()
+    {
+        return $this->hasOne(ProductImage::class, 'product_id');
     }
 }

@@ -495,6 +495,22 @@
 <body class="">
     <header class="headers3">
         <div class="container">
+
+        <!-- hiển thị thông báo -->
+
+        @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+
             <div class="headers3-wrap">
                 <div class="headers3-left">
                     <form class="tool-search" action="">
@@ -507,15 +523,25 @@
                     </form>
                 </div>
                 <div class="headers3-center">
-                    <a href="{{ route('index') }}" aria-label="F1GENZ Model Fashion">
-                        <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/medium/100/520/624/themes/959507/assets/shop_logo_imageb1ed.png') }}"
-                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion">
+                    <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
+                        <img src="{{ asset('assets/images/2004Store.png') }}"
+                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion" >
                     </a>
                 </div>
                 <div class="headers3-right">
-                    <button class="shop-tool" type="button" title="Tài khoản">
-                       <a href="{{route('client-login.index')}}"> <i class="fal fa-user"></i></a>
-                    </button>
+                <button class="shop-tool" type="button" title="Tài khoản">
+    @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
+        <span class="username">{{ Auth::user()->name }}</span> <!-- Hiển thị tên tài khoản -->
+        <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
+        </form>
+    @else
+        <a href="{{ route('client-login.index') }}">
+            <i class="fal fa-user"></i>
+        </a>
+    @endif
+</button>
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>
                     </button>
@@ -549,7 +575,7 @@
                                     </svg></button>
                             </li>
                             <li class="active">
-                                <a href="{{ route('index') }}" title="Trang chủ" aria-label="Trang chủ">Trang chủ</a>
+                                <a href="{{ route('client-home.index') }}" title="Trang chủ" aria-label="Trang chủ">Trang chủ</a>
                             </li>
                             <li class="hasChild">
                                 <a href="{{route('client-categories.index')}}" title="Danh mục sản phẩm"

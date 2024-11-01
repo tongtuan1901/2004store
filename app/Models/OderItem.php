@@ -16,4 +16,9 @@ class OderItem extends Model
         'quantity',
         'price',
     ];
+    // Model OrderItem
+    public function product() {
+        return $this->belongsTo(AdminProducts::class, 'product_id', 'id');
+    }
+
 }

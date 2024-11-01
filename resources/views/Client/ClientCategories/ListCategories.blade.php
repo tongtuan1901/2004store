@@ -53,104 +53,15 @@
                                 </ul>
                             </div>
                             <div class="shop-filter" data-type="vendor">
-                                <h4>Thương hiệu sản phẩm</h4>
+                                <h4>Danh mục sản phẩm</h4>
                                 <div class="shop-filter-list">
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-vendor1" data-group="vendor"
-                                            data-field="vendor" data-text="CHACOAL" value="(CHACOAL)" data-operator="OR">
-                                        <label for="shop-filter-vendor1">CHACOAL</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-vendor2" data-group="vendor"
-                                            data-field="vendor" data-text="GRAY" value="(GRAY)" data-operator="OR">
-                                        <label for="shop-filter-vendor2">GRAY</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-vendor3" data-group="vendor"
-                                            data-field="vendor" data-text="RIBBON" value="(RIBBON)" data-operator="OR">
-                                        <label for="shop-filter-vendor3">RIBBON</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-vendor4" data-group="vendor"
-                                            data-field="vendor" data-text="ROSY" value="(ROSY)" data-operator="OR">
-                                        <label for="shop-filter-vendor4">ROSY</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="shop-filter" data-type="type">
-                                <h4>Loại sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-type1" data-group="type"
-                                            data-field="product_type" data-text="ÁO" value="(ÁO)" data-operator="OR">
-                                        <label for="shop-filter-type1">ÁO</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-type2" data-group="type"
-                                            data-field="product_type" data-text="Đầm" value="(Đầm)" data-operator="OR">
-                                        <label for="shop-filter-type2">Đầm</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-type3" data-group="type"
-                                            data-field="product_type" data-text="Váy" value="(Váy)" data-operator="OR">
-                                        <label for="shop-filter-type3">Váy</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="shop-filter" data-type="variant1">
-                                <h4>Kích thước</h4>
-                                <div class="shop-filter-list">
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-tag-item11" data-group="tag1"
-                                            data-text="33x40cm" data-field="tags" value="(33x40cm)" data-operator="OR">
-                                        <label for="shop-filter-tag-item11">33x40cm</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-tag-item12" data-group="tag1"
-                                            data-text="40x30cm" data-field="tags" value="(40x30cm)" data-operator="OR">
-                                        <label for="shop-filter-tag-item12">40x30cm</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-tag-item13" data-group="tag1"
-                                            data-text="100x30cm" data-field="tags" value="(100x30cm)"
-                                            data-operator="OR">
-                                        <label for="shop-filter-tag-item13">100x30cm</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-tag-item14" data-group="tag1"
-                                            data-text="50x30cm" data-field="tags" value="(50x30cm)" data-operator="OR">
-                                        <label for="shop-filter-tag-item14">50x30cm</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="shop-filter" data-type="variant3">
-                                <h4>Màu sắc</h4>
-                                <div class="shop-filter-list color">
-                                    <div class="shop-filter-item color xanh">
-                                        <input type="checkbox" id="shop-filter-tag-item31" data-group="tag3"
-                                            data-field="tags" data-text="Xanh" value="(Xanh)" data-operator="OR">
-                                        <label for="shop-filter-tag-item31" title="Xanh">Xanh</label>
-                                    </div>
-                                    <div class="shop-filter-item color do">
-                                        <input type="checkbox" id="shop-filter-tag-item32" data-group="tag3"
-                                            data-field="tags" data-text="Đỏ" value="(Đỏ)" data-operator="OR">
-                                        <label for="shop-filter-tag-item32" title="Đỏ">Đỏ</label>
-                                    </div>
-                                    <div class="shop-filter-item color den">
-                                        <input type="checkbox" id="shop-filter-tag-item33" data-group="tag3"
-                                            data-field="tags" data-text="Đen" value="(Đen)" data-operator="OR">
-                                        <label for="shop-filter-tag-item33" title="Đen">Đen</label>
-                                    </div>
-                                    <div class="shop-filter-item color tim">
-                                        <input type="checkbox" id="shop-filter-tag-item34" data-group="tag3"
-                                            data-field="tags" data-text="Tím" value="(Tím)" data-operator="OR">
-                                        <label for="shop-filter-tag-item34" title="Tím">Tím</label>
-                                    </div>
-                                    <div class="shop-filter-item color vang">
-                                        <input type="checkbox" id="shop-filter-tag-item35" data-group="tag3"
-                                            data-field="tags" data-text="Vàng" value="(Vàng)" data-operator="OR">
-                                        <label for="shop-filter-tag-item35" title="Vàng">Vàng</label>
-                                    </div>
+                                    @foreach($categories as $category)
+                                        <div class="shop-filter-item">
+                                            <input type="checkbox" id="shop-filter-vendor-{{ $category->id }}" data-group="vendor"
+                                                data-field="vendor" data-text="{{ $category->name }}" value="({{ $category->name }})" data-operator="OR">
+                                            <label for="shop-filter-vendor-{{ $category->id }}">{{ $category->name }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
 
