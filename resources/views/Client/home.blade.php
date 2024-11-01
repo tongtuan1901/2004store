@@ -2,13 +2,13 @@
 @section('contentClient')
     
 <main class="main-layout">
-    <div id="bannerCarousel" class="carousel slide section_index--slider section-distance" data-ride="carousel" data-interval="2000">
+    <div id="bannerCarousel" class="carousel slide section_index--slider section-distance" data-ride="carousel" data-interval="2000" >
         <div class="carousel-inner">
             @foreach ($banners as $index => $banner)
                 <div class="carousel-item @if ($index === 0) active @endif">
                     <a href="collections/all.html" aria-label="{{ $banner->title }}" title="{{ $banner->title }}">
                         <img src="{{ asset('storage/' . $banner->image) }}" 
-                            alt="{{ $banner->title }}" class="d-block w-100 slide-image" loading="eager" decoding="sync">
+                            alt="{{ $banner->title }}" class="d-block w-100 slide-image" loading="eager" decoding="sync" style="height:100%">
                     </a>
                 </div>
             @endforeach
@@ -108,7 +108,7 @@
                 @foreach($categories as $category)
                     <a class="home-collection-list-item" href="{{ url('collections/all') }}" title="{{ $category->name }}">
                         <div class="home-collection-list-item-image-holder">
-                            <img src="{{  $category->image }}" alt="{{ $category->name }}" 
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" 
                             title="{{ $category->name }}" 
                            style="width=48px; height=480px; loading=lazy;  decoding=async; fetchpriority=auto;"
                             >
@@ -143,9 +143,10 @@
                                         <div class="product-item-top-image">
                                             <a href="{{ route('client-products.show', $product->id) }}"
                                                 class="product-item-top-image-showcase">
-                                                {{-- <img src="{{ Storage::url($product->images->image_path) }}"
-                                                    alt='{{ $product->name }}' title='{{ $product->name }}'
-                                                    width="480" height="480" loading="lazy" decoding="async"> --}}
+                                                <img src="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
+     alt='{{ $product->name }}' title='{{ $product->name }}'
+     width="480" height="480" loading="lazy" decoding="async">
+ 
                                             </a>
                                         </div>
                                         <div class="product-item-label-sale">

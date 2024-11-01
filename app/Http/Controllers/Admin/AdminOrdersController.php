@@ -24,7 +24,7 @@ class AdminOrdersController extends Controller
             }
         }
 
-        return view('Admin.orders.indexdangvanchuyen', compact('orders'));
+        return view('Admin.orders.index', compact('orders'));
     }
 
     public function approveIndex()

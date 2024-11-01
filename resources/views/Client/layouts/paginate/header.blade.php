@@ -524,8 +524,8 @@
                 </div>
                 <div class="headers3-center">
                     <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
-                        <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/medium/100/520/624/themes/959507/assets/shop_logo_imageb1ed.png') }}"
-                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion">
+                        <img src="{{ asset('assets/images/2004Store.png') }}"
+                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion" >
                     </a>
                 </div>
                 <div class="headers3-right">
@@ -536,12 +536,17 @@
             @csrf
             <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
         </form>
+
+        <!-- Nút đổi mật khẩu -->
+        <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
+
     @else
         <a href="{{ route('client-login.index') }}">
             <i class="fal fa-user"></i>
         </a>
     @endif
 </button>
+
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>
                     </button>

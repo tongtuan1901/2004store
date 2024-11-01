@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Color;
 use App\Models\ProductVariation;
 use App\Models\Size;
@@ -17,6 +18,7 @@ class AdminProductsController extends Controller
 {
     public function index(Request $request)
     {
+        $brands = Brand::all();
         $categories = Category::all();
         $listProducts = AdminProducts::with(['category', 'images', 'variations.size', 'variations.color'])
             ->withTrashed()
@@ -40,41 +42,40 @@ class AdminProductsController extends Controller
 
         $listProducts = $query->paginate(10);
 
-        return view('Admin.Products.index', compact('listProducts', 'categories'));
+        return view('admin.Products.index', compact('listProducts', 'categories', 'brands'));
     }
 
     public function create()
     {
+        $brands = Brand::all();
         $categories = Category::all();
         $sizes = Size::all();
         $colors = Color::all();
 
-        return view('admin.products.create', compact('categories', 'sizes', 'colors'));
+        return view('admin.products.create', compact('categories', 'brands', 'sizes', 'colors'));
     }
 
     public function store(Request $request)
     {
+        // Xác thực dữ liệu
         $request->validate([
-            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'price_sale' => 'nullable|numeric|min:0',
-            'quantity' => 'required|integer|min:1',
-            'status' => 'required|boolean',
-            'variation.size' => 'required|array',
-            'variation.color' => 'required|array',
-            'variation.quantity' => 'required|array',
-            'variation.price' => 'required|array',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Đảm bảo có trường cho ảnh sản phẩm
+            'price' => 'required|numeric',
+            'price_sale' => 'nullable|numeric',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'variation.size.*' => 'required|exists:sizes,id',
+            'variation.color.*' => 'required|exists:colors,id',
+            'variation.quantity.*' => 'required|numeric',
+            'variation.price.*' => 'required|numeric',
+            'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $product = AdminProducts::create($request->only(['category_id', 'name', 'description', 'price', 'price_sale', 'quantity', 'status']));
 
-        // Lưu ảnh sản phẩm
+        // Lưu sản phẩm chính
+        $product = AdminProducts::create($request->only(['name', 'price', 'price_sale', 'description', 'category_id', 'brand_id']));
         $this->uploadImages($request, $product->id);
-
-        // Lưu biến thể sản phẩm
+        // Lưu dữ liệu biến thể
         $sizes = $request->input('variation.size');
         $colors = $request->input('variation.color');
         $quantities = $request->input('variation.quantity');
@@ -101,91 +102,81 @@ class AdminProductsController extends Controller
             ]);
         }
 
-        return redirect()->route('admin-products.index')->with('success', 'Sản phẩm và biến thể đã được thêm thành công.');
+        return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được thêm thành công!');
     }
+
+
+
 
 
     public function show($id)
     {
-        $product = AdminProducts::with('images', 'category', 'variations.size', 'variations.color')->findOrFail($id);
-        return view('Admin.products.show', compact('product'));
+        $product = AdminProducts::with(['variations'])->findOrFail($id);
+        return view('admin.products.show', compact('product'));
     }
 
-    public function edit(int $id)
+
+    public function edit($id)
     {
-        $product = AdminProducts::with(['images', 'variations'])->findOrFail($id);
+        $brands = Brand::all();
+        $product = AdminProducts::with(['images', 'variations.size', 'variations.color'])->findOrFail($id);
         $categories = Category::all();
         $sizes = Size::all();
         $colors = Color::all();
 
-        return view("Admin.Products.edit", compact('product', 'categories', 'sizes', 'colors'));
+        return view('admin.products.edit', compact('brands', 'product', 'categories', 'sizes', 'colors'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|integer',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
-            'status' => 'required|integer',
-            'quantity' => 'required|integer',
-            'variation.size' => 'required|array',
-            'variation.color' => 'required|array',
-            'variation.quantity' => 'required|array',
-            'variation.price' => 'required|array',
-            'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
         $product = AdminProducts::findOrFail($id);
 
-        $product->update($request->only(['name', 'description', 'price', 'price_sale', 'quantity', 'status', 'category_id']));
+        // Validate the input data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'price_sale' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'variation.size.*' => 'required|exists:sizes,id',
+            'variation.color.*' => 'required|exists:colors,id',
+            'variation.quantity.*' => 'required|integer|min:0',
+            'variation.price.*' => 'required|numeric',
+            'variation.id.*' => 'required|exists:product_variations,id',
+        ]);
 
-        if ($request->has('delete_images')) {
-            foreach ($request->delete_images as $imageId) {
-                $image = ProductImage::findOrFail($imageId);
-                Storage::disk('public')->delete($image->image_path);
+        $product->update($request->only(['name', 'price', 'price_sale', 'description', 'category_id', 'brand_id']));
+
+        if ($request->hasFile('images')) {
+            foreach ($product->images as $image) {
+                Storage::delete($image->path);
                 $image->delete();
             }
-        }
 
-        // Lưu ảnh sản phẩm
-        $this->uploadImages($request, $product->id);
-
-        // Xóa và thêm lại biến thể sản phẩm
-        ProductVariation::where('product_id', $product->id)->delete();
-
-        $sizes = $request->input('variation.size');
-        $colors = $request->input('variation.color');
-        $quantities = $request->input('variation.quantity');
-        $prices = $request->input('variation.price');
-        $images = $request->file('variation.image');
-
-        foreach ($sizes as $index => $size) {
-            $color = $colors[$index];
-            $quantity = $quantities[$index];
-            $price = $prices[$index];
-            $imagePath = null;
-
-            if (isset($images[$index]) && $images[$index]->isValid()) {
-                $imagePath = $images[$index]->store('images/product_variations', 'public');
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('products');
+                $product->images()->create(['path' => $path]);
             }
-
-            ProductVariation::create([
-                'product_id' => $product->id,
-                'size_id' => $size,
-                'color_id' => $color,
-                'quantity' => $quantity,
-                'price' => $price,
-                'image' => $imagePath,
-            ]);
         }
 
-        return redirect()->route('admin-products.index')->with('success', 'Sản phẩm và biến thể đã được cập nhật thành công.');
-    }
+        // Update variations
+        $variations = $request->input('variation');
+        foreach ($variations['size'] as $index => $size) {
+            $product->variations()->updateOrCreate(
+                ['id' => $variations['id'][$index]],
+                [
+                    'size_id' => $size,
+                    'color_id' => $variations['color'][$index],
+                    'quantity' => $variations['quantity'][$index],
+                    'price' => $variations['price'][$index],
+                ]
+            );
+        }
 
+        return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
+    }
 
     public function destroy(string $id)
     {

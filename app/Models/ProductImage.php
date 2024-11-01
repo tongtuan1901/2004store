@@ -20,4 +20,8 @@ class ProductImage extends Model
     {
         return $this->belongsTo(AdminProducts::class, 'product_id');
     }
+    public function adminProduct()
+    {
+        return $this->belongsTo(AdminProducts::class);
+    }
 }

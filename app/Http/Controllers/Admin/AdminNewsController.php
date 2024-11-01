@@ -17,7 +17,7 @@ class AdminNewsController extends Controller
     public function index()
     {
         $data = DB::table('news')->get();
-        return view('admin\new.index', compact('data'));
+        return view('admin.new.index', compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class AdminNewsController extends Controller
      */
     public function create()
     {
-        return view('admin\new.create');
+        return view('admin.new.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class AdminNewsController extends Controller
     {
 
         $new = News::all()->where('id',$id);
-        return view('admin/new/show',compact('new'));
+        return view('admin.new.show',compact('new'));
 
     }
 
@@ -76,7 +76,7 @@ class AdminNewsController extends Controller
     public function edit(string $id)
     {
         $model = DB::table('news')->where('id', $id)->first();
-        return view('admin/new.edit', compact('model'));
+        return view('admin.new.edit', compact('model'));
     }
 
     /**

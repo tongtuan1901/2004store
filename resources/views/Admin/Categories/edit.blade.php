@@ -1,58 +1,124 @@
-@extends('Admin/layouts/master/master')
 
-@section('content')
-
-
-<div class="w-full relative mb-4">
-    <form action="{{ route('admin-categories.update', $category->id) }}" method="POST">
-        @csrf
-        @method('put')
-        <div class="flex-auto p-0 md:p-4">
-            <div class="mb-2">
-                <label for="title" class="font-medium text-sm text-slate-600 dark:text-slate-400">Tên danh mục :</label>
-                <input type="text" id="title" name="name"
-                 class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700"
-                 placeholder="Tên sản phẩm" @error('name') is-invalid @enderror
-                 value="{{ old('name', $category['name']) }}"
-                 required>
-                 @error('name')
-                     <div class="invalid-feedback">
-                        {{ $message }}
-                     </div>
-                 @enderror
+@extends('admin.layouts.master')
+@section('contentAdmin')
+    <section class="sherah-adashboard sherah-show">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sherah-body">
+                        <div class="sherah-dsinner">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="sherah-breadcrumb mg-top-30">
+                                        <h2 class="sherah-breadcrumb__title">Sửa danh mục</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25 p-0 container-fluid">
+                                <form class="sherah-wc__form-main" action="{{ route('admin-categories.update', $category->id) }}"
+                                    method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="product-form-box sherah-border mg-top-30">
+                                                <h4 class="form-title m-0">Thông tin danh mục</h4>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="sherah-wc__form-label">Tên danh mục</label>
+                                                            <div class="form-group__input">
+                                                                <input class="sherah-wc__form-input"
+                                                                    placeholder="Mời nhập tên danh mục" type="text"
+                                                                    name="name" value="{{ $category->name }}" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="sherah-wc__form-label">Ảnh danh mục</label>
+                                                            <div class="flex-container">
+                                                                <div id="image-preview-container" class="image-preview-container">
+                                                                    <!-- Hiển thị ảnh hiện tại nếu có -->
+                                                                    @if($category->image)
+                                                                        <img src="{{ asset('storage/' . $category->image) }}" class="uploaded-image" alt="Ảnh hiện tại">
+                                                                    @endif
+                                                                </div>
+                                                                <div class="upload-section">
+                                                                    <input type="file" name="image" class="btn-check"
+                                                                        id="input-img" accept="image/*">
+                                                                    <label class="image-upload-label" for="input-img">Tải lên ảnh mới</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                                <button type="submit" class="sherah-btn sherah-btn__primary">Cập nhật danh mục</button>
+                                                <a href="{{ route('admin-categories.index') }}"
+                                                    class="sherah-btn sherah-btn__third">Hủy</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- End Dashboard Inner -->
+                    </div>
+                </div>
             </div>
-
-
-    <form action="{{ route('admin-coupons.update', $coupon->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <label for="code">Mã</label>
-            <input type="text" class="form-control" name="code" id="code" value="{{ $coupon->code }}" required>
         </div>
-        
-        <div class="form-group">
-            <label for="type">Loại</label>
-            <input type="text" class="form-control" name="type" id="type" value="{{ $coupon->type }}" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="value">Giá trị</label>
-            <input type="number" class="form-control" name="value" id="value" step="0.01" value="{{ $coupon->value }}" required>
-        </div>
+    </section>
 
-        <div class="form-group">
-            <label for="starts_at">Ngày bắt đầu</label>
-            <input type="datetime-local" class="form-control" name="starts_at" id="starts_at" value="{{ $coupon->starts_at->format('Y-m-d\TH:i') }}" required>
-        </div>
+    <script>
+        // Preview uploaded images
+        const inputFile = document.getElementById('input-img');
+        const previewContainer = document.getElementById('image-preview-container');
 
-        <div class="form-group">
-            <label for="expires_at">Ngày kết thúc</label>
-            <input type="datetime-local" class="form-control" name="expires_at" id="expires_at" value="{{ $coupon->expires_at->format('Y-m-d\TH:i') }}" required>
-        </div>
+        inputFile.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            previewContainer.innerHTML = ''; // Clear previous images
 
-        <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
-    </form>
-</div>
+            if (file) {
+                const reader = new FileReader();
 
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('uploaded-image');
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+    <style>
+        .flex-container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .image-preview-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            flex: 1;
+        }
+
+        .uploaded-image {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+
+        .upload-section {
+            margin-left: 20px;
+        }
+    </style>
 @endsection
+

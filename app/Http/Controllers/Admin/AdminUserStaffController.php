@@ -42,18 +42,26 @@ class AdminUserStaffController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users_staff,email,' . $user->id,
-            'password' => 'nullable|string|min:8', // Không mã hóa mật khẩu
+            'email' => 'required|string|email|max:255', // Loại bỏ quy tắc unique
+            'password' => 'nullable|string|min:8', // Giữ nguyên nếu không muốn thay đổi mật khẩu
             'role' => 'required|in:admin,staff',
         ]);
-
-        $user->update($request->all()); // Cập nhật thông tin tài khoản
+    
+        // Cập nhật thông tin tài khoản
+        // Chỉ cập nhật mật khẩu nếu trường mật khẩu không rỗng
+        $data = $request->all();
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password); // Mã hóa mật khẩu mới
+        }
+    
+        $user->update($data); // Cập nhật thông tin tài khoản
         return redirect()->route('user-staff.index')->with('success', 'Tài khoản đã được cập nhật thành công.'); // Thông báo thành công
     }
-
-    public function destroy(UserStaff $user)
+    public function destroy($id)
     {
-        $user->delete(); // Xóa tài khoản
-        return redirect()->route('user-staff.index')->with('success', 'Tài khoản đã được xóa thành công.'); // Thông báo thành công
+        $user = UserStaff::findOrFail($id);
+        $user->delete(); // Xóa bản ghi
+        return redirect()->route('user-staff.index')->with('success', 'Tài khoản đã được xóa thành công.');
     }
+    
 }

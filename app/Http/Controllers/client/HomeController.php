@@ -15,8 +15,9 @@ class HomeController extends Controller{
      * Display a listing of the resource.
      */
     public function index(){
+        $banners = Banners::where('deleted', false)->get();
     $listCategories = Category::all();
-
+    $categories = Category::all(); 
         $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
         $productsSale->transform(function ($product) {
             if ($product->price > 0) {
@@ -43,7 +44,7 @@ class HomeController extends Controller{
             });
 
         // dd($products);
-        return view('Client.home',compact('listCategories','productsSale','bestSaller'));
+        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories'));
 
 
     /**
