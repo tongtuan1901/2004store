@@ -1,3 +1,4 @@
+
 @extends('Admin.layouts.master')
 
 @section('contentAdmin')
@@ -104,3 +105,6 @@ function populateVariations(selectElement) {
 }
 </script>
 @endsection
+
+
+

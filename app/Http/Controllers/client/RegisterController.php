@@ -21,15 +21,25 @@ class RegisterController extends Controller
             'phone_number' => 'nullable|string|max:20',
             'password' => 'required|string|min:6',
         ]);
+
     
         // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
+
+
+        // Lưu dữ liệu người dùng
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
+
             'password' => Hash::make($request->password), // Mã hóa mật khẩu
         ]);
     
+
+           
+
+
         return redirect()->route('client-login.index')->with('success', 'Đăng ký thành công!');
     }
 }

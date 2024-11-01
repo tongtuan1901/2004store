@@ -10,9 +10,22 @@ class Brand extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'slug', 'description', 'logo', 'product_id'];
-    public function product()
+
+    // protected $fillable = ['name', 'slug', 'description', 'logo', 'product_id'];
+    // public function product()
+    // {
+    //     return $this->belongsTo(AdminProducts::class);
+    // }
+    protected $table = 'brands';
+
+    protected $fillable = [
+        'name',
+        'image',
+    ];
+
+    public function products()
     {
-        return $this->belongsTo(AdminProducts::class);
+        return $this->hasMany(AdminProducts::class);
+
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id(); // Trường id với kiểu bigint và tự động tăng
             $table->unsignedBigInteger('category_id'); // Trường category_id kiểu bigint
-
+            $table->unsignedBigInteger('brand_id'); // Trường category_id kiểu bigint
             $table->string('name', 255); // Tên sản phẩm
             $table->text('description')->nullable(); // Mô tả sản phẩm, có thể null
             $table->decimal('price', 10, 2); // Giá gốc sản phẩm
@@ -29,6 +29,7 @@ return new class extends Migration
 
             // Thiết lập khóa ngoại cho category_id
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 
@@ -42,5 +43,3 @@ return new class extends Migration
         Schema::dropIfExists('products'); // Xóa bảng products nếu nó tồn tại
     }
 };
-
-

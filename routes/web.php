@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
@@ -42,7 +43,7 @@ use App\Http\Controllers\Admin1\AdminHomeController;
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
 
-use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\admin\AdminSizesController;
 
 
 
@@ -50,15 +51,18 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
+use App\Http\Controllers\admin\AdminBrandsController;
+
+use App\Http\Controllers\admin\AdminColorsController;
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin1\AdminBannersController;
 
-use App\Http\Controllers\Admin\AdminCouponsController;
+
+
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
-
-
-
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
@@ -139,6 +143,12 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
 Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
 Route::get('/admin-don-hang-da-huy', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.donHangDaHuy');
+
+Route::resource('admin-brands', AdminBrandsController::class);
+//color
+Route::resource('admin-color', AdminColorsController::class);
+//size
+Route::resource('admin-size', AdminSizesController::class);
 });
 
 
@@ -306,5 +316,19 @@ Route::resource('users', AdminUserController::class);
 // });
 
 
+
+
+
+// use App\Http\Controllers\admin\AdminBrandsController;
+// use App\Http\Controllers\Admin\AdminCategoriesController;
+// use App\Http\Controllers\admin\AdminColorsController;
+// use App\Http\Controllers\Admin\AdminProductsController;
+// use App\Http\Controllers\admin\AdminSizesController;
+// use Illuminate\Support\Facades\Route;
+
+// Route::resource('admin-products', AdminProductsController::class);
+// // danh mục admin
+// Route::resource('admin-categories', AdminCategoriesController::class);
+// // thuonghw hiệu
 
 

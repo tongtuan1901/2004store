@@ -1,3 +1,4 @@
+
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 
@@ -105,5 +106,11 @@
             </div>
         </div>
     </section>
+@endsection
+
+
+@extends('Admin1.layouts.master')
+@section('contentAdmin')
+
 @endsection
 

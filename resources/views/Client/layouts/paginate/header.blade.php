@@ -536,8 +536,10 @@
             @csrf
             <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
         </form>
+
         <!-- Nút đổi mật khẩu -->
         <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
+
     @else
         <a href="{{ route('client-login.index') }}">
             <i class="fal fa-user"></i>
