@@ -254,3 +254,47 @@ Route::resource('users', AdminUserController::class);
 // Route::resource('admin1-home',AdminHomeController ::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
 
+
+// Route::get('/customeraddress', [Customeraddress::class, 'index'])->name('customeraddress.index');
+// Route::get('/customeraddress/show/{id}',[Customeraddress::class,'show'])->name('customeraddress.show');
+// Route::get('/customeraddress/create', [Customeraddress::class, 'create'])->name('customeraddress.create');
+// Route::post('/customeraddress/store', [Customeraddress::class, 'store'])->name('customeraddress.store');
+
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-ui',function(){
+//     return view('Admin1.Products.index');
+// });
+// route::get('admin-products',function(){
+//     return view('Admin1.Products.create');
+// });
+
+// route::get('admin-products1',function(){
+//     return view('Admin1.Products.show');
+// });
+
+// route::get('admin-products2',function(){
+//     return view('Admin1.orders.index');
+// });
+
+// route::get('admin-products3',function(){
+//     return view('Admin1.orders.show');
+// });
+// route::get('admin-products4',function(){
+//     return view('Admin1.orders.listDonHangHuy');
+// });
+
+// route::get('admin-customer',function(){
+//     return view('Admin1.customer.show');
+// });
+// route::get('admin-customer1',function(){
+//     return view('Admin1.customer.index');
+// });
+// route::get('admin-new',function(){
+//     return view('admin1/new.index');
+// });
+
