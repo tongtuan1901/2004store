@@ -275,9 +275,9 @@
         type: 'line',
         
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['Đơn hàng', 'Doanh số', 'Số lượng'],
             datasets: [{
-                label: 'Visitor',
+                label: ['ngay_dat'],
                 data: [20, 15, 35, 45, 60, 45, 70, 50, 70, 70, 44, 50],
                 backgroundColor: gradientBg,
                 borderColor:'#6176FE',

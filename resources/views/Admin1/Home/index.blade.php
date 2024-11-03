@@ -30,24 +30,12 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Total Sells</span>
-                                                <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$654.66k</b></h4>
+                                                <span class="sherah-pcolor">Tổng tiền đơn hàng tháng này</span>
+                                                <h4 class="sherah-progress-card__title"><b class="count-animate">{{ number_format($total, 0, ',', '.') }}VND / <b style="color:rgb(4, 255, 0)">{{ number_format($totalThanhCong, 0, ',', '.') }}VND</b></b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color3">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.407" height="15.353"
-                                                        viewBox="0 0 8.407 15.353">
-                                                        <g id="Arrow_Icon" data-name="Arrow Icon"
-                                                            transform="translate(-584.97 -306)">
-                                                            <path id="Path_247" data-name="Path 247"
-                                                                d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
-                                                                transform="translate(321.362 224.389)" fill="#09ad95" />
-                                                        </g>
-                                                    </svg>
-                                                    +16.24 %
                                                 </p>
-                                                <a href="#" class="sherah-see-all">View net earnings</a>
                                             </div>
 
                                         </div>
@@ -72,9 +60,9 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Total Orders</span>
+                                                <span class="sherah-pcolor">Tổng tiền đơn hàng tháng trước</span>
                                                 <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$854.66k</b></h4>
+                                                        class="count-animate"> {{ number_format($totalTienDonHangThangTruoc, 0, ',', '.') }} VND / <b>{{ number_format($totalTienDonHangThangTruocThanhCong, 0, ',', '.') }}</b></b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color2">
