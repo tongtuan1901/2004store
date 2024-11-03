@@ -27,7 +27,9 @@
                                     <strong>ID Đơn Hàng:</strong> <span>{{ $order->id }}</span>
                                 </div>
                                 <div class="col-md-6">
-                                    <strong>Tên Khách Hàng:</strong> <span>{{ $order->name }}</span>
+                                    @foreach ($order->products as $product)
+                                        <strong>Tên người gửi:</strong> <span>{{ $order->user->name }}</span>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -39,21 +41,42 @@
                                     <span class="sherah-table__status sherah-color4 sherah-color4__bg--opacity">{{ $order->status }}</span>
                                 </div>
                             </div>
-
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <strong>Tên người nhận:</strong> <span>{{ $order->name }}</span>
+                                </div>
+                            </div>
                             <!-- Product Details -->
                             <h4>Chi Tiết Sản Phẩm</h4>
                             <table class="sherah-table__main sherah-table__main-v3 mt-3">
                                 <thead class="sherah-table__head">
                                     <tr>
                                         <th class="sherah-table__column-1">Tên Sản Phẩm</th>
-                                        <th class="sherah-table__column-2">Số Lượng</th>
-                                        <th class="sherah-table__column-3">Giá</th>
+                                        <th class="sherah-table__column-2">Ảnh biến thể</th>
+                                        <th class="sherah-table__column-2">biến thể</th>
+                                        <th class="sherah-table__column-3">Số Lượng</th>
+                                        <th class="sherah-table__column-4">Giá</th>
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
                                     @foreach ($order->products as $product)
                                     <tr>
                                         <td class="sherah-table__column-1">{{ $product->name }}</td>
+                                        <td class="sherah-table__column-1">
+                                            @foreach ($product->variations as $variation)
+                                                @if ($variation->image)
+                                                    <img src="{{ asset('storage/' . $variation->image) }}" alt="Variation Image" class="img-fluid" width="100">
+                                                @else
+                                                    <p>No image available</p>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                            @foreach ($product->variations as $variation)
+                                            <td>
+                                                Kích thước: {{ $variation->size->size ?? 'N/A' }}, 
+                                                Màu sắc: {{ $variation->color->color ?? 'N/A' }}
+                                            </td>
+                                            @endforeach
                                         <td class="sherah-table__column-2">{{ $product->pivot->quantity }}</td>
                                         <td class="sherah-table__column-3">{{ number_format($product->price) }} VNĐ</td>
                                     </tr>
