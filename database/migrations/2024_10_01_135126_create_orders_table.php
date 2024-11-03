@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id(); // Trường id tự động tăng
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name', 255); // Tên khách hàng
             $table->string('email', 255); // Email của khách hàng
             $table->string('phone', 255); // Số điện thoại khách hàng
@@ -21,6 +23,9 @@ return new class extends Migration
             $table->string('status', 255); // Trạng thái đơn hàng
             $table->timestamps(); // Tạo trường created_at và updated_at
             $table->softDeletes();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

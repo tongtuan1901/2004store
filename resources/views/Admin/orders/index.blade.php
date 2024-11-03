@@ -26,13 +26,16 @@
                                     <thead class="sherah-table__head">
                                         <tr>
                                             <th class="sherah-table__column-1 sherah-table__h1">Order ID</th>
-                                            <th class="sherah-table__column-2 sherah-table__h2">Tên khách hàng</th>
-                                            <th class="sherah-table__column-3 sherah-table__h3">Email</th>
-                                            <th class="sherah-table__column-4 sherah-table__h4">Số điện thoại</th>
-                                            <th class="sherah-table__column-5 sherah-table__h5">Địa chỉ</th>
-                                            <th class="sherah-table__column-6 sherah-table__h6">Trạng thái</th>
-                                            <th class="sherah-table__column-7 sherah-table__h7">Sản phẩm</th>
-                                            <th class="sherah-table__column-8 sherah-table__h8">Hành động</th>
+                                            <th class="sherah-table__column-2 sherah-table__h2">Người gửi</th>
+                                            <th class="sherah-table__column-2 sherah-table__h4">Người nhận</th>
+                                            <th class="sherah-table__column-3 sherah-table__h5">Email</th>
+                                            <th class="sherah-table__column-4 sherah-table__h6">Số điện thoại</th>
+                                            <th class="sherah-table__column-5 sherah-table__h7">Địa chỉ</th>
+                                            <th class="sherah-table__column-6 sherah-table__h8">Trạng thái</th>
+                                            <th class="sherah-table__column-7 sherah-table__h9">Sản phẩm</th>
+                                            <th class="sherah-table__column-2 sherah-table__h10">Biến thể</th>
+                                            <th class="sherah-table__column-8 sherah-table__h11">Số lượng</th>
+                                            <th class="sherah-table__column-8 sherah-table__h12">Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody class="sherah-table__body">
@@ -42,6 +45,9 @@
                                                     <p class="crany-table__product--number">
                                                         <a href="#" class="sherah-color1">#{{ $order->id }}</a>
                                                     </p>
+                                                </td>
+                                                <td class="sherah-table__column-2 sherah-table__data-2">
+                                                    <p class="sherah-table__product-desc">{{ $order->user->name }}</p>
                                                 </td>
                                                 <td class="sherah-table__column-2 sherah-table__data-2">
                                                     <p class="sherah-table__product-desc">{{ $order->name }}</p>
@@ -63,13 +69,32 @@
                                                 <td class="sherah-table__column-7 sherah-table__data-7">
                                                     <ul>
                                                         @foreach ($order->products as $product)
-                                                            <li>{{ $product->name }} - Số lượng: {{ $product->pivot->quantity }}</li>
+                                                            <li>{{ $product->name }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                                <td class="sherah-table__column-7 sherah-table__data-7">
+                                                    <ul>
+                                                        @foreach ($order->products as $product)
+                                                            @foreach ($product->variations as $variation)
+                                                            <li>
+                                                                Kích thước: {{ $variation->size->size ?? 'N/A' }}, 
+                                                                Màu sắc: {{ $variation->color->color ?? 'N/A' }}
+                                                            </li>
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                                <td class="sherah-table__column-7 sherah-table__data-7">
+                                                    <ul>
+                                                        @foreach ($order->products as $product)
+                                                            <li>{{ $product->pivot->quantity }}</li>
                                                         @endforeach
                                                     </ul>
                                                 </td>
                                                 <td class="sherah-table__column-8 sherah-table__data-8">
                                                     <div class="sherah-table__status__group">
-                                                        <a href="{{ route('admin-orders.edit', $order) }}" class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">Sửa</a>
+                                                        {{-- <a href="{{ route('admin-orders.edit', $order) }}" class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">Sửa</a> --}}
                                                         <a href="{{ route('admin-orders.show', $order) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
                                                         @if ($order->status === 'Chờ xử lý')
                                                             <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>

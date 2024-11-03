@@ -19,6 +19,6 @@ class ReviewController extends Controller
     // Hiển thị chi tiết một đánh giá
     public function show(Review $review)
     {
-        return view('Admin1.Rating.show', compact('review'));
+        return view('Admin.Rating.show', compact('review'));
     }
 }

@@ -111,6 +111,10 @@
                                                         class="menu-bar__name">Danh sách khách hàng</span></span></a></li>
                                         <!-- <li><a href='vendor-list.html'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Chi tiết khác hàng</span></span></a></li> -->
+                                        <li><a href='{{route('admin-comments.index')}}'><span class="menu-bar__text"><span
+                                            class="menu-bar__name">Bình luận</span></span></a></li>
+                                        <li><a href='{{route('admin.reviews.index')}}'><span class="menu-bar__text"><span
+                                                                class="menu-bar__name">Đánh giá</span></span></a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -240,7 +244,7 @@
                             </li>
 
                             <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
-                                    data-bs-target="#menu-item_products"><span class="menu-bar__text">
+                                    data-bs-target="#menu-item_storage"><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="21.136" height="17.873" viewBox="0 0 21.136 17.873">
@@ -252,7 +256,7 @@
                                         <span class="menu-bar__name">Quản lí tồn kho </span></span> <span
                                         class="sherah__toggle"></span></a></span>
                                 <!-- Dropdown Menu -->
-                                <div class="collapse sherah__dropdown" id="menu-item_products"
+                                <div class="collapse sherah__dropdown" id="menu-item_storage"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='{{ route('inventory.index') }}'><span class="menu-bar__text"><span
@@ -292,6 +296,30 @@
                                     </ul>
                                 </div>
                             </li>
+
+                            <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#menu-item_coupons"><span class="menu-bar__text">
+                                    <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <rect x="2" y="4" width="20" height="16" rx="3" ry="3" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+                                            <text x="12" y="14" text-anchor="middle" font-size="10" fill="#333" font-family="Arial, sans-serif">%</text>
+                                        </svg>
+                                        
+                                    </span>
+                                    <span class="menu-bar__name">Giảm giá </span></span> <span
+                                    class="sherah__toggle"></span></a></span>
+                            <!-- Dropdown Menu -->
+                            <div class="collapse sherah__dropdown" id="menu-item_coupons"
+                                data-bs-parent="#sherahMenu">
+                                <ul class="menu-bar__one-dropdown">
+                                    <li><a href='{{route('discount.index')}}'><span class="menu-bar__text"><span
+                                                    class="menu-bar__name">Mã giảm giá</span></span></a></li>
+                                    <li><a href='{{route('admin-coupons.index')}}'><span class="menu-bar__text"><span
+                                                    class="menu-bar__name">Khuyến mãi</span></span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+
                             <li><a class='collapsed' href='invoice.html'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"

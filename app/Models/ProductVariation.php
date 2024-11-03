@@ -28,7 +28,7 @@ class ProductVariation extends Model
 
     public function size()
     {
-        return $this->belongsTo(Size::class, 'size_id'); // Đảm bảo tên trường 'size_id' là đúng
+        return $this->belongsTo(Size::class, 'size_id');
     }
 
     public function color()
