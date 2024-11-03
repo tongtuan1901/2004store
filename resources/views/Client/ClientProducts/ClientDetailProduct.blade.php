@@ -255,6 +255,10 @@
                     </div>
                 </div>
 
+                <div id="variation-quantity" style="margin-top: 10px; "></div>
+
+
+
             </div>
 
 
@@ -451,6 +455,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
+            input.addEventListener('change', updateDetails);
+        });
+
+        document.querySelectorAll('input[name="product-choose-size"]').forEach(function(input) {
+            input.addEventListener('change', updateDetails);
+        });
+
+        function updateDetails() {
+            var selectedColor = document.querySelector('input[name="product-choose-color"]:checked');
+            var selectedSize = document.querySelector('input[name="product-choose-size"]:checked');
+
+            if (selectedColor && selectedSize) {
+                @foreach ($productDetail->variations as $variation)
+                    if (selectedColor.value === "{{ $variation->color->color }}" && selectedSize.value ===
+                        "{{ $variation->size->size }}") {
+                        document.getElementById('variation-quantity').innerText =
+                            "Số lượng còn lại: {{ $variation->quantity }}";
+                    }
+                @endforeach
+            } else {
+                document.getElementById('variation-quantity').innerText = '';
+            }
+        }
         document.querySelectorAll('.product-sw-select-item label').forEach(function(label) {
             label.addEventListener('click', function() {
                 var radio = document.getElementById(label.getAttribute('for'));
