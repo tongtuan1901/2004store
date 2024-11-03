@@ -17,7 +17,7 @@ class ProductVariation extends Model
         'price_sale',
         'quantity',
         'status',
-        'image',
+        'image_id', // Thêm image_id vào đây
         'variation_code',
     ];
 
@@ -28,11 +28,16 @@ class ProductVariation extends Model
 
     public function size()
     {
-        return $this->belongsTo(Size::class, 'size_id'); // Đảm bảo tên trường 'size_id' là đúng
+        return $this->belongsTo(Size::class, 'size_id');
     }
 
     public function color()
     {
         return $this->belongsTo(Color::class, 'color_id');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(ProductImage::class, 'image_id');
     }
 }

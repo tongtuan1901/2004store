@@ -76,7 +76,7 @@ use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 
 
-   
+
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
 //     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
@@ -85,7 +85,7 @@ use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 Route::prefix('admin')->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
-    
+
 
     // Đăng nhập admin và nhân viên
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -96,22 +96,22 @@ Route::prefix('admin')->group(function () {
  Route::resource('admin-coupons', AdminCouponsController::class);
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
- 
 
 
-    
+
+
  // Sản phẩm
  Route::resource('admin-products', AdminProductsController::class);
- 
+
  // Danh mục
  Route::resource('admin-categories', AdminCategoriesController::class);
- 
+
  // Khách hàng
  Route::resource('admin-customers', AdminUserController::class);
- 
+
  // Banner
  Route::resource('admin-banners', AdminBannersController::class);
- 
+
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
  // Route để hiển thị trang duyệt đơn hàng
@@ -127,12 +127,12 @@ Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedInd
 // Route để cập nhật trạng thái đơn hàng
 Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
 
- 
+
  // Thống kê
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
  Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
- 
+
  // Route cho tin tức
  Route::resource('new', AdminNewsController::class);
 
@@ -145,7 +145,7 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
  Route::resource('discount', DiscountController::class);
 Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
 Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
-Route::resource('admin-comments', AdminCommentsController::class);
+// Route::resource('admin-comments', AdminCommentsController::class);
 Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
 //
