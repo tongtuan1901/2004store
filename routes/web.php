@@ -35,15 +35,15 @@ use App\Http\Controllers\Admin\HomeAdminController;
 //View Admin
 
 
+use App\Http\Controllers\client\CheckoutController;
 use App\Http\Controllers\client\ProductsController;
+
+
 use App\Http\Controllers\client\RegisterController;
-
-
 use App\Http\Controllers\Admin1\AdminHomeController;
 use App\Http\Controllers\Admin\AdminBrandController;
-use App\Http\Controllers\admin\AdminLoginController;
 
-use App\Http\Controllers\admin\AdminSizesController;
+use App\Http\Controllers\admin\AdminLoginController;
 
 
 
@@ -51,18 +51,19 @@ use App\Http\Controllers\admin\AdminSizesController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\admin\AdminBrandsController;
+use App\Http\Controllers\admin\AdminSizesController;
 
+use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
+
+
+
 use App\Http\Controllers\Admin1\AdminBannersController;
-
-
-
-use App\Http\Controllers\Admin\AdminCommentsController; 
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminCommentsController; 
 use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
@@ -70,12 +71,7 @@ use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
-
-
-
-
-
-
+use App\Http\Controllers\client\CheckoutThankyouController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -243,6 +239,9 @@ Route::post('client-password/update', [ChangePasswordController::class, 'update'
 
 Route::resource('client-news', NewsController::class);
 Route::resource('client-card', CardController::class);
+//checkout
+Route::resource('client-checkout', CheckoutController::class);
+Route::resource('client-thankyou', CheckoutThankyouController::class);
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);

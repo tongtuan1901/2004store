@@ -67,11 +67,11 @@
                                                                     <div id="productCarousel{{ $product->id }}" class="carousel slide" data-bs-ride="carousel">
                                                                         <div class="carousel-inner">
                                                                             @foreach ($product->variations as $variation)
-                                                                                @if ($variation->image)
-                                                                                    <img src="{{ asset('storage/' . $variation->image) }}" alt="Variation Image" class="img-fluid" width="150">
-                                                                                @else
-                                                                                    <p>No image available</p>
-                                                                                @endif
+                                                                            @if ($variation->image)
+    <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
+@else
+    <p>No image available</p>
+@endif
                                                                             @endforeach
                                                                         </div>
                                                                     </div>
