@@ -121,7 +121,7 @@ class AdminProductsController extends Controller
 
     public function show($id)
     {
-        $product = AdminProducts::with(['variations'])->findOrFail($id);
+        $product = AdminProducts::with(['variations.size', 'variations.color'])->findOrFail($id);
         return view('admin.products.show', compact('product'));
     }
 

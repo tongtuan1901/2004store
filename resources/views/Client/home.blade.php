@@ -189,8 +189,53 @@
                                             </svg>
                                         </button>
                                         <div class="product-item-actions">
-                                            <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button"
-                                                data-type="shop-addLoop-button">Thêm vào giỏ</button>
+
+<!-- Modal for Adding to Cart -->
+<label for="modal-toggle" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
+<input type="checkbox" id="modal-toggle" class="modal-toggle" />
+
+<!-- Cửa sổ Modal -->
+<div class="modal">
+    <div class="modal-content">
+        <label for="modal-toggle" class="close">&times;</label>
+        <h2>Chọn biến thể và số lượng</h2>
+        @if (auth()->check())
+        <form id="productForm" action="{{ route('cart.add') }}" method="POST">
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="name" value="{{ $product->name }}">
+    <input type="hidden" name="price" value="{{ $product->price_sale }}">
+    <input type="hidden" name="image" value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
+    
+    <label for="size">Kích thước:</label>
+    <select id="size" name="size">
+        @foreach($product->variations as $variation)
+            <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
+        @endforeach
+    </select>
+
+    <label for="color">Màu:</label>
+    <select id="color" name="color">
+        @foreach($product->variations as $variation)
+            <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
+        @endforeach
+    </select>
+
+    <label for="quantity">Số lượng:</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1">
+    <br>
+    <button type="submit">Thêm vào giỏ</button>
+</form>
+
+        @else
+            <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
+            <a href="{{ route('client-login.index') }}">Đăng nhập</a>
+        @endif
+    </div>
+</div>
+
+
+
                                             <button type="button" title="Xem nhanh" class="shop-quickview-button"
                                                 data-type="shop-quickview-button">Xem nhanh</button>
                                         </div>
@@ -751,6 +796,7 @@
             </div>
         </div>
     </main>
+    
 @endsection
 
 

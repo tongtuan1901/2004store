@@ -18,9 +18,9 @@ use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 
 use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\admin\AdminCardController;
 use App\Http\Controllers\admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\HomeAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ use App\Http\Controllers\Admin\HomeAdminController;
 //View Admin
 
 
+use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\client\CheckoutController;
+
+
 use App\Http\Controllers\client\ProductsController;
-
-
 use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\Admin1\AdminHomeController;
-use App\Http\Controllers\Admin\AdminBrandController;
 
-use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminBrandController;
 
 
 
@@ -51,15 +51,16 @@ use App\Http\Controllers\admin\AdminLoginController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\admin\AdminSizesController;
+use App\Http\Controllers\admin\AdminLoginController;
 
+use App\Http\Controllers\admin\AdminSizesController;
 use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
+
+
+
 use App\Http\Controllers\Admin\AdminCouponsController;
-
-
-
 use App\Http\Controllers\Admin1\AdminBannersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
@@ -70,8 +71,8 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
-use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 use App\Http\Controllers\client\CheckoutThankyouController;
+use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -217,6 +218,9 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
     Route::resource('admin-color', AdminColorsController::class);
     //size
     Route::resource('admin-size', AdminSizesController::class);
+
+    Route::resource('admin-card', AdminCardController::class);
+    Route::get('/admin/carts', [AdminCardController::class, 'index'])->name('admin.carts.index');
 });
 
 
@@ -238,7 +242,16 @@ Route::post('client-password/update', [ChangePasswordController::class, 'update'
 
 
 Route::resource('client-news', NewsController::class);
+
 Route::resource('client-card', CardController::class);
+//
+Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
+Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
+
+
+
+// Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
 Route::resource('client-checkout', CheckoutController::class);
 Route::resource('client-thankyou', CheckoutThankyouController::class);
