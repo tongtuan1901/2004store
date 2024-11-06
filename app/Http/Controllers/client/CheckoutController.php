@@ -13,7 +13,7 @@ class CheckoutController extends Controller
     public function index()
     {
         //
-        return view('Client.checkout.checkOut');
+        return view('Client.Clientcheckout.checkOut');
     }
 
     /**
