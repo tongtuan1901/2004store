@@ -306,7 +306,8 @@ Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('addr
 Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 
-
+Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
+Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
 
 
 // route::get('admin-ui',function(){
