@@ -530,17 +530,17 @@
                 </div>
                 <div class="headers3-right">
                 <button class="shop-tool" type="button" title="Tài khoản">
-    @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
-        <span class="username">{{ Auth::user()->name }}</span> <!-- Hiển thị tên tài khoản -->
-        <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
-        </form>
+                @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
+                    <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản -->
+                    <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
+                    </form>
 
-        <!-- Nút đổi mật khẩu -->
-        <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
+                    <!-- Nút đổi mật khẩu -->
+                    <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
 
-    @else
+                @else
         <a href="{{ route('client-login.index') }}">
             <i class="fal fa-user"></i>
         </a>
