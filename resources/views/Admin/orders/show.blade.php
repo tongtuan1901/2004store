@@ -68,11 +68,11 @@
                                                                         <div class="carousel-inner">
                                                                             @foreach ($product->variations as $variation)
                                                                             @if ($variation->image)
-    <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
-@else
-    <p>No image available</p>
-@endif
-                                                                            @endforeach
+                                                                                <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
+                                                                            @else
+                                                                                <p>No image available</p>
+                                                                            @endif
+                                                                                                                                                        @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>

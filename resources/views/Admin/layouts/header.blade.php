@@ -292,8 +292,13 @@
                                                         class="menu-bar__name">Danh sách đơn hàng</span></span></a></li>
                                         <li><a href='{{route('admin-orders.approve.index')}}'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Đơn hàng cần duyệt</span></span></a></li>
+
                                         <li><a href='{{route('admin-card.index')}}'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Gio hàng của khách hàng</span></span></a></li>                
+
+                                        <li><a href='{{route('admin.address')}}'><span class="menu-bar__text"><span
+                                                            class="menu-bar__name">Địa chỉ khách hàng</span></span></a></li>
+
                                                        
                                     </ul>
                                 </div>

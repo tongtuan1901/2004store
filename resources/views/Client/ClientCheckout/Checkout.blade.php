@@ -349,7 +349,8 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 				requireShipping: true,
 				requireDistrict: false,
 				requireWard: false,
-				shouldSaveCheckoutAbandon: false}" action="/checkout/0299debabe28467ba2f5be03c549abfc" data-bind-event-submit="handleCheckoutSubmit(event)" data-bind-event-keypress="handleCheckoutKeyPress(event)" data-bind-event-change="handleCheckoutChange(event)" data-select2-id="select2-data-checkoutForm">
+				shouldSaveCheckoutAbandon: false}" action="" data-bind-event-submit="handleCheckoutSubmit(event)" data-bind-event-keypress="handleCheckoutKeyPress(event)" data-bind-event-change="handleCheckoutChange(event)" data-select2-id="select2-data-checkoutForm">
+				@csrf
 			<input type="hidden" name="_method" value="patch">
 			<div class="wrap" data-select2-id="select2-data-215-0u6j">
 				<main class="main">
@@ -392,7 +393,11 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 													<label for="customer-address" class="field__label">Sổ địa chỉ</label>
 													<select size="1" class="field__input field__input--select" id="customer-address" data-bind="customerAddress">
 														<option value="0">Địa chỉ khác...</option>
-														
+														@foreach($addresses as $address)
+															<option value="{{ $address->id }}">
+																{{ $address->street }}, {{ $address->city }}, {{ $address->state }}, {{ $address->country }}
+															</option>
+														@endforeach
 													</select>
 													<div class="field__caret">
 														<i class="fa fa-caret-down"></i>

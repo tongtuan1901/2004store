@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Models\AdminOrder;
 use App\Models\AdminProducts;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -200,21 +201,35 @@ use Illuminate\Support\Facades\Storage;
     // return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
 
 
-public function deletedOrders()
-{
-    $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
-    return view('Admin.orders.deleted', compact('deletedOrders'));
-}
+    public function deletedOrders()
+    {
+        $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
+        return view('Admin.orders.deleted', compact('deletedOrders'));
+    }
 
 
 
-public function listDonHangDaHuy(){
-    $donHangBiHuy = AdminOrder::where('status', 'Hủy')
-                    ->with('orderItems.product')
-                    ->get();
-                    // dd($donHangBiHuy);
-    return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
-}
+    public function listDonHangDaHuy(){
+        $donHangBiHuy = AdminOrder::where('status', 'Hủy')
+                        ->with('orderItems.product')
+                        ->get();
+                        // dd($donHangBiHuy);
+        return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
+    }
+
+    public function listAdrress()
+    {
+        $users = User::all();
+
+        return view('Admin.orders.listAddress',compact('users'));
+    }
+    public function showAddress($userId)
+    {
+        $user = User::with('addresses')->findOrFail($userId);
+        $addresses = $user->addresses;
+
+        return view('Admin.orders.showAddress',compact('user','addresses'));
+    }
 }
 
 

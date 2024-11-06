@@ -14,6 +14,7 @@ class CheckoutController extends Controller
     public function index()
     {
         //
+
         $userId = auth()->id();
         if (!$userId) {
             return redirect()->route('login')->with('error', 'Please log in to view your cart.');
@@ -24,6 +25,9 @@ class CheckoutController extends Controller
                     ->get();
                     $email = auth()->user()->email;
         return view('Client.checkout.checkOut',compact('cart','email'));
+
+       
+
     }
 
 

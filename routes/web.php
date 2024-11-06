@@ -71,6 +71,11 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
+
+
+
+use App\Http\Controllers\client\AddressController;
+
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 
@@ -253,10 +258,14 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
+
 Route::resource('client-checkout', CheckoutController::class);
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('client-checkout.process');
 Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name('payment.momo');
 Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
+
+
+// Route::resource('client-checkout', CheckoutController::class);
 
 Route::resource('client-thankyou', CheckoutThankyouController::class);
 
@@ -313,6 +322,18 @@ Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.sh
 route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
 Route::resource('admin-home', HomeAdminController::class);
+
+Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
+Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
+Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
+Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
+Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
+Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+
+Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
+Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+
 
 // route::get('admin-ui',function(){
 //     return view('Admin1.Products.index');
