@@ -65,50 +65,51 @@
                                 </div>
                             </div>
 
-                            <div class="shop-filter" data-type="price">
-                                <h4>Giá sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item1" data-group="price"
-                                            data-field="price_min" data-text="Dưới 1.000.000₫" value="(&lt;1000000)"
-                                            data-operator="OR">
-                                        <label for="shop-filter-price-item1" title="Dưới 1.000.000₫">Dưới
-                                            1.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item2" data-group="price"
-                                            data-field="price_min" data-text="Từ 1.000.000₫ - 3.000.000₫"
-                                            value="(&gt;=1000000 AND &lt;=3000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item2" title="Từ 1.000.000₫ - 3.000.000₫">Từ
-                                            1.000.000₫ - 3.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item3" data-group="price"
-                                            data-field="price_min" data-text="Từ 3.000.000₫ - 5.000.000₫"
-                                            value="(&gt;=3000000 AND &lt;=5000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item3" title="Từ 3.000.000₫ - 5.000.000₫">Từ
-                                            3.000.000₫ - 5.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item4" data-group="price"
-                                            data-field="price_min" data-text="Từ 5.000.000₫ - 10.000.000₫"
-                                            value="(&gt;=5000000 AND &lt;=10000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item4" title="Từ 5.000.000₫ - 10.000.000₫">Từ
-                                            5.000.000₫ - 10.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item5" data-group="price"
-                                            data-field="price_min" data-text="Trên 10.000.000₫" value="(&gt;10000000)"
-                                            data-operator="OR">
-                                        <label for="shop-filter-price-item5" title="Trên 10.000.000₫">Trên
-                                            10.000.000₫</label>
-                                    </div>
+                            
+                        </div>
+                        <div class="shop-filter" data-type="price">
+                            <h4>Giá sản phẩm</h4>
+                            <div class="shop-filter-list">
+                                <div class="shop-filter-item">
+                                    <input type="checkbox" id="shop-filter-price-item1" data-group="price"
+                                        data-field="price_min" data-text="Dưới 1.000.000₫" value="(&lt;1000000)"
+                                        data-operator="OR">
+                                    <label for="shop-filter-price-item1" title="Dưới 1.000.000₫">Dưới
+                                        1.000.000₫</label>
+                                </div>
+                                <div class="shop-filter-item">
+                                    <input type="checkbox" id="shop-filter-price-item2" data-group="price"
+                                        data-field="price_min" data-text="Từ 1.000.000₫ - 3.000.000₫"
+                                        value="(&gt;=1000000 AND &lt;=3000000)" data-operator="OR">
+                                    <label for="shop-filter-price-item2" title="Từ 1.000.000₫ - 3.000.000₫">Từ
+                                        1.000.000₫ - 3.000.000₫</label>
+                                </div>
+                                <div class="shop-filter-item">
+                                    <input type="checkbox" id="shop-filter-price-item3" data-group="price"
+                                        data-field="price_min" data-text="Từ 3.000.000₫ - 5.000.000₫"
+                                        value="(&gt;=3000000 AND &lt;=5000000)" data-operator="OR">
+                                    <label for="shop-filter-price-item3" title="Từ 3.000.000₫ - 5.000.000₫">Từ
+                                        3.000.000₫ - 5.000.000₫</label>
+                                </div>
+                                <div class="shop-filter-item">
+                                    <input type="checkbox" id="shop-filter-price-item4" data-group="price"
+                                        data-field="price_min" data-text="Từ 5.000.000₫ - 10.000.000₫"
+                                        value="(&gt;=5000000 AND &lt;=10000000)" data-operator="OR">
+                                    <label for="shop-filter-price-item4" title="Từ 5.000.000₫ - 10.000.000₫">Từ
+                                        5.000.000₫ - 10.000.000₫</label>
+                                </div>
+                                <div class="shop-filter-item">
+                                    <input type="checkbox" id="shop-filter-price-item5" data-group="price"
+                                        data-field="price_min" data-text="Trên 10.000.000₫" value="(&gt;10000000)"
+                                        data-operator="OR">
+                                    <label for="shop-filter-price-item5" title="Trên 10.000.000₫">Trên
+                                        10.000.000₫</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="main-collection-right ">
-                        <div class="main-collection-head">
+                        {{-- <div class="main-collection-head">
                             <div class="shop-sort-style">
                                 <strong>Hiển thị</strong>
                                 <div class="shop-filter-mobile-btn">
@@ -159,9 +160,43 @@
                                     <option value="created_on:asc">Hàng mới nhất</option>
                                 </select>
                             </div>
+                        </div> --}}
+                        <div class="main-collection-head">
+                            <div class="shop-sort-style">
+                                <strong>Hiển thị</strong>
+                                <div class="shop-filter-mobile-btn">
+                                    <button type="button" data-type="shop-filter-mobile-btn" title="Bộ lọc">
+                                        <!-- SVG icon -->
+                                    </button>
+                                </div>
+                                <div class="shop-sort-item" data-show="two"></div>
+                                <div class="shop-sort-item" data-show="three"></div>
+                                <div class="shop-sort-item" data-show="four"></div>
+                            </div>
+                            <div class="shop-sort-by">
+                                <label for="shopSortSelect">Sắp xếp theo</label>
+                                <select aria-label="Sắp xếp theo" id="shopSortSelect" onchange="sortProducts(this.value)">
+                                    <option value="">Mặc định</option>
+                                    <option value="name:asc" {{ $sortBy === 'name:asc' ? 'selected' : '' }}>A &rarr; Z</option>
+                                    <option value="name:desc" {{ $sortBy === 'name:desc' ? 'selected' : '' }}>Z &rarr; A</option>
+                                    <option value="price_min:asc" {{ $sortBy === 'price_min:asc' ? 'selected' : '' }}>Giá tăng dần</option>
+                                    <option value="price_min:desc" {{ $sortBy === 'price_min:desc' ? 'selected' : '' }}>Giá giảm dần</option>
+                                    <option value="created_on:asc" {{ $sortBy === 'created_on:asc' ? 'selected' : '' }}>Hàng mới nhất</option>
+                                    <option value="created_on:desc" {{ $sortBy === 'created_on:desc' ? 'selected' : '' }}>Hàng cũ nhất</option>
+                                </select>
+                            </div>
+                            <script>
+                                function sortProducts(value) {
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.set('sortBy', value);
+                                    window.location.href = url.toString();
+                                }
+                            </script>
+                            
                         </div>
+                        
                         <div class="main-collection-info">
-                            <h1 class="titleStyle1">Cocktail Dresses</h1>
+                            <h1 class="titleStyle1">2004 Store</h1>
                             <div class="main-collection-info-description">
                                 Những mẫu váy tinh tế, thanh lịch, thường may bằng các chất liệu cao cấp như lụa, ren,
                                 chiffon hoặc nhung. Chiều dài váy khoảng trên đầu gối đến dưới gối, tạo vẻ quý phái, sang
@@ -171,7 +206,7 @@
                             </div>
                         </div>
                         <div class="main-collection-data four">
-                            <div class="product-item" data-id="120912667" data-handle="ribbon-jacquard-vintage">
+                            {{-- <div class="product-item" data-id="120912667" data-handle="ribbon-jacquard-vintage">
                                 <div class="product-item-wrap">
                                     <div class="product-item-top">
                                         <div class="product-item-top-image">
@@ -229,27 +264,91 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
+                            @foreach ($productsSale as $product)
+    <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ Str::slug($product->name, '-') }}">
+        <div class="product-item-wrap">
+            <div class="product-item-top">
+                <div class="product-item-top-image">
+                    <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
+                        <img src="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
+                             alt="{{ $product->name }}" title="{{ $product->name }}"
+                             width="480" height="480" loading="lazy" decoding="async">
+                    </a>
+                </div>
+                <div class="product-item-label-sale"><span>-{{ number_format($product->discount_percentage, 2) }}%</span></div>
+                <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
+                    <!-- SVG yêu thích -->
+                </button>
+                <div class="product-item-actions">
+                    <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
+                    <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
+                </div>
+            </div>
+            <div class="product-item-detail">
+                <div class="product-item-detail-flex">
+                    <a class="product-item-detail-vendor" href="{{ route('client-products.index') }}" title="{{ $product->category->name ?? '' }}" aria-label="{{ $product->category->name ?? '' }}">
+                        <span>{{ $product->category->name ?? '' }}</span>
+                    </a>
+                    <div class="sapo-product-reviews-badge" data-id="{{ $product->id }}"></div>
+                </div>
+                <h3 class="product-item-detail-title">
+                    <a href="{{ route('client-products.show', $product->id) }}" title="{{ $product->name }}" aria-label="{{ $product->name }}">{{ $product->name }}</a>
+                </h3>
+                <div class="product-item-detail-price">
+                    <strong>{{ number_format($product->price_sale, 0, ',', '.') }}₫</strong>
+                    <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
+                </div>
+                <div class="product-item-detail-gallery-items">
+                    @foreach ($product->images as $image)
+                        <div class="product-item-detail-gallery-item {{ $loop->first ? 'active' : '' }}" data-image="{{ Storage::url($image->image_path) }}">
+                            <img src="{{ Storage::url($image->thumbnail_path) }}" width="50" height="50" loading="lazy" decoding="async" alt="{{ $product->name }}" title="{{ $product->name }}">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
                             <div class="shop-pagination">
-
-                                <span class="current">1</span>
-
-                                <a href="cocktail-dresses142e.html?view=vertical&amp;page=2" title="Trang 2"
-                                    aria-label="Trang 2" data-page="2">2</a>
-
-                                <a href="cocktail-dresses142e.html?view=vertical&amp;page=2" title="Trang sau"
-                                    aria-label="Trang sau" data-page="2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
-                                        y="0" viewBox="0 0 240.823 240.823" style="enable-background:new 0 0 512 512"
-                                        xml:space="preserve" class="">
-                                        <path id="Chevron_Right_1_"
-                                            d="M183.189,111.816L74.892,3.555c-4.752-4.74-12.451-4.74-17.215,0c-4.752,4.74-4.752,12.439,0,17.179l99.707,99.671l-99.695,99.671c-4.752,4.74-4.752,12.439,0,17.191c4.752,4.74,12.463,4.74,17.215,0l108.297-108.261C187.881,124.315,187.881,116.495,183.189,111.816z"
-                                            fill="#000000" data-original="#000000"></path>
-                                    </svg>
-                                </a>
-
-                            </div>
+                                <!-- Nút Trang trước -->
+                                @if (!$productsSale->onFirstPage())
+                                    <a href="{{ $productsSale->previousPageUrl() }}" title="Trang trước" aria-label="Trang trước">
+                                        Trước
+                                    </a>
+                                @endif
+                            
+                                <!-- Xác định phạm vi hiển thị -->
+                                @php
+                                    $currentPage = $productsSale->currentPage();
+                                    $lastPage = $productsSale->lastPage();
+                                    $startPage = max(1, $currentPage - 4); // Bắt đầu từ trang hiện tại - 4
+                                    $endPage = min($lastPage, $startPage + 9); // Kết thúc tại trang bắt đầu + 9
+                            
+                                    // Điều chỉnh để đảm bảo chúng ta không vượt quá phạm vi
+                                    if ($endPage - $startPage < 9) {
+                                        $startPage = max(1, $endPage - 9); // Nếu không đủ 10 trang, điều chỉnh lại startPage
+                                    }
+                                @endphp
+                            
+                                <!-- Hiển thị các số trang -->
+                                @for ($page = $startPage; $page <= $endPage; $page++)
+                                    @if ($page == $currentPage)
+                                        <!-- Trang hiện tại -->
+                                        <span class="current">{{ $page }}</span>
+                                    @else
+                                        <!-- Trang không phải trang hiện tại -->
+                                        <a href="{{ $productsSale->url($page) }}" title="Trang {{ $page }}" aria-label="Trang {{ $page }}">{{ $page }}</a>
+                                    @endif
+                                @endfor
+                            
+                                <!-- Nút Trang sau -->
+                                @if ($productsSale->hasMorePages())
+                                    <a href="{{ $productsSale->nextPageUrl() }}" title="Trang sau" aria-label="Trang sau">
+                                        Sau
+                                    </a>
+                                @endif
+                            </div>                            
                         </div>
                     </div>
                 </div>
