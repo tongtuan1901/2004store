@@ -403,15 +403,13 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 
 											
 												
-													<div class="field field--show-floating-label field--disabled">
-														<input name="email" type="hidden" value="tuan123456@gmail.com">
-														<div class="field__input-wrapper">
-															<label for="email" class="field__label">
-																Email
-															</label>
-															<input id="email" type="email" class="field__input" data-bind="email" value="" disabled="">
-														</div>
-													</div>
+											<div class="field field--show-floating-label field--disabled">
+    <input name="email" type="hidden" value="{{ $email }}">
+    <div class="field__input-wrapper">
+        <label for="email" class="field__label">Email</label>
+        <input id="email" type="email" class="field__input" data-bind="email" value="{{ $email }}" disabled>
+    </div>
+</div>
 												
 											
 
@@ -666,56 +664,37 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 						<div id="order-summary" class="order-summary order-summary--is-collapsed">
 							<div class="order-summary__sections">
 								<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
-									<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
-										<caption class="visually-hidden">Chi tiết đơn hàng</caption>
-										<thead class="product-table__header">
-											<tr>
-												<th>
-													<span class="visually-hidden">Ảnh sản phẩm</span>
-												</th>
-												<th>
-													<span class="visually-hidden">Tên và biến thể</span>
-												</th>
-												<th>
-													<span class="visually-hidden">Sổ lượng</span>
-												</th>
-												<th>
-													<span class="visually-hidden">Đơn giá</span>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-											<tr class="product">
-												<td class="product__image">
-													<div class="product-thumbnail">
-                                                    <div class="product-thumbnail__wrapper">
-    <img src="https://bizweb.dktcdn.net/thumb/thumb/100/520/624/products/adf9e2b08a5a6215605d38e8d56d8502-b8884d5f0ae8497b8c48fc9be0adf717-51eb4f9b44f344939e2e9d46cb971d3f.jpg?v=1720423442500" alt="" class="product-thumbnail__image">
-    <span class="product-thumbnail__quantity">1</span>
-</div>
-												</td>
-												<th class="product__description">
-													<span class="product__description__name">
-														CỔ CHỮ U TAY ÁO XÁM
-													</span>
-													
-													<span class="product__description__property">
-														Xám / S
-													</span>
-													
-													
-													
-												</th>
-												<td class="product__quantity visually-hidden"><em>Số lượng:</em> 1</td>
-												<td class="product__price">
-													
-													1.489.000₫
-													
-												</td>
-											</tr>
-											
-										</tbody>
-									</table>
+								<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
+    <caption class="visually-hidden">Chi tiết đơn hàng</caption>
+    <thead class="product-table__header">
+        <tr>
+            <th><span class="visually-hidden">Ảnh sản phẩm</span></th>
+            <th><span class="visually-hidden">Tên và biến thể</span></th>
+            <th><span class="visually-hidden">Số lượng</span></th>
+            <th><span class="visually-hidden">Đơn giá</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($cart as $item)
+            <tr class="product">
+                <td class="product__image">
+                    <div class="product-thumbnail">
+                        <div class="product-thumbnail__wrapper">
+                            <img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
+                            <span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
+                        </div>
+                    </div>
+                </td>
+                <th class="product__description">
+                    <span class="product__description__name">{{ $item->product->name }}</span>
+                    <span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
+                </th>
+                <td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>
+                <td class="product__price">{{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 								</div>
 								<div class="order-summary__section" id="discountCode">
     <h3 class="visually-hidden">Mã khuyến mại</h3>
@@ -749,10 +728,17 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										</thead>
 										<tbody class="total-line-table__tbody">
 											<tr class="total-line total-line--subtotal">
+											@php
+    $totalPrice = 0;
+    foreach ($cart as $item) {
+        $price = $item->variation->price ?? $item->product->price;
+        $totalPrice += $price * $item->quantity;
+    }
+@endphp
 												<th class="total-line__name">
 													Tạm tính
 												</th>
-												<td class="total-line__price">1.489.000₫</td>
+												<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
 											</tr>
 											
 											

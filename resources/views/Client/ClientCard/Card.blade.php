@@ -160,9 +160,9 @@
                                     </div>
                                 </div>
                                 <div class="main-cart-data-full-total-action">
-                                    <a href="/collections/all" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
+                                    <a href="{{route('client-home.index')}}" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
 
-                                    <a href="/checkout" title="Thanh toán">Thanh toán</a>
+                                    <a href="{{route('client-checkout.index')}}" title="Thanh toán">Thanh toán</a>
                                   
 
                                 </div>

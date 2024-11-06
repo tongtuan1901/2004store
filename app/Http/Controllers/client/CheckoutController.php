@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CheckoutController extends Controller
 {
@@ -13,8 +14,18 @@ class CheckoutController extends Controller
     public function index()
     {
         //
-        return view('Client.checkout.checkOut');
+        $userId = auth()->id();
+        if (!$userId) {
+            return redirect()->route('login')->with('error', 'Please log in to view your cart.');
+        }
+
+        $cart = Cart::where('user_id', $userId)
+                    ->with(['product', 'variation.size', 'variation.color'])
+                    ->get();
+                    $email = auth()->user()->email;
+        return view('Client.checkout.checkOut',compact('cart','email'));
     }
+
 
     /**
      * Show the form for creating a new resource.

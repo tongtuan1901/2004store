@@ -254,6 +254,10 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
 Route::resource('client-checkout', CheckoutController::class);
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('client-checkout.process');
+Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name('payment.momo');
+Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
+
 Route::resource('client-thankyou', CheckoutThankyouController::class);
 
 Route::resource('client-news',  NewsController::class);
