@@ -236,6 +236,44 @@
     </script>
 
     <style>
+
+        
+        .modal-toggle {
+  display: none; /* Ẩn checkbox */
+}
+
+.modal {
+  display: none; /* Ẩn mặc định */
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Hiện modal khi checkbox được chọn */
+.modal-toggle:checked ~ .modal {
+  display: block; 
+}
         .preload * {
             -webkit-transition: none !important;
             -moz-transition: none !important;
@@ -551,14 +589,16 @@
                         <i class="fal fa-bars"></i>
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
-                        title="Yêu thích">
-                        <i class="fal fa-heart"></i>
-                        <span class="shop-wishlist-count">0</span>
+                        title="Yêu thích"> <i class="fal fa-heart"></i>
+                        <span class="shop-wishlist-count">0</span> 
+                        
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
                         title="Giỏ hàng">
+                        <a href="{{route('client-card.index')}}" class="">
                         <i class="fal fa-shopping-bag"></i>
                         <span class="shop-cart-count">0</span>
+                        </a>
                     </button>
                 </div>
                 <div class="headers3-bot">

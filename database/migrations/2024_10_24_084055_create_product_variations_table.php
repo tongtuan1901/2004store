@@ -13,11 +13,11 @@ class CreateProductVariationsTable extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('color_id')->constrained('colors')->onDelete('cascade');
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade');
+            $table->foreignId('image_id')->nullable()->constrained('product_images')->onDelete('set null');
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('price_sale', 10, 2)->nullable();
             $table->integer('quantity')->default(0);
             $table->tinyInteger('status')->default(1);
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

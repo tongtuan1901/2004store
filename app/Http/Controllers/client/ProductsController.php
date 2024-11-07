@@ -8,35 +8,9 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('Client.ClientProducts.ClientDetailProduct');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
+<<<<<<< HEAD
         // $productsSale->transform(function ($product) {
         //     if ($product->price > 0) {
         //         $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
@@ -48,28 +22,12 @@ class ProductsController extends Controller
         $productDetail = AdminProducts::with(['category'])->findOrFail($id);
         return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail'));
     }
+=======
+        $productDetail = AdminProducts::with(['category', 'brand', 'images', 'variations.size', 'variations.color'])
+            ->findOrFail($id);
+>>>>>>> 7c530d06ed645330b04d4db4ea81a9e5786f4856
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 }

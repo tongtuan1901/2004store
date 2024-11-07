@@ -10,22 +10,24 @@ use App\Models\AdminProducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AdminOrdersController extends Controller
-{
-
-    public function index()
+    class AdminOrdersController extends Controller
     {
-        $orders = AdminOrder::all();
-        // Trong phương thức index
-        foreach ($orders as $order) {
-            // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
-            if ($order->status === 'Chờ xử lý') {
-                // Hiển thị nút duyệt
-            }
-        }
 
-        return view('Admin.orders.index', compact('orders'));
-    }
+        public function index()
+        {
+            $orders = AdminOrder::with(['user','products.variations.size', 'products.variations.color'])->get();
+            // $orders = AdminOrder::all();
+            // Trong phương thức index
+            // dd($orders->toArray());die;
+            foreach ($orders as $order) {
+                // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
+                if ($order->status === 'Chờ xử lý') {
+                    // Hiển thị nút duyệt
+                }
+            }
+
+            return view('Admin.orders.index', compact('orders'));
+        }
 
     public function approveIndex()
     {
@@ -96,7 +98,7 @@ class AdminOrdersController extends Controller
 
     public function show($id)
     {
-        $order = AdminOrder::with('products')->findOrFail($id);
+        $order = AdminOrder::with('user','products.variations.size', 'products.variations.color')->findOrFail($id);
         session()->put('cart_total', $order->total);
         foreach ($order->products as $product) {
             echo Storage::url($product->image_path);

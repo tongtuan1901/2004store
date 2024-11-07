@@ -21,7 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        
+        'order_id'
     ];
 
     /**
@@ -43,7 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function orders(){
+        return $this->hasMany(AdminOrder::class);
+    }
+    public function carts()
 {
-    return $this->hasMany(Review::class);
+    return $this->hasMany(Cart::class);
 }
 }

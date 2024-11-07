@@ -22,13 +22,18 @@ class AdminOrder extends Model
         'phone',
         'address',
         'total',
-        'status'
+        'status',
+        'user_id'
     ];
 
 
     public function products()
     {
         return $this->belongsToMany(AdminProducts::class, 'order_product', 'order_id', 'product_id')->withPivot('quantity');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function category()
