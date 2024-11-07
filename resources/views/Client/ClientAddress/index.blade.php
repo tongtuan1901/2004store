@@ -47,69 +47,103 @@
 
     <style>
         .address-container {
-            text-align: center;
-            margin: 20px; 
-        }
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .address-container h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
+.address-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
 
-        .alert {
-            background-color: #d4edda; 
-            color: #155724; 
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
+.alert {
+    background-color: #e2f3e4;
+    color: #256029;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-        li {
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-        }
+li {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-        .add-address {
-            display: inline-block;
-            background-color: #28a745; 
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 20px;
-        }
+li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
 
-        .add-address:hover {
-            background-color: #218838; 
-        }
-        button {
-        border: none; 
-        background: transparent; 
-        cursor: pointer; 
-        font-size: inherit; 
-        }
+li span {
+    color: #555;
+    line-height: 1.6;
+}
 
-        .icon-delete {
-            color: red; 
-        }
+.add-address {
+    display: inline-block;
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
 
-        .icon-edit {
-            color: deepskyblue; 
-        }
+.add-address:hover {
+    background-color: #218838;
+}
 
-        button:hover {
-            opacity: 0.7; 
-        }
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0 8px;
+}
+
+.icon-delete {
+    color: #dc3545;
+    transition: color 0.2s;
+}
+
+.icon-delete:hover {
+    color: #b02a37;
+}
+
+.icon-edit {
+    color: #007bff;
+    transition: color 0.2s;
+}
+
+.icon-edit:hover {
+    color: #0056b3;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
 
     </style>
 @endsection

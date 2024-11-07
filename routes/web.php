@@ -77,7 +77,11 @@ use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\AddressController;
 
 use App\Http\Controllers\client\CheckoutThankyouController;
+
+use App\Http\Controllers\client\ClientOrderControler;
+
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -342,6 +346,7 @@ Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddr
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
 Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
 
+Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 
 // route::get('admin-ui',function(){
 //     return view('Admin1.Products.index');
