@@ -25,7 +25,11 @@ class CheckoutController extends Controller
                     $email = auth()->user()->email;
         return view('Client.checkout.checkOut',compact('cart','email'));
     }
-
+    public function ttMuaNgay()
+    {
+        $cart = session()->get('cart', []);
+        return view('Client.checkout.checkOut', compact('cart'));
+    }
 
     /**
      * Show the form for creating a new resource.

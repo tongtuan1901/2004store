@@ -188,7 +188,7 @@
                                                 </g>
                                             </svg>
                                         </button>
-<<<<<<< HEAD
+
                                         {{-- <div class="product-item-actions">
                                             <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button"
                                                 data-type="shop-addLoop-button">Thêm vào giỏ</button>
@@ -288,6 +288,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <form action="{{ route('mua-ngay', $product->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Mua ngay</button>
+                            </form>
                         @endforeach
                     </div>
 

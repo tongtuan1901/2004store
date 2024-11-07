@@ -73,6 +73,7 @@ use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use App\Http\Controllers\client\MuaNgayController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -276,6 +277,11 @@ Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users
 Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
+//chức năng mua ngay
+Route::post('mua-ngay', [MuaNgayController::class, 'muaNgay'])->name('mua-ngay');
+Route::get('/checkout', [CheckoutController::class, 'ttMuaNgay'])->name('checkout');
+
+
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
@@ -318,7 +324,7 @@ route::get('card',function(){
     return view('Client.CLientCard.Card');
 });
 route::get('card-checkout',function(){
-    return view('Client.CLientCard.CheckOut');
+    return view('Client.Checkout.Checkout');
 });
 route::get('card-thankyou',function(){
     return view('Client.CLientCard.ThankYou');

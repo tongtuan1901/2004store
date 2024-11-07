@@ -812,3 +812,18 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 
 </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
 </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>
+
+{{-- @if(session('cart'))
+    @foreach(session('cart') as $id => $details)
+        <div>
+            <p>Tên: {{ $details['name'] }}</p>
+            <p>Giá: {{ $details['price'] }} VND</p>
+            <p>Số lượng: {{ $details['quantity'] }}</p>
+        </div>
+    @endforeach
+@else
+<div class="alert alert-primary" role="alert">
+  	Giỏ hàng của bạn trống! Hãy mua sản phẩm để đặt hàng. 
+</div>
+@endif --}}
+{{-- <a href="{{ route('') }}" class="btn btn-success">Thanh toán</a> --}}

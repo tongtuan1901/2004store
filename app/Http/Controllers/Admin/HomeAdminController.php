@@ -123,7 +123,7 @@ class HomeAdminController extends Controller
         // dd($doanhThuThangTruoc);
         // dd($labelsSPBanChay);
         // dd($dataSPBanChay);
-        return view('Admin1.Home.index', compact('das', 'total', 'totalThanhCong','quantity', 'doanhThuThangTruoc','totalTienDonHangThangTruocThanhCong', 'labels', 'data', 'productNamesSPBanChay', 'totalTienDonHangThangTruoc','quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai', 'doanhThuNgayHomNay', 'labelsDonHangThang', 'dataDonHangThang', 'soLuongBanHomNay', 'topKH', 'labelstop5Products', 'datatop5Products'));
+        return view('Admin.Home.index', compact('das', 'total', 'totalThanhCong','quantity', 'doanhThuThangTruoc','totalTienDonHangThangTruocThanhCong', 'labels', 'data', 'productNamesSPBanChay', 'totalTienDonHangThangTruoc','quantitiesSPBanChay', 'datHangThanhCong', 'datHangThatBai', 'doanhThuNgayHomNay', 'labelsDonHangThang', 'dataDonHangThang', 'soLuongBanHomNay', 'topKH', 'labelstop5Products', 'datatop5Products'));
         // return view('Admin.layouts.master.footer', compact('das'));
     }
     public function filter_by_date(Request $request)
