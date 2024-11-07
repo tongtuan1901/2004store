@@ -16,7 +16,7 @@ class AdminNewsController extends Controller
      */
     public function index()
     {
-        $data = DB::table('news')->get();
+        $data = News::all();
         return view('admin.new.index', compact('data'));
     }
 

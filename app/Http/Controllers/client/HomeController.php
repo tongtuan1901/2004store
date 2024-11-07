@@ -8,6 +8,7 @@ use App\Models\Banners;
 use App\Models\AdminProducts;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller{
@@ -44,8 +45,9 @@ class HomeController extends Controller{
                 return $productSeller;
             });
 
-        // dd($products);
-        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands'));
+            $news = News::latest()->limit(3)->get(); // Giới hạn số lượng tin tức, bạn có thể điều chỉnh theo nhu cầu
+
+            return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'listBrands', 'news'));
 
 
     /**
