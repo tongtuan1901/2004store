@@ -13,7 +13,7 @@
     <link rel="shortcut icon"
         href="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/faviconb1ed.png') }}"
         type="image/png">
-    <title>F1GENZ Model Fashion</title>
+    <title>2004Store</title>
     <link rel="canonical" href="">
     <link rel="alternate" href="" hreflang="vi-vn">
     <meta name="keywords" content="F1GENZ - COSMETIC,  Mỹ Phẩm, Son, Nước hoa..">

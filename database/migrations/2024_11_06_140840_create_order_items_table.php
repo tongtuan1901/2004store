@@ -17,11 +17,16 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id'); // ID của sản phẩm
             $table->integer('quantity'); // Số lượng sản phẩm trong đơn hàng
             $table->decimal('price', 10, 2); // Giá tiền của sản phẩm
+            $table->string('image')->nullable();
             $table->timestamps(); // Tạo trường created_at và updated_at
-
-            // Thiết lập khóa ngoại
+            $table->foreignId('variation_id')->constrained('product_variations')->onDelete('cascade');
+            // Add foreign key constraints
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            
+            // Index for optimization
+            $table->index('order_id');
+            $table->index('product_id');
         });
     }
 

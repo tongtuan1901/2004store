@@ -326,458 +326,445 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 		</div>
 	</header>
 	<aside>
-		<button class="order-summary-toggle" data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed">
-			<span class="wrap">
-				<span class="order-summary-toggle__inner">
-					<span class="order-summary-toggle__text expandable">
-						Đơn hàng (1 sản phẩm)
-					</span>
-					<span class="order-summary-toggle__total-recap" data-bind="getTextTotalPrice()">1.529.000₫</span>
-				</span>
-			</span>
-		</button>
-	</aside>
-	
-	
-		
-	
-	<div data-tg-refresh="checkout" id="checkout" class="content" data-select2-id="select2-data-checkout">
-		<form id="checkoutForm" method="post" data-define="{
-				loadingShippingErrorMessage: 'Không thể load phí vận chuyển. Vui lòng thử lại',
-				loadingReductionCodeErrorMessage: 'Có lỗi xảy ra khi áp dụng khuyến mãi. Vui lòng thử lại',
-				submitingCheckoutErrorMessage: 'Có lỗi xảy ra khi xử lý. Vui lòng thử lại',
-				requireShipping: true,
-				requireDistrict: false,
-				requireWard: false,
-				shouldSaveCheckoutAbandon: false}" action="/checkout/0299debabe28467ba2f5be03c549abfc" data-bind-event-submit="handleCheckoutSubmit(event)" data-bind-event-keypress="handleCheckoutKeyPress(event)" data-bind-event-change="handleCheckoutChange(event)" data-select2-id="select2-data-checkoutForm">
-			<input type="hidden" name="_method" value="patch">
-			<div class="wrap" data-select2-id="select2-data-215-0u6j">
-				<main class="main">
-					<header class="main__header">
-						<div class="logo logo--left">
-	
-		<h1 class="shop__name">
-			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
-		</h1>
-	
-</div>
-					</header>
-					<div class="main__content" data-select2-id="select2-data-214-jgm2">
-						<article class="animate-floating-labels row">
-							<div class="col col--two">
-								<section class="section" data-select2-id="select2-data-213-erl9">
-									<div class="section__header">
-										<div class="layout-flex">
-											<h2 class="section__title layout-flex__item layout-flex__item--stretch">
-												<i class="fa fa-id-card-o fa-lg section__title--icon hide-on-desktop"></i>
-												
-												Thông tin nhận hàng
-												
-											</h2>
-											
-												
-													<a data-savepage-href="/account/logout?returnUrl=/checkout/0299debabe28467ba2f5be03c549abfc" href="{{route('client-home.index')}}">
-														<i class="fa fa-sign-out fa-lg"></i>
-														<span>Đăng xuất</span>
-													</a>
-												
-											
-										</div>
-									</div>
-									<div class="section__content" data-select2-id="select2-data-212-x02n">
-										<div class="fieldset">
-											
-											<div class="field field--show-floating-label">
-												<div class="field__input-wrapper">
-													<label for="customer-address" class="field__label">Sổ địa chỉ</label>
-													<select size="1" class="field__input field__input--select" id="customer-address" data-bind="customerAddress">
-														<option value="0">Địa chỉ khác...</option>
-														
-													</select>
-													<div class="field__caret">
-														<i class="fa fa-caret-down"></i>
-													</div>
-												</div>
-											</div>
-											
 
-											
-												
-											<div class="field field--show-floating-label field--disabled">
-    <input name="email" type="hidden" value="{{ $email }}">
-    <div class="field__input-wrapper">
-        <label for="email" class="field__label">Email</label>
-        <input id="email" type="email" class="field__input" data-bind="email" value="{{ $email }}" disabled>
-    </div>
-</div>
-												
-											
-
-											<div class="field field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.name}">
-												<div class="field__input-wrapper">
-													<label for="billingName" class="field__label">Họ và tên</label>
-													<input name="billingName" id="billingName" type="text" class="field__input" data-bind="billing.name" value="ấd">
-												</div>
-												
-											</div>
-											
-											<div class="field field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.phone}">
-												<div class="field__input-wrapper field__input-wrapper--connected" data-define="{phoneInput: new InputPhone(this)}">
-													<label for="billingPhone" class="field__label">
-														Số điện thoại (tùy chọn)
-													</label>
-													<input name="billingPhone" id="billingPhone" type="tel" class="field__input" data-bind="billing.phone" value="adad">
-													
-												</div>
-												
-											</div>
-											
-											
-											<div class="field  field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.address}">
-												<div class="field__input-wrapper">
-													<label for="billingAddress" class="field__label">
-														Địa chỉ (tùy chọn)
-													</label>
-													<input name="billingAddress" id="billingAddress" type="text" class="field__input" data-bind="billing.address" value="adad">
-												</div>
-												
-											</div>
-											
-											
-                                            <div class="field field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.phone}">
-												<div class="field__input-wrapper field__input-wrapper--connected" data-define="{phoneInput: new InputPhone(this)}">
-													<label for="billingPhone" class="field__label">
-														Tỉnh thành
-													</label>
-													<input name="billingPhone" id="billingPhone" type="tel" class="field__input" data-bind="billing.phone" value="adad">
-													
-												</div>
-												
-											</div>
-											
-											<div class="field field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.phone}">
-												<div class="field__input-wrapper field__input-wrapper--connected" data-define="{phoneInput: new InputPhone(this)}">
-													<label for="billingPhone" class="field__label">
-														Quận,Huyện
-													</label>
-													<input name="billingPhone" id="billingPhone" type="tel" class="field__input" data-bind="billing.phone" value="adad">
-													
-												</div>
-												
-											</div>
-											
-											<div class="field field--show-floating-label" data-bind-class="{'field--show-floating-label': billing.phone}">
-												<div class="field__input-wrapper field__input-wrapper--connected" data-define="{phoneInput: new InputPhone(this)}">
-													<label for="billingPhone" class="field__label">
-														Phường xã
-													</label>
-													<input name="billingPhone" id="billingPhone" type="tel" class="field__input" data-bind="billing.phone" value="adad">
-													
-												</div>
-												
-											</div>
-											
-											
-											
-											
-										</div>
-									</div>
-								</section>
-								
-								<div class="fieldset">
-									<h3 class="visually-hidden">Ghi chú</h3>
-									<div class="field" data-bind-class="{'field--show-floating-label': note}">
-										<div class="field__input-wrapper">
-											<label for="note" class="field__label">
-												Ghi chú (tùy chọn)
-											</label>
-											<textarea name="note" id="note" class="field__input" data-bind="note"></textarea>
-										</div>
-										
-									</div>
-								</div>
-								
-							</div>
-							<div class="col col--two">
-								
-
-								
-									
-									
-										
-									
-								
-								<section class="section" data-define="{shippingMethod: ''}">
-									<div class="section__header">
-										<div class="layout-flex">
-											<h2 class="section__title layout-flex__item layout-flex__item--stretch">
-												<i class="fa fa-truck fa-lg section__title--icon hide-on-desktop"></i>
-												Vận chuyển
-											</h2>
-										</div>
-									</div>
-									<div class="section__content" data-tg-refresh="refreshShipping" id="shippingMethodList" data-define="{isAddressSelecting: false, shippingMethods: []}">
-										<div class="alert alert--loader spinner spinner--active hide" data-bind-show="isLoadingShippingMethod">
-											<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-												<use href="#spinner"></use>
-											</svg>
-										</div>
-
-										
-										<div class="alert alert-retry alert--danger hide" data-bind-event-click="handleShippingMethodErrorRetry()" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && isLoadingShippingError">
-											<span data-bind="loadingShippingErrorMessage">Không thể load phí vận chuyển. Vui lòng thử lại</span> <i class="fa fa-refresh"></i>
-										</div>
-
-										
-										<div class="content-box" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && !isLoadingShippingError">
-
-											
-											
-												
-											
-											
-												
-											
-											
-											
-											
-											<div class="content-box__row" data-define-array="{shippingMethods: {name: '802787_0,40.000 VND', textPriceFinal: '40.000₫', textPriceOriginal: '', subtotalPriceWithShippingFee: '1.529.000₫'}}">
-												<div class="radio-wrapper">
-													<div class="radio__input">
-														<input type="radio" class="input-radio" name="shippingMethod" id="shippingMethod-802787_0" value="802787_0,40.000 VND" data-bind="shippingMethod" checked="">
-													</div>
-													<label for="shippingMethod-802787_0" class="radio__label">
-														<span class="radio__label__primary">
-															<span>Giao hàng tận nơi</span>
-															
-														</span>
-														<span class="radio__label__accessory">
-															
-															<span class="content-box__emphasis price">
-																40.000₫
-															</span>
-															
-														</span>
-													</label>
-												</div>
-											</div>
-											
-										</div>
-										
-										<div class="alert alert--info hide" data-bind-show="!isLoadingShippingMethod && isAddressSelecting">
-											Vui lòng nhập thông tin giao hàng
-										</div>
-									</div>
-								</section>
-								
-								<section class="section">
-									<div class="section__header">
-										<div class="layout-flex">
-											<h2 class="section__title layout-flex__item layout-flex__item--stretch">
-												<i class="fa fa-credit-card fa-lg section__title--icon hide-on-desktop"></i>
-												Thanh toán
-											</h2>
-										</div>
-									</div>
-									<div class="section__content">
-										
-										
-										<div class="content-box" data-define="{paymentMethod: undefined}">
-											
-											
-											<div class="content-box__row">
-											<div class="radio-wrapper">
-													<div class="radio__input">
-														<input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="780744" data-provider-id="3" checked="">
-													</div>
-													<label for="paymentMethod-780744" class="radio__label">
-														<span class="radio__label__primary">Chuyển khoản</span>
-														<span class="radio__label__accessory">
-															<span class="radio__label__icon">
-																<i class="payment-icon payment-icon--3"></i>
-															</span>
-														</span>
-																
-															
-																					
-													</label>
-												</div>
-												
-											</div>
-											
-											<div class="content-box__row">
-											<div class="radio-wrapper">
-													<div class="radio__input">
-														<input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="780746" data-provider-id="4">
-													</div>
-													<label for="paymentMethod-780746" class="radio__label">
-														<span class="radio__label__primary">Thu hộ (COD)</span>
-														<span class="radio__label__accessory">
-															<span class="radio__label__icon">
-																<i class="payment-icon payment-icon--4"></i>
-															</span>
-														</span>
-																
-															
-																					
-													</label>
-												</div>
-												
-											</div>
-											
-										</div>
-										
-									</div>
-								</section>
-							</div>
-						</article>
-						<div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
-							<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-								<span class="spinner-label">ĐẶT HÀNG</span>
-								<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-									<use href="#spinner"></use>
-								</svg>
-							</button>
-							
-							<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
-								<i class="previous-link__arrow">❮</i>
-								<span class="previous-link__content">Quay về giỏ hàng</span>
-							</a>
-							
-						</div>
-
-						<div id="common-alert" data-tg-refresh="refreshError">
-							
-							
-							<div class="alert alert--danger hide-on-desktop hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
-						</div>
-					</div>
-					
-				</main>
-				<aside class="sidebar">
-					<div class="sidebar__header">
-						<h2 class="sidebar__title">
+		<form action="{{ route('client-checkout.store') }}" method="POST">
+		@csrf
+			<button class="order-summary-toggle" data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed">
+				<span class="wrap">
+					<span class="order-summary-toggle__inner">
+						<span class="order-summary-toggle__text expandable">
 							Đơn hàng (1 sản phẩm)
-						</h2>
-					</div>
-					<div class="sidebar__content">
-						<div id="order-summary" class="order-summary order-summary--is-collapsed">
-							<div class="order-summary__sections">
-								<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
-								<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
-    <caption class="visually-hidden">Chi tiết đơn hàng</caption>
-    <thead class="product-table__header">
-        <tr>
-            <th><span class="visually-hidden">Ảnh sản phẩm</span></th>
-            <th><span class="visually-hidden">Tên và biến thể</span></th>
-            <th><span class="visually-hidden">Số lượng</span></th>
-            <th><span class="visually-hidden">Đơn giá</span></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($cart as $item)
-            <tr class="product">
-                <td class="product__image">
-                    <div class="product-thumbnail">
-                        <div class="product-thumbnail__wrapper">
-                            <img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
-                            <span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
-                        </div>
-                    </div>
-                </td>
-                <th class="product__description">
-                    <span class="product__description__name">{{ $item->product->name }}</span>
-                    <span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
-                </th>
-                <td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>
-                <td class="product__price">{{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-								</div>
-								<div class="order-summary__section" id="discountCode">
-    <h3 class="visually-hidden">Mã khuyến mại</h3>
-    <div class="edit_checkout">
-        <div class="fieldset">
-            <div class="field">
-                <div class="field__input-btn-wrapper">
-                    <div class="field__input-wrapper">
-                        <label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
-                        <input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
-                    </div>
-                    <button class="field__input-btn btn" type="button" disabled>
-                        <span class="spinner-label">Áp dụng</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                            <use href="#spinner"></use>
-                        </svg>
-                    </button>
-                </div>
+						</span>
+						<span class="order-summary-toggle__total-recap" data-bind="getTextTotalPrice()">1.529.000₫</span>
+					</span>
+				</span>
+			</button>
+		</aside>
+		
+		
+			
+		
+		<div data-tg-refresh="checkout" id="checkout" class="content" data-select2-id="select2-data-checkout">
+			<form id="checkoutForm" method="post" data-define="{
+					loadingShippingErrorMessage: 'Không thể load phí vận chuyển. Vui lòng thử lại',
+					loadingReductionCodeErrorMessage: 'Có lỗi xảy ra khi áp dụng khuyến mãi. Vui lòng thử lại',
+					submitingCheckoutErrorMessage: 'Có lỗi xảy ra khi xử lý. Vui lòng thử lại',
+					requireShipping: true,
+					requireDistrict: false,
+					requireWard: false,
+					shouldSaveCheckoutAbandon: false}" action="" data-bind-event-submit="handleCheckoutSubmit(event)" data-bind-event-keypress="handleCheckoutKeyPress(event)" data-bind-event-change="handleCheckoutChange(event)" data-select2-id="select2-data-checkoutForm">
+					@csrf
+				<!-- <input type="hidden" name="_method" value="patch"> -->
+				<div class="wrap" data-select2-id="select2-data-215-0u6j">
+					<main class="main">
+						<header class="main__header">
+							<div class="logo logo--left">
+		
+			<h1 class="shop__name">
+				<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
+			</h1>
+		
+	</div>
+						</header>
+						<div class="main__content" data-select2-id="select2-data-214-jgm2">
+							<article class="animate-floating-labels row">
+								<div class="col col--two">
+									<section class="section" data-select2-id="select2-data-213-erl9">
+										<div class="section__header">
+											<div class="layout-flex">
+												<h2 class="section__title layout-flex__item layout-flex__item--stretch">
+													<i class="fa fa-id-card-o fa-lg section__title--icon hide-on-desktop"></i>
+													
+													Thông tin nhận hàng
+													
+												</h2>
+												
+													
+														<a data-savepage-href="/account/logout?returnUrl=/checkout/0299debabe28467ba2f5be03c549abfc" href="{{ route('address.list', ['userId' => auth()->id()]) }}">
+															<i class="fa fa-sign-out fa-lg"></i>
+															<span>Thêm sổ dịa chỉ</span>
+														</a>
+													
+												
+											</div>
+										</div>
+
+										<div class="section__content" data-select2-id="select2-data-212-x02n">
+		<div class="fieldset">
+
+
+			<div class="field field--show-floating-label">
+        <div class="field__input-wrapper">
+            <label for="customer-address" class="field__label">Sổ địa chỉ</label>
+            <select size="1" class="field__input field__input--select" id="customer-address" name="address_id" data-bind="customerAddress">
+                <option value="0">Địa chỉ khác...</option>
+                @foreach($addresses as $address)
+                    <option value="{{ $address->id }}" data-name="{{ $address->name }}" data-phone_number="{{ $address->phone_number }}" data-street="{{ $address->street }}" data-city="{{ $address->city }}" data-state="{{ $address->state }}" data-house_address="{{ $address->house_address }}">
+                        {{ $address->name }}, {{ $address->phone_number }}, {{ $address->city }}, {{ $address->house_address }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="field__caret">
+                <i class="fa fa-caret-down"></i>
             </div>
         </div>
     </div>
-</div>
-								<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
-									<table class="total-line-table">
-										<caption class="visually-hidden">Tổng giá trị</caption>
-										<thead>
-											<tr>
-												<td><span class="visually-hidden">Mô tả</span></td>
-												<td><span class="visually-hidden">Giá tiền</span></td>
-											</tr>
-										</thead>
-										<tbody class="total-line-table__tbody">
-											<tr class="total-line total-line--subtotal">
-											@php
-    $totalPrice = 0;
-    foreach ($cart as $item) {
-        $price = $item->variation->price ?? $item->product->price;
-        $totalPrice += $price * $item->quantity;
-    }
-@endphp
-												<th class="total-line__name">
-													Tạm tính
-												</th>
-												<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
-											</tr>
-											
-											
-											
-											<tr class="total-line total-line--shipping-fee">
-												<th class="total-line__name">
-													Phí vận chuyển
-												</th>
-												<td class="total-line__price">
-													<span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
-													<span data-bind="getTextShippingPriceFinal()">40.000₫</span>
-												</td>
-											</tr>
-											
-											
-											
-										</tbody>
-										<tfoot class="total-line-table__footer">
-											<tr class="total-line payment-due">
-												<th class="total-line__name">
-													<span class="payment-due__label-total">
-														Tổng cộng
-													</span>
-												</th>
-												<td class="total-line__price">
-													<span class="payment-due__price" data-bind="getTextTotalPrice()">1.529.000₫</span>
-												</td>
-											</tr>
-										</tfoot>
-									</table>
-								</div>
-								<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
-									<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-										<span class="spinner-label">ĐẶT HÀNG</span>
-										<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-											<use href="#spinner"></use>
-										</svg>
-									</button>
 
+			<div class="field field--show-floating-label field--disabled">
+				<input name="email" type="hidden" value="{{ $email }}">
+				<div class="field__input-wrapper">
+					<label for="email" class="field__label">Email</label>
+					<input id="email" type="email" class="field__input" data-bind="email" value="{{ $email }}" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billingName" class="field__label">Tên</label>
+					<input name="billingName" id="billingName" type="text" class="field__input" data-bind="billing.name" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billingPhone" class="field__label">Số điện thoại</label>
+					<input name="billingPhone" id="billingPhone" type="text" class="field__input" data-bind="billing.phone" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billinghouse_address" class="field__label">Địa chỉ nhà</label>
+					<input name="billinghouse_address" id="billinghouse_address" type="text" class="field__input" data-bind="billing.house_address" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billingStreet" class="field__label">Xã/Phường</label>
+					<input name="billingStreet" id="billingStreet" type="text" class="field__input" data-bind="billing.street" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billingState" class="field__label">Huyện</label>
+					<input name="billingState" id="billingState" type="text" class="field__input" data-bind="billing.state" disabled>
+				</div>
+			</div>
+
+			<div class="field field--show-floating-label">
+				<div class="field__input-wrapper">
+					<label for="billingCity" class="field__label">Tỉnh</label>
+					<input name="billingCity" id="billingCity" type="text" class="field__input" data-bind="billing.city" disabled>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById('customer-address').addEventListener('change', function() {
+			var selectedOption = this.options[this.selectedIndex];
+			document.getElementById('billingName').value = selectedOption.getAttribute('data-name');
+			document.getElementById('billingPhone').value = selectedOption.getAttribute('data-phone_number');
+			document.getElementById('billingStreet').value = selectedOption.getAttribute('data-street');
+			document.getElementById('billingCity').value = selectedOption.getAttribute('data-city');
+			document.getElementById('billingState').value = selectedOption.getAttribute('data-state');
+			document.getElementById('billinghouse_address').value = selectedOption.getAttribute('data-house_address');
+		});
+	</script>
+
+
+
+									</section>
+									
+									<div class="fieldset">
+										<h3 class="visually-hidden">Ghi chú</h3>
+										<div class="field" data-bind-class="{'field--show-floating-label': note}">
+											<div class="field__input-wrapper">
+												<label for="note" class="field__label">
+													Ghi chú (tùy chọn)
+												</label>
+												<textarea name="note" id="note" class="field__input" data-bind="note"></textarea>
+											</div>
+											
+										</div>
+									</div>
+									
+								</div>
+								<div class="col col--two">
+									
+
+									
+										
+										
+											
+										
+									
+									<section class="section" data-define="{shippingMethod: ''}">
+										<div class="section__header">
+											<div class="layout-flex">
+												<h2 class="section__title layout-flex__item layout-flex__item--stretch">
+													<i class="fa fa-truck fa-lg section__title--icon hide-on-desktop"></i>
+													Vận chuyển
+												</h2>
+											</div>
+										</div>
+										<div class="section__content" data-tg-refresh="refreshShipping" id="shippingMethodList" data-define="{isAddressSelecting: false, shippingMethods: []}">
+											<div class="alert alert--loader spinner spinner--active hide" data-bind-show="isLoadingShippingMethod">
+												<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+													<use href="#spinner"></use>
+												</svg>
+											</div>
+
+											
+											<div class="alert alert-retry alert--danger hide" data-bind-event-click="handleShippingMethodErrorRetry()" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && isLoadingShippingError">
+												<span data-bind="loadingShippingErrorMessage">Không thể load phí vận chuyển. Vui lòng thử lại</span> <i class="fa fa-refresh"></i>
+											</div>
+
+											
+											<div class="content-box" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && !isLoadingShippingError">
+
+												
+												
+													
+												
+												
+													
+												
+												
+												
+												
+												<div class="content-box__row" data-define-array="{shippingMethods: {name: '802787_0,40.000 VND', textPriceFinal: '40.000₫', textPriceOriginal: '', subtotalPriceWithShippingFee: '1.529.000₫'}}">
+													<div class="radio-wrapper">
+														<div class="radio__input">
+															<input type="radio" class="input-radio" name="shippingMethod" id="shippingMethod-802787_0" value="802787_0,40.000 VND" data-bind="shippingMethod" checked="">
+														</div>
+														<label for="shippingMethod-802787_0" class="radio__label">
+															<span class="radio__label__primary">
+																<span>Giao hàng tận nơi</span>
+																
+															</span>
+															<span class="radio__label__accessory">
+																
+																<span class="content-box__emphasis price">
+																	40.000₫
+																</span>
+																
+															</span>
+														</label>
+													</div>
+												</div>
+												
+											</div>
+											
+											<div class="alert alert--info hide" data-bind-show="!isLoadingShippingMethod && isAddressSelecting">
+												Vui lòng nhập thông tin giao hàng
+											</div>
+										</div>
+									</section>
+									
+									<section class="section">
+										<div class="section__header">
+											<div class="layout-flex">
+												<h2 class="section__title layout-flex__item layout-flex__item--stretch">
+													<i class="fa fa-credit-card fa-lg section__title--icon hide-on-desktop"></i>
+													Thanh toán
+												</h2>
+											</div>
+										</div>
+										<div class="section__content">
+											
+											
+										<div class="content-box" data-define="{paymentMethod: undefined}">
+        <div class="content-box__row">
+            <div class="radio-wrapper">
+                <div class="radio__input">
+                    <input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
+                </div>
+                <label for="paymentMethod-780744" class="radio__label">
+                    <span class="radio__label__primary">Chuyển khoản</span>
+                    <span class="radio__label__accessory">
+                        <span class="radio__label__icon">
+                            <i class="payment-icon payment-icon--3"></i>
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="content-box__row">
+            <div class="radio-wrapper">
+                <div class="radio__input">
+                    <input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="cod" data-provider-id="4">
+                </div>
+                <label for="paymentMethod-780746" class="radio__label">
+                    <span class="radio__label__primary">Thanh toán khi nhận hàng</span>
+                    <span class="radio__label__accessory">
+                        <span class="radio__label__icon">
+                            <i class="payment-icon payment-icon--4"></i>
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+											
+										</div>
+									</section>
+								</div>
+							</article>
+							<div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
+								<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
+									<span class="spinner-label">ĐẶT HÀNG</span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+										<use href="#spinner"></use>
+									</svg>
+								</button>
+								
+								<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
+									<i class="previous-link__arrow">❮</i>
+									<span class="previous-link__content">Quay về giỏ hàng</span>
+								</a>
+								
+							</div>
+
+							<div id="common-alert" data-tg-refresh="refreshError">
+								
+								
+								<div class="alert alert--danger hide-on-desktop hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
+							</div>
+						</div>
+						
+					</main>
+					<aside class="sidebar">
+						<div class="sidebar__header">
+							<h2 class="sidebar__title">
+								Đơn hàng (1 sản phẩm)
+							</h2>
+						</div>
+						<div class="sidebar__content">
+							<div id="order-summary" class="order-summary order-summary--is-collapsed">
+								<div class="order-summary__sections">
+									<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
+									<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
+		<caption class="visually-hidden">Chi tiết đơn hàng</caption>
+		<thead class="product-table__header">
+			<tr>
+				<th><span class="visually-hidden">Ảnh sản phẩm</span></th>
+				<th><span class="visually-hidden">Tên và biến thể</span></th>
+				<th><span class="visually-hidden">Số lượng</span></th>
+				<th><span class="visually-hidden">Đơn giá</span></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach ($cart as $item)
+				<tr class="product">
+				
+					<td class="product__image">
+						<div class="product-thumbnail">
+							<div class="product-thumbnail__wrapper">
+								<img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
+								<span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
+							</div>
+						</div>
+					</td>
+					<th class="product__description">
+						<span class="product__description__name">{{ $item->product->name }}</span>
+						<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
+					</th>
+					<td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>
+					<td class="product__price">{{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫</td>
+				</tr>
+			@endforeach
+		</tbody>
+	</table>
+									</div>
+									<div class="order-summary__section" id="discountCode">
+		<h3 class="visually-hidden">Mã khuyến mại</h3>
+		<div class="edit_checkout">
+			<div class="fieldset">
+				<div class="field">
+					<div class="field__input-btn-wrapper">
+						<div class="field__input-wrapper">
+							<label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
+							<input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
+						</div>
+						<button class="field__input-btn btn" type="button" disabled>
+							<span class="spinner-label">Áp dụng</span>
+							<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+								<use href="#spinner"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
+										<table class="total-line-table">
+											<caption class="visually-hidden">Tổng giá trị</caption>
+											<thead>
+												<tr>
+													<td><span class="visually-hidden">Mô tả</span></td>
+													<td><span class="visually-hidden">Giá tiền</span></td>
+												</tr>
+											</thead>
+											<tbody class="total-line-table__tbody">
+												<tr class="total-line total-line--subtotal">
+												@php
+		$totalPrice = 0;
+		foreach ($cart as $item) {
+			$price = $item->variation->price ?? $item->product->price;
+			$totalPrice += $price * $item->quantity;
+		}
+		$shippingFee = 40000; // Phí vận chuyển cố định
+		$finalTotal = $totalPrice + $shippingFee;
+	@endphp
+													<th class="total-line__name">
+														Tạm tính
+													</th>
+													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+												</tr>
+												
+												
+												
+												<tr class="total-line total-line--shipping-fee">
+													<th class="total-line__name">
+														Phí vận chuyển
+													</th>
+													<td class="total-line__price">
+														<span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
+														<span data-bind="getTextShippingPriceFinal()">40.000₫</span>
+													</td>
+												</tr>
+												
+												
+												
+											</tbody>
+											<tfoot class="total-line-table__footer">
+												<tr class="total-line payment-due">
+													<th class="total-line__name">
+														<span class="payment-due__label-total">
+															Tổng cộng
+														</span>
+													</th>
+													<td class="total-line__price">
+														<span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+													</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
+										<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
+											<span class="spinner-label">ĐẶT HÀNG</span>
+											<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+												<use href="#spinner"></use>
+											</svg>
+										</button>
+										</form>
 									
 									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
