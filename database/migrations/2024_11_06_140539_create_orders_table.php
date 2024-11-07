@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone', 255); // Số điện thoại khách hàng
             $table->text('address'); // Địa chỉ giao hàng
             $table->decimal('total', 10, 2); // Tổng số tiền đơn hàng
-            $table->string('status', 255); // Trạng thái đơn hàng
+            $table->enum('status', ['pending', 'processing', 'shipped', 'completed', 'canceled']); // Trạng thái đơn hàng
             $table->string('name_client', 255);
             $table->string('phone_number');
             $table->string('street');
