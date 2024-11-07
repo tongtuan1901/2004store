@@ -65,10 +65,10 @@
                                         <td class="sherah-table__column-1">
                                             @foreach ($product->variations as $variation)
                                             @if ($variation->image)
-    <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
-@else
-    <p>No image available</p>
-@endif
+                                                <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
+                                            @else
+                                                <p>No image available</p>
+                                            @endif
                                             @endforeach
                                         </td>
                                             @foreach ($product->variations as $variation)
