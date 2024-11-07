@@ -7,25 +7,28 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Models\AdminOrder;
 use App\Models\AdminProducts;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AdminOrdersController extends Controller
-{
-
-    public function index()
+    class AdminOrdersController extends Controller
     {
-        $orders = AdminOrder::all();
-        // Trong phương thức index
-        foreach ($orders as $order) {
-            // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
-            if ($order->status === 'Chờ xử lý') {
-                // Hiển thị nút duyệt
-            }
-        }
 
-        return view('Admin.orders.index', compact('orders'));
-    }
+        public function index()
+        {
+            $orders = AdminOrder::with(['user','products.variations.size', 'products.variations.color'])->get();
+            // $orders = AdminOrder::all();
+            // Trong phương thức index
+            // dd($orders->toArray());die;
+            foreach ($orders as $order) {
+                // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
+                if ($order->status === 'Chờ xử lý') {
+                    // Hiển thị nút duyệt
+                }
+            }
+
+            return view('Admin.orders.index', compact('orders'));
+        }
 
     public function approveIndex()
     {
@@ -96,7 +99,7 @@ class AdminOrdersController extends Controller
 
     public function show($id)
     {
-        $order = AdminOrder::with('products')->findOrFail($id);
+        $order = AdminOrder::with('user','products.variations.size', 'products.variations.color')->findOrFail($id);
         session()->put('cart_total', $order->total);
         foreach ($order->products as $product) {
             echo Storage::url($product->image_path);
@@ -198,21 +201,35 @@ class AdminOrdersController extends Controller
     // return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
 
 
-public function deletedOrders()
-{
-    $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
-    return view('Admin.orders.deleted', compact('deletedOrders'));
-}
+    public function deletedOrders()
+    {
+        $deletedOrders = AdminOrder::onlyTrashed()->get(); // Lấy tất cả các đơn hàng đã xóa
+        return view('Admin.orders.deleted', compact('deletedOrders'));
+    }
 
 
 
-public function listDonHangDaHuy(){
-    $donHangBiHuy = AdminOrder::where('status', 'Hủy')
-                    ->with('orderItems.product')
-                    ->get();
-                    // dd($donHangBiHuy);
-    return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
-}
+    public function listDonHangDaHuy(){
+        $donHangBiHuy = AdminOrder::where('status', 'Hủy')
+                        ->with('orderItems.product')
+                        ->get();
+                        // dd($donHangBiHuy);
+        return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
+    }
+
+    public function listAdrress()
+    {
+        $users = User::all();
+
+        return view('Admin.orders.listAddress',compact('users'));
+    }
+    public function showAddress($userId)
+    {
+        $user = User::with('addresses')->findOrFail($userId);
+        $addresses = $user->addresses;
+
+        return view('Admin.orders.showAddress',compact('user','addresses'));
+    }
 }
 
 

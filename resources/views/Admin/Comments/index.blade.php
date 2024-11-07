@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -85,9 +84,5 @@
         </div>
     </div>
     </section>
-=======
-@extends('Admin1.layouts.master')
-@section('contentAdmin')
 
->>>>>>> 76487577908bae5581b3924995779e1559163d7c
 @endsection

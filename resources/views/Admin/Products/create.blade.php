@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.master')
 
 @section('contentAdmin')
@@ -132,8 +131,7 @@
                                                                 <div class="variation-content">
                                                                     <div class="row">
                                                                         <div class="col-md-4">
-                                                                            <label class="form-label">Kích
-                                                                                thước</label>
+                                                                            <label class="form-label">Kích thước</label>
                                                                             <select name="variation[size][]"
                                                                                 class="form-select" required>
                                                                                 <option value="">Chọn kích thước
@@ -182,14 +180,14 @@
                                                                     </div>
                                                                     <button type="button"
                                                                         class="btn btn-danger remove-variation mt-2">Xóa
-                                                                        biến
-                                                                        thể</button>
+                                                                        biến thể</button>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <button type="button" id="add-variation"
                                                             class="btn btn-primary mt-3">Thêm Biến Thể</button>
+
 
                                                     </div>
                                                 </div>
@@ -207,6 +205,7 @@
                             </div>
                         </div>
 
+                     
                     </div>
                 </div>
 
@@ -309,5 +308,4 @@
             display: none;
         }
     </style>
-
 @endsection

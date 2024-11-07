@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.master')
 
 @section('contentAdmin')
@@ -113,7 +112,7 @@
                                                             <div class="image-container me-3" style="flex: 0 0 350px;">
                                                                 <label class="form-label">Hình ảnh:</label>
                                                                 @if ($variation->image)
-                                                                    <img src="{{ asset('storage/' . $variation->image) }}"
+                                                                    <img src="{{ asset('storage/' . $variation->image->image_path) }}"
                                                                         alt="Hình ảnh biến thể" class="img-fluid"
                                                                         style="max-width: 100%; height: auto;">
                                                                 @else
@@ -147,6 +146,7 @@
                                     </div>
                                 @endforeach
                             </div>
+
 
                         </div>
 
@@ -203,5 +203,6 @@
             margin-bottom: 15px;
         }
     </style>
->>>>>>> 76487577908bae5581b3924995779e1559163d7c
+
+
 @endsection
