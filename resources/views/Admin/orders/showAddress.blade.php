@@ -30,6 +30,7 @@
                                             <th class="sherah-table__column-1 sherah-table__h1">Xã</th>
                                             <th class="sherah-table__column-1 sherah-table__h1">Thành phố/ Tỉnh</th>
                                             <th class="sherah-table__column-1 sherah-table__h1">Huyện</th>
+                                            <th class="sherah-table__column-1 sherah-table__h1">Địa chỉ nhà</th>
                                             {{-- <th class="sherah-table__column-1 sherah-table__h1">Tên</th> --}}
                                         </tr> 
                                     </thead>
@@ -59,6 +60,11 @@
                                                 <td class="sherah-table__column-1 sherah-table__data-1">
                                                     <p class="crany-table__product--number">
                                                         <a href="" class="sherah-color1">{{ $address->state }}</a>
+                                                    </p>
+                                                </td>
+                                                <td class="sherah-table__column-1 sherah-table__data-1">
+                                                    <p class="crany-table__product--number">
+                                                        <a href="" class="sherah-color1">{{ $address->house_address }}</a>
                                                     </p>
                                                 </td>
                                             </tr>

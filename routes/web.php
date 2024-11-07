@@ -18,9 +18,9 @@ use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 
 use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\admin\AdminCardController;
 use App\Http\Controllers\admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\HomeAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ use App\Http\Controllers\Admin\HomeAdminController;
 //View Admin
 
 
+use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\client\CheckoutController;
+
+
 use App\Http\Controllers\client\ProductsController;
-
-
 use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\Admin1\AdminHomeController;
-use App\Http\Controllers\Admin\AdminBrandController;
 
-use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminBrandController;
 
 
 
@@ -51,15 +51,16 @@ use App\Http\Controllers\admin\AdminLoginController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\admin\AdminSizesController;
+use App\Http\Controllers\admin\AdminLoginController;
 
+use App\Http\Controllers\admin\AdminSizesController;
 use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
+
+
+
 use App\Http\Controllers\Admin\AdminCouponsController;
-
-
-
 use App\Http\Controllers\Admin1\AdminBannersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
@@ -70,10 +71,17 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
-use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+
+
+
 use App\Http\Controllers\client\AddressController;
+
 use App\Http\Controllers\client\CheckoutThankyouController;
+
 use App\Http\Controllers\client\ClientOrderControler;
+
+use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -181,7 +189,7 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
     Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
 
     Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedIndex'])->name('admin-orders.received');
-
+    Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
 
     // Route để cập nhật trạng thái đơn hàng
     Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
@@ -219,6 +227,9 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
     Route::resource('admin-color', AdminColorsController::class);
     //size
     Route::resource('admin-size', AdminSizesController::class);
+
+    Route::resource('admin-card', AdminCardController::class);
+    Route::get('/admin/carts', [AdminCardController::class, 'index'])->name('admin.carts.index');
 });
 
 
@@ -238,11 +249,28 @@ Route::resource('client-products', ProductsController::class);
 Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
 Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
 
-
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('client-checkout.store');
 Route::resource('client-news', NewsController::class);
+
 Route::resource('client-card', CardController::class);
+//
+Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
+Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
+
+
+
+// Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
+
+Route::resource('client-checkout', CheckoutController::class);
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('client-checkout.process');
+Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name('payment.momo');
+Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
+
+
 // Route::resource('client-checkout', CheckoutController::class);
+
 Route::resource('client-thankyou', CheckoutThankyouController::class);
 
 Route::resource('client-news',  NewsController::class);
@@ -306,6 +334,8 @@ Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddr
 Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
 Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+
 
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
 Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');

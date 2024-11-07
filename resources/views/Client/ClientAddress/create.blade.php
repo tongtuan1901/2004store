@@ -26,6 +26,10 @@
         <label for="state">Huyện</label>
         <input type="text" id="state" name="state" required>
     </div>
+    <div class="form-group">
+        <label for="state">Địa chỉ nhà</label>
+        <input type="text" id="house_address" name="house_address" required>
+    </div>
     
     <button type="submit" class="submit-button">Thêm Địa Chỉ</button>
 </form>

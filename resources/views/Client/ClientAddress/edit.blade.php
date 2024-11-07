@@ -35,12 +35,13 @@
         </div>
         
         <div class="form-group">
-            <label for="state">Huyện</label>
-            <input type="text" id="state" name="state" value="{{ old('state', $address->state) }}" required>
-            @if ($errors->has('state'))
-                <div class="alert alert-danger">{{ $errors->first('state') }}</div>
-            @endif
-        </div>       
+    <label for="house_address">Địa chỉ nhà</label>
+    <input type="text" id="house_address" name="house_address" value="{{ old('house_address', $address->house_address) }}" required>
+    @if ($errors->has('house_address'))
+        <div class="alert alert-danger">{{ $errors->first('house_address') }}</div>
+    @endif
+</div>
+    
         <button type="submit" class="submit-button">Cập Nhật Địa Chỉ</button>
     </form>
 @endsection
