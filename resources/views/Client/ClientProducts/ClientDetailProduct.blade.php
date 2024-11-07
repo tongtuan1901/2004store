@@ -10,7 +10,7 @@
             <div class="main-product-breadcrumb" title="">
                 <div class="container">
                     <div hidden class="section-title-all">
-                        <h1>{{$productDetail->name}}</h1>
+                        <h1>{{ $productDetail->name }}</h1>
                     </div>
                     <div class="breadcrumb-wrap">
                         <ol class="breadcrumb">
@@ -18,7 +18,7 @@
                                     chủ</a></li>
                             <li class="breadcrumb-item"><a href="cocktail-dresses.html" aria-label="Cocktail Dresses"
                                     title="Cocktail Dresses">Cocktail Dresses</a></li>
-                            <li class="breadcrumb-item active"><span> {{$productDetail->name}}</span></li>
+                            <li class="breadcrumb-item active"><span> {{ $productDetail->name }}</span></li>
                         </ol>
                     </div>
                 </div>
@@ -26,9 +26,7 @@
             <div class="container">
                 <!-- Flash Sale -->
                 <div class="productFSale">
-                    <img loading="lazy" decoding="async"
-                        src=""
-                        alt="productFSale" />
+                    <img loading="lazy" decoding="async" src="" alt="productFSale" />
                     <div data-time="1/4/2025 24:00:00" class="countdownLoop"></div>
                     <a href="cocktail-dresses.html" aria-label="Xem toàn bộ sản phẩm Flash Sale"
                         title="Xem toàn bộ sản phẩm Flash Sale">Xem toàn bộ sản phẩm Flash Sale</a>
@@ -42,11 +40,11 @@
                                 title="Áo Dây TWIST DRAPE" data-index="1">
                                 <picture>
                                     <source width="480" height="480" media="(max-width: 480px)"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}">
                                     <source width="1024" height="1024" media="(min-width: 481px)"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}">
                                     <img class="w-auto" width="1024" height="1024"
-                                        src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                        src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                         title="Áo Dây TWIST DRAPE" alt="Áo Dây TWIST DRAPE" loading="eager" decoding="sync"
                                         fetchpriority="high">
                                 </picture>
@@ -55,11 +53,11 @@
                                 title="Áo Dây TWIST DRAPE" data-index="2">
                                 <picture>
                                     <source width="480" height="480" media="(max-width: 480px)"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}">
                                     <source width="1024" height="1024" media="(min-width: 481px)"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}">
                                     <img class="w-auto" width="1024" height="1024"
-                                        src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                        src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                         title="Áo Dây TWIST DRAPE" alt="Áo Dây TWIST DRAPE" loading="lazy" decoding="async"
                                         fetchpriority="low">
                                 </picture>
@@ -72,15 +70,15 @@
                         <div class="main-product-share">
                             <button type="button" data-type="main-product-share-overplay"
                                 class="main-product-share-overplay"></button>
-                            <button type="button" data-type="main-product-share-open-popup"
-                                class="main-product-share-cta" title="Chia sẻ">
+                            <button type="button" data-type="main-product-share-open-popup" class="main-product-share-cta"
+                                title="Chia sẻ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
                                     <path fill="#595959"
                                         d="M19 3c-1.652 0-3 1.348-3 3 0 .46.113.895.3 1.285L12.587 11h-4.77A2.999 2.999 0 005 9c-1.652 0-3 1.348-3 3s1.348 3 3 3c1.3 0 2.402-.84 2.816-2h4.77l3.715 3.715c-.188.39-.301.824-.301 1.285 0 1.652 1.348 3 3 3s3-1.348 3-3-1.348-3-3-3c-.46 0-.895.113-1.285.3l-3.3-3.3 3.3-3.3c.39.187.824.3 1.285.3 1.652 0 3-1.348 3-3s-1.348-3-3-3z">
                                     </path>
                                 </svg>
-                                </button>
+                            </button>
                             <div class="main-product-share-popup">
                                 <div class="main-product-share-popup-head">
                                     <label>Chia sẻ</label>
@@ -144,8 +142,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <h1 class="main-product-title ">Áo Dây TWIST DRAPE</h1>
+                        <form action="" method="post">
+                            @csrf
+                            @method('POST')
+                        <h1 class="main-product-title ">{{ $productDetail->name }}</h1>
                         <div class="main-product-info">
                             <div class="main-product-info-sku">
                                 <strong>Mã sản phẩm: </strong>
@@ -165,19 +165,15 @@
                             </div>
                         </div>
                         <div class="main-product-short">
-                            <div class="main-product-short-data">[MATERIAL]겉감: Polyester 73%, Rayon 21%, Span 6%- 탄탄하고 텐션이
-                                높은 폴리소재- 가슴부분의 트위스트 디테일- 타이트핏- 글리터 스트링은 탈부착 가능[SIZE GUIDE]Size(cm)&nbsp;&nbsp;
-                                &nbsp;FREE어깨단면&nbsp;&nbsp; &nbsp;36가슴단면&nbsp;&nbsp; &nbsp;39밑단단면&nbsp;&nbsp;
-                                &nbsp;39.5소매기장&nbsp;&nbsp; &nbsp;16소매부리단면&nbsp;&nbsp;...</div>
-                            <a hidden href="#" aria-label="Đọc tiếp" title="Đọc tiếp">Đọc tiếp</a>
+                            
                         </div>
                         <div class="main-product-price">
                             <div class="main-product-price-wrap">
-                                <del class="main-product-price-compare">1.880.000₫</del>
+                                <del class="main-product-price-compare">{{ $productDetail->price }} VND</del>
 
-                                <span class="main-product-price-this">1.679.000₫</span>
+                                <span class="main-product-price-this">{{ $productDetail->price_sale }} VND</span>
 
-                                <span class="main-product-price-discount">Tiết kiệm 11%</span>
+                                <span class="main-product-price-discount"></span>
                             </div>
                             <div class="sapo-product-reviews-badge" data-id="36389545"></div>
                         </div>
@@ -194,16 +190,12 @@
                                 <div class="product-sw-select">
                                     <div class="product-sw-title">Color</div>
                                     <span class="product-sw-select-item sw-color">
-                                        <span class="colorHover"></span> <input type="radio" data-value="Kem"
-                                            name="product-choose-color" data-name="option1" value="Kem"
-                                            class="trigger-option-sw d-none" id="product-choose-color-2">
-                                        <label title="Kem" for="product-choose-color-2"
-                                            class="product-sw-select-item-span sw-color-kem-label">
-
-                                            <span
-                                                style="background-image: url(../bizweb.dktcdn.net/thumb/small/100/520/624/products/46ca37424dabab3e8eaf50be81266100-6dae117d2f584904b0a623e6ba4db62d-53d035ecc8f041e587c57bfa6fadc9635e0f.png?v=1720423503557)"
-                                                class="sw-color-kem"></span>
-                                        </label>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>--Chọn--</option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
                                     </span>
                                 </div>
                             </div>
@@ -213,24 +205,12 @@
                             <div class="product-sw-line">
                                 <div class="product-sw-select">
                                     <div class="product-sw-title">Size</div>
-                                    <span class="product-sw-select-item">
-                                        <input type="radio" data-value="S" name="product-choose-size"
-                                            data-name="option2" value="S" class="trigger-option-sw d-none"
-                                            id="product-choose-size-2">
-                                        <label for="product-choose-size-2" class="product-sw-select-item-span">S</label>
-                                    </span>
-                                    <span class="product-sw-select-item">
-                                        <input type="radio" data-value="M" name="product-choose-size"
-                                            data-name="option2" value="M" class="trigger-option-sw d-none"
-                                            id="product-choose-size-3">
-                                        <label for="product-choose-size-3" class="product-sw-select-item-span">M</label>
-                                    </span>
-                                    <span class="product-sw-select-item">
-                                        <input type="radio" data-value="L" name="product-choose-size"
-                                            data-name="option2" value="L" class="trigger-option-sw d-none"
-                                            id="product-choose-size-4">
-                                        <label for="product-choose-size-4" class="product-sw-select-item-span">L</label>
-                                    </span>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>--Chọn--</option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -277,22 +257,14 @@
                                     alt="Beauty Cosmetic" />
                             </a>
                         </div>
-
+                        </form>
                         <div class="main-product-description inSidebar">
                             <div class="main-product-description-items">
                                 <div class="main-product-description-item active" data-type="des">
                                     <span class="main-product-description-item-head">Mô tả sản phẩm</span>
                                     <div class="main-product-description-item-data-wrap">
                                         <div class="main-product-description-item-data">
-                                            <p>[MATERIAL]<br>겉감: Polyester 73%, Rayon 21%, Span 6%</p>
-                                            <p>- 탄탄하고 텐션이 높은 폴리소재<br>- 가슴부분의 트위스트 디테일<br>- 타이트핏<br>- 글리터 스트링은 탈부착 가능</p>
-                                            <p><br>[SIZE GUIDE]<br>Size(cm)&nbsp;&nbsp; &nbsp;FREE<br>어깨단면&nbsp;&nbsp;
-                                                &nbsp;36<br>가슴단면&nbsp;&nbsp; &nbsp;39<br>밑단단면&nbsp;&nbsp;
-                                                &nbsp;39.5<br>소매기장&nbsp;&nbsp; &nbsp;16<br>소매부리단면&nbsp;&nbsp;
-                                                &nbsp;15<br>총장&nbsp;&nbsp; &nbsp;53.5<br>- 핏과 디자인에 따라서, 사이즈는 실제 사이즈와 1-2cm
-                                                정도 다를 수 있습니다.</p>
-                                            <p>[MODEL SIZE]<br>Sofia Kalinov 모델 착용 사이즈 FR<br>키: 173CM<br>가슴둘레: 74cm<br>허리둘레:
-                                                57cm<br>엉덩이둘레: 87cm</p>
+                                            <p><br>{{$productDetail->description}}<br>
                                         </div>
                                     </div>
                                 </div>
@@ -331,10 +303,9 @@
                                     <div class="product-item-top-image">
                                         <a href="ao-phong-co-chu-v-logo-rosy.html"
                                             class="product-item-top-image-showcase">
-                                            <img src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
-                                                alt=''
-                                                title='' width="480"
-                                                height="480" loading="lazy" decoding="async">
+                                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                                alt='' title='' width="480" height="480"
+                                                loading="lazy" decoding="async">
                                         </a>
                                     </div>
                                     <div class="product-item-label-sale"><span>-33%</span></div>
@@ -396,28 +367,26 @@
 
                                     </div>
                                     <div class="product-item-detail-gallery-items">
-                                        <div class="product-item-detail-gallery-item active"
-                                            >
-                                            <img src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                        <div class="product-item-detail-gallery-item active">
+                                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
                                                 title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
                                         </div>
                                         <div class="product-item-detail-gallery-item">
-                                            <img src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
                                                 title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
                                         </div>
-                                        <div class="product-item-detail-gallery-item"
-                                            data-image="">
-                                            <img src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                        <div class="product-item-detail-gallery-item" data-image="">
+                                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
                                                 title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
                                         </div>
                                         <div class="product-item-detail-gallery-item">
-                                            <img src="{{asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg')}}"
+                                            <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
                                                 title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>

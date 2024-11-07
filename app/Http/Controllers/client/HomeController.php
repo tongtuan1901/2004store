@@ -17,7 +17,7 @@ class HomeController extends Controller{
         $banners = Banners::where('deleted', false)->get();
     $listCategories = Category::all();
     $categories = Category::all(); 
-        $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
+        $productsSale = AdminProducts::with(['category'])->orderBy('price_sale', 'asc')->limit(4)->get();
         $productsSale->transform(function ($product) {
             if ($product->price > 0) {
                 $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);

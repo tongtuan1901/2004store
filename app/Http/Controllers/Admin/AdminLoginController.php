@@ -25,7 +25,7 @@ class AdminLoginController extends Controller
         // Kiểm tra xem người dùng có tồn tại và mật khẩu có khớp không
         if ($user && $user->password === $credentials['password']) {
             Auth::guard('user_staff')->login($user); // Đăng nhập người dùng
-            return redirect()->intended('admin-categories'); // Chuyển hướng đến trang admin sau khi đăng nhập
+            return redirect()->intended('users'); // Chuyển hướng đến trang admin sau khi đăng nhập
         }
     
         return redirect()->back()->withErrors(['access' => 'Thông tin đăng nhập không chính xác.']); // Thông báo lỗi

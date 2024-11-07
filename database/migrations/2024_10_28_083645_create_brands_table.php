@@ -6,20 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    /**
+     * Run the migrations.
+     */
+    public function up()
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('logo')->nullable();
-            $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('cascade'); // Liên kết với products
+            $table->string('name');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
     public function down(): void
     {
         Schema::dropIfExists('brands');

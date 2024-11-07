@@ -12,9 +12,15 @@ class AdminProducts extends Model
 
     use HasFactory, SoftDeletes;
 
+
 protected  $table = "products";
+
+   
+
+
     protected $fillable = [
         'category_id',
+        'brand_id',
         'name',
         'description',
         'price',
@@ -28,11 +34,11 @@ protected  $table = "products";
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // Relationship with ProductImage
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
+
 
     // Relationship with AdminOrder
     // public function orders()
@@ -47,6 +53,9 @@ protected  $table = "products";
     // }
 
     // Relationship with ProductVariation
+
+
+
     public function variations()
     {
         return $this->hasMany(ProductVariation::class, 'product_id');
@@ -54,23 +63,41 @@ protected  $table = "products";
 
 
     // Override the table name if needed
-    public function getTable()
+    // public function getTable()
+
+    // public function coupons()
+
+    // {
+    //     return $this->hasMany(AdminCoupons::class);
+    // }
+
+    public function brand()
     {
-        return 'products';
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // public function firstImage()
+    // {
+    //     return $this->hasOne(ProductImage::class, 'product_id');
+    // }
 
     public function coupons()
     {
         return $this->hasMany(AdminCoupons::class);
     }
-    public function brand()
-    {
-        return $this->hasOne(Brand::class);
-    }
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+    // public function brand()
+    // {
+    //     return $this->hasOne(Brand::class);
+    // }
+    // public function reviews()
+    // {
+    //     return $this->hasMany(Review::class);
+    // }
 
 //     public function getTable()
 //     {
@@ -86,6 +113,9 @@ public function firstImage()
 {
     return $this->hasOne(ProductImage::class, 'product_id');
 }
-
+public function review()
+{
+    return $this->hasMany(Review::class);
+}
 
 }

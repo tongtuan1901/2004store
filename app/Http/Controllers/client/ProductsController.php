@@ -37,8 +37,16 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
-        return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
+        // $productsSale->transform(function ($product) {
+        //     if ($product->price > 0) {
+        //         $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
+        //     } else {
+        //         $product->discount_percentage = 0;
+        //     }
+        //     return $product;
+        // });
+        $productDetail = AdminProducts::with(['category'])->findOrFail($id);
+        return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail'));
     }
 
     /**

@@ -143,7 +143,7 @@
                                         <div class="product-item-top-image">
                                             <a href="{{ route('client-products.show', $product->id) }}"
                                                 class="product-item-top-image-showcase">
-                                                <img src="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
+                                                <img src="{{ Storage::url($product->image_path ?? 'default/path/to/image.jpg') }}"
      alt='{{ $product->name }}' title='{{ $product->name }}'
      width="480" height="480" loading="lazy" decoding="async">
  
@@ -188,12 +188,12 @@
                                                 </g>
                                             </svg>
                                         </button>
-                                        <div class="product-item-actions">
+                                        {{-- <div class="product-item-actions">
                                             <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button"
                                                 data-type="shop-addLoop-button">Thêm vào giỏ</button>
                                             <button type="button" title="Xem nhanh" class="shop-quickview-button"
                                                 data-type="shop-quickview-button">Xem nhanh</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="product-item-detail">
                                         <div class="product-item-detail-flex">
