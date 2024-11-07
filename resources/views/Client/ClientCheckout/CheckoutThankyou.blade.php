@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<meta name="description" content="F1GENZ Model Fashion - Cảm ơn">
-	<title>F1GENZ Model Fashion - Cảm ơn</title>
+	<title>2004Store - Cảm ơn</title>
 
 	<script data-savepage-type="text/javascript" type="text/plain" async="" data-savepage-src="https://buyx-gety.sapoapps.vn/assets/script.v2.js?store=f1genz-model-fashion.mysapo.net"></script><script data-savepage-type="text/javascript" type="text/plain" async="" data-savepage-src="//newproductreviews.sapoapps.vn/assets/js/productreviews.min.js?store=f1genz-model-fashion.mysapo.net"></script><script data-savepage-type="" type="text/plain"></script>
 	
@@ -1200,7 +1200,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 			<div class="logo logo--left">
 	
 		<h1 class="shop__name">
-			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">F1GENZ Model Fashion</a>
+			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
 		</h1>
 	
 </div>
@@ -1214,7 +1214,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 						<div class="logo logo--left">
 	
 		<h1 class="shop__name">
-			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">F1GENZ Model Fashion</a>
+			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
 		</h1>
 	
 </div>
@@ -1235,7 +1235,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										<h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
 										
 										<p class="section__text">
-											Một email xác nhận đã được gửi tới tuan123456@gmail.com. <br>
+											Một email xác nhận đã được gửi tới {{ $order->email }}.  <br>
 											Xin vui lòng kiểm tra email của bạn
 										</p>
 										
@@ -1247,7 +1247,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 								<aside class="order-summary order-summary--bordered order-summary--is-collapsed" id="order-summary">
 									<div class="order-summary__header">
 										<div class="order-summary__title">
-											Đơn hàng #1007
+											Đơn hàng #{{ $order->id }}
 											<span class="unprintable">(1)</span>
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
@@ -1260,34 +1260,35 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
 											<table class="product-table">
 												<tbody>
-													
+                                                @foreach ($order->orderItems as $item)
 													<tr class="product">
 														<td class="product__image">
 															<div class="product-thumbnail">
                                                             <div class="product-thumbnail__wrapper">
-    <img src="https://bizweb.dktcdn.net/thumb/thumb/100/520/624/products/adf9e2b08a5a6215605d38e8d56d8502-b8884d5f0ae8497b8c48fc9be0adf717-51eb4f9b44f344939e2e9d46cb971d3f.jpg?v=1720423442500" alt="" class="product-thumbnail__image">
+                                                            <img src="{{ asset('storage/' . $item->image) }}" alt="" class="product-thumbnail__image">
+                                                            
 </div>
 																<span class="product-thumbnail__quantity unprintable">1</span>
 															</div>
 														</td>
 														<th class="product__description">
-															<span class="product__description__name">CỔ CHỮ U TAY ÁO XÁM</span>
+															<span class="product__description__name">{{ $item->product->name }}</span>
 															
-															<span class="product__description__property">Xám / S</span>
+															<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
 															
 															
 															
 														</th>
-														<td class="product__quantity printable-only">
-															x 1
-														</td>
+														<th class="product__quantity printable-only">
+															x {{ $item->quantity }}
+														</th>
 														<td class="product__price">
 															
-																1.489.000₫
+                                                        {{ number_format($item->price, 0, ',', '.') }}₫
 															
 														</td>
 													</tr>
-													
+                                                    @endforeach
 												</tbody>
 											</table>
 										</div>
@@ -1299,7 +1300,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 													
 													<tr class="total-line total-line--subtotal">
 														<th class="total-line__name">Tạm tính</th>
-														<td class="total-line__price">1.489.000₫</td>
+														<td class="total-line__price">{{ number_format($order->total - $shippingFee, 0, ',', '.') }}₫</td>
 													</tr>
 													
 													<tr class="total-line total-line--shipping-fee">
@@ -1309,7 +1310,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 																
 															
 															
-															<span>40.000₫</span>
+															<span>{{ number_format($shippingFee, 0, ',', '.') }}₫</span>
 															
 														</td>
 													</tr>
@@ -1327,7 +1328,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 															<span class="payment-due__label-total">Tổng cộng</span>
 														</th>
 														<td class="total-line__price">
-															<span class="payment-due__price">1.529.000₫</span>
+															<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
 														</td>
 													</tr>
 												</tbody>
@@ -1344,34 +1345,37 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 											
 											<div class="col col--md-two">
 												<h2>Thông tin mua hàng</h2>
-												<p>ấd</p>
+												<p>{{ $user->name }}</p>
 												
-												<p>tuan123456@gmail.com</p>
+												<p>{{ $user->email }}</p>
 												
 												
-												<p>+84977339302</p>
+												<p>{{ $user->phone_number }}</p>
 												
 											</div>
 											
 											<div class="col col--md-two">
-												<h2>Địa chỉ nhận hàng</h2>
-												<p>ấd</p>
+												<h2>Thông tin người nhận</h2>
+												<p>{{ $order->name }}</p>
+                                                <p>{{ $order->phone }}</p>
 												
-												<p>adad</p>
-												
-												
-												
-												<p>Phường Núi Sam, Thành phố Châu Đốc, An Giang</p>
+												<p>{{ $order->house_address }}</p>
 												
 												
-												<p>+84977339302</p>
+                                                <p>{{ $order->state }}</p>
+												
+												<p>{{ $order->street }}</p>
+                                                <p>{{ $order->city }}</p>
+												
+												
+												
 												
 											</div>
 										</div>
 										<div class="row">
 											<div class="col col--md-two">
 												<h2>Phương thức thanh toán</h2>
-												<p>Chuyển khoản</p>
+												<p>{{ $order->payment_method == 'bank_transfer' ? 'Chuyển khoản' : 'Thanh toán khi nhận hàng' }}</p>
 											</div>
 											<div class="col col--md-two">
 												<h2>Phương thức vận chuyển</h2>
@@ -1383,7 +1387,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 								</section>
 								<section class="section unprintable">
 									<div class="field__input-btn-wrapper field__input-btn-wrapper--floating">
-										<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/" class="btn btn--large">Tiếp tục mua hàng</a>
+										<a data-savepage-href="/" href="{{route('client-home.index')}}" class="btn btn--large">Tiếp tục mua hàng</a>
 										<span class="text-icon-group text-icon-group--large icon-print" onclick="window.print()">
 											<i class="fa fa-print"></i>
 											<span>In </span>

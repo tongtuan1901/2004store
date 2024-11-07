@@ -24,9 +24,9 @@ class AddressController extends Controller
     {
         $request->validate([
             
-            'street' => 'required|string|max:255|regex:/^[^\d]*$/',
-            'city' => 'required|string|max:255|regex:/^[^\d]*$/',
-            'state' => 'required|string|max:255|regex:/^[^\d]*$/',
+            'street' => 'required|string|max:255',  
+    'city' => 'required|string|max:255',    
+    'state' => 'required|string|max:255',
         ]);
         
     
@@ -37,6 +37,7 @@ class AddressController extends Controller
             'street' => $request->street,
             'city' => $request->city,
             'state' => $request->state,
+            'house_address' => $request->house_address, 
         ]);
     
         return redirect()->route('address.list', ['userId' => $userId])->with('success', 'Địa chỉ đã được thêm!');
@@ -45,6 +46,7 @@ class AddressController extends Controller
     {
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
+        
 
     return view('Client.ClientCheckout.Checkout', compact('user', 'addresses'));
     }

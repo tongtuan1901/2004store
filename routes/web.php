@@ -185,7 +185,7 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
     Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
 
     Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedIndex'])->name('admin-orders.received');
-
+    Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
 
     // Route để cập nhật trạng thái đơn hàng
     Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
@@ -245,7 +245,7 @@ Route::resource('client-products', ProductsController::class);
 Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
 Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
 
-
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('client-checkout.store');
 Route::resource('client-news', NewsController::class);
 
 Route::resource('client-card', CardController::class);
@@ -330,6 +330,8 @@ Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddr
 Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
 Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+
 
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
 Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');

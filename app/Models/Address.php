@@ -15,7 +15,8 @@ class Address extends Model
         'phone_number',
         'street',
         'city',
-        'state'
+        'state',
+        'house_address'
     ];
 
     public function user()

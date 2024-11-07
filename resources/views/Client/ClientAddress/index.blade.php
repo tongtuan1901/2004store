@@ -15,7 +15,7 @@
             <ul>
                 @foreach($addresses as $address)
                     <li>
-                        <span> Tên:{{ $address->name }}, Số điện thoại:{{ $address->phone_number }},Xã:{{ $address->street }}, Thành phố:{{ $address->city }}, Huyện{{ $address->state }}</span>
+                        <span> Tên:{{ $address->name }}, Số điện thoại:{{ $address->phone_number }},Xã:{{ $address->street }}, Thành phố:{{ $address->city }}, Huyện{{ $address->state }},Địa chỉ nhà{{ $address->house_address }}</span>
                         <a href="{{ route('address.edit', ['id' => $address->id]) }}">
                             <svg width="16" height="16" fill="currentColor" class="icon icon-edit" viewBox="0 0 24 24">
                                 <path d="M3 17.25V21h3.75l11.04-11.04-3.75-3.75L3 17.25zM20.71 7.04a1.004 1.004 0 0 0 0-1.42l-2.34-2.34a1.004 1.004 0 0 0-1.42 0L15.13 4.8l3.75 3.75 1.83-1.51z"/>

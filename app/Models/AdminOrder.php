@@ -23,7 +23,15 @@ class AdminOrder extends Model
         'address',
         'total',
         'status',
-        'user_id'
+        'user_id',
+        'phone_number',
+        'street',
+        'city',
+        'state',
+        'house_address',
+        'name_client',
+        'payment_method', 
+        
     ];
 
 
@@ -41,7 +49,12 @@ class AdminOrder extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function orderItems() {
+    public function orderItems()
+    {
         return $this->hasMany(OderItem::class, 'order_id', 'id');
+    }
+    public function image()
+    {
+        return $this->belongsTo(ProductImage::class, 'image_id');
     }
 }
