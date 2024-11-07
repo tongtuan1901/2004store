@@ -478,36 +478,16 @@
                         <h3>Các thương hiệu tin dùng chúng tôi</h3>
                     </div>
                     <div class="home-vendor-item-wrapper">
-                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - SSENSE">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__1b1ed.png') }}"
-                                alt="F1GENZ Fashion - SSENSE" title="F1GENZ Fashion - SSENSE" width="400"
-                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
-                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - BURBERRY">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__2b1ed.png') }}"
-                                alt="F1GENZ Fashion - BURBERRY" title="F1GENZ Fashion - BURBERRY" width="400"
-                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
-                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - NIKE">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__3b1ed.png') }}"
-                                alt="F1GENZ Fashion - NIKE" title="F1GENZ Fashion - NIKE" width="400" height="165"
-                                loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
-                        <a class="home-vendor-item" href="colelctions/all.html" title="F1GENZ Fashion - ASOS">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__4b1ed.png') }}"
-                                alt="F1GENZ Fashion - ASOS" title="F1GENZ Fashion - ASOS" width="400" height="165"
-                                loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
-                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - PULL & BEAR">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__5b1ed.png') }}"
-                                alt="F1GENZ Fashion - PULL & BEAR" title="F1GENZ Fashion - PULL & BEAR" width="400"
-                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
-                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - GILDAN">
-                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__6b1ed.jpg') }}"
-                                alt="F1GENZ Fashion - GILDAN" title="F1GENZ Fashion - GILDAN" width="400"
-                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                        </a>
+                      
+                            @foreach ($listBrands as $brand)
+                                <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}" title="{{ $brand->name }}">
+                                    <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" width="400" height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                                    {{-- <p style="text-align: center; margin-top: 5px;">{{ $brand->name }}</p> <!-- Căn giữa tên thương hiệu --> --}}
+                                </a>
+                            @endforeach
+                       
+                        
+                      
                     </div>
 
                 </div>

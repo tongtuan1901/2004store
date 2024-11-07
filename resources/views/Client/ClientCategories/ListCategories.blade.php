@@ -161,35 +161,63 @@
                             </div>
                         </div>
                         <div class="main-collection-info">
-                            <h1 class="titleStyle1">Cocktail Dresses</h1>
-                            <div class="main-collection-info-description">
+                           
+                            @if($products->isNotEmpty())
+                            <h1 class="titleStyle1">Sản phẩm của thương hiệu: {{ $products->first()->brand->name }}</h1>
+                        @endif
+                            {{-- <div class="main-collection-info-description">
                                 Những mẫu váy tinh tế, thanh lịch, thường may bằng các chất liệu cao cấp như lụa, ren,
                                 chiffon hoặc nhung. Chiều dài váy khoảng trên đầu gối đến dưới gối, tạo vẻ quý phái, sang
                                 trọng. Các thiết kế có nhiều kiểu dáng khác nhau như cổ chéo, cổ V, tay lửng hoặc không tay.
                                 Các màu sắc phổ biến bao gồm đen, đỏ, xanh đen, tím than và các gam màu trung tính tinh tế.
                                 Những chiếc váy này thường được mặc tới các bữa tiệc, sự kiện chính thức hoặc dạ tiệc.
-                            </div>
+                            </div> --}}
                         </div>
-                        <div class="main-collection-data four">
-                            <div class="product-item" data-id="120912667" data-handle="ribbon-jacquard-vintage">
-                                <div class="product-item-wrap">
-                                    <div class="product-item-top">
-                                        <div class="product-item-top-image">
-                                            <a href="ribbon-jacquard-vintage.html" class="product-item-top-image-showcase">
-                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg" 
-                                                     alt='RIBBON JACQUARD VINTAGE'
-                                                     title='RIBBON JACQUARD VINTAGE' width="480" height="480" loading="lazy" decoding="async">
-                                            </a>
-                                        </div>
-                                        <div class="product-item-label-sale"><span>-20%</span></div>
-                                        <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
-                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128" x="0" y="0" viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" xml:space="preserve" class=""> <path d="M359.511,37.984c-38.907,0-75.282,14.653-103.511,41.478c-28.229-26.825-64.605-41.478-103.511-41.478 C68.406,37.984,0,108.033,0,194.135c0,49.918,42.543,112.126,126.449,184.895c61.346,53.204,123.555,93.023,124.176,93.419 c1.639,1.045,3.507,1.567,5.375,1.567c1.868,0,3.736-0.523,5.376-1.568c0.621-0.396,62.83-40.215,124.176-93.419 C469.457,306.26,512,244.052,512,194.135C512,108.033,443.594,37.984,359.511,37.984z M372.62,363.771 c-49.885,43.284-100.379,77.567-116.62,88.301c-16.216-10.715-66.578-44.903-116.448-88.153C61.34,296.089,20,237.378,20,194.135 C20,119.06,79.435,57.984,152.489,57.984c36.726,0,70.877,15.094,96.161,42.501c1.893,2.052,4.558,3.219,7.35,3.219 s5.457-1.167,7.35-3.219c25.285-27.406,59.435-42.5,96.161-42.5C432.565,57.984,492,119.06,492,194.135 C492,237.344,450.719,296.003,372.62,363.771z" fill="#000000" data-original="#000000"></path> <path d="M347.379,93.307l-0.376,0.065c-5.438,0.966-9.063,6.157-8.097,11.595c0.861,4.846,5.078,8.252,9.834,8.252 c0.581,0,1.17-0.051,1.76-0.156l0.199-0.034c5.446-0.917,9.118-6.075,8.201-11.521C357.983,96.06,352.82,92.393,347.379,93.307z" fill="#000000" data-original="#000000"></path> <path d="M439.056,131.382c-12.278-16.867-29.718-29.43-49.106-35.375c-5.281-1.621-10.873,1.349-12.492,6.629 c-1.619,5.28,1.349,10.873,6.629,12.492c31.959,9.8,54.279,41.078,54.279,76.063c0,5.523,4.477,10,10,10s10-4.477,9.999-10.001 C458.365,169.416,451.688,148.735,439.056,131.382z" fill="#000000" data-original="#000000"></path></svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 256 256" style="enable-background:new 0 0 512 512" xml:space="preserve" class="hovered-paths"><g><path fill="#fc4f4f" d="M198 32.5c-3.4-1.1-7-1.8-10.7-2.2-47.2-4.8-59.3 40.2-59.3 40.2s-12.1-45-59.2-40.2C25 34.7 2 89.9 30.7 136.3c8.2 13.3 21 27.6 34.7 40.9 27.5 26.7 58.5 48.9 62.6 48.9 6.2 0 72.5-49.7 97.3-89.7C251.6 93.9 234.6 44 198 32.5z" opacity="1" data-original="#fc4f4f" class="hovered-path"></path><path d="M225.3 136.3C251.6 93.9 234.6 44 198 32.5c0 0 36.5 35.2 15.5 71.4s-91.2 81.2-101.1 82.8c-8.2 1.3-29-.6-47-9.4 27.5 26.7 58.5 48.9 62.6 48.9 6.2-.1 72.5-49.8 97.3-89.9z" opacity="1" fill="#00000015" data-original="#00000015" class=""></path><ellipse cx="50.6" cy="65.5" fill="#fff" opacity=".3" rx="24.9" ry="12.6" transform="rotate(-49.83 50.593 65.492)"></ellipse></g></svg>
-                                        </button>
-                                        <div class="product-item-actions">
-                                            <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
-                                            <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
-                                        </div>
+                        {{-- <h1>Sản phẩm theo thương hiệu</h1> --}}
+
+    <div class="main-collection-data four">
+      
+        @foreach ($products as $product)
+       
+            <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ $product->slug }}">
+                <div class="product-item-wrap">
+                    <div class="product-item-top">
+                        <div class="product-item-top-image">
+                            <a href="#" class="product-item-top-image-showcase">
+                                <img src="{{ Storage::url($product->images->first()->image_path) }}"
+                                     alt="{{ $product->name }}"
+                                     title="{{ $product->name }}" width="480" height="480" loading="lazy" decoding="async">
+                            </a>
+                
+                        </div>
+                        
+                        @if($product->sale_percentage > 0)
+                            <div class="product-item-label-sale"><span>-{{ $product->sale_percentage }}%</span></div>
+                        @endif
+                        <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
+                            <!-- SVG icon for wishlist button -->
+                        </button>
+                        <div class="product-item-actions">
+                            <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
+                            <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
+                        </div>
+                        
+                    </div>
+                    <div class="product-item-details">
+                        <h2 class="product-item-name">{{ $product->name }}</h2>
+                        <p class="product-item-price">
+                            <span class="original-price" style="color: red; font-size: 1.2em;">
+                                {{ number_format($product->price, 0, ',', '.') }} VNĐ
+                            </span>
+                            <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
+                                {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
                                     </div>
                                     <div class="product-item-detail">
                                         <div class="product-item-detail-flex">

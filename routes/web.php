@@ -102,6 +102,8 @@ Route::prefix('admin')->group(function () {
     
  // Sản phẩm
  Route::resource('admin-products', AdminProductsController::class);
+
+
  
  // Danh mục
  Route::resource('admin-categories', AdminCategoriesController::class);
@@ -170,6 +172,10 @@ Route::resource('admin-size', AdminSizesController::class);
 Route::resource('client-home', HomeController::class);
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
+//lấy sản phẩm theo thương hiệu
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+
 Route::resource('client-login', LoginController::class);
 Route::resource('client-register', RegisterController::class);
 //quên mật khẩu

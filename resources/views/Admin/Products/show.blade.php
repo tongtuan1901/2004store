@@ -66,7 +66,7 @@
                                             <p class="product-detail-body__stock sherah-color3">{{ $product->stock }} In
                                                 stock</p>
                                             <div class="product-detail-body__text">{{ $product->description }}</div>
->>>>>>> 76487577908bae5581b3924995779e1559163d7c
+
 
                                             <div class="sherah-border-btm pd-top-40 mg-btm-40"></div>
                                             <div class="sherah-products-meta">

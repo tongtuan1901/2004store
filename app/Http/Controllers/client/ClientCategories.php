@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminProducts;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,15 @@ class ClientCategories extends Controller
         return view("Client.ClientCategories.ListCategories", compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function showByBrand($id)
+    {
+        $categories = Category::all(); // Nếu bạn cần hiển thị danh mục
+        $products = AdminProducts::where('brand_id', $id)->get(); // Lấy sản phẩm theo ID thương hiệu
+    
+        return view('Client.ClientCategories.ListCategories', compact('categories', 'products'));
+    }
+    
+
     public function create()
     {
         //
