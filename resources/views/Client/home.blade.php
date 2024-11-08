@@ -523,16 +523,36 @@
                         <h3>Các thương hiệu tin dùng chúng tôi</h3>
                     </div>
                     <div class="home-vendor-item-wrapper">
-                      
-                            @foreach ($listBrands as $brand)
-                                <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}" title="{{ $brand->name }}">
-                                    <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" width="400" height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                                    {{-- <p style="text-align: center; margin-top: 5px;">{{ $brand->name }}</p> <!-- Căn giữa tên thương hiệu --> --}}
-                                </a>
-                            @endforeach
-                       
-                        
-                      
+                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - SSENSE">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__1b1ed.png') }}"
+                                alt="F1GENZ Fashion - SSENSE" title="F1GENZ Fashion - SSENSE" width="400"
+                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - BURBERRY">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__2b1ed.png') }}"
+                                alt="F1GENZ Fashion - BURBERRY" title="F1GENZ Fashion - BURBERRY" width="400"
+                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - NIKE">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__3b1ed.png') }}"
+                                alt="F1GENZ Fashion - NIKE" title="F1GENZ Fashion - NIKE" width="400" height="165"
+                                loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                        <a class="home-vendor-item" href="colelctions/all.html" title="F1GENZ Fashion - ASOS">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__4b1ed.png') }}"
+                                alt="F1GENZ Fashion - ASOS" title="F1GENZ Fashion - ASOS" width="400" height="165"
+                                loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - PULL & BEAR">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__5b1ed.png') }}"
+                                alt="F1GENZ Fashion - PULL & BEAR" title="F1GENZ Fashion - PULL & BEAR" width="400"
+                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                        <a class="home-vendor-item" href="collections/all.html" title="F1GENZ Fashion - GILDAN">
+                            <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/home_vendor_image__6b1ed.jpg') }}"
+                                alt="F1GENZ Fashion - GILDAN" title="F1GENZ Fashion - GILDAN" width="400"
+                                height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
                     </div>
 
                 </div>
@@ -554,47 +574,51 @@
                     <div class="home-blogs-bottom">
                         <div class="home-blogs-items">
 
-                            @foreach($news as $article)
-                            <div class="article-item">
+
+                            <div class="article-item " >
                                 <div class="article-item-wrap">
-                                    <a href="{{ url('article/' . $article->id . '.html') }}" class="article-item-image" title="{{ $article->title }}">
+                                    <a href= "ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html"
+                                        class="article-item-image"
+                                        title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
                                         <img loading="lazy" decoding="async" width="600" height="400"
-                                             src="{{ asset('storage/' . $article->image) }}"
-                                             alt="{{ $article->title }}"
-                                             title="{{ $article->title }}">
+                                            src="{{ asset('assets/bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/home_banner_second_lg_image_mb1ed.jpg') }}"
+                                            alt="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
+                                            title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
                                     </a>
                                     <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title">
-                                            <a title="{{ $article->title }}" href="{{ url('article/' . $article->id . '.html') }}">
-                                                {{ $article->title }}
-                                            </a>
-                                        </h3>
+                                        <h3 class="article-item-detail-title"><a
+                                                title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
+                                                href="ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html">Vẻ
+                                                Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang
+                                                Mùa Thu 2024</a></h3>
                                         <div class="article-item-detail-info">
-                                            <span class="article-item-detail-info-date" style="color: rgb(160, 62, 44);">
-                                                <i class="fal fa-calendar"></i> 
-                                                {{ $article->created_at ? $article->created_at->format('d.m.Y') : 'Chưa có ngày' }}
-                                            </span>
-                                            <span class="article-item-detail-info-author" style="color: rgb(42, 161, 161);">
-                                                <i class='fal fa-edit'></i> {{ $article->author ?? 'Công Ty TNHH KTCN F1GENZ' }}
-                                            </span>
-                                            <span class="article-item-detail-info-comment" style="color: rgb(35, 153, 35);">
-                                                <i class='fal fa-comments'></i> {{ $article->comments_count ?? 0 }} Comments
-                                            </span>
+                                            <span class="article-item-detail-info-date"
+                                                style="color: rgb(160, 62, 44);"><i class="fal fa-calendar"></i>
+                                                01.07.2024</span>
+                                            <span class="article-item-detail-info-author"
+                                                style="color: rgb(42, 161, 161);"><i class='fal fa-edit'></i> Công Ty
+                                                TNHH KTCN F1GENZ</span>
+                                            <span class="article-item-detail-info-comment"
+                                                style="color: rgb(35, 153, 35);"><i class='fal fa-comments'></i> 1
+                                                Comments</span>
                                         </div>
                                         <div class="article-item-detail-content">
-                                            {{ Str::limit($article->content, 200) }}
+                                            Xu Hướng Thời Trang Mùa Thu 2024
+                                            1. Sự Đối Lập Giữa Cổ Điển và Hiện Đại
+                                            Mùa thu 2024 đang mang đến những xu hướng thời trang đầy sức sống và cá tính
+                                            trên các sàn diễn thời trang châu Âu. Tại Tuần lễ Thời trang Milan vừa qua, các
+                                            nhà thiết kế đã trình làng...
                                         </div>
-                                        <a title="Xem thêm" href="{{ url('article/' . $article->id . '.html') }}" class="article-item-detail-more">
-                                            Xem thêm
-                                        </a>
+
+                                        <a title="Xem thêm"
+                                            href="ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html"
+                                            class="article-item-detail-more">Xem thêm</a>
+
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                        
 
-
-                            {{-- <div class="article-item " data-index="2">
+                            <div class="article-item " data-index="2">
                                 <div class="article-item-wrap">
                                     <a href= "hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html"
                                         class="article-item-image"
@@ -635,9 +659,9 @@
 
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="article-item " data-index="2">
+                            <div class="article-item " data-index="2">
                                 <div class="article-item-wrap">
                                     <a href= "tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html"
                                         class="article-item-image"
@@ -677,9 +701,9 @@
 
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="article-item " data-index="2">
+                            <div class="article-item " data-index="2">
                                 <div class="article-item-wrap">
                                     <a href= "xu-huong-thoi-trang-mua-thu-2024-su-doi-lap-giua-co-dien-va-hien-dai.html"
                                         class="article-item-image"
@@ -717,7 +741,7 @@
                                             href="xu-huong-thoi-trang-mua-thu-2024-su-doi-lap-giua-co-dien-va-hien-dai.html"
                                             class="article-item-detail-more">Xem thêm</a>
 
-                                    </div> --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

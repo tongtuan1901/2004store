@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 
         public function index()
         {
-            $orders = AdminOrder::with(['user','products.variations.size', 'products.variations.color'])->get();
+            $orders = AdminOrder::with(['user','orderItems.variation.color', 'orderItems.variation.size'])->get();
             // $orders = AdminOrder::all();
             // Trong phương thức index
             // dd($orders->toArray());die;
@@ -209,12 +209,15 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-    public function listDonHangDaHuy(){
-        $donHangBiHuy = AdminOrder::where('status', 'Hủy')
-                        ->with('orderItems.product')
-                        ->get();
-                        // dd($donHangBiHuy);
-        return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
+    public function listDonHangDaHuy()
+    {
+        // Lấy tất cả đơn hàng có trạng thái 'Hủy'
+        $donHangDaHuy = AdminOrder::where('status', 'canceled')
+                            ->with('orderItems.product')  // Bao gồm thông tin sản phẩm liên quan
+                            ->get();
+    
+        // Truyền dữ liệu vào view
+        return view('Admin.orders.listDonHangHuy', compact('donHangDaHuy'));
     }
 
     public function listAdrress()

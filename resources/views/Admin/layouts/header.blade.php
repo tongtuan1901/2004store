@@ -298,7 +298,11 @@
 
                                         <li><a href='{{route('admin.address')}}'><span class="menu-bar__text"><span
                                                             class="menu-bar__name">Địa chỉ khách hàng</span></span></a></li>
-
+                                                            <li><a href="{{ route('admin-orders.cancelled') }}">
+                                                                <span class="menu-bar__text">
+                                                                    <span class="menu-bar__name">Đơn hàng đã hủy</span>
+                                                                </span>
+                                                            </a></li>
                                                        
                                     </ul>
                                 </div>

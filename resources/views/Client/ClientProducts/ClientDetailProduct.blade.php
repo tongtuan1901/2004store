@@ -39,21 +39,14 @@
                                 <div class="carousel-inner">
                                     @php $displayedImages = []; @endphp
                                     @foreach ($productDetail->variations as $key => $variation)
-                                        @if (is_object($variation->image) && isset($variation->image->image_path) && !in_array($variation->image->image_path, $displayedImages))
+                                        @if ($variation->image && !in_array($variation->image->image_path, $displayedImages))
                                             <div class="carousel-item @if ($key === 0) active @endif">
-                                                <img src="{{ asset('storage/' . $variation->image->image_path) }}" class="d-block w-100" alt="Product Variation Image">
+                                                <img src="{{ asset('storage/' . $variation->image->image_path) }}"
+                                                    class="d-block w-100" alt="Product Variation Image">
                                             </div>
                                             @php $displayedImages[] = $variation->image->image_path; @endphp
-                                        @elseif (is_string($variation->image) && !in_array($variation->image, $displayedImages)) 
-                                            <div class="carousel-item @if ($key === 0) active @endif">
-                                                <img src="{{ asset('storage/' . $variation->image) }}" class="d-block w-100" alt="Product Variation Image">
-                                            </div>
-                                            @php $displayedImages[] = $variation->image; @endphp
                                         @endif
                                     @endforeach
-
-                                    
-
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#productCarouselClient"
                                     data-bs-slide="prev">

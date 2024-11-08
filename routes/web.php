@@ -136,6 +136,9 @@ Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedInd
 // Route để cập nhật trạng thái đơn hàng
 Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
 
+//route cho đơn hàng đã hủy
+Route::get('admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin-orders.cancelled');
+
 
  // Thống kê
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
@@ -239,6 +242,9 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
 
 // Route cho view client
 Route::resource('client-home', HomeController::class);
+Route::get('/', function () {
+    return view('Client.home');  // Chắc chắn rằng bạn trỏ đến view home.blade.php trong thư mục Client
+})->name('home');
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 //lấy sản phẩm theo thương hiệu
@@ -305,6 +311,12 @@ Route::resource('admin-orders', AdminOrdersController::class);
 
 // in pdf
 Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+
+
+//
+Route::get('/orders/{userId}', [ClientOrderControler::class, 'listOrder'])->name('client.orders.list');
+
+
 
 
 
@@ -452,3 +464,4 @@ Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->n
 // // danh mục admin
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
+Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
