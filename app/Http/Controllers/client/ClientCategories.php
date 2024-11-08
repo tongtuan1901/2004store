@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Banners;
+use App\Models\Brand;
+use App\Models\Color;
+use App\Models\Size; // Nhập mô hình Size
 
 use App\Models\AdminProducts;
 
@@ -17,8 +20,11 @@ class ClientCategories extends Controller
     public function index(Request $request)
 {
     $banners = Banners::where('deleted', false)->get();
+    $brands = Brand::all();
+    $colors = Color::all();
     $listCategories = Category::all();
     $categories = Category::all();
+    $sizes = Size::all();
     
     // Thiết lập các giá trị mặc định
     $sortBy = $request->input('sortBy', 'name:asc'); // Mặc định là sắp xếp theo tên tăng dần
@@ -83,7 +89,7 @@ class ClientCategories extends Controller
         return $productSeller;
     });
 
-    return view('client.clientcategories.listcategories', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'sortBy'));
+    return view('client.clientcategories.listcategories', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'sortBy','brands','colors','sizes'));
 }
 
 
