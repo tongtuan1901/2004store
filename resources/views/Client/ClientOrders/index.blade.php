@@ -27,34 +27,38 @@
             @foreach ($userOrder as $user)
                 @if ($user->orders->isNotEmpty())
                     @foreach ($user->orders as $order)
-                        @foreach ($order->products as $product)
-                            @foreach ($product->variations as $variation)
+                        @foreach ($order->orderItems as $item)
+                            @if ($item->variation) <!-- Kiểm tra nếu variation tồn tại -->
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $order->name }}</td>
                                     <td class="img-cell">
-                                        @if ($variation->image)
-                                            <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-small">
+                                        @if ($item->variation->image) <!-- Kiểm tra nếu có ảnh -->
+                                            <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image" class="img-small">
                                         @else
                                             <span>No image</span>
                                         @endif
                                     </td>
                                     <td class="truncate">
-                                        {{ $product->name }}
+                                        {{ $item->variation->product->name ?? 'Product Name N/A' }} <!-- Lấy tên sản phẩm từ variation -->
                                         <br>
-                                        Kích thước: {{ $variation->size->size ?? 'N/A' }},
-                                        Màu sắc: {{ $variation->color->color ?? 'N/A' }}
+                                        Kích thước: {{ $item->variation->size->size ?? 'N/A' }},
+                                        Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
                                         <br>
-                                        Số lượng {{ $product->pivot->quantity }}
+                                        Số lượng: {{ $item->quantity }} <!-- Số lượng từ orderItem -->
                                     </td>
                                     <td class="truncate">{{ $order->status }}</td>
-                                    
                                     <td class="truncate">{{ $order->phone }} - {{ $order->address }}</td>
-                                        <td>
-                                                <button>Hủy đơn</button>
-                                        </td>
+                                    <td>
+                                        <form action="{{ route('orders.cancel', $order->id) }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button class="btn-cancel" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')">Hủy đơn</button>
+                                        </form>
+                                        {{-- <a class="btn-detail" href="{{route('orders.show',$order->id)}}"><button>Chi tiết</button></a> --}}
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @endif
                         @endforeach
                     @endforeach
                 @else
@@ -64,6 +68,7 @@
                 @endif
             @endforeach
         </tbody>
+        
     </table>
 @endif
 
@@ -134,7 +139,7 @@
         font-style: italic;
     }
 
-    button {
+    .btn-cancel {
         padding: 6px 12px;
         font-size: 12px;
         color: #fff;
@@ -144,6 +149,8 @@
         cursor: pointer;
     }
 
+    
+    
     button:hover {
         background-color: #d32f2f;
     }

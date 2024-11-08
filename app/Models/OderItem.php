@@ -22,7 +22,7 @@ class OderItem extends Model
     public function product() {
         return $this->belongsTo(AdminProducts::class, 'product_id', 'id');
     }
-
+    
     public function variation()
     {
         return $this->belongsTo(ProductVariation::class, 'variation_id', 'id');

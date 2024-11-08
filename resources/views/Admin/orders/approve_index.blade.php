@@ -14,8 +14,6 @@
                                 <div class="sherah-breadcrumb">
                                     <h2 class="sherah-breadcrumb__title">Danh sách đơn hàng cần xử lý</h2>
                                 </div>
-                                <!-- End Breadcrumb -->
-                                <a href="{{ route('admin-orders.deleted') }}" class="sherah-btn sherah-gbcolor">Đơn hàng đã xóa</a>
                             </div>
                         </div>
 
@@ -25,11 +23,13 @@
                                 <!-- Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th class="sherah-table__column-1">Order ID</th>
-                                        <th class="sherah-table__column-2">Customer Name</th>
+                                        <th class="sherah-table__column-1">ID</th>
+                                        <th class="sherah-table__column-2">Tên khách hàng</th>
                                         <th class="sherah-table__column-3">Email</th>
-                                        <th class="sherah-table__column-4">Order Status</th>
-                                        <th class="sherah-table__column-5">Action</th>
+                                        <th class="sherah-table__column-5">Trang thái đơn hàng</th>
+                                        <th class="sherah-table__column-4">Sản phẩm</th>
+                                        <th class="sherah-table__column-4">Biến thể</th>
+                                        <th class="sherah-table__column-5">thao thác</th>
                                     </tr>
                                 </thead>
 
@@ -37,9 +37,7 @@
                                 <tbody class="sherah-table__body">
                                     @foreach ($orders as $order)
                                     <tr>
-                                        <td class="sherah-table__column-1">
-                                            {{ $order->id }}</a>
-                                        </td>
+                                        <td class="sherah-table__column-1">{{ $order->id }}</td>
                                         <td class="sherah-table__column-2">{{ $order->name }}</td>
                                         <td class="sherah-table__column-3">{{ $order->email }}</td>
                                         <td class="sherah-table__column-4">
@@ -47,26 +45,46 @@
                                                 {{ $order->status }}
                                             </div>
                                         </td>
+                                
+                                        <!-- Cột Sản phẩm -->
+                                        <td class="sherah-table__column-4">
+                                            @foreach ($order->orderItems as $item)
+                                                {{ $item->product->name }}
+                                                <br>
+                                                <hr>
+                                            @endforeach
+                                        </td>
+                                
+                                        <!-- Cột Biến thể -->
                                         <td class="sherah-table__column-5">
+                                            @foreach ($order->orderItems as $item)
+                                            @if ($item->variation)
+                                            <div>
+                                                Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
+                                                Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
+                                            </div>
+                                            @else
+                                                <div>Không có biến thể</div>
+                                            @endif
+                                                <hr> <!-- Để phân tách các sản phẩm -->
+                                            @endforeach
+                                        </td>
+                                
+                                        <td class="sherah-table__column-6">
                                             <div class="sherah-table__status__group">
-                                                <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">
-                                                    Duyệt
-                                                </a>
-                                                <a href="{{ route('admin-orders.show', $order->id) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
-                                                    Chi tiết
-                                                </a>
+                                                <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">Duyệt</a>
+                                                <a href="{{ route('admin-orders.show', $order->id) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
                                                 <form action="{{ route('admin-orders.destroy', $order->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
-                                                        Xóa
-                                                    </button>
+                                                    <button type="submit" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Xóa</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                
                             </table>
                         </div>
                         <!-- End Table -->
