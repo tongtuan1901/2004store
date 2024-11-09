@@ -43,7 +43,7 @@ protected  $table = "products";
     // Relationship with AdminOrder
     public function orders()
     {
-        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
+        return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')->withPivot('quantity');
     }
 
     // Relationship with AdminCoupons

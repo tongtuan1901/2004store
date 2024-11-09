@@ -77,7 +77,11 @@ use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\AddressController;
 
 use App\Http\Controllers\client\CheckoutThankyouController;
+
+use App\Http\Controllers\client\ClientOrderControler;
+
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use GuzzleHttp\Client;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -335,6 +339,11 @@ Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddr
 
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
 Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+
+Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
+Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+
 
 
 // route::get('admin-ui',function(){

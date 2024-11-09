@@ -16,13 +16,14 @@ use Illuminate\Support\Facades\Storage;
 
         public function index()
         {
-            $orders = AdminOrder::with(['user','products.variations.size', 'products.variations.color'])->get();
+            $orders = AdminOrder::with(['user', 'orderItems.variation.size','orderItems.variation.color'])
+            ->where('status','Đang xử lý')->get();
             // $orders = AdminOrder::all();
             // Trong phương thức index
             // dd($orders->toArray());die;
             foreach ($orders as $order) {
                 // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
-                if ($order->status === 'Chờ xử lý') {
+                if ($order->status === 'Đang Xử lý') {
                     // Hiển thị nút duyệt
                 }
             }
@@ -39,7 +40,7 @@ use Illuminate\Support\Facades\Storage;
 
     public function receivedIndex()
     {
-        $orders = AdminOrder::where('status', 'Đã nhận hàng')->get();
+        $orders = AdminOrder::where('status', 'Hoàn thành')->get();
         return view('Admin.orders.received_index', compact('orders'));
     }
 
@@ -167,7 +168,7 @@ use Illuminate\Support\Facades\Storage;
 
         // Kiểm tra trạng thái và cập nhật
         if ($order->status === 'Chờ xử lý') {
-            $order->update(['status' => 'Đã xử lý']);
+            $order->update(['status' => 'Đang xử lý']);
             return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được duyệt thành công!');
         }
 

@@ -99,7 +99,7 @@ class CheckoutController extends Controller
     
         // Fill order with other fields from the request
         $order->total = $finalTotal;
-        $order->status = 'pending'; // Default order status
+        $order->status = 'Chờ xử lý'; // Default order status
         $order->name_client = $nameClient; // Customer's name
         $order->phone_number = $phoneNumber;
         $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
