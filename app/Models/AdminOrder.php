@@ -37,7 +37,7 @@ class AdminOrder extends Model
 
     public function products()
     {
-        return $this->belongsToMany(AdminProducts::class, 'order_product', 'order_id', 'product_id')->withPivot('quantity');
+        return $this->belongsToMany(AdminProducts::class, 'order_items', 'order_id', 'product_id')->withPivot('quantity');
     }
 
     public function user(){

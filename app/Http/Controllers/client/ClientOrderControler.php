@@ -30,7 +30,7 @@ class ClientOrderControler extends Controller
         // Giả sử bạn có các thông tin cần thiết từ $request để tạo đơn hàng
         $order = new OderItem();
         $order->user_id = auth()->id();
-        $order->status = 'Pending'; // Hoặc trạng thái mong muốn
+        $order->status = 'Chờ xử lý'; // Hoặc trạng thái mong muốn
         $order->phone = $request->phone;
         $order->address = $request->address;
         $order->save();
@@ -62,16 +62,16 @@ class ClientOrderControler extends Controller
     }
     public function cancelOrder($id)
 {
-    // Tìm đơn hàng theo ID, nếu không tìm thấy sẽ ném lỗi 404
-    $order = AdminOrder::findOrFail($id);
+    $order = AdminOrder::find($id);
+    
+    if ($order && $order->status !== 'Hủy') {
+        $order->status = 'Hủy';  // Cập nhật trạng thái đơn hàng thành "canceled"
+        $order->save();
 
-    // Cập nhật trạng thái đơn hàng thành 'Đã Hủy'
-    $order->status = 'canceled';
+        // Chuyển hướng về danh sách đơn hàng sau khi hủy thành công
+        return redirect()->route('orders.index')->with('success', 'Đơn hàng đã bị hủy.');
+    }
 
-    // Lưu thay đổi
-    $order->save();
-
-    // Quay lại trang trước
-    return back()->with('success', 'Đơn hàng đã được hủy thành công.');
+    return redirect()->route('orders.index')->with('error', 'Đơn hàng không tồn tại hoặc đã bị hủy.');
 }
 }

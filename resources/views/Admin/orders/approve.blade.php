@@ -48,38 +48,92 @@
                             </div>
                             <!-- Product Details -->
                             <h4>Chi Tiết Sản Phẩm</h4>
-                            <table class="sherah-table__main sherah-table__main-v3 mt-3">
+                            <table id="sherah-table__orderv1" class="sherah-table__main sherah-table__main--orderv1">
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th class="sherah-table__column-1">Tên Sản Phẩm</th>
-                                        <th class="sherah-table__column-2">Ảnh biến thể</th>
-                                        <th class="sherah-table__column-2">biến thể</th>
-                                        <th class="sherah-table__column-3">Số Lượng</th>
-                                        <th class="sherah-table__column-4">Giá</th>
+                                        <th class="sherah-table__column-2 sherah-table__h2">Tên Sản Phẩm</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1">Hình Ảnh</th>
+                                        <th class="sherah-table__column-3 sherah-table__h4">Biến thể</th>
+                                        <th class="sherah-table__column-3 sherah-table__h4">Danh mục</th>
+                                        <th class="sherah-table__column-3 sherah-table__h4">Thương hiệu</th>
+                                        <th class="sherah-table__column-3 sherah-table__h4">Giá</th>
+                                        <th class="sherah-table__column-4 sherah-table__h5">Số Lượng</th>
+                                        <th class="sherah-table__column-3 sherah-table__h4">Phương thức thanh toán</th>
+                                        <th class="sherah-table__column-4 sherah-table__h5">Ngày đặt</th>
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
-                                    @foreach ($order->products as $product)
-                                    <tr>
-                                        <td class="sherah-table__column-1">{{ $product->name }}</td>
-                                        <td class="sherah-table__column-1">
-                                            @foreach ($product->variations as $variation)
-                                            @if ($variation->image)
-                                                <img src="{{ asset('storage/' . $variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
-                                            @else
-                                                <p>No image available</p>
-                                            @endif
-                                            @endforeach
-                                        </td>
-                                            @foreach ($product->variations as $variation)
-                                            <td>
-                                                Kích thước: {{ $variation->size->size ?? 'N/A' }}, 
-                                                Màu sắc: {{ $variation->color->color ?? 'N/A' }}
+                                    @foreach ($order->orderItems as $item)
+                                        <tr>
+                                            <td class="sherah-table__column-2 sherah-table__data-2">
+                                                <div class="sherah-table__product-name">
+                                                    <h4 class="sherah-table__product-name--title">{{ $item->product->name }}</h4>
+                                                </div>
                                             </td>
-                                            @endforeach
-                                        <td class="sherah-table__column-2">{{ $product->pivot->quantity }}</td>
-                                        <td class="sherah-table__column-3">{{ number_format($product->price) }} VNĐ</td>
-                                    </tr>
+                                            <td class="sherah-table__column-1 sherah-table__data-1">
+                                                <div class="sherah-table__product--thumb">
+                                                    <div class="product-carousel">
+                                                        <div id="productCarousel{{ $item->id }}" class="carousel slide" data-bs-ride="carousel">
+                                                            <div class="carousel-inner">
+                                                                @if ($item->variation)
+                                                                    @if ($item->variation->image)
+                                                                        <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image" class="img-fluid" width="150">
+                                                                    @else
+                                                                        <p>No image available</p>
+                                                                    @endif
+                                                                @else
+                                                                    <p>No variation available</p>
+                                                                @endif
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-2 sherah-table__data-2">
+                                                <div class="sherah-table__product-name">
+                                                    @if ($item->variation)
+                                                    <div>
+                                                        Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
+                                                        Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
+                                                    </div>
+                                                    @else
+                                                        <div>Không có biến thể</div>
+                                                    @endif
+                                                        <hr> 
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-3 sherah-table__data-3">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ $item->product->category->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-3 sherah-table__data-3">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-3 sherah-table__data-3">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ number_format($item->price) }} VNĐ</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-4 sherah-table__data-4">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ $item->quantity }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-4 sherah-table__data-4">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ $order->payment_method }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-4 sherah-table__data-4">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">{{ $order->created_at }}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

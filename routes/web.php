@@ -81,7 +81,7 @@ use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\client\ClientOrderControler;
 
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
-
+use GuzzleHttp\Client;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -251,6 +251,7 @@ Route::resource('client-categories', ClientCategories::class);
 Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
 
+
 Route::resource('client-login', LoginController::class);
 Route::resource('client-register', RegisterController::class);
 //quên mật khẩu
@@ -315,6 +316,8 @@ Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF
 
 //
 Route::get('/orders/{userId}', [ClientOrderControler::class, 'listOrder'])->name('client.orders.list');
+Route::delete('/orders/cancel/{id}', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+
 
 
 
@@ -359,6 +362,10 @@ Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->n
 Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
+Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+
+
 
 // route::get('admin-ui',function(){
 //     return view('Admin1.Products.index');
@@ -465,3 +472,6 @@ Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->n
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+
+
+
