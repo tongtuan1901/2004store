@@ -71,10 +71,10 @@ class AdminProductsController extends Controller
             'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
         // Lưu sản phẩm chính
         $product = AdminProducts::create($request->only(['name', 'price', 'price_sale', 'description', 'category_id', 'brand_id']));
         $this->uploadImages($request, $product->id);
+
         // Lưu dữ liệu biến thể
         $sizes = $request->input('variation.size');
         $colors = $request->input('variation.color');
@@ -87,9 +87,21 @@ class AdminProductsController extends Controller
             $quantity = $quantities[$index];
             $price = $prices[$index];
             $imagePath = null;
+            $productImage = null;
 
             if (isset($images[$index]) && $images[$index]->isValid()) {
                 $imagePath = $images[$index]->store('images/product_variations', 'public');
+
+                // Kiểm tra xem ảnh đã tồn tại chưa
+                $existingImage = ProductImage::where('image_path', $imagePath)->first();
+                if (!$existingImage) {
+                    $productImage = ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $imagePath,
+                    ]);
+                } else {
+                    $productImage = $existingImage;
+                }
             }
 
             ProductVariation::create([
@@ -98,7 +110,7 @@ class AdminProductsController extends Controller
                 'color_id' => $color,
                 'quantity' => $quantity,
                 'price' => $price,
-                'image' => $imagePath,
+                'image_id' => $productImage ? $productImage->id : null,
             ]);
         }
 
@@ -107,11 +119,9 @@ class AdminProductsController extends Controller
 
 
 
-
-
     public function show($id)
     {
-        $product = AdminProducts::with(['variations'])->findOrFail($id);
+        $product = AdminProducts::with(['variations.size', 'variations.color'])->findOrFail($id);
         return view('admin.products.show', compact('product'));
     }
 
@@ -198,12 +208,4 @@ class AdminProductsController extends Controller
             }
         }
     }
-
-
-
 }
-
-
-
-
-
