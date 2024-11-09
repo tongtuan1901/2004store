@@ -11,7 +11,12 @@ class AdminCommentsController extends Controller
     public function index()
     {
         $comments = Comment::with('user', 'product')->get();
-        return view('admin.comments.index', compact('comments'));
+        return view('admin.Comments.index', compact('comments'));
+    }
+    public function show(string $id)
+    {
+        $comment = Comment::with('user', 'product')->findOrFail($id);
+        return view('admin.Comments.show', compact('comment'));
     }
 
     public function destroy(string $id)
