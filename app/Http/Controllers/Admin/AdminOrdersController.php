@@ -9,6 +9,7 @@ use App\Models\AdminOrder;
 use App\Models\AdminProducts;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
     class AdminOrdersController extends Controller
@@ -213,16 +214,16 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-    public function listDonHangDaHuy()
-    {
-        // Lấy tất cả đơn hàng có trạng thái 'Hủy'
-        $donHangDaHuy = AdminOrder::where('status', 'canceled')
-                            ->with('orderItems.product')  // Bao gồm thông tin sản phẩm liên quan
-                            ->get();
+    // public function listDonHangDaHuy()
+    // {
+    //     // Lấy tất cả đơn hàng có trạng thái 'Hủy'
+    //     $donHangDaHuy = AdminOrder::where('status', 'Hủy')
+    //                         ->with('orderItems.product')  // Bao gồm thông tin sản phẩm liên quan
+    //                         ->get();
     
-        // Truyền dữ liệu vào view
-        return view('Admin.orders.listDonHangHuy', compact('donHangDaHuy'));
-    }
+    //     // Truyền dữ liệu vào view
+    //     return view('Admin.orders.listDonHangHuy', compact('donHangDaHuy'));
+    // }
 
     public function listAdrress()
     {
@@ -237,6 +238,36 @@ use Illuminate\Support\Facades\Storage;
 
         return view('Admin.orders.showAddress',compact('user','addresses'));
     }
+    // public function canceledOrders($id)
+    // {
+
+    //     $order = AdminOrder::findOrFail($id);
+    //     // Lấy tất cả các đơn hàng có trạng thái "Hủy"
+    //     $canceledOrders = AdminOrder::where('status', 'Hủy')
+    //                             ->with('orderItems.product', 'orderItems.variation') // Eager load các liên kết cần thiết
+    //                             ->get();
+                            
+    //                             $order->status = 'Hủy';
+    //                             $order->save();
+    //     // Truyền dữ liệu vào view
+    //     return redirect()->route('Admin.orders.listDonHangHuy')->with('success', 'Đơn hàng đã được hủy thành công.');
+    public function cancelOrder($orderId)
+    {
+        $order = AdminOrder::findOrFail($orderId);
+        $order->status = 'Hủy'; // Change status to "Hủy"
+        $order->save();
+    
+        // Redirect lại trang danh sách đơn hàng
+        return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
+    }
+public function listDonHangDaHuy()
+{
+    $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
+    $donHangDaHuy = AdminOrder::where('status', 'Hủy')
+                             ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
+                             ->get();
+    return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
+}
 }
 
 

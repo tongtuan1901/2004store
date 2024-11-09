@@ -1,8 +1,17 @@
 @extends('Client.layouts.paginate.master')
+
 @section('contentClient')
 <h2 style="text-align: center">Danh sách đơn hàng</h2>
 
-@if ($userOrder && $userOrder->orders->isNotEmpty())
+@php
+    $hasOrders = $userOrder->contains(function($user) {
+        return $user->orders->isNotEmpty();
+    });
+@endphp
+
+@if (!$hasOrders)
+    <p class="no-orders-message">Bạn chưa có đơn hàng nào</p>
+@else
     <table class="styled-table">
         <thead>
             <tr>
@@ -16,68 +25,81 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($userOrder->orders as $order)
-                <tr>
-                    <td>{{ $userOrder->name }} </td> <!-- Tài khoản -->
-                    <td>{{ $order->name }}</td> <!-- Người nhận -->
-
-                   {{-- <<td>
-                    @foreach ($order->orderItems as $item)
-                    <div class="order-item">
-                        @if ($item->variation)
-                            <!-- Hình ảnh sản phẩm -->
-                            @if ($item->variation->image)
-                                <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
-                                     alt="{{ $item->product->name }}" 
-                                     style="width: 100px; height: auto;">
-                            @else
-                                <img src="{{ asset('images/default-image.png') }}" 
-                                     alt="Hình ảnh không có" 
-                                     style="width: 100px; height: auto;">
+            @foreach ($userOrder as $user)
+                @if ($user->orders->isNotEmpty())
+                    @foreach ($user->orders as $order)
+                        @php
+                            $orderItems = $order->orderItems; // Lấy danh sách các item trong đơn hàng
+                            $productDetails = [];
+                        @endphp
+                        @foreach ($orderItems as $item)
+                            @if ($item->variation) <!-- Kiểm tra nếu variation tồn tại -->
+                                @php
+                                    $productDetails[] = [
+                                        'name' => $item->product->name ?? 'Product Name N/A',
+                                        'size' => $item->variation->size->size ?? 'N/A',
+                                        'color' => $item->variation->color->color ?? 'N/A',
+                                        'quantity' => $item->quantity
+                                    ];
+                                @endphp
                             @endif
-                            @endforeach
-                </td> --}}
-
-              
-                    @foreach ($order->orderItems as $item)
-                    <td>@if ($item->variation->image)
-                        <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
-                             alt="{{ $item->product->name }}" 
-                             style="width: 100px; height: auto;">
-                    @else
-                        <img src="{{ asset('images/default-image.png') }}" 
-                             alt="Hình ảnh không có" 
-                             style="width: 100px; height: auto;">
-                    @endif</td>
-                  <td>    {{ $item->product->name }}</td>
+                        @endforeach
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $order->name }}</td>
+                            <td class="img-cell">
+                                @if ($item->variation->image) <!-- Kiểm tra nếu có ảnh -->
+                                    <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image" class="img-small">
+                                @else
+                                    <span>No image</span>
+                                @endif
+                            </td>
+                            <td class="truncate">
+                                @foreach ($productDetails as $product)
+                                    <div>
+                                        {{ $product['name'] }}<br>
+                                        Kích thước: {{ $product['size'] }}, Màu sắc: {{ $product['color'] }}<br>
+                                        Số lượng: {{ $product['quantity'] }}<br><br>
+                                    </div>
+                                @endforeach
+                            </td>
+                            <td class="truncate">
+                                <!-- Hiển thị trạng thái đơn hàng -->
+                                {{ $order->status }}
+                            </td>
+                            <td class="truncate">{{ $order->phone }} - {{ $order->address }}</td>
+                            <td>
+                                <!-- Form for canceling the order -->
+                                @if ($order->status != 'Hủy') <!-- Chỉ hiển thị nút hủy khi trạng thái chưa phải là "Hủy" -->
+                                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="cancel-order-form">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="btn-cancel">Hủy đơn</button>
+                                    </form>
+                                @else
+                                    <span>Đơn hàng đã được hủy</span> <!-- Hiển thị thông báo đã hủy khi đơn hàng đã hủy -->
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
-                
-
-                    <td>{{ $order->status }}</td> <!-- Trạng thái -->
-                    <td>{{ $order->address }}</td> <!-- Địa chỉ -->
-                    <td>
-                        <!-- Nút Hủy Đơn Hàng -->
-                        @if ($order->status !== 'canceled') <!-- Kiểm tra nếu đơn hàng chưa bị hủy -->
-                            <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                            </form>
-                        @else
-                            <span>Đơn hàng đã bị hủy</span>
-                        @endif
-                    </td>
-                </tr>
+                @else
+                    <tr>
+                        <td colspan="7" class="no-orders-cell">Không có đơn hàng</td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
-@else
-    <p class="no-orders-message">Bạn chưa có đơn hàng nào</p>
 @endif
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 <style>
-    /* Thông báo nếu không có đơn hàng */
+    /* Style cho bảng và nút hủy */
     .no-orders-message {
         text-align: center;
         font-size: 16px;
@@ -86,7 +108,6 @@
         margin-top: 20px;
     }
 
-    /* Bảng đẹp, gọn nhẹ, bo góc */
     .styled-table {
         width: 75%;
         max-width: 800px;
@@ -143,7 +164,7 @@
         font-style: italic;
     }
 
-    button {
+    .btn-cancel {
         padding: 6px 12px;
         font-size: 12px;
         color: #fff;
@@ -153,8 +174,16 @@
         cursor: pointer;
     }
 
-    button:hover {
+    .btn-cancel:hover {
         background-color: #d32f2f;
+    }
+
+    .alert-success {
+        text-align: center;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        margin-top: 20px;
     }
 </style>
 

@@ -472,6 +472,12 @@ Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
+// Route để hủy đơn hàng
+Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.orders.canceled');
+Route::delete('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('admin.orders.cancel');
+
 
 
 
