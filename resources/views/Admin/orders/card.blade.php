@@ -20,7 +20,7 @@
                                 <thead class="sherah-table__head">
                                     <tr>
                                         <th class="sherah-table__column-1">ID Giỏ Hàng</th>
-                                        <th class="sherah-table__column-2">Session ID</th>
+                                        <!-- <th class="sherah-table__column-2">Session ID</th> -->
                                         <th class="sherah-table__column-3">Tên Sản Phẩm</th>
                                         <th class="sherah-table__column-4">Tên Biến Thể</th>
                                         <th class="sherah-table__column-5">Ảnh Biến Thể</th>
@@ -35,7 +35,7 @@
                                     @foreach ($carts as $cart)
                                         <tr>
                                             <td class="sherah-table__column-1">{{ $cart->id }}</td>
-                                            <td class="sherah-table__column-2">{{ $cart->session_id }}</td>
+                                            <!-- <td class="sherah-table__column-2">{{ $cart->session_id }}</td> -->
                                             <td class="sherah-table__column-3">
                                                 @if ($cart->product)
                                                     {{ $cart->product->name ?? 'N/A' }}

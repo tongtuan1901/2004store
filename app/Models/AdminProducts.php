@@ -38,7 +38,10 @@ protected  $table = "products";
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
-
+    public function comments() 
+    {
+         return $this->hasMany(Comment::class, 'product_id');
+     }
 
     // Relationship with AdminOrder
     public function orders()
