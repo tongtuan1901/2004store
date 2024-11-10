@@ -121,7 +121,7 @@ class AdminProductsController extends Controller
 
     public function show($id)
     {
-        $product = AdminProducts::with(['variations'])->findOrFail($id);
+        $product = AdminProducts::with(['variations.size', 'variations.color'])->findOrFail($id);
         return view('admin.products.show', compact('product'));
     }
 
@@ -171,40 +171,47 @@ class AdminProductsController extends Controller
         // Xóa các biến thể cũ để thêm mới
         ProductVariation::where('product_id', $product->id)->delete();
 
-        foreach ($sizes as $index => $size) {
-            $color = $colors[$index];
-            $quantity = $quantities[$index];
-            $price = $prices[$index];
-            $imagePath = null;
-            $productImage = null;
+        if (is_array($sizes) && is_array($colors) && is_array($quantities) && is_array($prices)) {
+            foreach ($sizes as $index => $size) {
+                $color = $colors[$index];
+                $quantity = $quantities[$index];
+                $price = $prices[$index];
+                $imagePath = null;
+                $productImage = null;
 
-            if (isset($images[$index]) && $images[$index]->isValid()) {
-                $imagePath = $images[$index]->store('images/product_variations', 'public');
+                // Kiểm tra xem ảnh có tồn tại và hợp lệ không
+                if (isset($images[$index]) && $images[$index]->isValid()) {
+                    $imagePath = $images[$index]->store('images/product_variations', 'public');
 
-                // Kiểm tra xem ảnh đã tồn tại chưa
-                $existingImage = ProductImage::where('image_path', $imagePath)->first();
-                if (!$existingImage) {
-                    $productImage = ProductImage::create([
-                        'product_id' => $product->id,
-                        'image_path' => $imagePath,
-                    ]);
-                } else {
-                    $productImage = $existingImage;
+                    // Kiểm tra xem ảnh đã tồn tại chưa
+                    $existingImage = ProductImage::where('image_path', $imagePath)->first();
+                    if (!$existingImage) {
+                        $productImage = ProductImage::create([
+                            'product_id' => $product->id,
+                            'image_path' => $imagePath,
+                        ]);
+                    } else {
+                        $productImage = $existingImage;
+                    }
                 }
-            }
 
-            ProductVariation::create([
-                'product_id' => $product->id,
-                'size_id' => $size,
-                'color_id' => $color,
-                'quantity' => $quantity,
-                'price' => $price,
-                'image_id' => $productImage ? $productImage->id : null,
-            ]);
+                // Tạo mới biến thể sản phẩm
+                ProductVariation::create([
+                    'product_id' => $product->id,
+                    'size_id' => $size,
+                    'color_id' => $color,
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    'image_id' => $productImage ? $productImage->id : null,
+                ]);
+            }
+        } else {
+            return back()->withErrors('Dữ liệu biến thể sản phẩm không hợp lệ.');
         }
 
         return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
+
 
 
     public function destroy(string $id)

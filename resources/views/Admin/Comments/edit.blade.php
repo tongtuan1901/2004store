@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -6,7 +5,7 @@
         <div class="row">
             <div class="col-12 sherah-main__column">
                 <div class="sherah-body">
-                    
+
 
 
 

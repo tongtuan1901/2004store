@@ -40,4 +40,8 @@ class ProductVariation extends Model
     {
         return $this->belongsTo(ProductImage::class, 'image_id');
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OderItem::class, 'variation_id', 'id');
+    }
 }

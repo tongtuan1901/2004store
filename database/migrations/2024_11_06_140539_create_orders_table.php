@@ -13,14 +13,28 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id(); // Trường id tự động tăng
+           
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('address_id'); // Thêm khóa ngoại cho address
             $table->string('name', 255); // Tên khách hàng
             $table->string('email', 255); // Email của khách hàng
             $table->string('phone', 255); // Số điện thoại khách hàng
             $table->text('address'); // Địa chỉ giao hàng
             $table->decimal('total', 10, 2); // Tổng số tiền đơn hàng
             $table->string('status', 255); // Trạng thái đơn hàng
+            $table->string('name_client', 255);
+            $table->string('phone_number');
+            $table->string('street');
+            $table->string('city');
+            $table->string('state');
+            $table->string('house_address');
+            $table->string('payment_method');
             $table->timestamps(); // Tạo trường created_at và updated_at
             $table->softDeletes();
+
+          
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade'); // Khóa ngoại cho address
         });
     }
 
@@ -32,3 +46,4 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 };
+
