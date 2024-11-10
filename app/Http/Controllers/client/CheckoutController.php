@@ -30,14 +30,20 @@ class CheckoutController extends Controller
                     ->with(['product', 'variation.size', 'variation.color'])
                     ->get();
                     $email = auth()->user()->email;
-        return view('Client.checkout.checkOut',compact('cart','email'));
+        return view('Client.ClientCheckout.Checkout',compact('cart','email'));
     }
     public function ttMuaNgay()
     {
-        $cart = session()->get('cart', []);
-        return view('Client.checkout.checkOut', compact('cart'));
-    }
 
+    $cart = session()->get('cart', []);
+
+    $total = array_reduce($cart, function ($sum, $item) {
+        return $sum + ($item['price_sale'] * $item['quantity']);
+    }, 0);
+    return view('Client.ClientCheckout.Checkout', compact('cart', 'total'));
+    }
+    
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -152,6 +158,11 @@ class CheckoutController extends Controller
                      ->with('success', 'Your order has been placed successfully!');
     }
     
-    
+    public function process(Request $request)
+{
+    session()->forget('cart');
+
+    return redirect()->route('client-home.index')->with('success', 'Thanh toán thành công! Cảm ơn bạn đã mua hàng.');
+}
     
 }

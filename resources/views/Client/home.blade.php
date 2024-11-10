@@ -88,7 +88,7 @@
                     </div>
                     <div class="home-about-right">
                         <img loading="lazy" decoding="async" width="500" height="380"
-                            src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                            src=""
                             alt="Về chúng tôi">
                     </div>
                 </div>
@@ -188,63 +188,6 @@
                                                 </g>
                                             </svg>
                                         </button>
-
-                                        {{-- <div class="product-item-actions">
-                                            <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button"
-                                                data-type="shop-addLoop-button">Thêm vào giỏ</button>
-=======
-                                        <div class="product-item-actions">
-
-<!-- Modal for Adding to Cart -->
-<label for="modal-toggle" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
-<input type="checkbox" id="modal-toggle" class="modal-toggle" />
-
-<!-- Cửa sổ Modal -->
-<div class="modal">
-    <div class="modal-content">
-        <label for="modal-toggle" class="close">&times;</label>
-        <h2>Chọn biến thể và số lượng</h2>
-        @if (auth()->check())
-        <form id="productForm" action="{{ route('cart.add') }}" method="POST">
-    @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="hidden" name="name" value="{{ $product->name }}">
-    <input type="hidden" name="price" value="{{ $product->price_sale }}">
-    <input type="hidden" name="image" value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
-    
-    <label for="size">Kích thước:</label>
-    <select id="size" name="size">
-        @foreach($product->variations as $variation)
-            <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
-        @endforeach
-    </select>
-
-    <label for="color">Màu:</label>
-    <select id="color" name="color">
-        @foreach($product->variations as $variation)
-            <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
-        @endforeach
-    </select>
-
-    <label for="quantity">Số lượng:</label>
-    <input type="number" id="quantity" name="quantity" min="1" value="1">
-    <br>
-    <button type="submit">Thêm vào giỏ</button>
-</form>
-
-        @else
-            <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
-            <a href="{{ route('client-login.index') }}">Đăng nhập</a>
-        @endif
-    </div>
-</div>
-
-
-
->>>>>>> 7c530d06ed645330b04d4db4ea81a9e5786f4856
-                                            <button type="button" title="Xem nhanh" class="shop-quickview-button"
-                                                data-type="shop-quickview-button">Xem nhanh</button>
-                                        </div> --}}
                                     </div>
                                     <div class="product-item-detail">
                                         <div class="product-item-detail-flex">
@@ -262,25 +205,26 @@
                                             <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
 
                                         </div>
+                                        <a href="{{ route('quick.buy', $product->id) }}" class="btn btn-primary">Mua Nhanh</a>
                                         <div class="product-item-detail-gallery-items">
                                             <div class="product-item-detail-gallery-item active"
                                                 data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
-                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                <img src=""
                                                     width="50" height="50" loading="lazy" decoding="async"
                                                     alt='{{ $product->name }}' title='{{ $product->name }}'>
                                             </div>
                                             <div class="product-item-detail-gallery-item" data-image="">
-                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                <img src=""
                                                     width="50" height="50" loading="lazy" decoding="async"
                                                     alt='{{ $product->name }}' title='{{ $product->name }}'>
                                             </div>
                                             <div class="product-item-detail-gallery-item" data-image="">
-                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                <img src=""
                                                     width="50" height="50" loading="lazy" decoding="async"
                                                     alt='{{ $product->name }}' title='{{ $product->name }}'>
                                             </div>
                                             <div class="product-item-detail-gallery-item" data-image="">
-                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                <img src=""
                                                     width="50" height="50" loading="lazy" decoding="async"
                                                     alt='{{ $product->name }}' title='{{ $product->name }}'>
                                             </div>
@@ -288,10 +232,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="{{ route('mua-ngay', $product->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Mua ngay</button>
-                            </form>
+                            
                         @endforeach
                     </div>
 
@@ -318,7 +259,7 @@
                         <a href="collections/cocktail-dresses.html" title="Cocktail Dresses"
                             class="home-slider-image-holder">
                             <picture>
-                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                <img src=""
                                     alt="Cocktail Dresses" title="Cocktail Dresses" width="600" height="600"
                                     loading="lazy" decoding="async" fetchpriority="auto">
                             </picture>
@@ -336,7 +277,7 @@
                         <a href="collections/casual-jumpsuits.html" title="Casual Jumpsuits"
                             class="home-slider-image-holder">
                             <picture>
-                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                <img src=""
                                     alt="Casual Jumpsuits" title="Casual Jumpsuits" width="600" height="600"
                                     loading="lazy" decoding="async" fetchpriority="auto">
                             </picture>
@@ -353,7 +294,7 @@
                     <div class="home-banner-stylist-item">
                         <a href="collections/formal-pants.html" title="Formal Pants" class="home-slider-image-holder">
                             <picture>
-                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                <img src=""
                                     alt="Formal Pants" title="Formal Pants" width="600" height="600"
                                     loading="lazy" decoding="async" fetchpriority="auto">
                             </picture>
@@ -475,25 +416,25 @@
                                     </div>
                                     <div class="product-item-detail-gallery-items">
                                         <div class="product-item-detail-gallery-item active" data-image="">
-                                            <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                            <img src=""
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='{{ $item->name }}'
                                                 title='{{ $item->name }}'>
                                         </div>
                                         <div class="product-item-detail-gallery-item" data-image=".">
-                                            <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                            <img src=""
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='{{ $item->name }}'
                                                 title='{{ $item->name }}'>
                                         </div>
                                         <div class="product-item-detail-gallery-item">
-                                            <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                            <img src=""
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='{{ $item->name }}'
                                                 title='{{ $item->name }}'>
                                         </div>
                                         <div class="product-item-detail-gallery-item" data-image="">
-                                            <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                            <img src=""
                                                 width="50" height="50" loading="lazy" decoding="async"
                                                 alt='{{ $item->name }}'
                                                 title='{{ $item->name }}'>

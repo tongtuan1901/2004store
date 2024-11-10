@@ -79,6 +79,7 @@ use App\Http\Controllers\client\AddressController;
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 use App\Http\Controllers\client\MuaNgayController;
+use App\Models\AdminProducts;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -287,8 +288,12 @@ Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('u
 Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
 //chức năng mua ngay
-Route::post('mua-ngay', [MuaNgayController::class, 'muaNgay'])->name('mua-ngay');
-Route::get('/checkout', [CheckoutController::class, 'ttMuaNgay'])->name('checkout');
+Route::get('/quick-buy/{id}', [MuaNgayController::class, 'quickBuy'])->name('quick.buy');
+Route::get('checkout', [CheckoutController::class, 'ttMuaNgay'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+
+Route::post('/product/quick-buy/{id}', [MuaNgayController::class, 'quickBuyFromDetail'])->name('product.quickBuyFromDetail');
+Route::post('/product/quick-buy/{id}', [AdminProducts::class, 'quickBuyWithVariants'])->name('product.quickBuyWithVariants');
 
 
 
@@ -334,7 +339,7 @@ route::get('card',function(){
     return view('Client.CLientCard.Card');
 });
 route::get('card-checkout',function(){
-    return view('Client.Checkout.Checkout');
+    return view('Client.ClientCheckout.Checkout');
 });
 route::get('card-thankyou',function(){
     return view('Client.CLientCard.ThankYou');

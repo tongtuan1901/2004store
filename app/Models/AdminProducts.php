@@ -60,7 +60,15 @@ protected  $table = "products";
     {
         return $this->hasMany(ProductVariation::class, 'product_id');
     }
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'product_variations', 'product_id', 'color_id')->distinct();
+    }
 
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_variations', 'product_id', 'size_id')->distinct();
+    }
 
     // Override the table name if needed
     // public function getTable()

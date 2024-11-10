@@ -8,25 +8,46 @@ use Illuminate\Http\Request;
 
 class MuaNgayController extends Controller
 {
-    public function muaNgay($id)
+    public function quickBuy($id)
     {
-        $product = AdminProducts::findOrFail($id);
 
-        if ($product->stock <= 0) {
-            return redirect()->back()->with('error', 'Sản phẩm đã hết hàng');
+        $product = AdminProducts::find($id);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
         }
-
         $cart = session()->get('cart', []);
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "name" => $product->name,
+                "price_sale" => $product->price_sale,
+                "quantity" => 1
+            ];
+        }
+        session()->put('cart', $cart);
+        return redirect()->route('checkout');
+    }
+    public function quickBuyFromDetail(Request $request, $id)
+{
+    $product = AdminProducts::findOrFail($id);
+
+    if (!$product) {
+        return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
+    }
+    $cart = session()->get('cart', []);
+    if (isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+    } else {
         $cart[$id] = [
             "name" => $product->name,
-            "quantity" => 1,
             "price" => $product->price,
             "price_sale" => $product->price_sale,
+            "quantity" => 1
         ];
-
-        session()->put('cart', $cart);
-
-        // Điều hướng tới trang thanh toán hoặc giỏ hàng
-        return redirect()->route('checkout')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
     }
+    session()->put('cart', $cart);
+    return redirect()->route('checkout');
+}
+
 }
