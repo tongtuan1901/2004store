@@ -61,7 +61,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 
 
 use App\Http\Controllers\Admin\AdminCouponsController;
-use App\Http\Controllers\Admins\AdminBannersController;
+use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminCommentsController;
@@ -77,7 +77,11 @@ use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\AddressController;
 
 use App\Http\Controllers\client\CheckoutThankyouController;
+
+use App\Http\Controllers\client\ClientOrderControler;
+
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use GuzzleHttp\Client;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -94,69 +98,69 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-    // Mã giảm giá
-    Route::resource('admin-coupons', AdminCouponsController::class);
-    //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
+
+ // Mã giảm giá
+ Route::resource('admin-coupons', AdminCouponsController::class);
+//  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
 
 
-    Route::resource('admin-comments', AdminCommentsController::class);
-
-    // Sản phẩm
-    Route::resource('admin-products', AdminProductsController::class);
-
-    // Danh mục
-    Route::resource('admin-categories', AdminCategoriesController::class);
-
-    // Khách hàng
-    Route::resource('admin-customers', AdminUserController::class);
-
-    // Banner
-    Route::resource('admin-banners', AdminBannersController::class);
-
-    // Đặt hàng
-    Route::resource('admin-orders', AdminOrdersController::class);
-    // Route để hiển thị trang duyệt đơn hàng
-    Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
-    Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
-    Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
-    Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
-    Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
-
-    Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedIndex'])->name('admin-orders.received');
 
 
-    // Route để cập nhật trạng thái đơn hàng
-    Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
+ // Sản phẩm
+ Route::resource('admin-products', AdminProductsController::class);
 
-    //bình luận
+ // Danh mục
+ Route::resource('admin-categories', AdminCategoriesController::class);
 
-    // Thống kê
-    Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
-    Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
+ // Khách hàng
+ Route::resource('admin-customers', AdminUserController::class);
+
+ // Banner
+ Route::resource('admin-banners', AdminBannersController::class);
+
+ Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
+
+Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
+
+ // Đặt hàng
+ Route::resource('admin-orders', AdminOrdersController::class);
+ // Route để hiển thị trang duyệt đơn hàng
+Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
+Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
+Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
+Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
+Route::delete('/admin/orders/force-delete/{id}', [AdminOrdersController::class, 'forceDelete'])->name('admin-orders.forceDelete');
+
+Route::get('/admin/orders/received', [AdminOrdersController::class, 'receivedIndex'])->name('admin-orders.received');
 
 
-    // Route cho tin tức
-    Route::resource('new', AdminNewsController::class);
-
-    Route::resource('users', AdminUserController::class);
-    //
-    Route::resource('inventory', AdminInventoryController::class);
+// Route để cập nhật trạng thái đơn hàng
+Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])->name('admin-orders.update-status');
 
 
+ // Thống kê
+ Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
+ Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
-    Route::resource('discount', DiscountController::class);
-    Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
-    Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
-    Route::resource('admin-brands', AdminBrandController::class);
-    Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
-    //
-    Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
-    Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('admin.reviews.show');
-    Route::get('/admin-don-hang-da-huy', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.donHangDaHuy');
+ // Route cho tin tức
+ Route::resource('new', AdminNewsController::class);
 
+ Route::resource('users', AdminUserController::class);
+ //
+ Route::resource('inventory', AdminInventoryController::class);
+
+
+
+ Route::resource('discount', DiscountController::class);
+Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
+Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
+// Route::resource('admin-comments', AdminCommentsController::class);
+Route::resource('admin-brands', AdminBrandController::class);
+Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
+//
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
     // Mã giảm giá
     Route::resource('admin-coupons', AdminCouponsController::class);
@@ -230,6 +234,23 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('admin-card', AdminCardController::class);
     Route::get('/admin/carts', [AdminCardController::class, 'index'])->name('admin.carts.index');
+
+    Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
+Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
+Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
+Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
+Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
+Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
+// Route để hủy đơn hàng
+Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.orders.canceled');
+Route::delete('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('admin.orders.cancel');
+//route cho đơn hàng đã hủy
+Route::get('admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin-orders.cancelled');
 });
 
 
@@ -258,9 +279,6 @@ Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
 Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
 
-// mã giảm
-Route::post('/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('apply.discount');
-Route::post('/store-order', [CheckoutController::class, 'store'])->name('order.store');
 
 
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
@@ -270,6 +288,7 @@ Route::resource('client-checkout', CheckoutController::class);
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('client-checkout.process');
 Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name('payment.momo');
 Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
+
 
 
 // Route::resource('client-checkout', CheckoutController::class);
@@ -303,21 +322,18 @@ Route::resource('admin-orders', AdminOrdersController::class);
 // in pdf
 Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
-// bình luận
-Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
 
 
 
 
 
-Route::resource('admin-products', AdminProductsController::class);
+
+// Route::resource('admin-products', AdminProductsController::class);
 
 
-Route::resource('admin-banners', AdminBannersController::class);
+// Route::resource('admin-banners', AdminBannersController::class);
 
-Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
 
-Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 
 Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
 Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
@@ -331,18 +347,18 @@ route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
 Route::resource('admin-home', HomeAdminController::class);
 
-Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
-Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
-Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
-Route::get('user/{userId}/address/create', [AddressController::class, 'CreateAddress'])->name('address.create');
-Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
-Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
-Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
-Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 
 
-Route::get('admin/user/address', [AdminOrdersController::class, 'listAdrress'])->name('admin.address');
-Route::get('admin/address/show/{userId}', [AdminOrdersController::class, 'showAddress'])->name('admin.address.show');
+
+Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
+Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+
+Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
+Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+//bình luận
+Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
+
 
 
 // route::get('admin-ui',function(){
