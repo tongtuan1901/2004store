@@ -15,6 +15,7 @@
     <table class="styled-table">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Tài khoản</th>
                 <th>Người nhận</th>
                 <th>Hình ảnh</th>
@@ -45,6 +46,7 @@
                             @endif
                         @endforeach
                         <tr>
+                            <td>{{ $order->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $order->name }}</td>
                             <td class="img-cell">
@@ -77,7 +79,7 @@
                                         <button class="btn-cancel">Hủy đơn</button>
                                     </form>
                                 @else
-                                    <span>Đơn hàng đã được hủy</span> <!-- Hiển thị thông báo đã hủy khi đơn hàng đã hủy -->
+                                    {{-- <span>Đơn hàng đã được hủy</span> <!-- Hiển thị thông báo đã hủy khi đơn hàng đã hủy --> --}}
                                 @endif
                             </td>
                         </tr>
