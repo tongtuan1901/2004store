@@ -103,6 +103,18 @@ class CheckoutController extends Controller
         $order->name_client = $nameClient; // Customer's name
         $order->phone_number = $phoneNumber;
         $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
+    
+        // Check if payment method is wallet
+        if ($request->paymentMethod == 'wallet') {
+            $user = auth()->user();
+            if ($user->balance < $finalTotal) {
+                return redirect()->back()->with('error', 'Số dư trong ví không đủ');
+            }
+            // Deduct the amount from user's wallet
+            $user->balance -= $finalTotal;
+            $user->save();
+        }
+    
         $order->save();
     
         // Save order items

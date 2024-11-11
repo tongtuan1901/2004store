@@ -21,7 +21,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'order_id'
+        'order_id',
+        'balance'
     ];
 
     /**
@@ -58,6 +59,10 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+    public function transferRequests()
+    {
+        return $this->hasMany(TransferRequest::class);  // Một người dùng có nhiều yêu cầu chuyển tiền
     }
 
 }

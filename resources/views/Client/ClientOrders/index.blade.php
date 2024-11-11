@@ -4,9 +4,7 @@
 <h2 style="text-align: center">Danh sách đơn hàng</h2>
 
 @php
-    $hasOrders = $userOrder->contains(function($user) {
-        return $user->orders->isNotEmpty();
-    });
+    $hasOrders = $userOrder && $userOrder->orders->isNotEmpty(); // Check if the user has orders
     $orderIndex = 1;
 @endphp
 
@@ -16,7 +14,7 @@
     <table class="styled-table">
         <thead>
             <tr>
-                <th class="stt-column">STT</th> <!-- Add a class to the STT column -->
+                <th class="stt-column">STT</th>
                 <th>Tài khoản</th>
                 <th>Người nhận</th>
                 <th>Hình ảnh</th>
@@ -27,67 +25,55 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($userOrder as $user)
-                @if ($user->orders->isNotEmpty())
-                    @foreach ($user->orders as $order)
+            @foreach ($userOrder->orders as $order)
+                @php
+                    $orderItems = $order->orderItems;
+                    $productDetails = [];
+                @endphp
+                @foreach ($orderItems as $item)
+                    @if ($item->variation)
                         @php
-                            $orderItems = $order->orderItems; // Lấy danh sách các item trong đơn hàng
-                            $productDetails = [];
+                            $productDetails[] = [
+                                'name' => $item->product->name ?? 'Product Name N/A',
+                                'size' => $item->variation->size->size ?? 'N/A',
+                                'color' => $item->variation->color->color ?? 'N/A',
+                                'quantity' => $item->quantity
+                            ];
                         @endphp
-                        @foreach ($orderItems as $item)
-                            @if ($item->variation) <!-- Kiểm tra nếu variation tồn tại -->
-                                @php
-                                    $productDetails[] = [
-                                        'name' => $item->product->name ?? 'Product Name N/A',
-                                        'size' => $item->variation->size->size ?? 'N/A',
-                                        'color' => $item->variation->color->color ?? 'N/A',
-                                        'quantity' => $item->quantity
-                                    ];
-                                @endphp
-                            @endif
+                    @endif
+                @endforeach
+                <tr>
+                    <td class="stt-column">{{ $orderIndex++ }}</td>
+                    <td>{{ $userOrder->name }}</td>
+                    <td>{{ $order->name }}</td>
+                    <td class="img-cell">
+                        @if ($item->variation && $item->variation->image)
+                            <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image" class="img-small">
+                        @else
+                            <span>No image</span>
+                        @endif
+                    </td>
+                    <td class="truncate">
+                        @foreach ($productDetails as $product)
+                            <div>
+                                {{ $product['name'] }}<br>
+                                Kích thước: {{ $product['size'] }}, Màu sắc: {{ $product['color'] }}<br>
+                                Số lượng: {{ $product['quantity'] }}<br><br>
+                            </div>
                         @endforeach
-                        <tr>
-                        <td class="stt-column">{{ $orderIndex++ }}</td> <!-- Apply class to this cell -->
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $order->name }}</td>
-                            <td class="img-cell">
-                                @if ($item->variation->image) <!-- Kiểm tra nếu có ảnh -->
-                                    <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image" class="img-small">
-                                @else
-                                    <span>No image</span>
-                                @endif
-                            </td>
-                            <td class="truncate">
-                                @foreach ($productDetails as $product)
-                                    <div>
-                                        {{ $product['name'] }}<br>
-                                        Kích thước: {{ $product['size'] }}, Màu sắc: {{ $product['color'] }}<br>
-                                        Số lượng: {{ $product['quantity'] }}<br><br>
-                                    </div>
-                                @endforeach
-                            </td>
-                            <td class="truncate">
-                                <!-- Hiển thị trạng thái đơn hàng -->
-                                {{ $order->status }}
-                            </td>
-                            <td class="truncate">{{ $order->phone }} - {{ $order->address }}</td>
-                            <td>
-                                <!-- Form for canceling the order -->
-                                @if ($order->status != 'Hủy') <!-- Chỉ hiển thị nút hủy khi trạng thái chưa phải là "Hủy" -->
-                                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="cancel-order-form">
-                                        @csrf
-                                        @method('PUT')
-                                        <button class="btn-cancel">Hủy đơn</button>
-                                    </form>
-                                @else
-                                    
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    
-                @endif
+                    </td>
+                    <td class="truncate">{{ $order->status }}</td>
+                    <td class="truncate">{{ $order->phone }} - {{ $order->address }}</td>
+                    <td>
+                        @if ($order->status != 'Hủy')
+                            <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="cancel-order-form">
+                                @csrf
+                                @method('PUT')
+                                <button class="btn-cancel">Hủy đơn</button>
+                            </form>
+                        @endif
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
