@@ -38,6 +38,25 @@ class ClientOrderControler extends Controller
             'user',
             'address'
         ])->findOrFail($id);
+            
+        if ($order->status == 'Chờ xử lý' && !$order->pending_time) {
+            $order->pending_time = now();
+        }
+        
+        if ($order->status == 'Đang xử lý' && !$order->processing_time) {
+            $order->processing_time = now();
+        }
+        
+        if ($order->status == 'Đang giao hàng' && !$order->shipping_time) {
+            $order->shipping_time = now();
+        }
+        
+        if ($order->status == 'Hoàn thành' && !$order->completed_time) {
+            $order->completed_time = now();
+        }
+        
+        $order->save();
+        
 
         return view('Client.ClientOrders.show', compact('order'));
     }

@@ -244,6 +244,8 @@ Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('addr
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('Client/orders/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('/orders/{id}/show', [ClientOrderControler::class, 'showOrder'])->name('orders.show');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
 // Route để hủy đơn hàng
 Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');

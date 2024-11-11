@@ -72,6 +72,8 @@
                             </td>
                             <td class="truncate">{{ $order->phone }} - {{ $order->address }}</td>
                             <td>
+                            <!-- Nút Chi tiết -->
+                            <a href="{{ route('orders.show', $order->id) }}" class="btn-detail">Chi tiết</a>                                
                                 <!-- Form for canceling the order -->
                                 @if ($order->status != 'Hủy') <!-- Chỉ hiển thị nút hủy khi trạng thái chưa phải là "Hủy" -->
                                     <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="cancel-order-form">
@@ -186,6 +188,22 @@
         padding: 10px;
         margin-top: 20px;
     }
+    .btn-detail {
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #2196F3;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-detail:hover {
+    background-color: #1976D2;
+}
+
 
     /* Custom style to make STT column smaller */
     .stt-column {
