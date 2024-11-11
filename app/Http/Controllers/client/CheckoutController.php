@@ -133,4 +133,5 @@ class CheckoutController extends Controller
         return redirect()->route('client-thankyou.index', ['order_id' => $order->id])
             ->with('success', 'Your order has been placed successfully!');
     }
+
 }
