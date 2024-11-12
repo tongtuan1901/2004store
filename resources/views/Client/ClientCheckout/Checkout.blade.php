@@ -10552,17 +10552,6 @@
 
                                         <div class="content-box"
                                             data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && !isLoadingShippingError">
-
-
-
-
-
-
-
-
-
-
-
                                             <div class="content-box__row"
                                                 data-define-array="{shippingMethods: {name: '802787_0,40.000 VND', textPriceFinal: '40.000₫', textPriceOriginal: '', subtotalPriceWithShippingFee: '1.529.000₫'}}">
                                                 <div class="radio-wrapper">
@@ -10613,20 +10602,16 @@
                                         <div class="content-box" data-define="{paymentMethod: undefined}">
                                             <div class="content-box__row">
                                                 <div class="radio-wrapper">
-                                                    <div class="radio__input">
-                                                        <input name="paymentMethod" id="paymentMethod-780744"
-                                                            type="radio" class="input-radio"
-                                                            data-bind="paymentMethod" value="bank_transfer"
-                                                            data-provider-id="3" checked="">
-                                                    </div>
-                                                    <label for="paymentMethod-780744" class="radio__label">
-                                                        <span class="radio__label__primary">Chuyển khoản</span>
-                                                        <span class="radio__label__accessory">
-                                                            <span class="radio__label__icon">
-                                                                <i class="payment-icon payment-icon--3"></i>
-                                                            </span>
-                                                        </span>
-                                                    </label>
+                                                    <input type="radio" id="momo_payment" name="paymentMethod"
+                                                        value="momo" checked>
+                                                    <label for="momo_payment">Thanh toán MoMo</label><br>
+                                                </div>
+                                            </div>
+                                            <div class="content-box__row">
+                                                <div class="radio-wrapper">
+                                                    <input type="radio" id="vnpay_payment" name="paymentMethod"
+                                                        value="vnpay">
+                                                    <label for="vnpay_payment">Thanh toán VNPay</label><br>
                                                 </div>
                                             </div>
                                             <div class="content-box__row">
@@ -10656,32 +10641,6 @@
                                 </section>
                             </div>
                         </article>
-                        <div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
-                            <button type="submit" class="btn btn-checkout spinner"
-                                data-bind-class="{'spinner--active': isSubmitingCheckout}"
-                                data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-                                <span class="spinner-label">ĐẶT HÀNG</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                                    <use href="#spinner"></use>
-                                </svg>
-                            </button>
-
-                            <a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart"
-                                class="previous-link">
-                                <i class="previous-link__arrow">❮</i>
-                                <span class="previous-link__content">Quay về giỏ hàng</span>
-                            </a>
-
-                        </div>
-
-                        <div id="common-alert" data-tg-refresh="refreshError">
-
-
-                            <div class="alert alert--danger hide-on-desktop hide"
-                                data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError"
-                                data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại
-                            </div>
-                        </div>
                     </div>
 
                 </main>
@@ -10822,6 +10781,7 @@
                                         </tfoot>
                                     </table>
                                 </div>
+
                                 <div
                                     class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
                                     <button type="submit" class="btn btn-checkout spinner"
@@ -10832,7 +10792,7 @@
                                             <use href="#spinner"></use>
                                         </svg>
                                     </button>
-
+        </form>
         <a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
             <i class="previous-link__arrow">❮</i>
             <span class="previous-link__content">Quay về giỏ hàng</span>
@@ -10852,8 +10812,6 @@
     </aside>
     </div>
 
-    </form>
-
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="spinner">
@@ -10867,8 +10825,6 @@
         </symbol>
     </svg>
     </div>
-
-
 </body><savior-host
     style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template
         data-savepage-shadowroot="">
@@ -10880,5 +10836,5 @@
             <toasts id="toasts-container"></toasts>
         </div>
     </template></savior-host>
-forrm
+
 </html>

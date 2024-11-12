@@ -258,6 +258,9 @@ Route::prefix('admin')->group(function () {
 
 // Route cho view client
 Route::resource('client-home', HomeController::class);
+// Định nghĩa route cho trang chủ của client
+Route::get('/home', [HomeController::class, 'index'])->name('client-home');
+
 Route::resource('client-user', UsersController::class);
 Route::resource('client-categories', ClientCategories::class);
 Route::resource('client-login', LoginController::class);
@@ -285,9 +288,12 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 //checkout
 
 Route::resource('client-checkout', CheckoutController::class);
+// Định nghĩa route cho trang checkout
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('client-checkout');
+
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('client-checkout.process');
-Route::post('/momo_payment', [CheckoutController::class, 'payWithMomo'])->name('momo_payment');
-Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
+Route::post('/momo-payment', [CheckoutController::class, 'momo_payment'])->name('momo.payment');
+
 
 
 
@@ -295,6 +301,9 @@ Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->
 // Route::resource('client-checkout', CheckoutController::class);
 
 Route::resource('client-thankyou', CheckoutThankyouController::class);
+// routes/web.php
+// Route::get('/client-thankyou', [CheckoutThankyouController::class, 'index'])->name('client-thankyou');
+
 // check out vnpay
 
 Route::resource('client-news',  NewsController::class);

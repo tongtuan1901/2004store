@@ -16,9 +16,149 @@ use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            )
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
+    }
+    public function momo_payment(AdminOrder $order)
+    {
+        // Lấy tổng tiền từ đơn hàng
+        $amount = $order->total;
+
+        // Cấu hình MoMo
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $orderInfo = "Thanh toán qua MoMo cho đơn hàng #" . $order->id;
+        $orderId = time() . "-" . uniqid();
+        $redirectUrl = route('client-thankyou.index', ['order_id' => $order->id]);
+        $ipnUrl = route('client-checkout');
+
+        $requestId = time();
+        $requestType = "payWithATM";
+
+        // Xây dựng chuỗi rawHash cho chữ ký
+        $rawHash = "accessKey=" . $accessKey .
+            "&amount=" . $amount .
+            "&extraData=" . "" .
+            "&ipnUrl=" . $ipnUrl .
+            "&orderId=" . $orderId .
+            "&orderInfo=" . $orderInfo .
+            "&partnerCode=" . $partnerCode .
+            "&redirectUrl=" . $redirectUrl .
+            "&requestId=" . $requestId .
+            "&requestType=" . $requestType;
+
+        // Tạo chữ ký bằng hash HMAC SHA256
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+        // Dữ liệu gửi đi trong yêu cầu
+        $data = array(
+            'partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            'requestId' => $requestId,
+            'amount' => $amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'redirectUrl' => $redirectUrl,
+            'ipnUrl' => $ipnUrl,
+            'lang' => 'vi',
+            'extraData' => '',
+            'requestType' => $requestType,
+            'signature' => $signature
+        );
+
+        // Gửi yêu cầu đến MoMo
+        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true);
+
+        // Kiểm tra nếu 'payUrl' có tồn tại trong phản hồi từ MoMo
+        if (isset($jsonResult['payUrl'])) {
+            // Lưu thông tin vào session
+            session(['momo_payment_info' => $jsonResult]);
+
+            return redirect()->to($jsonResult['payUrl']);
+        } else {
+            // Nếu không có payUrl, trả về thông báo lỗi
+            return redirect()->route('client-checkout')->with('error', 'Lỗi khi kết nối với MoMo. Vui lòng thử lại.');
+        }
+    }
+
+    public function vnpay_payment(AdminOrder $order)
+    {
+        // Cấu hình VNPAY
+        $vnp_TmnCode = "NINXYELP"; // Mã Terminal của VNPAY
+        $vnp_HashSecret = "AIETPJHOVHILFFJPZHPGRDQSRWULXSRH"; // Chuỗi bí mật
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL cổng thanh toán VNPAY
+        $vnp_Returnurl = route('client-thankyou.index', ['order_id' => $order->id]); // URL trả về sau thanh toán
+
+        // Lấy thông tin đơn hàng
+        $vnp_TxnRef = $order->id;
+        $vnp_OrderInfo = "Thanh toán đơn hàng #" . $order->id;
+        $vnp_OrderType = "billpayment";
+        $vnp_Amount = $order->total * 100; // Đơn vị: đồng
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = request()->ip();
+
+        // Tham số thanh toán
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+
+        // Tạo URL và chuỗi ký hiệu
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+
+        return redirect()->to($vnp_Url); // Chuyển hướng người dùng đến VNPAY
+    }
     public function index()
     {
         $userId = auth()->id();
@@ -37,42 +177,42 @@ class CheckoutController extends Controller
         return view('Client.clientcheckout.checkOut', compact('cart', 'email', 'addresses'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // Check if the user is logged in
+        // Kiểm tra nếu người dùng chưa đăng nhập
         $userId = auth()->id();
         if (!$userId) {
-            return redirect()->route('login')->with('error', 'Please log in to place an order.');
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để đặt hàng.');
         }
 
-        // Get the user's cart
+        // Lấy giỏ hàng của người dùng
         $cart = Cart::where('user_id', $userId)
             ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
             ->get();
 
-        // Calculate the total value of the cart
+        // Tính tổng giá trị giỏ hàng
         $totalPrice = 0;
         foreach ($cart as $item) {
             $price = $item->variation->price ?? $item->product->price;
             $totalPrice += $price * $item->quantity;
         }
 
-        // Fixed shipping fee
+        // Phí vận chuyển cố định
         $shippingFee = 40000;
         $finalTotal = $totalPrice + $shippingFee;
 
-        // Create a new order
+        // Tạo đơn hàng mới
         $order = new AdminOrder();
         $order->user_id = $userId;
         $order->email = auth()->user()->email;
 
-        // Use the selected address from the request
+        // Lấy địa chỉ người dùng từ request
         $addressId = $request->input('address_id');
         $address = Address::where('user_id', $userId)->findOrFail($addressId);
-
         if ($address) {
             $order->address = $address->street . ', ' . $address->city . ', ' . $address->state . ' ' . $address->house_address;
             $order->street = $address->street;
@@ -80,41 +220,31 @@ class CheckoutController extends Controller
             $order->state = $address->state;
             $order->house_address = $address->house_address;
             $order->address_id = $address->id;
-            $order->name = $address->name; // Lưu tên người nhận từ địa chỉ
-            $order->phone = $address->phone_number; // Lưu số điện thoại từ địa chỉ
+            $order->name = $address->name;
+            $order->phone = $address->phone_number;
         } else {
-            // Handle case where address is not available
-            return redirect()->back()->with('error', 'No address found for the user.');
+            return redirect()->back()->with('error', 'Không tìm thấy địa chỉ người dùng.');
         }
 
-        // Get the name client from the request or use the user's name from their account
-        $nameClient = $request->name_client ?: auth()->user()->name; // Use the user's name if not provided in the request
-
-        // Get the phone number from the request or fallback to the user's phone number from the saved address
-        $phoneNumber = $request->phone_number ?: $address->phone_number ?: auth()->user()->phone_number; // Use the address phone or user phone if not provided
-
+        // Lấy tên khách hàng và số điện thoại
+        $nameClient = $request->name_client ?: auth()->user()->name;
+        $phoneNumber = $request->phone_number ?: $address->phone_number ?: auth()->user()->phone_number;
         if (!$phoneNumber) {
-            // If phone number is still not found, redirect back with an error
-            return redirect()->back()->with('error', 'No phone number found for the user.');
+            return redirect()->back()->with('error', 'Không tìm thấy số điện thoại người dùng.');
         }
 
-        // Fill order with other fields from the request
+        // Lưu thông tin đơn hàng
         $order->total = $finalTotal;
-        $order->status = 'Chờ xử lý'; // Default order status
-        $order->name_client = $nameClient; // Customer's name
+        $order->status = 'Chờ xử lý';
+        $order->name_client = $nameClient;
         $order->phone_number = $phoneNumber;
         $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
         $order->save();
 
-        // Save order items
+        // Lưu các sản phẩm trong đơn hàng
         foreach ($cart as $item) {
-            $productId = $item->product_id;  // Đảm bảo lấy đúng product_id
+            $productId = $item->product_id;
             $variationId = $item->variation_id;
-
-            // Kiểm tra thêm để đảm bảo product_id có giá trị hợp lệ
-            if (!$productId || !AdminProducts::find($productId) || !$variationId || !ProductVariation::find($variationId)) {
-                return redirect()->back()->with('error', 'Invalid product or variation ID in cart.');
-            }
             $imagePath = $item->variation->image->image_path ?? '';
             OderItem::create([
                 'order_id' => $order->id,
@@ -126,12 +256,21 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Clear the user's cart after the order
+        // Xóa giỏ hàng của người dùng
         Cart::where('user_id', $userId)->delete();
-        Mail::to($order->email)->send(new OrderConfirmationMail($order));
-        // Redirect to the success page
-        return redirect()->route('client-thankyou.index', ['order_id' => $order->id])
-            ->with('success', 'Your order has been placed successfully!');
-    }
 
+        // Nếu phương thức thanh toán là MoMo, chuyển hướng tới cổng thanh toán MoMo
+        if ($request->paymentMethod == 'momo') {
+            return $this->momo_payment($order); // Gọi phương thức momo_payment
+        } elseif ($request->paymentMethod == 'vnpay') {
+            return $this->vnpay_payment($order); // Gọi phương thức vnpay_payment
+        }
+
+
+        // Nếu thanh toán bằng phương thức khác (chuyển khoản), gửi email và chuyển hướng tới trang cảm ơn
+        Mail::to($order->email)->send(new OrderConfirmationMail($order));
+        return redirect()->route('client-thankyou.index', ['order_id' => $order->id])
+            ->with('success', 'Đơn hàng của bạn đã được đặt thành công!');
+    }
+    
 }
