@@ -571,6 +571,10 @@
                 @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
                     <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản -->
                     <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a>
+                    <div class="wallet-balance">
+                    <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a>
+            <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong>
+    </div>
                     <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
                         @csrf
                         <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>

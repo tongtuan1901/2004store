@@ -7,8 +7,8 @@
             @foreach ($banners as $index => $banner)
                 <div class="carousel-item @if ($index === 0) active @endif">
                     <a href="collections/all.html" aria-label="{{ $banner->title }}" title="{{ $banner->title }}">
-                        <img src="{{ asset('storage/' . $banner->image) }}" 
-                            alt="{{ $banner->title }}" class="d-block w-100 slide-image" loading="eager" decoding="sync" style="height:100%">
+                        <img src="{{ asset('storage/' . $banner->image) }}" width="" 
+                            alt="{{ $banner->title }}" class="d-block w-100 slide-image" loading="eager" decoding="sync" style="height:650px">
                     </a>
                 </div>
             @endforeach
@@ -88,7 +88,7 @@
                     </div>
                     <div class="home-about-right">
                         <img loading="lazy" decoding="async" width="500" height="380"
-                            src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                            src="https://images.pexels.com/photos/7764018/pexels-photo-7764018.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                             alt="Về chúng tôi">
                     </div>
                 </div>
@@ -235,6 +235,7 @@
     </div>
 
 
+
                                             <button type="button" title="Xem nhanh" class="shop-quickview-button"
                                                 data-type="shop-quickview-button">Xem nhanh</button>
                                         </div>
@@ -255,7 +256,7 @@
                                             <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
 
                                         </div>
-                                        <div class="product-item-detail-gallery-items">
+                                        <!-- <div class="product-item-detail-gallery-items">
                                             <div class="product-item-detail-gallery-item active"
                                                 data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
                                                 <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
@@ -277,7 +278,7 @@
                                                     width="50" height="50" loading="lazy" decoding="async"
                                                     alt='{{ $product->name }}' title='{{ $product->name }}'>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -462,7 +463,7 @@
                                         <del>{{$item->price}}₫</del>
 
                                     </div>
-                                    <div class="product-item-detail-gallery-items">
+                                    <!-- <div class="product-item-detail-gallery-items">
                                         <div class="product-item-detail-gallery-item active" data-image="">
                                             <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
                                                 width="50" height="50" loading="lazy" decoding="async"
@@ -487,7 +488,7 @@
                                                 alt='{{ $item->name }}'
                                                 title='{{ $item->name }}'>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

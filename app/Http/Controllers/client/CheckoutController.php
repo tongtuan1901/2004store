@@ -93,6 +93,7 @@ class CheckoutController extends Controller
     //         return redirect()->back()->with('error', 'No phone number found for the user.');
     //     }
     
+<<<<<<< HEAD
     //     // Fill order with other fields from the request
     //     $order->total = $finalTotal;
     //     $order->status = 'Chờ xử lý'; // Default order status
@@ -100,6 +101,27 @@ class CheckoutController extends Controller
     //     $order->phone_number = $phoneNumber;
     //     $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
     //     $order->save();
+=======
+        // Fill order with other fields from the request
+        $order->total = $finalTotal;
+        $order->status = 'Chờ xử lý'; // Default order status
+        $order->name_client = $nameClient; // Customer's name
+        $order->phone_number = $phoneNumber;
+        $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
+    
+        // Check if payment method is wallet
+        if ($request->paymentMethod == 'wallet') {
+            $user = auth()->user();
+            if ($user->balance < $finalTotal) {
+                return redirect()->back()->with('error', 'Số dư trong ví không đủ');
+            }
+            // Deduct the amount from user's wallet
+            $user->balance -= $finalTotal;
+            $user->save();
+        }
+    
+        $order->save();
+>>>>>>> 6c25769062e94fbc1fda2211c6476ae1dbe54452
     
     //     // Save order items
     //     foreach ($cart as $item) {

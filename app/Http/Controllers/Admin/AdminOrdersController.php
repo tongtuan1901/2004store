@@ -202,13 +202,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-    public function listDonHangDaHuy(){
-        $donHangBiHuy = AdminOrder::where('status', 'Hủy')
-                        ->with('orderItems.product')
-                        ->get();
-                        // dd($donHangBiHuy);
-        return view('Admin.orders.listDonHangHuy',compact('donHangBiHuy'));
-    }
+   
 
     public function listAdrress()
     {
@@ -223,6 +217,23 @@ use Illuminate\Support\Facades\Storage;
 
         return view('Admin.orders.showAddress',compact('user','addresses'));
     }
+    public function cancelOrder($orderId)
+    {
+        $order = AdminOrder::findOrFail($orderId);
+        $order->status = 'Hủy'; // Change status to "Hủy"
+        $order->save();
+    
+        // Redirect lại trang danh sách đơn hàng
+        return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
+    }
+public function listDonHangDaHuy()
+{
+    $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
+    $donHangDaHuy = AdminOrder::where('status', 'Hủy')
+                             ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
+                             ->get();
+    return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
+}
 }
 
 

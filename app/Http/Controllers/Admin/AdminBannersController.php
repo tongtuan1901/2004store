@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin1;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banners;
@@ -13,7 +13,7 @@ class AdminBannersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    const PATH_VIEW  = 'Admin1.banners.';
+    const PATH_VIEW  = 'Admin.banners.';
     public function index()
     {
         $listBanners = DB::table('banners')->where('deleted',0)->get();

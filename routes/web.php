@@ -1,26 +1,26 @@
 <?php
 
 
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+
+
 use App\Http\Controllers\client\CardController;
-
-
 use App\Http\Controllers\client\HomeController;
+
+
+
 use App\Http\Controllers\client\NewsController;
-
-
-
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
-use App\Http\Controllers\client\ClientCategories;
 
+use App\Http\Controllers\client\ClientCategories;
+use App\Http\Controllers\Admin\BankCardController;
 use App\Http\Controllers\Admin\DiscountController;
-use App\Http\Controllers\admin\AdminCardController;
-use App\Http\Controllers\admin\AdminNewsController;
-use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\client\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ use App\Http\Controllers\Admin\AdminUserController;
 //View Admin
 
 
+use App\Http\Controllers\admin\AdminCardController;
+use App\Http\Controllers\admin\AdminNewsController;
+
+
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\client\CheckoutController;
 
-
 use App\Http\Controllers\client\ProductsController;
-use App\Http\Controllers\client\RegisterController;
-use App\Http\Controllers\Admin1\AdminHomeController;
-
-use App\Http\Controllers\Admin\AdminBrandController;
 
 
 
@@ -51,37 +51,40 @@ use App\Http\Controllers\Admin\AdminBrandController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\client\RegisterController;
 
+use App\Http\Controllers\Admin1\AdminHomeController;
+use App\Http\Controllers\Admin\AdminBrandController;
+use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminSizesController;
+
+
+
 use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
-
-
-
+use App\Http\Controllers\client\ClientOrderControler;
+use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
-use App\Http\Controllers\Admin1\AdminBannersController;
+use App\Http\Controllers\client\ClientBanksController;
 use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\Admin\AdminTransferController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminCommentsController; 
+
+
+
 use App\Http\Controllers\admin\AdminInventoryController;
+
 use App\Http\Controllers\Admin\AdminUserStaffController;
+
 use App\Http\Controllers\Admin\AdminCategoriesController;
+
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
-
-
-
-use App\Http\Controllers\client\AddressController;
-
 use App\Http\Controllers\client\CheckoutThankyouController;
-
-use App\Http\Controllers\client\ClientOrderControler;
-
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
-use GuzzleHttp\Client;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -118,6 +121,10 @@ Route::prefix('admin')->group(function () {
 
  // Banner
  Route::resource('admin-banners', AdminBannersController::class);
+
+ Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
+
+Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
@@ -230,6 +237,34 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
 
     Route::resource('admin-card', AdminCardController::class);
     Route::get('/admin/carts', [AdminCardController::class, 'index'])->name('admin.carts.index');
+
+    Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
+Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
+Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
+Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
+Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
+Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
+// Route để hủy đơn hàng
+Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.orders.canceled');
+Route::delete('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('admin.orders.cancel');
+//route cho đơn hàng đã hủy
+Route::get('admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin-orders.cancelled');
+
+
+// thêm tài khoản ngân hàng admin
+Route::resource('bank-cards', BankCardController::class);
+//yêu cầu nạp tiền
+Route::get('/transfer-requests', [AdminTransferController::class, 'index'])->name('admin.transfer-requests.index');
+Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 'approve'])->name('admin.transfer-requests.approve');
+Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
+Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
+
+
 });
 
 
@@ -269,14 +304,19 @@ Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name(
 Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
 
 
+
 // Route::resource('client-checkout', CheckoutController::class);
 
 Route::resource('client-thankyou', CheckoutThankyouController::class);
+//nạp tiền khách hàng
+Route::resource('client-banks', ClientBanksController::class);
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
 // đăng xuất khách hàng
 Route::post('client-logout', [LoginController::class, 'logout'])->name('client-logout');
+// nạp tiền khách hàng
+Route::post('/client-bank/transfer-request', [ClientBanksController::class, 'storeTransferRequest'])->name('client-bank.transfer-request');
 
 
 Route::resource('admin-customers', AdminUserController::class);
@@ -306,14 +346,12 @@ Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF
 
 
 
-Route::resource('admin-products', AdminProductsController::class);
+// Route::resource('admin-products', AdminProductsController::class);
 
 
-Route::resource('admin-banners', AdminBannersController::class);
+// Route::resource('admin-banners', AdminBannersController::class);
 
-Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
 
-Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 
 Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
 Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
@@ -327,14 +365,7 @@ route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
 Route::resource('admin-home', HomeAdminController::class);
 
-Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
-Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
-Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
-Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
-Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
-Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
-Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
-Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+
 
 
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
@@ -343,6 +374,8 @@ Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddr
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+//bình luận
+Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
 
 Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
 

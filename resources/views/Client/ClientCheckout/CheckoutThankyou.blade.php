@@ -1294,6 +1294,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										</div>
 										<div class="order-summary__section">
 											<table class="total-line-table">
+<<<<<<< HEAD
                                                 <caption class="visually-hidden">Tổng giá trị</caption>
                                                 <thead>
                                                     <tr>
@@ -1336,6 +1337,53 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
                                                 </tfoot>
                                             </table>
                                             
+=======
+												<tbody class="total-line-table__tbody">
+													
+													
+													
+													<tr class="total-line total-line--subtotal">
+														<th class="total-line__name">Tạm tính</th>
+														<td class="total-line__price">{{ number_format($order->total - $shippingFee, 0, ',', '.') }}₫</td>
+													</tr>
+													
+													<tr class="total-line total-line--shipping-fee">
+														<th class="total-line__name">Phí vận chuyển</th>
+														<td class="total-line__price">
+															
+																
+															
+															
+															<span>{{ number_format($shippingFee, 0, ',', '.') }}₫</span>
+															
+														</td>
+													</tr>
+                                                    @if($order->payment_method == 'wallet')
+                        <tr class="total-line total-line--wallet">
+                            <th class="total-line__name">Số tiền trừ từ ví</th>
+                            <td class="total-line__price">{{ number_format($order->total, 0, ',', '.') }}₫</td>
+                        </tr>
+                        @endif						
+													
+													
+												</tbody>
+											</table>
+										</div>
+										<div class="order-summary__section">
+											<table class="total-line-table">
+												<tbody class="total-line-table__tbody">
+													<tr class="total-line payment-due">
+														<th class="total-line__name">
+															<span class="payment-due__label-total">Tổng cộng</span>
+														</th>
+														<td class="total-line__price">
+															<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
+														</td>
+													</tr>
+                                                    
+												</tbody>
+											</table>
+>>>>>>> 6c25769062e94fbc1fda2211c6476ae1dbe54452
 										</div>
 									</div>
 								</aside>
@@ -1376,10 +1424,20 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 											</div>
 										</div>
 										<div class="row">
-											<div class="col col--md-two">
-												<h2>Phương thức thanh toán</h2>
-												<p>{{ $order->payment_method == 'bank_transfer' ? 'Chuyển khoản' : 'Thanh toán khi nhận hàng' }}</p>
-											</div>
+                                        <div class="col col--md-two">
+    <h2>Phương thức thanh toán</h2>
+    <p>
+        @if($order->payment_method == 'bank_transfer')
+            Chuyển khoản
+        @elseif($order->payment_method == 'cod')
+            Thanh toán khi nhận hàng
+        @elseif($order->payment_method == 'wallet')
+            Thanh toán qua ví
+        @else
+            Phương thức thanh toán không xác định
+        @endif
+    </p>
+</div>
 											<div class="col col--md-two">
 												<h2>Phương thức vận chuyển</h2>
 												<p>Giao hàng tận nơi</p>

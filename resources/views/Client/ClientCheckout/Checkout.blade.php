@@ -549,6 +549,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										</div>
 									<div class="section__content">	
 										<div class="content-box" data-define="{paymentMethod: undefined}">
+<<<<<<< HEAD
 											<div class="content-box__row">
 												<div class="radio-wrapper">
 													<div class="radio__input">
@@ -580,6 +581,70 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 												</div>
 										</div>
 									</div>	
+=======
+    <!-- Chuyển khoản -->
+    <div class="content-box__row">
+        <div class="radio-wrapper">
+            <div class="radio__input">
+                <input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
+            </div>
+            <label for="paymentMethod-780744" class="radio__label">
+                <span class="radio__label__primary">Chuyển khoản</span>
+                <span class="radio__label__accessory">
+                    <span class="radio__label__icon">
+                        <i class="payment-icon payment-icon--3"></i>
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Thanh toán khi nhận hàng -->
+    <div class="content-box__row">
+        <div class="radio-wrapper">
+            <div class="radio__input">
+                <input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="cod" data-provider-id="4">
+            </div>
+            <label for="paymentMethod-780746" class="radio__label">
+                <span class="radio__label__primary">Thanh toán khi nhận hàng</span>
+                <span class="radio__label__accessory">
+                    <span class="radio__label__icon">
+                        <i class="payment-icon payment-icon--4"></i>
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Thanh toán qua ví -->
+    <div class="content-box__row">
+        <div class="radio-wrapper">
+            <div class="radio__input">
+                <input name="paymentMethod" id="paymentMethod-780748" type="radio" class="input-radio" data-bind="paymentMethod" value="wallet" data-provider-id="5">
+            </div>
+            <label for="paymentMethod-780748" class="radio__label">
+                <span class="radio__label__primary">Thanh toán qua ví</span>
+                <span class="radio__label__accessory">
+                    <span class="radio__label__icon">
+                        <i class="payment-icon payment-icon--5"></i> <!-- Thêm icon cho ví -->
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Hiển thị số dư ví -->
+    @if(Auth::check()) <!-- Kiểm tra nếu người dùng đã đăng nhập -->
+    <div class="wallet-balance" >
+        <span>Số dư ví: </span>
+        <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> <!-- Hiển thị số dư ví -->
+    </div>
+    @endif
+</div>
+
+
+											
+>>>>>>> 6c25769062e94fbc1fda2211c6476ae1dbe54452
 										</div>
 									</section>
 								</div>
