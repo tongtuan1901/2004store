@@ -1294,45 +1294,47 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										</div>
 										<div class="order-summary__section">
 											<table class="total-line-table">
-												<tbody class="total-line-table__tbody">
-													
-													
-													
-													<tr class="total-line total-line--subtotal">
-														<th class="total-line__name">Tạm tính</th>
-														<td class="total-line__price">{{ number_format($order->total - $shippingFee, 0, ',', '.') }}₫</td>
-													</tr>
-													
-													<tr class="total-line total-line--shipping-fee">
-														<th class="total-line__name">Phí vận chuyển</th>
-														<td class="total-line__price">
-															
-																
-															
-															
-															<span>{{ number_format($shippingFee, 0, ',', '.') }}₫</span>
-															
-														</td>
-													</tr>
-													
-													
-													
-												</tbody>
-											</table>
-										</div>
-										<div class="order-summary__section">
-											<table class="total-line-table">
-												<tbody class="total-line-table__tbody">
-													<tr class="total-line payment-due">
-														<th class="total-line__name">
-															<span class="payment-due__label-total">Tổng cộng</span>
-														</th>
-														<td class="total-line__price">
-															<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+                                                <caption class="visually-hidden">Tổng giá trị</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Mô tả</td>
+                                                        <td>Giá tiền</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="total-line-table__tbody">
+                                                    <!-- Tạm tính -->
+                                                    <tr class="total-line total-line--subtotal">
+                                                        <th>Tạm tính</th>
+                                                        <td>{{ number_format($order->total, 0, ',', '.') }}₫</td>
+                                                    </tr>
+                                                    
+                                                    <!-- Phí vận chuyển -->
+                                                    <tr class="total-line total-line--shipping-fee">
+                                                        <th>Phí vận chuyển</th>
+                                                        <td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot class="total-line-table__footer">
+                                                    <tr class="total-line payment-due">
+                                                        <th>Tổng cộng</th>
+                                                        <td>
+                                                            @if($order->discount_code)
+                                                                <p>Đã áp dụng mã giảm giá: {{session('discount_code')}}</p>
+                                                                <p>Giá trị giảm: -{{number_format(session('discount_value'), 0, ',', '.') }}₫</p>
+                                                            @endif
+                                            
+                                                            <!-- Hiển thị thông báo nếu có lỗi mã giảm giá -->
+                                                            @if(session('discount_error'))
+                                                                <p style="color: red;">{{ session('discount_error') }}</p>
+                                                            @endif
+                                            
+                                                            <!-- Tổng cộng sau khi áp dụng giảm giá và phí vận chuyển -->
+                                                            <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            
 										</div>
 									</div>
 								</aside>

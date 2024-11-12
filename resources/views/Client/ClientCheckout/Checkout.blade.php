@@ -493,14 +493,6 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 									
 								</div>
 								<div class="col col--two">
-									
-
-									
-										
-										
-											
-										
-									
 									<section class="section" data-define="{shippingMethod: ''}">
 										<div class="section__header">
 											<div class="layout-flex">
@@ -516,25 +508,10 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 													<use href="#spinner"></use>
 												</svg>
 											</div>
-
-											
 											<div class="alert alert-retry alert--danger hide" data-bind-event-click="handleShippingMethodErrorRetry()" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && isLoadingShippingError">
 												<span data-bind="loadingShippingErrorMessage">Không thể load phí vận chuyển. Vui lòng thử lại</span> <i class="fa fa-refresh"></i>
 											</div>
-
-											
 											<div class="content-box" data-bind-show="!isLoadingShippingMethod && !isAddressSelecting && !isLoadingShippingError">
-
-												
-												
-													
-												
-												
-													
-												
-												
-												
-												
 												<div class="content-box__row" data-define-array="{shippingMethods: {name: '802787_0,40.000 VND', textPriceFinal: '40.000₫', textPriceOriginal: '', subtotalPriceWithShippingFee: '1.529.000₫'}}">
 													<div class="radio-wrapper">
 														<div class="radio__input">
@@ -555,15 +532,12 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 														</label>
 													</div>
 												</div>
-												
 											</div>
-											
 											<div class="alert alert--info hide" data-bind-show="!isLoadingShippingMethod && isAddressSelecting">
 												Vui lòng nhập thông tin giao hàng
 											</div>
 										</div>
 									</section>
-									
 									<section class="section">
 										<div class="section__header">
 											<div class="layout-flex">
@@ -573,44 +547,39 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 												</h2>
 											</div>
 										</div>
-										<div class="section__content">
-											
-											
+									<div class="section__content">	
 										<div class="content-box" data-define="{paymentMethod: undefined}">
-        <div class="content-box__row">
-            <div class="radio-wrapper">
-                <div class="radio__input">
-                    <input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
-                </div>
-                <label for="paymentMethod-780744" class="radio__label">
-                    <span class="radio__label__primary">Chuyển khoản</span>
-                    <span class="radio__label__accessory">
-                        <span class="radio__label__icon">
-                            <i class="payment-icon payment-icon--3"></i>
-                        </span>
-                    </span>
-                </label>
-            </div>
-        </div>
-        <div class="content-box__row">
-            <div class="radio-wrapper">
-                <div class="radio__input">
-                    <input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="cod" data-provider-id="4">
-                </div>
-                <label for="paymentMethod-780746" class="radio__label">
-                    <span class="radio__label__primary">Thanh toán khi nhận hàng</span>
-                    <span class="radio__label__accessory">
-                        <span class="radio__label__icon">
-                            <i class="payment-icon payment-icon--4"></i>
-                        </span>
-                    </span>
-                </label>
-            </div>
-        </div>
-    </div>
-
-
-											
+											<div class="content-box__row">
+												<div class="radio-wrapper">
+													<div class="radio__input">
+														<input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
+													</div>
+													<label for="paymentMethod-780744" class="radio__label">
+														<span class="radio__label__primary">Chuyển khoản</span>
+														<span class="radio__label__accessory">
+															<span class="radio__label__icon">
+																<i class="payment-icon payment-icon--3"></i>
+															</span>
+														</span>
+													</label>
+												</div>
+											</div>
+											<div class="content-box__row">
+												<div class="radio-wrapper">
+													<div class="radio__input">
+														<input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="cod" data-provider-id="4">
+													</div>
+													<label for="paymentMethod-780746" class="radio__label">
+														<span class="radio__label__primary">Thanh toán khi nhận hàng</span>
+														<span class="radio__label__accessory">
+															<span class="radio__label__icon">
+																<i class="payment-icon payment-icon--4"></i>
+															</span>
+														</span>
+													</label>
+												</div>
+										</div>
+									</div>	
 										</div>
 									</section>
 								</div>
@@ -636,7 +605,6 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 								<div class="alert alert--danger hide-on-desktop hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
 							</div>
 						</div>
-						
 					</main>
 					<aside class="sidebar">
 						<div class="sidebar__header">
@@ -686,10 +654,10 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 		<div class="edit_checkout">
 			<div class="fieldset">
 				<div class="field">
-					<div class="field__input-btn-wrapper">
+					{{-- <div class="field__input-btn-wrapper">
 						<div class="field__input-wrapper">
 							<label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
-							<input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
+							<input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off">
 						</div>
 						<button class="field__input-btn btn" type="button" disabled>
 							<span class="spinner-label">Áp dụng</span>
@@ -697,12 +665,47 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 								<use href="#spinner"></use>
 							</svg>
 						</button>
+					</div> --}}
+					<div class="field__input-btn-wrapper">
+						<div class="field__input-btn-wrapper">
+							<form action="{{ route('client-checkout.store') }}" method="POST">
+								@csrf
+								<div class="field__input-wrapper">
+									<input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off" oninput="toggleApplyButton()" placeholder="Nhập mã giảm giá">
+								</div>
+								<button class="field__input-btn btn" type="submit" id="applyDiscountButton" disabled>
+									<span class="spinner-label">Áp dụng</span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+										<use href="#spinner"></use>
+									</svg>
+								</button>
+							</form>
+						
+							<!-- Nút Xóa mã giảm giá -->
+							@if(session('discount_code'))
+								<form action="{{ route('client-checkout.removeDiscount') }}" method="POST" style="display: inline;">
+									@csrf
+									<button type="submit" class="btn btn-danger">Xoá mã giảm giá</button>
+								</form>
+							@endif
+						</div>
+						
+						<script>
+							function toggleApplyButton() {
+								const discountInput = document.getElementById('discount_code');
+								const applyButton = document.getElementById('applyDiscountButton');
+								
+								// Kích hoạt nút khi có mã giảm giá
+								applyButton.disabled = !discountInput.value.trim();
+							}
+						</script>
+										
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
+									{{-- <div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
 										<table class="total-line-table">
 											<caption class="visually-hidden">Tổng giá trị</caption>
 											<thead>
@@ -714,14 +717,14 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
 												@php
-		$totalPrice = 0;
-		foreach ($cart as $item) {
-			$price = $item->variation->price ?? $item->product->price;
-			$totalPrice += $price * $item->quantity;
-		}
-		$shippingFee = 40000; // Phí vận chuyển cố định
-		$finalTotal = $totalPrice + $shippingFee;
-	@endphp
+													$totalPrice = 0;
+													foreach ($cart as $item) {
+														$price = $item->variation->price ?? $item->product->price;
+														$totalPrice += $price * $item->quantity;
+													}
+													$shippingFee = 40000; // Phí vận chuyển cố định
+													$finalTotal = $totalPrice + $shippingFee;
+												@endphp
 													<th class="total-line__name">
 														Tạm tính
 													</th>
@@ -751,12 +754,74 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 														</span>
 													</th>
 													<td class="total-line__price">
+														@if(session('discount_code'))
+														<p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+														<p>Giá trị giảm: {{ number_format(session('discount_value'), 0, ',', '.') }} VND</p>
+													@endif
+													
+													@if(session('discount_error'))
+														<p style="color: red;">{{ session('discount_error') }}</p>
+													@endif
+													
+
+
 														<span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
 													</td>
 												</tr>
 											</tfoot>
 										</table>
+									</div> --}}
+									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" id="orderSummary">
+										<table class="total-line-table">
+											<caption class="visually-hidden">Tổng giá trị</caption>
+											<thead>
+												<tr>
+													<td>Mô tả</td>
+													<td>Giá tiền</td>
+												</tr>
+											</thead>
+											<tbody class="total-line-table__tbody">
+												<tr class="total-line total-line--subtotal">
+													@php
+														$totalPrice = 0;
+														foreach ($cart as $item) {
+															$price = $item->variation->price ?? $item->product->price;
+															$totalPrice += $price * $item->quantity;
+														}
+														$shippingFee = 40000;
+														$discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
+														$finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+													@endphp
+
+													<th>Tạm tính</th>
+													<td>{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+												</tr>
+												<tr class="total-line total-line--shipping-fee">
+													<th>Phí vận chuyển</th>
+													<td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
+												</tr>
+											</tbody>
+											<tfoot class="total-line-table__footer">
+												<tr class="total-line payment-due">
+													<th>Tổng cộng</th>
+													<td>
+														@if(session('discount_code'))
+															<p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+															<p>Giá trị giảm: -{{ number_format(session('discount_value'), 0, ',', '.') }}₫</p>
+														@endif
+										
+														@if(session('discount_error'))
+															<p style="color: red;">{{ session('discount_error') }}</p>
+														@endif
+										
+														<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+													</td>
+												</tr>
+											</tfoot>
+										</table>
+										
 									</div>
+									
 									<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
 										<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
 											<span class="spinner-label">ĐẶT HÀNG</span>

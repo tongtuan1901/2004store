@@ -344,6 +344,16 @@ Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->n
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
 
+Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// Route::post('/order/store', [AdminOrdersController::class, 'store'])->name('order.store');
+// routes/web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('client-checkout.removeDiscount');
+
+
+
+
+
 
 
 // route::get('admin-ui',function(){

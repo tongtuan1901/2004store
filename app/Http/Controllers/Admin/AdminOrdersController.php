@@ -92,7 +92,6 @@ use Illuminate\Support\Facades\Storage;
             $total += $product->price * $quantity;
         }
         $order->update(['total' => $total]);
-        session()->put('cart_total', $order->total);
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được tạo thành công!');
     }
@@ -101,11 +100,6 @@ use Illuminate\Support\Facades\Storage;
     public function show($id)
     {
         $order = AdminOrder::with('user','products.variations.size', 'products.variations.color')->findOrFail($id);
-        session()->put('cart_total', $order->total);
-        foreach ($order->products as $product) {
-            echo Storage::url($product->image_path);
-        }
-        // session()->put('cart_total', $order->total);
         return view('admin.orders.show', compact('order'));
     }
 
@@ -156,8 +150,6 @@ use Illuminate\Support\Facades\Storage;
     public function approve($id)
     {
         $order = AdminOrder::findOrFail($id);
-        // $order->status = 'Đã xử lý'; // Hoặc trạng thái bạn muốn
-        // $order->save();
         session()->put('cart_total', $order->total);
         return view('admin.orders.approve', compact('order'));
     }
