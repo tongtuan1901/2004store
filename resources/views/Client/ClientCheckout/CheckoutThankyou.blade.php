@@ -1319,17 +1319,18 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
                                                         <th>Tổng cộng</th>
                                                         <td>
                                                             @if($order->discount_code)
-                                                                <p>Đã áp dụng mã giảm giá: {{session('discount_code')}}</p>
-                                                                <p>Giá trị giảm: -{{number_format(session('discount_value'), 0, ',', '.') }}₫</p>
+                                                                <p>Đã áp dụng mã giảm giá: {{ $order->discount_code }}</p>
+                                                                <p>Giá trị giảm: -{{ number_format($order->discount_value, 0, ',', '.') }}₫</p>
                                                             @endif
-                                            
+
                                                             <!-- Hiển thị thông báo nếu có lỗi mã giảm giá -->
                                                             @if(session('discount_error'))
                                                                 <p style="color: red;">{{ session('discount_error') }}</p>
                                                             @endif
-                                            
+
                                                             <!-- Tổng cộng sau khi áp dụng giảm giá và phí vận chuyển -->
                                                             <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+
                                                         </td>
                                                     </tr>
                                                 </tfoot>

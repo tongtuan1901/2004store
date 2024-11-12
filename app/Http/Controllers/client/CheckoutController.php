@@ -325,6 +325,8 @@ if ($address) {
 // Lưu đơn hàng vào cơ sở dữ liệu
 $order->save();
 
+session()->forget('discount_code');
+session()->forget('discount_value');
 
 
     // Lưu các mục đơn hàng (Order Items)
