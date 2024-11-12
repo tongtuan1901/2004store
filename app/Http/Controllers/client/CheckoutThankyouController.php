@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class CheckoutThankyouController extends Controller
 {
     /**
-     * Display the thank you page after successful order.
+     * Display a listing of the resource.
      */
     public function index(Request $request)
     {
@@ -19,13 +19,25 @@ class CheckoutThankyouController extends Controller
 
         // Truy vấn cơ sở dữ liệu để lấy thông tin đơn hàng
         $order = AdminOrder::with(['orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color', 'orderItems.variation.image'])
-            ->findOrFail($orderId);
+                            ->findOrFail($orderId);
         $user = User::findOrFail($order->user_id);
 
-        // Phí vận chuyển và tổng cộng
+        // Tính toán lại phí vận chuyển và tổng cộng
         $shippingFee = 40000;
-        $finalTotal = $order->total;
+        $finalTotal = $order->total + $shippingFee;
 
-        return view('Client.ClientCheckout.Checkoutthankyou', compact('order', 'shippingFee', 'finalTotal', 'user'));
+        // Lấy số dư ví của người dùng
+        $walletBalance = $user->balance;
+
+        // Tính toán số tiền còn lại sau khi trừ đi số tiền từ ví và tiền ship
+        $amountPaidByWallet = 0;
+        if ($order->payment_method == 'wallet') {
+            $amountPaidByWallet = $finalTotal;
+            $finalTotal = 0; // Tổng cộng sẽ là 0 nếu thanh toán toàn bộ bằng ví
+        }
+
+        return view('Client.ClientCheckout.Checkoutthankyou', compact('order', 'shippingFee', 'finalTotal', 'user', 'walletBalance', 'amountPaidByWallet'));
     }
+
+
 }
