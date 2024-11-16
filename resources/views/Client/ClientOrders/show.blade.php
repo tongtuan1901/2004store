@@ -14,13 +14,27 @@
             <div class="card-body">
                 <h2 class="card-title">Thông tin đơn hàng</h2>
                 <p><strong>Mã đơn hàng:</strong> {{ $order->id }}</p>
-                <p><strong>Trạng thái:</strong> {{ $order->status }}</p>
                 <p><strong>Phương thức thanh toán:</strong> {{ $order->payment_method }}</p>
                 <p><strong>Tổng tiền:</strong> {{ number_format($order->total, 0, ',', '.') }} VND</p>
                 <p><strong>Mã giảm giá:</strong> {{ $order->discount_code ?? 'Không có' }}</p>
                 <p><strong>Giá trị giảm giá:</strong> {{ number_format($order->discount_value) ?? '0' }} VND</p>
                 <p><strong>Sau khi giảm giá:</strong> {{ number_format($order->total-$order->discount_value) ?? '0' }} VND</p>
-
+                <p><h2 class="card-title mt-4">Trạng thái:</h2> 
+                    <div class="order-status">
+                        <p><strong>Chờ xử lý:</strong> 
+                            {{ $order->pending_time ?? 'Chưa cập nhật' }}
+                        </p>
+                        <p><strong>Đang xử lý:</strong> 
+                            {{ $order->processing_time ?? 'Chưa cập nhật' }}
+                        </p>
+                        <p><strong>Đang giao hàng:</strong> 
+                            {{ $order->shipping_time ?? 'Chưa cập nhật' }}
+                        </p>
+                        <p><strong>Hoàn thành:</strong> 
+                            {{ $order->completed_time ?? 'Chưa cập nhật' }}
+                        </p>
+                    </div>
+                </p>
                 <h2 class="card-title mt-4">Thông tin giao hàng</h2>
                 <p><strong>Địa chỉ:</strong> {{ $order->address ?? 'Không có' }}</p>
             </div>
@@ -62,7 +76,7 @@
                                     <td>{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }} VND</td>
                                     @if($order->status == 'Hoàn thành') <!-- Kiểm tra trạng thái để hiển thị cột đánh giá -->
                                         <td>
-                                            <a href="{{ route('orders.review', ['order' => $order->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
+                                            <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
                                         </td>
                                     @endif
                                 </tr>

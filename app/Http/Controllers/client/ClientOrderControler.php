@@ -55,17 +55,46 @@ class ClientOrderControler extends Controller
     }
     public function show($userId, $orderId)
     {
-        $userOrder = User::where('id', $userId) // Lọc theo $userId
-        ->with([
-            'orders' => function ($query) use ($orderId) {
-                $query->where('id', $orderId);
-            },
-            'addresses',
-            'orders.orderItems.variation.size',
-            'orders.orderItems.variation.color'
-        ])
-        ->first();
-
-        return view('Client.ClientOrders.show', compact( 'userOrder'));
+        $userOrder = User::where('id', $userId)
+            ->with([
+                'orders' => function ($query) use ($orderId) {
+                    $query->where('id', $orderId)->where('status', '!=', 'Hủy');
+                },
+                'addresses',
+                'orders.orderItems.variation.size',
+                'orders.orderItems.variation.color',
+            ])
+            ->first();
+    
+        // Kiểm tra null cho $userOrder và đơn hàng
+        if (!$userOrder || $userOrder->orders->isEmpty()) {
+            return redirect()->back()->with('error', 'Không tìm thấy đơn hàng.');
+        }
+    
+        // Lấy đơn hàng cụ thể
+        $order = $userOrder->orders->first();
+    
+        // Kiểm tra trạng thái và cập nhật thời gian nếu cần
+        if ($order->status === 'Chờ xử lý' && !$order->pending_time) {
+            $order->pending_time = now();
+        }
+    
+        if ($order->status === 'Đang xử lý' && !$order->processing_time) {
+            $order->processing_time = now();
+        }
+    
+        if ($order->status === 'Đang giao hàng' && !$order->shipping_time) {
+            $order->shipping_time = now();
+        }
+    
+        if ($order->status === 'Hoàn thành' && !$order->completed_time) {
+            $order->completed_time = now();
+        }
+    
+        // Lưu lại đơn hàng
+        $order->save();
+    
+        return view('Client.ClientOrders.show', compact('userOrder'));
     }
+    
 }

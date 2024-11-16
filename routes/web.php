@@ -284,6 +284,7 @@ Route::resource('client-register', RegisterController::class);
 Route::get('client-password/reset', [ForgotPasswordController::class, 'showResetForm'])->name('client-password.reset');
 Route::post('client-password/email', [ForgotPasswordController::class, 'sendResetLink'])->name('client-password.email');
 Route::resource('client-products', ProductsController::class);
+
 // đổi mật khẩu khách hàng
 Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
 Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
@@ -393,11 +394,12 @@ Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscou
 Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('client-checkout.removeDiscount');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/orders/{order}/review', [ClientReviewsController::class, 'showReviewForm'])->name('orders.review');
-    Route::post('/orders/{order}/review', [ClientReviewsController::class, 'submitReview'])->name('orders.submitReview');
+    Route::get('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'showProductReviewForm'])
+    ->name('client.product.review.form');
+    Route::post('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'submitReview'])
+    ->name('client.product.submitReview');
 });
 Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
-
 
 
 
