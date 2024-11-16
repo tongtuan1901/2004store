@@ -50,7 +50,6 @@ class AdminOrder extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
     public function orderItems()
     {
         return $this->hasMany(OderItem::class, 'order_id', 'id');

@@ -39,6 +39,7 @@ class ClientOrderControler extends Controller
         $order->save();
     
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công và số tiền đã được hoàn vào ví.');
+
     }
     
     public function canceledOrders($id)

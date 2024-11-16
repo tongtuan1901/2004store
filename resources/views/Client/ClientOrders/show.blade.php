@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        
+
     @else
         <p class="alert alert-warning">Không có đơn hàng nào.</p>
     @endif
@@ -82,5 +82,6 @@
         <a href="{{ route('client.order', ['userId' => $userOrder->id]) }}" class="btn btn-secondary">Quay lại</a>
     </div>
 </div>
+
 
 @endsection
