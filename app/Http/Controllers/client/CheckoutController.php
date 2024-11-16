@@ -51,7 +51,7 @@ class CheckoutController extends Controller
         $orderInfo = "Thanh toán qua MoMo cho đơn hàng #" . $order->id;
         $orderId = time() . "-" . uniqid();
         $redirectUrl = route('client-thankyou.index', ['order_id' => $order->id]);
-        $ipnUrl = route('client-checkout');
+        $ipnUrl = route('client-checkout.index');
 
         $requestId = time();
         $requestType = "payWithATM";
@@ -239,7 +239,7 @@ class CheckoutController extends Controller
         $order->name_client = $nameClient;
         $order->phone_number = $phoneNumber;
         $order->payment_method = $request->paymentMethod; // Lưu phương thức thanh toán
-    
+
         // Check if payment method is wallet
         if ($request->paymentMethod == 'wallet') {
             $user = auth()->user();
@@ -250,7 +250,7 @@ class CheckoutController extends Controller
             $user->balance -= $finalTotal;
             $user->save();
         }
-    
+
         $order->save();
 
         // Lưu các sản phẩm trong đơn hàng
@@ -284,5 +284,5 @@ class CheckoutController extends Controller
         return redirect()->route('client-thankyou.index', ['order_id' => $order->id])
             ->with('success', 'Đơn hàng của bạn đã được đặt thành công!');
     }
-    
+
 }

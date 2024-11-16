@@ -580,17 +580,14 @@
         <!-- Chuyển khoản -->
         <div class="content-box__row">
             <div class="radio-wrapper">
-                <div class="radio__input">
-                    <input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
-                </div>
-                <label for="paymentMethod-780744" class="radio__label">
-                    <span class="radio__label__primary">Chuyển khoản</span>
-                    <span class="radio__label__accessory">
-                        <span class="radio__label__icon">
-                            <i class="payment-icon payment-icon--3"></i>
-                        </span>
-                    </span>
-                </label>
+                <input type="radio" id="momo_payment" name="paymentMethod" value="momo" checked>
+                <label for="momo_payment">Thanh toán MoMo</label><br>
+            </div>
+        </div>
+        <div class="content-box__row">
+            <div class="radio-wrapper">
+                <input type="radio" id="vnpay_payment" name="paymentMethod" value="vnpay">
+                <label for="vnpay_payment">Thanh toán VNPay</label><br>
             </div>
         </div>
 
@@ -643,20 +640,6 @@
                                         </section>
                                     </div>
                                 </article>
-                                <div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
-                                    <button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-                                        <span class="spinner-label">ĐẶT HÀNG</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                                            <use href="#spinner"></use>
-                                        </svg>
-                                    </button>
-
-                                    <a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
-                                        <i class="previous-link__arrow">❮</i>
-                                        <span class="previous-link__content">Quay về giỏ hàng</span>
-                                    </a>
-
-                                </div>
 
                                 <div id="common-alert" data-tg-refresh="refreshError">
 
