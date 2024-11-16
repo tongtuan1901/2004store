@@ -549,39 +549,7 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 										</div>
 									<div class="section__content">	
 										<div class="content-box" data-define="{paymentMethod: undefined}">
-<<<<<<< HEAD
-											<div class="content-box__row">
-												<div class="radio-wrapper">
-													<div class="radio__input">
-														<input name="paymentMethod" id="paymentMethod-780744" type="radio" class="input-radio" data-bind="paymentMethod" value="bank_transfer" data-provider-id="3" checked="">
-													</div>
-													<label for="paymentMethod-780744" class="radio__label">
-														<span class="radio__label__primary">Chuyển khoản</span>
-														<span class="radio__label__accessory">
-															<span class="radio__label__icon">
-																<i class="payment-icon payment-icon--3"></i>
-															</span>
-														</span>
-													</label>
-												</div>
-											</div>
-											<div class="content-box__row">
-												<div class="radio-wrapper">
-													<div class="radio__input">
-														<input name="paymentMethod" id="paymentMethod-780746" type="radio" class="input-radio" data-bind="paymentMethod" value="cod" data-provider-id="4">
-													</div>
-													<label for="paymentMethod-780746" class="radio__label">
-														<span class="radio__label__primary">Thanh toán khi nhận hàng</span>
-														<span class="radio__label__accessory">
-															<span class="radio__label__icon">
-																<i class="payment-icon payment-icon--4"></i>
-															</span>
-														</span>
-													</label>
-												</div>
-										</div>
-									</div>	
-=======
+
     <!-- Chuyển khoản -->
     <div class="content-box__row">
         <div class="radio-wrapper">
@@ -641,10 +609,6 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
     </div>
     @endif
 </div>
-
-
-											
->>>>>>> 6c25769062e94fbc1fda2211c6476ae1dbe54452
 										</div>
 									</section>
 								</div>

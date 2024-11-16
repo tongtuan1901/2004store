@@ -62,4 +62,9 @@ class AdminOrder extends Model
     public function discountCode(){
         return $this->belongsTo(Discount::class,'discount_id');
     }
+    public function address()
+{
+    return $this->belongsTo(Address::class, 'user_id', 'user_id');
+}
+
 }

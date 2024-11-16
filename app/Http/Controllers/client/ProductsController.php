@@ -11,9 +11,8 @@ class ProductsController extends Controller
 {
     public function show(string $id)
     {
-        $productDetail = AdminProducts::with(['category', 'brand', 'images', 'variations.size', 'variations.color', 'comments.user'])
+        $productDetail = AdminProducts::with(['category', 'brand', 'images', 'variations.size', 'variations.color', 'comments.user','reviews.user'])->latest()
             ->findOrFail($id);
-
         $relatedProducts = AdminProducts::where('category_id', $productDetail->category_id)
             ->where('id', '!=', $id)
             ->take(4)
@@ -36,4 +35,6 @@ class ProductsController extends Controller
 
         return redirect()->route('client-products.show', $productId)->with('success', 'Bình luận của bạn đã được gửi.');
     }
+
+
 }

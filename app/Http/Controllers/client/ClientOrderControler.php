@@ -41,17 +41,6 @@ class ClientOrderControler extends Controller
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công và số tiền đã được hoàn vào ví.');
     }
     
-    public function show($id)
-    {
-        $order = AdminOrder::with([
-            'orderItems.variation.size',
-            'orderItems.variation.color',
-            'user',
-            'address'
-        ])->findOrFail($id);
-
-        return view('Client.ClientOrders.show', compact('order'));
-    }
     public function canceledOrders($id)
     {
         // Lấy tất cả các đơn hàng có trạng thái "Hủy"
@@ -63,6 +52,19 @@ class ClientOrderControler extends Controller
         // Truyền dữ liệu vào view
         return view('Admin.orders.listDonHangHuy', compact('canceledOrders'));
     }
+    public function show($userId, $orderId)
+    {
+        $userOrder = User::where('id', $userId) // Lọc theo $userId
+        ->with([
+            'orders' => function ($query) use ($orderId) {
+                $query->where('id', $orderId);
+            },
+            'addresses',
+            'orders.orderItems.variation.size',
+            'orders.orderItems.variation.color'
+        ])
+        ->first();
 
-
+        return view('Client.ClientOrders.show', compact( 'userOrder'));
+    }
 }

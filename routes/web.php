@@ -79,12 +79,14 @@ use App\Http\Controllers\admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserStaffController;
 
 use App\Http\Controllers\Admin\AdminCategoriesController;
-
+use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use App\Http\Controllers\client\ClientReviewsController;
+use App\Http\Controllers\client\ContactController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -340,6 +342,11 @@ Route::resource('admin-orders', AdminOrdersController::class);
 // in pdf
 Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
+//contact
+Route::get('client/contact',[ContactController::class,'index'])->name('user.contact');
+Route::post('client/contact/',[ContactController::class,'store'])->name('user.store');
+Route::get('admin/contact',[AdminContactController::class,'index'])->name('admin.contact.index');
+
 
 
 
@@ -373,7 +380,7 @@ Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddr
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
-Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận
 Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
 
@@ -382,6 +389,15 @@ Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscou
 // Route::post('/order/store', [AdminOrdersController::class, 'store'])->name('order.store');
 // routes/web.php
 Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('client-checkout.removeDiscount');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders/{order}/review', [ClientReviewsController::class, 'showReviewForm'])->name('orders.review');
+    Route::post('/orders/{order}/review', [ClientReviewsController::class, 'submitReview'])->name('orders.submitReview');
+});
+Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
+
+
+
 
 
 

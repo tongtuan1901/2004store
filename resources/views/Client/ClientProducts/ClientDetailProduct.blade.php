@@ -340,7 +340,7 @@
 
         </div>
             <div class="comments-section mt-4">
-                <h5>Bình luận:</h5>
+                {{-- <h5>Bình luận:</h5>
                 @if($productDetail->comments)
     @foreach ($productDetail->comments as $comment)
         <div class="comment-item mb-3">
@@ -371,11 +371,90 @@
                 </div>
                 <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a>
                     để bình luận.</p>
-            @endauth
+            @endauth --}}
 
-
-
-
+            <div class="btn-group mb-3">
+                <button id="btn-comments" class="btn btn-primary">Bình luận</button>
+                <button id="btn-reviews" class="btn btn-secondary">Đánh giá</button>
+            </div>
+            
+            <div id="comments-section">
+                <h5>Bình luận:</h5>
+                @if($productDetail->comments)
+                    @foreach ($productDetail->comments as $comment)
+                        <div class="comment-item mb-3">
+                            <div class="comment-header">
+                                <strong>{{ $comment->user->name }}</strong>
+                                <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
+                            </div>
+                            <div class="comment-content">
+                                {{ $comment->content }}
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            
+                @auth
+                    <form method="POST" action="{{ route('client-products.comments.store', $productDetail->id) }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Viết bình luận của bạn:</label>
+                            <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                    </form>
+                @else
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Viết bình luận của bạn:</label>
+                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a> để bình luận.</p>
+                @endauth
+            </div>
+            
+            <div id="reviews-section" style="display: none;">
+                <h2>Đánh giá sản phẩm</h2>
+                <div id="reviews-section">
+                    @if($productDetail->reviews->isEmpty())
+                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                    @else
+                        @foreach ($productDetail->reviews as $review)
+                            <div class="review">
+                                <h4>{{ $review->user->name }}</h4>
+                                
+                                <!-- Hiển thị sao đánh giá -->
+                                <div class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $review->rating)
+                                            <i class="fa fa-star text-warning"></i> <!-- Sao vàng -->
+                                        @else
+                                            <i class="fa fa-star text-secondary"></i> <!-- Sao xám -->
+                                        @endif
+                                    @endfor
+                                </div>
+            
+                                <p>{{ $review->comment }}</p>
+                                <small>Đăng vào ngày {{ $review->created_at->format('d/m/Y') }}</small>
+                            </div>
+                            <hr>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            
+            
+            <script>
+                document.getElementById('btn-comments').addEventListener('click', function () {
+                    document.getElementById('comments-section').style.display = 'block';
+                    document.getElementById('reviews-section').style.display = 'none';
+                });
+            
+                document.getElementById('btn-reviews').addEventListener('click', function () {
+                    document.getElementById('comments-section').style.display = 'none';
+                    document.getElementById('reviews-section').style.display = 'block';
+                });
+            </script>
+            
 
         <div class="main-product-relate">
             <div class="section-title-all">
