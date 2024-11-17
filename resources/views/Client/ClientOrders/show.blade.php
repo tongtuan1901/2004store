@@ -11,35 +11,64 @@
 
         <!-- Thông tin khách hàng và địa chỉ -->
         <div class="card mb-4 shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h2 class="m-0">Thông tin chi tiết đơn hàng</h2>
+            </div>
             <div class="card-body">
-                <h2 class="card-title">Thông tin đơn hàng</h2>
-                <p><strong>Mã đơn hàng:</strong> {{ $order->id }}</p>
-                <p><strong>Phương thức thanh toán:</strong> {{ $order->payment_method }}</p>
-                <p><strong>Tổng tiền:</strong> {{ number_format($order->total, 0, ',', '.') }} VND</p>
-                <p><strong>Mã giảm giá:</strong> {{ $order->discount_code ?? 'Không có' }}</p>
-                <p><strong>Giá trị giảm giá:</strong> {{ number_format($order->discount_value) ?? '0' }} VND</p>
-                <p><strong>Sau khi giảm giá:</strong> {{ number_format($order->total-$order->discount_value) ?? '0' }} VND</p>
-                <p><h2 class="card-title mt-4">Trạng thái:</h2> 
-                    <div class="order-status">
-                        <p><strong>Chờ xử lý:</strong> 
-                            {{ $order->pending_time ?? 'Chưa cập nhật' }}
-                        </p>
-                        <p><strong>Đang xử lý:</strong> 
-                            {{ $order->processing_time ?? 'Chưa cập nhật' }}
-                        </p>
-                        <p><strong>Đang giao hàng:</strong> 
-                            {{ $order->shipping_time ?? 'Chưa cập nhật' }}
-                        </p>
-                        <p><strong>Hoàn thành:</strong> 
-                            {{ $order->completed_time ?? 'Chưa cập nhật' }}
-                        </p>
+                <div class="row text-center gy-4">
+                    <!-- Thông tin đơn hàng -->
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <h3 class="text-primary mb-3">Thông tin đơn hàng</h3>
+                            <p><strong>Mã đơn hàng:</strong> <span class="text-dark">{{ $order->id }}</span></p>
+                            <p><strong>Phương thức thanh toán:</strong> <span class="text-info">{{ $order->payment_method }}</span></p>
+                            <p><strong>Tổng tiền:</strong> 
+                                <span class="text-danger fw-bold">{{ number_format($order->total, 0, ',', '.') }} VND</span>
+                            </p>
+                            <p><strong>Mã giảm giá:</strong> 
+                                <span class="badge bg-success">{{ $order->discount_code ?? 'Không có' }}</span>
+                            </p>
+                            <p><strong>Giá trị giảm giá:</strong> 
+                                <span class="text-success">{{ number_format($order->discount_value ?? 0, 0, ',', '.') }} VND</span>
+                            </p>
+                            <p><strong>Sau khi giảm giá:</strong> 
+                                <span class="text-primary fw-bold fs-5">{{ number_format(($order->total - $order->discount_value) ?? 0, 0, ',', '.') }} VND</span>
+                            </p>
+                        </div>
                     </div>
-                </p>
-                <h2 class="card-title mt-4">Thông tin giao hàng</h2>
-                <p><strong>Địa chỉ:</strong> {{ $order->address ?? 'Không có' }}</p>
+        
+                    <!-- Trạng thái đơn hàng -->
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <h3 class="text-warning mb-3">Trạng thái đơn hàng</h3>
+                            <p><strong>Chờ xử lý:</strong> 
+                                <span class="text-muted">{{ $order->pending_time ?? 'Chưa cập nhật' }}</span>
+                            </p>
+                            <p><strong>Đang xử lý:</strong> 
+                                <span class="text-muted">{{ $order->processing_time ?? 'Chưa cập nhật' }}</span>
+                            </p>
+                            <p><strong>Đang giao hàng:</strong> 
+                                <span class="text-muted">{{ $order->shipping_time ?? 'Chưa cập nhật' }}</span>
+                            </p>
+                            <p><strong>Hoàn thành:</strong> 
+                                <span class="text-muted">{{ $order->completed_time ?? 'Chưa cập nhật' }}</span>
+                            </p>
+                        </div>
+                    </div>
+        
+                    <!-- Thông tin giao hàng -->
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <h3 class="text-success mb-3">Thông tin giao hàng</h3>
+                            <p><strong>Địa chỉ giao hàng:</strong> 
+                                <span class="text-muted">{{ $order->address ?? 'Không có' }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
+         
         <!-- Chi tiết sản phẩm trong đơn hàng -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
