@@ -46,11 +46,12 @@
                         <td class="text-center">{{ $orderIndex++ }}</td>
                         <td>{{ $order->name }}</td>
                         <td class="text-center">
-                            @if ($order->orderItems->first()->variation && $order->orderItems->first()->variation->image)
-                                <img src="{{ asset('storage/' . $order->orderItems->first()->variation->image->image_path) }}" alt="Variation Image" class="img-fluid rounded" style="max-width: 60px;">
-                            @else
-                                <span class="text-muted">Không có hình ảnh</span>
-                            @endif
+                        @if ($order->orderItems->isNotEmpty() && $order->orderItems->first()->variation && $order->orderItems->first()->variation->image)
+    <img src="{{ asset('storage/' . $order->orderItems->first()->variation->image->image_path) }}" alt="Variation Image" class="img-fluid rounded" style="max-width: 60px;">
+@else
+    <span class="text-muted">Không có hình ảnh</span>
+@endif
+
                         </td>
                         <td class="truncate">
                             @foreach ($productDetails as $product)
@@ -71,7 +72,7 @@
                                 <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="cancel-order-form">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-danger btn-sm rounded">Hủy đơn</button>
+                                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')" class="btn btn-danger btn-sm rounded">Hủy đơn</button>
                                 </form>
                             @endif
                             <a href="{{ route('client.orders.show', ['userId' => $userOrder->id, 'orderId' => $order->id]) }}" class="btn btn-primary btn-sm rounded">
