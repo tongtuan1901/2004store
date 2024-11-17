@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
         public function index()
         {
             $orders = AdminOrder::with(['user', 'orderItems.variation.size','orderItems.variation.color'])
-            ->where('status','Đang xử lý')->get();
+            ->where('status','!=','Hủy')->where('status','!=','Chờ xử lý')->get();
             // $orders = AdminOrder::all();
             // Trong phương thức index
             // dd($orders->toArray());die;

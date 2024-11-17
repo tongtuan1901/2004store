@@ -44,7 +44,6 @@ class ClientOrderControler extends Controller
     
     public function canceledOrders($id)
     {
-        // Lấy tất cả các đơn hàng có trạng thái "Hủy"
         $order = AdminOrder::findOrFail($id);
         $canceledOrders = AdminOrder::where('status', 'Hủy')
                                 ->with('orderItems.product', 'orderItems.variation') // Eager load các liên kết cần thiết
