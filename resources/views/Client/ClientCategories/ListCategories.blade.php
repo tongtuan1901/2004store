@@ -233,6 +233,18 @@
         });
     });
 });
+document.getElementById("remove-all-filters").addEventListener("click", function(event) {
+    event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
+    
+    // Tắt tất cả các checkbox
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+    
+    // Gửi lại form với các bộ lọc đã bị xóa
+    document.querySelector("form").submit();  // Submit form sau khi bỏ tất cả bộ lọc
+});
 
     // Xóa tất cả bộ lọc
     // document.getElementById('remove-all-filters').addEventListener('click', function () {
