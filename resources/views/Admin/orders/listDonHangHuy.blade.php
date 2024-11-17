@@ -1,3 +1,4 @@
+use Illuminate\Support\Facades\Auth;
 @extends('Admin.layouts.master')
 
 @section('contentAdmin')
@@ -39,10 +40,15 @@
                                                     </td>
                                                     <td>{{$user->name}}</td>
                                                     <td>
+
                                                         @foreach ($order->orderItems as $item)
                                                             <p>{{ $item->product->name }}</p>
                                                         
-                                                        @endforeach
+
+                                                    @foreach ($order->orderItems as $item)
+    <p>{{ $item->product ? $item->product->name : 'Product Name Not Available' }}</p>
+@endforeach
+
                                                     </td>
                                                     
                                                     <td>

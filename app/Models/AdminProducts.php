@@ -38,12 +38,15 @@ protected  $table = "products";
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
-
+    public function comments() 
+    {
+         return $this->hasMany(Comment::class, 'product_id');
+     }
 
     // Relationship with AdminOrder
     public function orders()
     {
-        return $this->belongsToMany(AdminOrder::class, 'order_items', 'product_id', 'order_id')->withPivot('quantity');
+        return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
     }
 
     // Relationship with AdminCoupons

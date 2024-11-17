@@ -61,7 +61,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 
 
 use App\Http\Controllers\Admin\AdminCouponsController;
-use App\Http\Controllers\Admin1\AdminBannersController;
+use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminCommentsController; 
@@ -120,6 +120,10 @@ Route::prefix('admin')->group(function () {
 
  // Banner
  Route::resource('admin-banners', AdminBannersController::class);
+
+ Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
+
+Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
@@ -235,6 +239,23 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
 
     Route::resource('admin-card', AdminCardController::class);
     Route::get('/admin/carts', [AdminCardController::class, 'index'])->name('admin.carts.index');
+
+    Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
+Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
+Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
+Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
+Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
+Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
+// Route để hủy đơn hàng
+Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.orders.canceled');
+Route::delete('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('admin.orders.cancel');
+//route cho đơn hàng đã hủy
+Route::get('admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin-orders.cancelled');
 });
 
 
@@ -282,6 +303,7 @@ Route::post('/checkout/momo', [CheckoutController::class, 'payWithMomo'])->name(
 Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->name('payment.momo.return');
 
 
+
 // Route::resource('client-checkout', CheckoutController::class);
 
 Route::resource('client-thankyou', CheckoutThankyouController::class);
@@ -327,14 +349,12 @@ Route::delete('/orders/cancel/{id}', [ClientOrderControler::class, 'cancelOrder'
 
 
 
-Route::resource('admin-products', AdminProductsController::class);
+// Route::resource('admin-products', AdminProductsController::class);
 
 
-Route::resource('admin-banners', AdminBannersController::class);
+// Route::resource('admin-banners', AdminBannersController::class);
 
-Route::get('Admin/Banners/trash', [AdminBannersController::class, 'trash']);
 
-Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete']);
 
 Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
 Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
@@ -348,14 +368,7 @@ route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
 Route::resource('admin-home', HomeAdminController::class);
 
-Route::get('user/{userId}/addresses', [AddressController::class, 'listAddresses'])->name('address.list');
-Route::post('user/{userId}/address', [AddressController::class, 'storeAddress'])->name('address.store');
-Route::get('user/{userId}/address/form', [AddressController::class, 'showAddressForm'])->name('address.form');
-Route::get('user/{userId}/address/create', [AddressController::class,'CreateAddress'])->name('address.create');
-Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
-Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
-Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
-Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
+
 
 
 Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
@@ -364,6 +377,8 @@ Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddr
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+//bình luận
+Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
 
 
 
@@ -477,6 +492,16 @@ Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrd
 Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'listDonHangDaHuy'])->name('admin.orders.canceled');
 Route::delete('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('admin.orders.cancel');
+
+//lọc
+Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
+Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
+
+
+
+
+
+
 
 
 

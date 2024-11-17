@@ -331,7 +331,7 @@
                             </div>
                         </li>
 
-                            <li><a class='collapsed' href='invoice.html'><span class="menu-bar__text">
+                            <li><a class='collapsed' href='{{route('admin-banners.index')}}'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="19.434" height="19.432" viewBox="0 0 19.434 19.432">
@@ -353,9 +353,9 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <span class="menu-bar__name">Invoice</span></span></a></span>
+                                        <span class="menu-bar__name">Banners</span></span></a></span>
                             </li>
-                            <li><a class='collapsed' href='profile-info.html'><span class="menu-bar__text">
+                            <!-- <li><a class='collapsed' href='profile-info.html'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="22.103" height="22.368" viewBox="0 0 22.103 22.368">
@@ -372,8 +372,8 @@
                                             </svg>
                                         </span>
                                         <span class="menu-bar__name">Settings</span></span></a></span>
-                            </li>
-                            <li><a class='collapsed' href='chat-messages.html'><span class="menu-bar__text">
+                            </li> -->
+                            <!-- <li><a class='collapsed' href='chat-messages.html'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="22.029" height="22.368" viewBox="0 0 22.029 22.368">
@@ -394,9 +394,9 @@
                                             </svg>
                                         </span>
                                         <span class="menu-bar__name">Message</span></span></a></span>
-                            </li>
+                            </li> -->
 
-                            <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
+                            <!-- <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#menu-item__9"><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -416,8 +416,8 @@
                                         </span>
                                         <span class="menu-bar__name">Pages</span></span><span
                                         class="sherah__toggle"></span></a></span>
-                                <!-- Dropdown Menu -->
-                                <div class="collapse sherah__dropdown" id="menu-item__9"
+                                Dropdown Menu -->
+                                <!-- <div class="collapse sherah__dropdown" id="menu-item__9"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='notifications.html'><span class="menu-bar__text"><span
@@ -429,8 +429,8 @@
                                                         class="menu-bar__name">Faqs</span></span></a></li>
                                     </ul>
                                 </div>
-                            </li>
-                            <li><a class='collapsed' href='languages.html'><span class="menu-bar__text">
+                            </li> -->
+                            <!-- <li><a class='collapsed' href='languages.html'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="20.929" height="20.929" viewBox="0 0 20.929 20.929">
@@ -447,7 +447,7 @@
                                             </svg>
                                         </span>
                                         <span class="menu-bar__name">Language</span></span></a></span>
-                            </li>
+                            </li> -->
                             <li><a class='collapsed' href='{{ route('user-staff.index') }}'><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"

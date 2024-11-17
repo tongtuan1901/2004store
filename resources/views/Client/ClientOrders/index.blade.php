@@ -7,6 +7,7 @@
     $hasOrders = $userOrder->contains(function($user) {
         return $user->orders->isNotEmpty();
     });
+    $orderIndex = 1;
 @endphp
 
 @if (!$hasOrders)
@@ -15,7 +16,11 @@
     <table class="styled-table">
         <thead>
             <tr>
+
                 <th>Id</th>
+
+                <th class="stt-column">STT</th> <!-- Add a class to the STT column -->
+
                 <th>Tài khoản</th>
                 <th>Người nhận</th>
                 <th>Hình ảnh</th>
@@ -46,7 +51,11 @@
                             @endif
                         @endforeach
                         <tr>
+
                             <td>{{ $order->id }}</td>
+
+                        <td class="stt-column">{{ $orderIndex++ }}</td> <!-- Apply class to this cell -->
+
                             <td>{{ $user->name }}</td>
                             <td>{{ $order->name }}</td>
                             <td class="img-cell">
@@ -79,26 +88,40 @@
                                         <button class="btn-cancel">Hủy đơn</button>
                                     </form>
                                 @else
+
                                     {{-- <span>Đơn hàng đã được hủy</span> <!-- Hiển thị thông báo đã hủy khi đơn hàng đã hủy --> --}}
+
+                                    
+
                                 @endif
                             </td>
                         </tr>
                     @endforeach
                 @else
+
                     <tr>
                         <td colspan="7" class="no-orders-cell">Không có đơn hàng</td>
                     </tr>
+
                 @endif
             @endforeach
         </tbody>
     </table>
 @endif
 
+
 @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
+
+<!-- @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif -->
+
 
 <style>
     /* Style cho bảng và nút hủy */
@@ -187,6 +210,14 @@
         padding: 10px;
         margin-top: 20px;
     }
+
+
+
+    /* Custom style to make STT column smaller */
+    .stt-column {
+        width: 40px; /* Adjust the width to make it smaller */
+    }
+
 </style>
 
 @endsection

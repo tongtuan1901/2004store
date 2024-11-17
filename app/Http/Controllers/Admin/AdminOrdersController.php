@@ -213,7 +213,6 @@ use Illuminate\Support\Facades\Storage;
     }
 
 
-
     // public function listDonHangDaHuy()
     // {
     //     // Lấy tất cả đơn hàng có trạng thái 'Hủy'
@@ -223,7 +222,9 @@ use Illuminate\Support\Facades\Storage;
     
     //     // Truyền dữ liệu vào view
     //     return view('Admin.orders.listDonHangHuy', compact('donHangDaHuy'));
-    // }
+    // 
+   
+
 
     public function listAdrress()
     {
@@ -238,6 +239,7 @@ use Illuminate\Support\Facades\Storage;
 
         return view('Admin.orders.showAddress',compact('user','addresses'));
     }
+
     // public function canceledOrders($id)
     // {
 
@@ -251,6 +253,8 @@ use Illuminate\Support\Facades\Storage;
     //                             $order->save();
     //     // Truyền dữ liệu vào view
     //     return redirect()->route('Admin.orders.listDonHangHuy')->with('success', 'Đơn hàng đã được hủy thành công.');
+
+
     public function cancelOrder($orderId)
     {
         $order = AdminOrder::findOrFail($orderId);
