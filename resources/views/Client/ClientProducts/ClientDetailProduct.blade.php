@@ -188,13 +188,7 @@
                     <span>{{ $productDetail->category ? $productDetail->category->name : 'Không có' }}</span>
                 </div>
             </div>
-            {{-- <div class="main-product-short">
-                            <div class="main-product-short-data">[MATERIAL]겉감: Polyester 73%, Rayon 21%, Span 6%- 탄탄하고 텐션이
-                                높은 폴리소재- 가슴부분의 트위스트 디테일- 타이트핏- 글리터 스트링은 탈부착 가능[SIZE GUIDE]Size(cm)&nbsp;&nbsp;
-                                &nbsp;FREE어깨단면&nbsp;&nbsp; &nbsp;36가슴단면&nbsp;&nbsp; &nbsp;39밑단단면&nbsp;&nbsp;
-                                &nbsp;39.5소매기장&nbsp;&nbsp; &nbsp;16소매부리단면&nbsp;&nbsp;...</div>
-                            <a hidden href="#" aria-label="Đọc tiếp" title="Đọc tiếp">Đọc tiếp</a>
-                        </div> --}}
+
             <div class="main-product-swatch">
                 <div id="product-base-price" class="main-product-price">
                     <div class="main-product-price-wrap">
@@ -205,7 +199,7 @@
                         <span class="main-product-price-discount">Tiết kiệm 11%</span>
                     </div>
                 </div>
-                <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
+                {{-- <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
                 <div class="product-sw-line">
                     <div class="product-sw-select">
                         <div class="product-sw-title">Color</div>
@@ -229,65 +223,90 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="product-sw-line">
-                    <div class="product-sw-select">
-                        <div class="product-sw-title">Size</div>
-                        <div class="variation mb-3">
-                            <div class="variation-content d-flex">
-                                @php $uniqueSizes = []; @endphp
-                                @foreach ($productDetail->variations as $variation)
-                                    @if (!in_array($variation->size->size, $uniqueSizes))
-                                        <span class="product-sw-select-item">
-                                            <input type="radio" data-size="{{ $variation->size->size }}"
-                                                name="product-choose-size" value="{{ $variation->size->size }}"
-                                                class="trigger-option-sw d-none"
-                                                id="product-choose-size-{{ $variation->size->id }}">
-                                            <label for="product-choose-size-{{ $variation->size->id }}"
-                                                class="product-sw-select-item-span">{{ $variation->size->size }}</label>
-                                        </span>
-                                        @php $uniqueSizes[] = $variation->size->size; @endphp
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="variation-quantity" style="margin-top: 10px; "></div>
-
-
-
-            </div>
-
-
-            <div class="main-product-quantity shop-quantity-wrap">
-                <label>Số lượng</label>
-                <div class="shop-quantity">
-                    <button type="button" data-type="shop-quantity-minus" title="Giảm"
-                        class="quantity-btn">-</button>
-                    <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-                    <button type="button" data-type="shop-quantity-plus" title="Tăng" class="quantity-btn">+</button>
-                </div>
-                <button class="buy-now-btn">Mua ngay</button>
-            </div>
-
-            <div class="main-product-freeship">
-                <div class="shop-freeship" data-freeship-price="50000000">
-                    <div class="shop-freeship-bar">
-                        <div class="shop-freeship-bar-main"><span></span></div>
-                    </div>
-                    <div class="shop-freeship-note">
-                        Mua thêm <span>50.000.000₫</span> để được miễn phí giao hàng trên toàn quốc
-                    </div>
+                </div> --}}
+                <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
+    
+    <!-- Color selection -->
+    <div class="product-sw-line">
+        <div class="product-sw-select">
+            <div class="product-sw-title">Color</div>
+            <div class="variation mb-3">
+                <div class="variation-content d-flex">
+                    @php $uniqueColors = []; @endphp
+                    @foreach ($productDetail->variations as $variation)
+                        @if (!in_array($variation->color->color, $uniqueColors))
+                            <span class="product-sw-select-item">
+                                <input type="radio" 
+                                    name="color" 
+                                    value="{{ $variation->color->id }}"
+                                    data-color="{{ $variation->color->color }}"
+                                    data-image="{{ asset('storage/' . $variation->image->image_path) }}"
+                                    data-price="{{ $variation->price }}"
+                                    class="trigger-option-sw d-none"
+                                    id="product-choose-color-{{ $variation->color->id }}" required>
+                                <label for="product-choose-color-{{ $variation->color->id }}"
+                                    class="product-sw-select-item-span">{{ $variation->color->color }}</label>
+                            </span>
+                            @php $uniqueColors[] = $variation->color->color; @endphp
+                        @endif
+                    @endforeach
                 </div>
             </div>
-            <div class="main-product-cta">
-                <button type="button" data-type="main-product-add" title="Thêm vào giỏ">
-                    <strong>Thêm vào giỏ</strong>
-                    <span>Chọn ngay sản phẩm bạn yêu thích</span>
-                </button>
+        </div>
+    </div>
+
+    <!-- Size selection -->
+    <div class="product-sw-line">
+        <div class="product-sw-select">
+            <div class="product-sw-title">Size</div>
+            <div class="variation mb-3">
+                <div class="variation-content d-flex">
+                    @php $uniqueSizes = []; @endphp
+                    @foreach ($productDetail->variations as $variation)
+                        @if (!in_array($variation->size->size, $uniqueSizes))
+                            <span class="product-sw-select-item">
+                                <input type="radio" 
+                                    name="size" 
+                                    value="{{ $variation->size->id }}"
+                                    data-size="{{ $variation->size->size }}"
+                                    class="trigger-option-sw d-none"
+                                    id="product-choose-size-{{ $variation->size->id }}" required>
+                                <label for="product-choose-size-{{ $variation->size->id }}"
+                                    class="product-sw-select-item-span">{{ $variation->size->size }}</label>
+                            </span>
+                            @php $uniqueSizes[] = $variation->size->size; @endphp
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="main-product-quantity shop-quantity-wrap">
+        <label>Số lượng</label>
+        <div class="shop-quantity">
+            <button type="button" data-type="shop-quantity-minus" class="quantity-btn">-</button>
+            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+            <button type="button" data-type="shop-quantity-plus" class="quantity-btn">+</button>
+        </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="main-product-cta">
+        <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
+            <strong>Thêm vào giỏ</strong>
+            <span>Chọn ngay sản phẩm bạn yêu thích</span>
+        </button>
+        <button type="submit" name="action" value="buyNow" class="buy-now-btn">
+            <strong>Mua ngay</strong>
+            <span>Mua ngay sản phẩm này</span>
+        </button>
+    </div>
+</form>
+                <!-- HTML remains the same -->
                 <button type="button" data-type="main-product-send-help" title="Tư vấn">
                     <strong>Tư vấn</strong>
                     <span>Tư vấn kích cỡ phù hợp</span>
@@ -339,43 +358,6 @@
             </div>
 
         </div>
-            <div class="comments-section mt-4">
-                <h5>Bình luận:</h5>
-                @if($productDetail->comments)
-    @foreach ($productDetail->comments as $comment)
-        <div class="comment-item mb-3">
-            <div class="comment-header">
-                <strong>{{ $comment->user->name }}</strong>
-                <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
-            </div>
-            <div class="comment-content">
-                {{ $comment->content }}
-            </div>
-        </div>
-    @endforeach
-@endif
-            </div>
-            @auth
-                <form method="POST" action="{{ route('client-products.comments.store', $productDetail->id) }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Viết bình luận của bạn:</label>
-                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Gửi bình luận</button>
-                </form>
-            @else
-                <div class="mb-3">
-                    <label for="content" class="form-label">Viết bình luận của bạn:</label>
-                    <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
-                </div>
-                <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a>
-                    để bình luận.</p>
-            @endauth
-
-
-
-
 
         <div class="main-product-relate">
             <div class="section-title-all">
@@ -385,42 +367,102 @@
 
                 <div class="product-item" data-id="120912676" data-handle="ao-phong-co-chu-v-logo-rosy">
                     <div class="product-item-wrap">
-                        <div class="related-products">
-                            @foreach ($relatedProducts as $relatedProduct)
-                                <div class="product-item-detail">
-                                    <div class="product-item-top-image">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            class="product-item-top-image-showcase">
-                                            <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
-                                                alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}'
-                                                width="300" height="480" loading="lazy" decoding="async">
+                        <div class="product-item-top">
+                            <div class="product-item-top-image">
+                                <a href="ao-phong-co-chu-v-logo-rosy.html" class="product-item-top-image-showcase">
+                                    <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                        alt='' title='' width="480" height="480" loading="lazy"
+                                        decoding="async">
+                                </a>
+                            </div>
+                            <div class="product-item-label-sale"><span>-33%</span></div>
+                            <button type="button" title="Yêu thích" class="shop-wishlist-button-add"
+                                data-type="shop-wishlist-button-add">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128" x="0" y="0"
+                                    viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" xml:space="preserve"
+                                    class="">
+                                    <path
+                                        d="M359.511,37.984c-38.907,0-75.282,14.653-103.511,41.478c-28.229-26.825-64.605-41.478-103.511-41.478 C68.406,37.984,0,108.033,0,194.135c0,49.918,42.543,112.126,126.449,184.895c61.346,53.204,123.555,93.023,124.176,93.419 c1.639,1.045,3.507,1.567,5.375,1.567c1.868,0,3.736-0.523,5.376-1.568c0.621-0.396,62.83-40.215,124.176-93.419 C469.457,306.26,512,244.052,512,194.135C512,108.033,443.594,37.984,359.511,37.984z M372.62,363.771 c-49.885,43.284-100.379,77.567-116.62,88.301c-16.216-10.715-66.578-44.903-116.448-88.153C61.34,296.089,20,237.378,20,194.135 C20,119.06,79.435,57.984,152.489,57.984c36.726,0,70.877,15.094,96.161,42.501c1.893,2.052,4.558,3.219,7.35,3.219 s5.457-1.167,7.35-3.219c25.285-27.406,59.435-42.5,96.161-42.5C432.565,57.984,492,119.06,492,194.135 C492,237.344,450.719,296.003,372.62,363.771z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path
+                                        d="M347.379,93.307l-0.376,0.065c-5.438,0.966-9.063,6.157-8.097,11.595c0.861,4.846,5.078,8.252,9.834,8.252 c0.581,0,1.17-0.051,1.76-0.156l0.199-0.034c5.446-0.917,9.118-6.075,8.201-11.521C357.983,96.06,352.82,92.393,347.379,93.307z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path
+                                        d="M439.056,131.382c-12.278-16.867-29.718-29.43-49.106-35.375c-5.281-1.621-10.873,1.349-12.492,6.629 c-1.619,5.28,1.349,10.873,6.629,12.492c31.959,9.8,54.279,41.078,54.279,76.063c0,5.523,4.477,10,10,10s10-4.477,9.999-10.001 C458.365,169.416,451.688,148.735,439.056,131.382z"
+                                        fill="#000000" data-original="#000000"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0"
+                                    viewBox="0 0 256 256" style="enable-background:new 0 0 512 512" xml:space="preserve"
+                                    class="hovered-paths">
+                                    <g>
+                                        <path fill="#fc4f4f"
+                                            d="M198 32.5c-3.4-1.1-7-1.8-10.7-2.2-47.2-4.8-59.3 40.2-59.3 40.2s-12.1-45-59.2-40.2C25 34.7 2 89.9 30.7 136.3c8.2 13.3 21 27.6 34.7 40.9 27.5 26.7 58.5 48.9 62.6 48.9 6.2 0 72.5-49.7 97.3-89.7C251.6 93.9 234.6 44 198 32.5z"
+                                            opacity="1" data-original="#fc4f4f" class="hovered-path">
+                                        </path>
+                                        <path
+                                            d="M225.3 136.3C251.6 93.9 234.6 44 198 32.5c0 0 36.5 35.2 15.5 71.4s-91.2 81.2-101.1 82.8c-8.2 1.3-29-.6-47-9.4 27.5 26.7 58.5 48.9 62.6 48.9 6.2-.1 72.5-49.8 97.3-89.9z"
+                                            opacity="1" fill="#00000015" data-original="#00000015" class="">
+                                        </path>
+                                        <ellipse cx="50.6" cy="65.5" fill="#fff" opacity=".3"
+                                            rx="24.9" ry="12.6" transform="rotate(-49.83 50.593 65.492)">
+                                        </ellipse>
+                                    </g>
+                                </svg>
+                            </button>
+                            <div class="product-item-actions">
 
-                                        </a>
-                                    </div>
-                                    <div class="product-item-detail-flex">
-                                        <a class="product-item-detail-vendor"
-                                            href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->brand->name }}"
-                                            aria-label="{{ $relatedProduct->brand->name }}">
-                                            <span>{{ $relatedProduct->brand->name }}</span>
-                                        </a>
-                                        <div class="sapo-product-reviews-badge" data-id="{{ $relatedProduct->id }}">
-                                        </div>
-                                    </div>
-                                    <h3 class="product-item-detail-title">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->name }}"
-                                            aria-label="{{ $relatedProduct->name }}">
-                                            {{ $relatedProduct->name }}
-                                        </a>
-                                    </h3>
-                                    <div class="product-item-detail-price">
-                                        <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
-                                        <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
-                                    </div>
 
+                                <button type="button" title="Xem nhanh" class="shop-quickview-button"
+                                    data-type="shop-quickview-button">Thêm vào giỏ</button>
+                                <button type="button" title="Xem nhanh" class="shop-quickview-button"
+                                    data-type="shop-quickview-button">Xem nhanh</button>
+                            </div>
+                        </div>
+                        <div class="product-item-detail">
+                            <div class="product-item-detail-flex">
+                                <a class="product-item-detail-vendor" href="ao-phong-co-chu-v-logo-rosy.html"
+                                    title="ROSY" aria-label="ROSY"><span>ROSY</span></a>
+                                <div class="sapo-product-reviews-badge" data-id="36389531"></div>
+                            </div>
+                            <h3 class="product-item-detail-title"><a href="ao-phong-co-chu-v-logo-rosy.html"
+                                    title="&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY"
+                                    aria-label="&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY">ÁO PHÔNG CỔ CHỮ V
+                                    LOGO
+                                    ROSY</a></h3>
+                            <div class="product-item-detail-price">
+
+                                <strong>1.079.000₫</strong>
+                                <del>1.599.000₫</del>
+
+                            </div>
+                            <div class="product-item-detail-gallery-items">
+                                <div class="product-item-detail-gallery-item active">
+                                    <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                        width="50" height="50" loading="lazy" decoding="async"
+                                        alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
+                                        title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
                                 </div>
-                            @endforeach
+                                <div class="product-item-detail-gallery-item">
+                                    <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                        width="50" height="50" loading="lazy" decoding="async"
+                                        alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
+                                        title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
+                                </div>
+                                <div class="product-item-detail-gallery-item" data-image="">
+                                    <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                        width="50" height="50" loading="lazy" decoding="async"
+                                        alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
+                                        title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
+                                </div>
+                                <div class="product-item-detail-gallery-item">
+                                    <img src="{{ asset('assets/bizweb.dktcdn.net/100/520/624/products/65536d88f9c870da7da2d3fa9e38c7c40c74.jpg') }}"
+                                        width="50" height="50" loading="lazy" decoding="async"
+                                        alt='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'
+                                        title='&#193;O PH&#212;NG CỔ CHỮ V LOGO ROSY'>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -476,15 +518,26 @@
             var input = document.querySelector('input[name="quantity"]');
             input.value = parseInt(input.value) + 1;
         });
-        document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
-            input.addEventListener('change', function() {
-                if (this.checked) {
-                    var newImage = this.getAttribute('data-image');
-                    document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src =
-                        newImage;
-                }
-            });
-        });
+       // Cập nhật hình ảnh khi chọn màu
+document.querySelectorAll('input[name="color"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+        if (this.checked) {
+            var newImage = this.getAttribute('data-image');
+            document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src = newImage;
+        }
+    });
+});
+
+// Kiểm tra form trước khi submit
+document.getElementById('cart-form').addEventListener('submit', function(e) {
+    var color = document.querySelector('input[name="color"]:checked');
+    var size = document.querySelector('input[name="size"]:checked');
+    
+    if (!color || !size) {
+        e.preventDefault();
+        alert('Vui lòng chọn màu sắc và kích thước');
+    }
+});
         document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
             input.addEventListener('change', updatePrice);
         });
@@ -701,61 +754,6 @@
             /* Đổi màu biểu tượng nếu cần */
         }
 
-        /* CSS cho form bình luận và hiển thị bình luận */
-        .form-label {
-            font-weight: bold;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        button.btn-primary {
-            background-color: #007bff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button.btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .comments-section {
-            margin-top: 20px;
-        }
-
-        .comments-section h5 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .comment-item {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-        }
-
-        .comment-header {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-        }
-
-        .comment-content {
-            font-size: 16px;
-            color: #333;
-        }
+        /* Đảm bảo rằng không có khoảng cách giữa các phần tử carousel */
     </style>
 @endsection

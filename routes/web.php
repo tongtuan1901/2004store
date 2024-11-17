@@ -280,6 +280,15 @@ Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword
 });
 
 
+// Xóa dữ liệu mua ngay khi thoát ra
+Route::post('/clear-buy-now', function() {
+    session()->forget('buyNow');
+    return response()->json(['success' => true]);
+})->name('clear-buy-now');
+
+Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
+Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
 // dang nhap admin và nhân viên
 
 // Route cho view client

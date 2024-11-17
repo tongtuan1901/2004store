@@ -687,25 +687,54 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($cart as $item)
-				<tr class="product">
-				
-					<td class="product__image">
-						<div class="product-thumbnail">
-							<div class="product-thumbnail__wrapper">
-								<img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
-								<span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
-							</div>
-						</div>
-					</td>
-					<th class="product__description">
-						<span class="product__description__name">{{ $item->product->name }}</span>
-						<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
-					</th>
-					<td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>
-					<td class="product__price">{{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫</td>
-				</tr>
-			@endforeach
+		@php
+    // Kiểm tra xem có phải là mua ngay không
+    $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
+@endphp
+
+@foreach ($cartItems as $item)
+    <tr class="product">
+        <td class="product__image">
+            <div class="product-thumbnail">
+                <div class="product-thumbnail__wrapper">
+				@if(session()->has('buyNow'))
+    <img src="{{ Storage::url($item['image']) }}" alt="" class="product-thumbnail__image">
+@else
+    @if($item->variation && $item->variation->image)
+        <img src="{{ Storage::url($item->variation->image->image_path) }}" alt="" class="product-thumbnail__image">
+    @endif
+@endif
+                </div>
+            </div>
+        </td>
+        <th class="product__description">
+            @if(session()->has('buyNow'))
+                <span class="product__description__name">{{ $item['name'] }}</span>
+                <span class="product__description__property">
+                    {{ App\Models\Color::find($item['color'])->color ?? '' }} / 
+                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
+                </span>
+            @else
+                <span class="product__description__name">{{ $item->product->name }}</span>
+                <span class="product__description__property">
+                    {{ $item->variation->color->color ?? '' }} / 
+                    {{ $item->variation->size->size ?? '' }}
+                </span>
+            @endif
+        </th>
+        <td class="product__quantity">
+            <em>Số lượng:</em> 
+            {{ session()->has('buyNow') ? $item['quantity'] : $item->quantity }}
+        </td>
+        <td class="product__price">
+            @if(session()->has('buyNow'))
+                {{ number_format($item['price'], 0, ',', '.') }}₫
+            @else
+                {{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫
+            @endif
+        </td>
+    </tr>
+@endforeach
 		</tbody>
 	</table>
 									</div>
@@ -742,15 +771,19 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
 												@php
-		$totalPrice = 0;
-		foreach ($cart as $item) {
-			$price = $item->variation->price ?? $item->product->price;
-			$totalPrice += $price * $item->quantity;
-		}
-		$shippingFee = 40000; // Phí vận chuyển cố định
-		$finalTotal = $totalPrice + $shippingFee;
-	@endphp
-													<th class="total-line__name">
+    // Tính tổng tiền
+    $totalPrice = 0;
+    foreach ($cartItems as $item) {
+        if(session()->has('buyNow')) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        } else {
+            $price = $item->variation->price ?? $item->product->price;
+            $totalPrice += $price * $item->quantity;
+        }
+    }
+    $shippingFee = 40000;
+    $finalTotal = $totalPrice + $shippingFee;
+@endphp										<th class="total-line__name">
 														Tạm tính
 													</th>
 													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
@@ -823,7 +856,19 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 			</symbol>
 		</svg>
 	</div>
-
+	<!-- xóa dữ liệu mua ngay khi thoát ra -->
+	<script>
+window.addEventListener('beforeunload', function() {
+    if (@json($clearBuyNow ?? false)) {
+        fetch('{{ route("clear-buy-now") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+    }
+});
+</script>
 
 </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
 </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>
