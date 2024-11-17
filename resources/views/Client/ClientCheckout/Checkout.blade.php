@@ -661,17 +661,17 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 		<tbody>
 			@foreach ($cart as $item)
 				<tr class="product">
-				
 					<td class="product__image">
 						<div class="product-thumbnail">
 							<div class="product-thumbnail__wrapper">
-								<img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
-								<span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
+								{{-- <img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image"> --}}
+								{{-- <span class="product-thumbnail__quantity">{{ $item->quantity }}</span> --}}
 							</div>
 						</div>
 					</td>
 					<th class="product__description">
 						<span class="product__description__name">{{ $item->product->name }}</span>
+						{{-- <span class="product__description__property">{{ $item->name}}</span> --}}
 						<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
 					</th>
 					<td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>

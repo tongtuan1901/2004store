@@ -110,7 +110,7 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Số đơn hàng hôm nay</span>
+                                                <span class="sherah-pcolor">Số đơn hàng tháng này</span>
                                                 <h4 class="sherah-progress-card__title"><b
                                                         class="count-animate">{{$soDonHang}}</b></h4>
                                             </div>
@@ -151,7 +151,7 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Tài khoản đăng ký hôm nay</span>
+                                                <span class="sherah-pcolor">Tài khoản đăng ký tháng này</span>
                                                 <h4 class="sherah-progress-card__title"><b
                                                         class="count-animate">{{$countAcc}}</b></h4>
                                             </div>
@@ -302,13 +302,12 @@
                                                             </div>
                                                             <div class="col-md-2 d-flex">
                                                                 <input type="button" name="" id="btn-dashboard-filter" class="btn btn-primary" value="Lọc">
-                                                                <select class="dashboard-filter form-select" id="dashboard-filter" aria-label="Default select example">
-                                                                    <option selected>--Chọn--</option>
-                                                                    <option value="7day">7 ngày</option>
+                                                                <select id="dashboard-filter" class="form-control">
+                                                                    <option value="7day">7 ngày qua</option>
                                                                     <option value="thangTrc">Tháng trước</option>
                                                                     <option value="thangNay">Tháng này</option>
-                                                                    <option value="365">1 năm</option>
-                                                                  </select>
+                                                                    <option value="365day">365 ngày qua</option>
+                                                                </select>
                                                             </div>
                                                             
                                                         </div>

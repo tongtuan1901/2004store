@@ -78,55 +78,97 @@ class AdminHomeController extends Controller
          'soDonHang'));
     }
     public function filterByDate(Request $request)
-{
-    $data = $request->all();
-    $from_date = $data['from_date'];
-    $to_date = $data['to_date'];
-    $chart_data = [];
-
-    $get = AdminOrder::whereBetween('created_at', [$from_date, $to_date])
-                     ->orderBy('created_at', 'ASC')
-                     ->get();
-
-    foreach ($get as $val) {
-        $chart_data[] = [
-          'ngayDat' => $val->created_at->format('Y-m-d'),
-            'total' => (float)$val->total,
-            'status' => $val->status,
-            'payment_method' => $val->payment_method,
-        ];
-    }
-
-    return response()->json($chart_data);
-}
-    public function filterByBtn(Request $request){
+    {
         $data = $request->all();
-        $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
-        $dauthangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
-        $cuoithangtrc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
-
-        $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subdays(7)->toDateString();
-        $sub365day = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
-
-        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
-        if($data['dashboard_value' == '7day']){
-            $get = AdminOrder::whereBetween('created_at',[$sub7days,$now])->orderBy('created_at','ASC')->get();
-        }elseif($data['dashboard_value' == 'thangTrc']){
-            $get = AdminOrder::whereBetween('created_at',[$dauthangtruoc,$cuoithangtrc])->orderBy('created_at','ASC')->get();
-        }elseif($data['dashboard_value' == 'thangNay']){
-            $get = AdminOrder::whereBetween('created_at',[$dauthangnay,$now])->orderBy('created_at','ASC')->get();
-        }else{
-            $get = AdminOrder::whereBetween('created_at',[$sub365day,$now])->orderBy('created_at','ASC')->get();
-        }
-        foreach ($get as $val) {
-            $chart_data[] = [
-              'ngayDat' => $val->created_at->format('Y-m-d'),
-                'total' => (float)$val->total,
-                'status' => $val->status,
-                'payment_method' => $val->payment_method,
-            ];
-        }
+        $from_date = $data['from_date'];
+        $to_date = $data['to_date'];
+    
+        // Lấy dữ liệu và nhóm theo ngày
+        $chart_data = AdminOrder::select(
+            DB::raw('DATE(created_at) as ngayDat'), // Lấy ngày
+            DB::raw('SUM(total) as total'),        // Tổng doanh thu
+            DB::raw('COUNT(id) as soLuongDon')     // Số lượng đơn
+        )
+        ->whereBetween('created_at', [$from_date, $to_date])
+        ->groupBy('ngayDat') // Nhóm theo ngày
+        ->orderBy('ngayDat', 'ASC')
+        ->get();
     
         return response()->json($chart_data);
     }
+    // public function filterByBtn(Request $request){
+    //     $data = $request->all();
+    //     $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+    //     $dauthangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+    //     $cuoithangtrc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+
+    //     $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subdays(7)->toDateString();
+    //     $sub365day = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
+
+    //     $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+    //     if($data['dashboard_value'] == '7day') {
+    //         $get = AdminOrder::whereBetween('created_at', [$sub7days, $now])
+    //                          ->orderBy('created_at', 'ASC')
+    //                          ->get();
+    //     } elseif($data['dashboard_value'] == 'thangTrc') {
+    //         $get = AdminOrder::whereBetween('created_at', [$dauthangtruoc, $cuoithangtrc])
+    //                          ->orderBy('created_at', 'ASC')
+    //                          ->get();
+    //     } elseif($data['dashboard_value'] == 'thangNay') {
+    //         $get = AdminOrder::whereBetween('created_at', [$dauthangnay, $now])
+    //                          ->orderBy('created_at', 'ASC')
+    //                          ->get();
+    //     } else {
+    //         $get = AdminOrder::whereBetween('created_at', [$sub365day, $now])
+    //                          ->orderBy('created_at', 'ASC')
+    //                          ->get();
+    //     }        
+    //     foreach ($get as $val) {
+    //         $chart_data[] = [
+    //             'ngayDat' => $val->created_at->format('Y-m-d'),
+    //             'total' => (float) $val->total,
+    //             'status' => $val->status,
+    //             'payment_method' => $val->payment_method,
+    //         ];
+    //     }        
+    
+    //     return response()->json($chart_data);
+    // }
+    public function filterByBtn(Request $request)
+{
+    $data = $request->all();
+    $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+    $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+    $dauthangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+    $cuoithangtrc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+    $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subdays(7)->toDateString();
+    $sub365day = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
+
+    if ($data['dashboard_value'] == '7day') {
+        $from_date = $sub7days;
+        $to_date = $now;
+    } elseif ($data['dashboard_value'] == 'thangTrc') {
+        $from_date = $dauthangtruoc;
+        $to_date = $cuoithangtrc;
+    } elseif ($data['dashboard_value'] == 'thangNay') {
+        $from_date = $dauthangnay;
+        $to_date = $now;
+    } else {
+        $from_date = $sub365day;
+        $to_date = $now;
+    }
+
+    // Nhóm dữ liệu theo ngày và tính tổng doanh thu + số lượng đơn hàng
+    $chart_data = AdminOrder::select(
+        DB::raw('DATE(created_at) as ngayDat'),
+        DB::raw('SUM(total) as total'),
+        DB::raw('COUNT(id) as soLuongDon')
+    )
+    ->whereBetween('created_at', [$from_date, $to_date])
+    ->groupBy('ngayDat')
+    ->orderBy('ngayDat', 'ASC')
+    ->get();
+
+    return response()->json($chart_data);
+}
 }

@@ -34,10 +34,7 @@ class CardController extends Controller
             return redirect()->route('login')->with('error', 'Please log in to add products to your cart.');
         }
     
-        // Retrieve the product
         $product = AdminProducts::findOrFail($productId);
-    
-        // Find variation based on size and color
         $variation = $product->variations()
             ->where('size_id', $sizeId)
             ->where('color_id', $colorId)
@@ -46,8 +43,6 @@ class CardController extends Controller
         if (!$variation) {
             return redirect()->route('cart.index')->with('error', 'The selected product variation does not exist.');
         }
-    
-        // Check if item is already in cart
         $cartItem = Cart::where('product_id', $productId)
                         ->where('user_id', $userId)
                         ->where('size', $sizeId)
@@ -55,11 +50,9 @@ class CardController extends Controller
                         ->first();
     
         if ($cartItem) {
-            // Update quantity if item exists
             $cartItem->quantity += $quantity;
             $cartItem->save();
         } else {
-            // Add new item to cart
             Cart::create([
                 'session_id' => session()->getId(),
                 'product_id' => $productId,
@@ -75,11 +68,41 @@ class CardController extends Controller
             ]);
             
         }
-    
         return redirect()->route('cart.index')->with('success', 'Product added to cart!');
-        }else{
-            //phần mua hàng ngay
+        }elseif($action === 'buyNow'){
+        $productId = $request->input('product_id');
+        $sizeId = $request->input('size');
+        $colorId = $request->input('color');
+        $quantity = $request->input('quantity', 1);
+        $product = AdminProducts::findOrFail($productId);
+        $variation = $product->variations()
+            ->where('size_id', $sizeId)
+            ->where('color_id', $colorId)
+            ->first();
+
+        if (!$variation) {
+            return redirect()->route('cart.index')->with('error', '');
         }
+
+        $cart = [
+            'product_id' => $productId,
+            'name' => $product->name,
+            'quantity' => $quantity,
+            'size' => $sizeId,
+            'color' => $colorId,
+            'price' => $product->price_sale,
+            'image' => $variation->image->image_path ?? 'default/path/to/image.jpg',
+            'variation_id' => $variation->id,
+        ];
+        $userId = auth()->id();
+        $email = auth()->user()->email;
+        $user = User::with('addresses')->findOrFail($userId);
+        $addresses = $user->addresses;
+        session()->put('buyNow', $cart);
+        dd($cart, $addresses, $email, $user);
+        // dd($cart);
+        return view('Client.ClientCheckout.Checkout',compact('cart','email', 'addresses'));
+    }
     }
 
     /**
