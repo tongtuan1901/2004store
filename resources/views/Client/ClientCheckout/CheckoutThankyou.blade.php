@@ -17634,9 +17634,240 @@
 
 <body data-no-turbolink="">
 
+
     <header class="banner">
         <div class="wrap">
             <div class="logo logo--left">
+
+	<header class="banner">
+		<div class="wrap">
+			<div class="logo logo--left">
+	
+		<h1 class="shop__name">
+			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
+		</h1>
+	
+</div>
+		</div>
+	</header>
+	<div class="content">
+		<form>
+			<div class="wrap wrap--mobile-fluid">
+				<main class="main main--nosidebar">
+					<header class="main__header">
+						<div class="logo logo--left">
+	
+		<h1 class="shop__name">
+			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
+		</h1>
+	
+</div>
+					</header>
+					<div class="main__content">
+						<article class="row">
+							<div class="col col--primary">
+								<section class="section section--icon-heading">
+									<div class="section__icon unprintable">
+										<svg xmlns="http://www.w3.org/2000/svg" width="72px" height="72px">
+											<g fill="none" stroke="#8EC343" stroke-width="2">
+												<circle cx="36" cy="36" r="35" style="stroke-dasharray:240px, 240px; stroke-dashoffset: 480px;"></circle>
+												<path d="M17.417,37.778l9.93,9.909l25.444-25.393" style="stroke-dasharray:50px, 50px; stroke-dashoffset: 0px;"></path>
+											</g>
+										</svg>
+									</div>
+									<div class="thankyou-message-container">
+										<h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
+										
+										<p class="section__text">
+											Một email xác nhận đã được gửi tới {{ $order->email }}.  <br>
+											Xin vui lòng kiểm tra email của bạn
+										</p>
+										
+										
+									</div>
+								</section>
+							</div>
+							<div class="col col--secondary">
+								<aside class="order-summary order-summary--bordered order-summary--is-collapsed" id="order-summary">
+									<div class="order-summary__header">
+										<div class="order-summary__title">
+											Đơn hàng #{{ $order->id }}
+											<span class="unprintable">(1)</span>
+										</div>
+										<div class="order-summary__action hide-on-desktop unprintable">
+											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
+												Xem chi tiết
+											</a>
+										</div>
+									</div>
+									<div class="order-summary__sections">
+										<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
+											<table class="product-table">
+												<tbody>
+                                                @foreach ($order->orderItems as $item)
+													<tr class="product">
+														<td class="product__image">
+															<div class="product-thumbnail">
+                                                            <div class="product-thumbnail__wrapper">
+                                                            <img src="{{ asset('storage/' . $item->image) }}" alt="" class="product-thumbnail__image">
+                                                            
+</div>
+																<span class="product-thumbnail__quantity unprintable">1</span>
+															</div>
+														</td>
+														<th class="product__description">
+															<span class="product__description__name">{{ $item->product->name }}</span>
+															
+															<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
+															
+															
+															
+														</th>
+														<th class="product__quantity printable-only">
+															x {{ $item->quantity }}
+														</th>
+														<td class="product__price">
+															
+                                                        {{ number_format($item->price, 0, ',', '.') }}₫
+															
+														</td>
+													</tr>
+                                                    @endforeach
+												</tbody>
+											</table>
+										</div>
+										<div class="order-summary__section">
+											<table class="total-line-table">
+												<tbody class="total-line-table__tbody">
+													<tr class="total-line total-line--subtotal">
+														<th class="total-line__name">Tạm tính</th>
+														<td class="total-line__price">{{ number_format($order->total - $shippingFee, 0, ',', '.') }}₫</td>
+													</tr>
+													<tr class="total-line total-line--shipping-fee">
+														<th class="total-line__name">Phí vận chuyển</th>
+														<td class="total-line__price">
+															<span>{{ number_format($shippingFee, 0, ',', '.') }}₫</span>
+														</td>
+													</tr>
+                                                        @if($order->payment_method == 'wallet')
+                                                        <tr class="total-line total-line--wallet">
+                                                            <th class="total-line__name">Số tiền trừ từ ví</th>
+                                                            <td class="total-line__price">{{ number_format($order->total, 0, ',', '.') }}₫</td>
+                                                        </tr>
+                                                    @endif			
+												</tbody>
+											</table>
+										</div>
+										<div class="order-summary__section">
+											<table class="total-line-table">
+												<tbody class="total-line-table__tbody">
+													<tr class="total-line payment-due">
+														<th class="total-line__name">
+															<span class="payment-due__label-total">Tổng cộng</span>
+														</th>
+														<td class="total-line__price">
+                                                            <td>
+                                                                @if($order->discount_code)
+                                                                    <p>Đã áp dụng mã giảm giá: {{ $order->discount_code }}</p>
+                                                                    <p>Giá trị giảm: -{{ number_format($order->discount_value, 0, ',', '.') }}₫</p>
+                                                                    <p>{{ $order->$finalTotal }}</p>
+                                                                @endif
+    
+                                                                <!-- Hiển thị thông báo nếu có lỗi mã giảm giá -->
+                                                                @if(session('discount_error'))
+                                                                    <p style="color: red;">{{ session('discount_error') }}</p>
+                                                                @endif
+    
+                                                                <!-- Tổng cộng sau khi áp dụng giảm giá và phí vận chuyển -->
+                                                                <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+    
+                                                            </td>
+														</td>
+													</tr>
+                                                    
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+								</aside>
+							</div>
+							<div class="col col--primary">
+								<section class="section">
+									<div class="section__content section__content--bordered">
+										
+										<div class="row">
+											
+											<div class="col col--md-two">
+												<h2>Thông tin mua hàng</h2>
+												<p>{{ $user->name }}</p>
+												
+												<p>{{ $user->email }}</p>
+												
+												
+												<p>{{ $user->phone_number }}</p>
+												
+											</div>
+											
+											<div class="col col--md-two">
+												<h2>Thông tin người nhận</h2>
+												<p>{{ $order->name }}</p>
+                                                <p>{{ $order->phone }}</p>
+												
+												<p>{{ $order->house_address }}</p>
+												
+												
+                                                <p>{{ $order->state }}</p>
+												
+												<p>{{ $order->street }}</p>
+                                                <p>{{ $order->city }}</p>
+												
+												
+												
+												
+											</div>
+										</div>
+										<div class="row">
+                                        <div class="col col--md-two">
+    <h2>Phương thức thanh toán</h2>
+    <p>
+        @if($order->payment_method == 'bank_transfer')
+            Chuyển khoản
+        @elseif($order->payment_method == 'cod')
+            Thanh toán khi nhận hàng
+        @elseif($order->payment_method == 'wallet')
+            Thanh toán qua ví
+        @else
+            Phương thức thanh toán không xác định
+        @endif
+    </p>
+</div>
+											<div class="col col--md-two">
+												<h2>Phương thức vận chuyển</h2>
+												<p>Giao hàng tận nơi</p>
+											</div>
+										</div>
+										
+									</div>
+								</section>
+								<section class="section unprintable">
+									<div class="field__input-btn-wrapper field__input-btn-wrapper--floating">
+										<a data-savepage-href="/" href="{{route('client-home.index')}}" class="btn btn--large">Tiếp tục mua hàng</a>
+										<span class="text-icon-group text-icon-group--large icon-print" onclick="window.print()">
+											<i class="fa fa-print"></i>
+											<span>In </span>
+										</span>
+									</div>
+								</section>
+							</div>
+						</article>
+					</div>
+					
+				</main>
+			</div>
+		</form>
+	</div>
+>>>>>>> a8b92f3f5fe7bb5b9e25849f2aa1126abaf23586
 
                 <h1 class="shop__name">
                     <a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>

@@ -84,11 +84,17 @@ use App\Http\Controllers\admin\AdminInventoryController;
 
 use App\Http\Controllers\Admin\AdminUserStaffController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
+
+
+use App\Http\Controllers\Admin\AdminContactController;
+
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use App\Http\Controllers\client\ClientReviewsController;
+use App\Http\Controllers\client\ContactController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -251,6 +257,8 @@ Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('addr
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('Client/orders/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('/orders/{id}/show', [ClientOrderControler::class, 'showOrder'])->name('orders.show');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
 // Route để hủy đơn hàng
 Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
@@ -303,6 +311,7 @@ Route::resource('client-register', RegisterController::class);
 Route::get('client-password/reset', [ForgotPasswordController::class, 'showResetForm'])->name('client-password.reset');
 Route::post('client-password/email', [ForgotPasswordController::class, 'sendResetLink'])->name('client-password.email');
 Route::resource('client-products', ProductsController::class);
+
 // đổi mật khẩu khách hàng
 Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
 Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
@@ -363,6 +372,11 @@ Route::resource('admin-orders', AdminOrdersController::class);
 // in pdf
 Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
+//contact
+Route::get('client/contact',[ContactController::class,'index'])->name('user.contact');
+Route::post('client/contact/',[ContactController::class,'store'])->name('user.store');
+Route::get('admin/contact',[AdminContactController::class,'index'])->name('admin.contact.index');
+
 
 
 
@@ -396,9 +410,29 @@ Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddr
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
-Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận
 Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
+
+Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// Route::post('/order/store', [AdminOrdersController::class, 'store'])->name('order.store');
+// routes/web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('client-checkout.removeDiscount');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'showProductReviewForm'])
+    ->name('client.product.review.form');
+    Route::post('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'submitReview'])
+    ->name('client.product.submitReview');
+});
+Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
+
+
+
+
+
+
 
 
 

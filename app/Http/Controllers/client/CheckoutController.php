@@ -12,6 +12,7 @@ use App\Models\AdminProducts;
 use App\Models\OderItem;
 use App\Models\ProductVariation;
 use App\Mail\OrderConfirmationMail;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
@@ -274,7 +275,42 @@ class CheckoutController extends Controller
 
         // Phí vận chuyển cố định
         $shippingFee = 40000;
-        $finalTotal = $totalPrice + $shippingFee;
+
+       // Kiểm tra xem có yêu cầu áp dụng mã giảm giá không
+    if ($request->has('discount_code')) {
+        $discountCode = $request->input('discount_code');
+        $discountValue = 0;
+
+        $discount = Discount::where('code', $discountCode)->first();
+        if ($discount && $discount->isValid()) {
+            if ($discount->type === 'percent') {
+                $discountValue = $totalPrice * ($discount->value / 100);
+            } elseif ($discount->type === 'fixed') {
+                $discountValue = $discount->value;
+            }
+
+            $discountValue = min($discountValue, $totalPrice);
+
+            // Lưu mã giảm giá và giá trị giảm giá vào session
+            session(['discount_code' => $discountCode, 'discount_value' => $discountValue]);
+
+            // Trả về thông tin tổng giá mới
+            $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+
+            return redirect()->back()->with([
+                'success' => 'Discount applied successfully!',
+                'final_total' => $finalTotal,
+                'discount_code' => $discountCode,
+                'discount_value' => $discountValue,
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'Invalid or expired discount code.');
+        }
+    }
+           // Nếu không có mã giảm giá, tiếp tục xử lý tạo đơn hàng
+    $discountCode = session('discount_code', null);
+    $discountValue = session('discount_value', 0);
+    $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
 
         // Tạo đơn hàng mới
         $order = new AdminOrder();
@@ -323,7 +359,9 @@ class CheckoutController extends Controller
         }
 
         $order->save();
-
+        
+        session()->forget('discount_code');
+        session()->forget('discount_value');
 
         // Create order items
         foreach ($cartItems as $item) {
@@ -392,6 +430,14 @@ class CheckoutController extends Controller
         Mail::to($order->email)->send(new OrderConfirmationMail($order));
         return redirect()->route('client-thankyou.index', ['order_id' => $order->id])
             ->with('success', 'Đơn hàng của bạn đã được đặt thành công!');
+    }
+    public function removeDiscount()
+    {
+        // Xoá mã giảm giá và giá trị giảm giá khỏi session
+        session()->forget(['discount_code', 'discount_value']);
+
+        // Trả về trang checkout với thông báo đã xoá mã giảm giá
+        return redirect()->back()->with('success', 'Mã giảm giá đã được xoá.');
     }
 
 

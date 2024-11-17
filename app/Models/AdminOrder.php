@@ -31,7 +31,9 @@ class AdminOrder extends Model
         'house_address',
         'name_client',
         'payment_method', 
-        
+        'discount_id',
+        'discount_code',
+        'discount_value'
     ];
 
 
@@ -48,7 +50,6 @@ class AdminOrder extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
     public function orderItems()
     {
         return $this->hasMany(OderItem::class, 'order_id', 'id');
@@ -57,4 +58,12 @@ class AdminOrder extends Model
     {
         return $this->belongsTo(ProductImage::class, 'image_id');
     }
+    public function discountCode(){
+        return $this->belongsTo(Discount::class,'discount_id');
+    }
+    public function address()
+{
+    return $this->belongsTo(Address::class, 'user_id', 'user_id');
+}
+
 }

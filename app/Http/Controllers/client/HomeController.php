@@ -29,6 +29,16 @@ class HomeController extends Controller
             }
             return $product;
         });
+    
+        // Truy vấn để lấy top 5 sản phẩm bán chạy nhất dựa trên tổng số lượng đã bán
+        // $bestSaller = AdminProducts::select('products.*')
+        //     ->join('order_items', 'products.id', '=', 'order_items.product_id')
+        //     ->selectRaw('SUM(order_items.quantity) as total_quantity')
+        //     ->groupBy('products.id')
+        //     ->orderByDesc('total_quantity')
+        //     ->limit(5)
+        //     ->get();
+        
         $bestSaller = AdminProducts::select('products.*')
             ->join('order_items', 'products.id', '=', 'order_items.product_id')
             ->selectRaw('SUM(order_items.quantity) as total_quantity')
