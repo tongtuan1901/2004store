@@ -2,25 +2,25 @@
 
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
+
 use App\Http\Middleware\AdminMiddleware;
-
-
 use App\Http\Controllers\client\CardController;
+
+
+
 use App\Http\Controllers\client\HomeController;
-
-
-
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-use App\Http\Controllers\client\UsersController;
 
+use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\Admin\BankCardController;
 use App\Http\Controllers\Admin\DiscountController;
-use App\Http\Controllers\client\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ use App\Http\Controllers\client\AddressController;
 //View Admin
 
 
+use App\Http\Controllers\client\AddressController;
 use App\Http\Controllers\admin\AdminCardController;
+
+
 use App\Http\Controllers\admin\AdminNewsController;
-
-
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\HomeAdminController;
-use App\Http\Controllers\client\CheckoutController;
 
-use App\Http\Controllers\client\ProductsController;
+use App\Http\Controllers\client\CheckoutController;
 
 
 
@@ -51,35 +51,37 @@ use App\Http\Controllers\client\ProductsController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\client\ProductsController;
 
+use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\Admin1\AdminHomeController;
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
+
+
+
 use App\Http\Controllers\admin\AdminSizesController;
-
-
-
 use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\client\ClientOrderControler;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\client\ClientBanksController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminTransferController;
+
+
+
 use App\Http\Controllers\Admin1\AdminCustomerController;
+
 use App\Http\Controllers\Admin\AdminCommentsController; 
-
-
 
 use App\Http\Controllers\admin\AdminInventoryController;
 
 use App\Http\Controllers\Admin\AdminUserStaffController;
-
 use App\Http\Controllers\Admin\AdminCategoriesController;
-
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
@@ -263,6 +265,16 @@ Route::get('/transfer-requests', [AdminTransferController::class, 'index'])->nam
 Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 'approve'])->name('admin.transfer-requests.approve');
 Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
+
+//quên mật khẩu
+Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
+
+
+//reset mật khẩu
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
+Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
 
 
 });
