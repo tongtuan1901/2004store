@@ -1,4 +1,3 @@
-
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -45,14 +44,6 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="role" class="form-label">Vai Trò</label>
-                                <select class="form-select" id="role" name="role" required>
-                                    <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                                    <option value="staff" {{ $user->role === 'staff' ? 'selected' : '' }}>Nhân viên</option>
-                                </select>
-                            </div>
-
                             <button type="submit" class="btn btn-primary">Cập Nhật Tài Khoản</button>
                             <a href="{{ route('user-staff.index') }}" class="btn btn-secondary">Quay Lại</a>
                         </form>
@@ -74,4 +65,3 @@
     });
 </script>
 @endsection
-

@@ -24,172 +24,46 @@
                         <div class="main-blog-left-data">
 
 
-                            <div class="article-item " data-index="">
-                                <div class="article-item-wrap">
-                                    <a href= "ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html"
-                                        class="article-item-image"
-                                        title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
-                                            title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
-                                                href="ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html">Vẻ
-                                                Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang
-                                                Mùa Thu 2024</a></h3>
-                                        <div class="article-item-detail-info">
-                                            <span class="article-item-detail-info-date" style="color: rgb(160, 62, 44);"><i
-                                                    class="fal fa-calendar"></i> 01.07.2024</span>
-                                            <span class="article-item-detail-info-author"
-                                                style="color: rgb(42, 161, 161);"><i class='fal fa-edit'></i> Công Ty TNHH
-                                                KTCN F1GENZ</span>
-                                            <span class="article-item-detail-info-comment"
-                                                style="color: rgb(35, 153, 35);"><i class='fal fa-comments'></i> 1
-                                                Comments</span>
+                            @foreach ($data as $item)
+                                <div class="article-item" data-index="{{ $loop->index }}">
+                                    <div class="article-item-wrap">
+                                        <a href="{{ route('client-news.show', $item->id) }}" class="article-item-image"
+                                            title="{{ $item->title }}">
+                                            <img loading="lazy" decoding="async" width="600" height="400"
+                                                src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
+                                                title="{{ $item->title }}">
+                                        </a>
+                                        <div class="article-item-detail">
+                                            <h3 class="article-item-detail-title">
+                                                <a title="{{ $item->title }}"
+                                                    href="{{ route('client-news.show', $item->id) }}">{{ $item->title }}</a>
+                                            </h3>
+                                            {{-- <div class="article-item-detail-info">
+                                                <span class="article-item-detail-info-date"
+                                                    style="color: rgb(160, 62, 44);">
+                                                    <i class="fal fa-calendar"></i> {{ $item->created_at->format('d.m.Y') }}
+                                                </span>
+                                                <span class="article-item-detail-info-author"
+                                                    style="color: rgb(42, 161, 161);">
+                                                    <i class="fal fa-edit"></i> {{ $item->author ?? 'Admin' }}
+                                                </span>
+                                                <span class="article-item-detail-info-comment"
+                                                    style="color: rgb(35, 153, 35);">
+                                                    <i class="fal fa-comments"></i> {{ $item->comments_count ?? 0 }}
+                                                    Comments
+                                                </span>
+                                            </div> --}}
+                                            <div class="article-item-detail-content">
+                                                {{ \Illuminate\Support\Str::limit($item->content, 150) }}
+                                            </div>
+                                            <a title="Xem thêm" href="{{ route('client-news.show', $item->id) }}"
+                                                class="article-item-detail-more">
+                                                Xem thêm
+                                            </a>
                                         </div>
-                                        <div class="article-item-detail-content">
-                                            Xu Hướng Thời Trang Mùa Thu 2024
-                                            1. Sự Đối Lập Giữa Cổ Điển và Hiện Đại
-                                            Mùa thu 2024 đang mang đến những xu hướng thời trang đầy sức sống và cá tính
-                                            trên các sàn diễn thời trang châu Âu. Tại Tuần lễ Thời trang Milan vừa qua, các
-                                            nhà thiết kế đã trình làng...
-                                        </div>
-
-                                        <a title="Xem thêm"
-                                            href="ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html"
-                                            class="article-item-detail-more">Xem thêm</a>
-
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="article-item " data-index="">
-                                <div class="article-item-wrap">
-                                    <a href= "hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html"
-                                        class="article-item-image"
-                                        title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024"
-                                            title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024"
-                                                href="hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html">Hoài
-                                                Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024</a>
-                                        </h3>
-                                        <div class="article-item-detail-info">
-                                            <span class="article-item-detail-info-date" style="color: rgb(160, 62, 44);"><i
-                                                    class="fal fa-calendar"></i> 01.07.2024</span>
-                                            <span class="article-item-detail-info-author"
-                                                style="color: rgb(42, 161, 161);"><i class='fal fa-edit'></i> Công Ty TNHH
-                                                KTCN F1GENZ</span>
-                                            <span class="article-item-detail-info-comment"
-                                                style="color: rgb(35, 153, 35);"><i class='fal fa-comments'></i> 0
-                                                Comments</span>
-                                        </div>
-                                        <div class="article-item-detail-content">
-                                            Xu Hướng Thời Trang Mùa Thu 2024
-                                            1. Sự Đối Lập Giữa Cổ Điển và Hiện Đại
-                                            Mùa thu 2024 đang mang đến những xu hướng thời trang đầy sức sống và cá tính
-                                            trên các sàn diễn thời trang châu Âu. Tại Tuần lễ Thời trang Milan vừa qua, các
-                                            nhà thiết kế đã trình làng...
-                                        </div>
-
-                                        <a title="Xem thêm"
-                                            href="hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html"
-                                            class="article-item-detail-more">Xem thêm</a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="article-item " data-index="">
-                                <div class="article-item-wrap">
-                                    <a href= "tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html"
-                                        class="article-item-image"
-                                        title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại"
-                                            title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại"
-                                                href="tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html">Tuần
-                                                Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại</a></h3>
-                                        <div class="article-item-detail-info">
-                                            <span class="article-item-detail-info-date" style="color: rgb(160, 62, 44);"><i
-                                                    class="fal fa-calendar"></i> 01.07.2024</span>
-                                            <span class="article-item-detail-info-author"
-                                                style="color: rgb(42, 161, 161);"><i class='fal fa-edit'></i> Công Ty TNHH
-                                                KTCN F1GENZ</span>
-                                            <span class="article-item-detail-info-comment"
-                                                style="color: rgb(35, 153, 35);"><i class='fal fa-comments'></i> 0
-                                                Comments</span>
-                                        </div>
-                                        <div class="article-item-detail-content">
-                                            Xu Hướng Thời Trang Mùa Thu 2024
-                                            1. Sự Đối Lập Giữa Cổ Điển và Hiện Đại
-                                            Mùa thu 2024 đang mang đến những xu hướng thời trang đầy sức sống và cá tính
-                                            trên các sàn diễn thời trang châu Âu. Tại Tuần lễ Thời trang Milan vừa qua, các
-                                            nhà thiết kế đã trình làng...
-                                        </div>
-
-                                        <a title="Xem thêm"
-                                            href="tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html"
-                                            class="article-item-detail-more">Xem thêm</a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="article-item " data-index="">
-                                <div class="article-item-wrap">
-                                    <a href= "xu-huong-thoi-trang-mua-thu-2024-su-doi-lap-giua-co-dien-va-hien-dai.html"
-                                        class="article-item-image"
-                                        title="Xu Hướng Thời Trang Mùa Thu 2024: Sự Đối Lập Giữa Cổ Điển và Hiện Đại">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Xu Hướng Thời Trang Mùa Thu 2024: Sự Đối Lập Giữa Cổ Điển và Hiện Đại"
-                                            title="Xu Hướng Thời Trang Mùa Thu 2024: Sự Đối Lập Giữa Cổ Điển và Hiện Đại">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Xu Hướng Thời Trang Mùa Thu 2024: Sự Đối Lập Giữa Cổ Điển và Hiện Đại"
-                                                href="xu-huong-thoi-trang-mua-thu-2024-su-doi-lap-giua-co-dien-va-hien-dai.html">Xu
-                                                Hướng Thời Trang Mùa Thu 2024: Sự Đối Lập Giữa Cổ Điển và Hiện Đại</a></h3>
-                                        <div class="article-item-detail-info">
-                                            <span class="article-item-detail-info-date"
-                                                style="color: rgb(160, 62, 44);"><i class="fal fa-calendar"></i>
-                                                01.07.2024</span>
-                                            <span class="article-item-detail-info-author"
-                                                style="color: rgb(42, 161, 161);"><i class='fal fa-edit'></i> Công Ty TNHH
-                                                KTCN F1GENZ</span>
-                                            <span class="article-item-detail-info-comment"
-                                                style="color: rgb(35, 153, 35);"><i class='fal fa-comments'></i> 0
-                                                Comments</span>
-                                        </div>
-                                        <div class="article-item-detail-content">
-                                            Xu Hướng Thời Trang Mùa Thu 2024
-                                            1. Sự Đối Lập Giữa Cổ Điển và Hiện Đại
-                                            Mùa thu 2024 đang mang đến những xu hướng thời trang đầy sức sống và cá tính
-                                            trên các sàn diễn thời trang châu Âu. Tại Tuần lễ Thời trang Milan vừa qua, các
-                                            nhà thiết kế đã trình làng...
-                                        </div>
-
-                                        <a title="Xem thêm"
-                                            href="xu-huong-thoi-trang-mua-thu-2024-su-doi-lap-giua-co-dien-va-hien-dai.html"
-                                            class="article-item-detail-more">Xem thêm</a>
-
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="shop-pagination">
 
@@ -201,65 +75,25 @@
                                 <span>Đừng bỏ lỡ.</span>
                             </div>
 
-
-                            <div class="article-item layout-small" data-index="1">
-                                <div class="article-item-wrap">
-                                    <a href= "ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html"
-                                        class="article-item-image"
-                                        title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
-                                            title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Vẻ Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang Mùa Thu 2024"
-                                                href="ve-dep-truong-ton-duoc-tai-tao-nghien-cuu-su-doi-lap-trong-xu-huong-thoi-trang-mua-thu-2024.html">Vẻ
-                                                Đẹp Trường Tồn Được Tái Tạo: Nghiên Cứu Sự Đối Lập trong Xu Hướng Thời Trang
-                                                Mùa Thu 2024</a></h3>
+                            @foreach ($data as $key => $item)
+                                <div class="article-item layout-small">{{ $key + 1 }}
+                                    <div class="article-item-wrap">
+                                        <a href="{{ route('client-news.show', $item->id) }}" class="article-item-image"
+                                            title="{{ $item->title }}">
+                                            <img loading="lazy" decoding="async" width="600" height="400"
+                                                src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
+                                                title="{{ $item->title }}">
+                                        </a>
+                                        <div class="article-item-detail">
+                                            <h3 class="article-item-detail-title">
+                                                <a title="{{ $item->title }}"
+                                                    href="{{ route('client-news.show', $item->id) }}">{{ $item->title }}</a>
+                                            </h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="article-item layout-small" data-index="2">
-                                <div class="article-item-wrap">
-                                    <a href= "hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html"
-                                        class="article-item-image"
-                                        title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024"
-                                            title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Hoài Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024"
-                                                href="hoai-co-gap-hien-dai-kham-pha-suc-quyen-ru-cua-tuan-le-thoi-trang-milan-2024.html">Hoài
-                                                Cổ Gặp Hiện Đại: Khám Phá Sức Quyến Rũ của Tuần Lễ Thời Trang Milan 2024</a>
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="article-item layout-small" data-index="3">
-                                <div class="article-item-wrap">
-                                    <a href= "tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html"
-                                        class="article-item-image"
-                                        title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại">
-                                        <img loading="lazy" decoding="async" width="600" height="400"
-                                            src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/articles/dip-holding3-da21e5c4d4274ab2a94f6f5917600bfb7879.jpg')}}"
-                                            alt="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại"
-                                            title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại">
-                                    </a>
-                                    <div class="article-item-detail">
-                                        <h3 class="article-item-detail-title"><a
-                                                title="Tuần Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại"
-                                                href="tuan-le-thoi-trang-milan-2024-khi-phong-cach-retro-gap-go-su-hien-dai.html">Tuần
-                                                Lễ Thời Trang Milan 2024: Khi Phong Cách Retro Gặp Gỡ Sự Hiện Đại</a></h3>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="main-blog-right-menu">
                             <div class="section-title-all">
@@ -332,11 +166,11 @@
                                 </div>
                                 <picture>
                                     <source media="(max-width: 480px)" width="480" height="480"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg') }}">
                                     <source media="(min-width: 481px)" width="600" height="600"
-                                        srcset="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg')}}">
+                                        srcset="{{ asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg') }}">
                                     <img width="600" height="600" loading="lazy" title="Bạn cần tư vấn?"
-                                        src="{{asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg')}}"
+                                        src="{{ asset('assets/bizweb.dktcdn.net/thumb/grande/100/520/624/themes/959507/assets/main_blog_banner_imageb1ed.jpg') }}"
                                         alt="F1GENZ Model Fashion - main_blog_banner_title">
                                 </picture>
                             </a>

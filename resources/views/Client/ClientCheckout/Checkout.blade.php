@@ -734,7 +734,72 @@ div[class^="tiktok"].--savior-overlay-z-index-reset {
 			</div>
 		</div>
 	</div>
-									
+									{{-- <div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
+										<table class="total-line-table">
+											<caption class="visually-hidden">Tổng giá trị</caption>
+											<thead>
+												<tr>
+													<td><span class="visually-hidden">Mô tả</span></td>
+													<td><span class="visually-hidden">Giá tiền</span></td>
+												</tr>
+											</thead>
+											<tbody class="total-line-table__tbody">
+												<tr class="total-line total-line--subtotal">
+												@php
+													$totalPrice = 0;
+													foreach ($cart as $item) {
+														$price = $item->variation->price ?? $item->product->price;
+														$totalPrice += $price * $item->quantity;
+													}
+													$shippingFee = 40000; // Phí vận chuyển cố định
+													$finalTotal = $totalPrice + $shippingFee;
+												@endphp
+													<th class="total-line__name">
+														Tạm tính
+													</th>
+													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+												</tr>
+												
+												
+												
+												<tr class="total-line total-line--shipping-fee">
+													<th class="total-line__name">
+														Phí vận chuyển
+													</th>
+													<td class="total-line__price">
+														<span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
+														<span data-bind="getTextShippingPriceFinal()">40.000₫</span>
+													</td>
+												</tr>
+												
+												
+												
+											</tbody>
+											<tfoot class="total-line-table__footer">
+												<tr class="total-line payment-due">
+													<th class="total-line__name">
+														<span class="payment-due__label-total">
+															Tổng cộng
+														</span>
+													</th>
+													<td class="total-line__price">
+														@if(session('discount_code'))
+														<p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+														<p>Giá trị giảm: {{ number_format(session('discount_value'), 0, ',', '.') }} VND</p>
+													@endif
+													
+													@if(session('discount_error'))
+														<p style="color: red;">{{ session('discount_error') }}</p>
+													@endif
+													
+
+
+														<span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+													</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div> --}}
 									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" id="orderSummary">
 										<table class="total-line-table">
 											<caption class="visually-hidden">Tổng giá trị</caption>

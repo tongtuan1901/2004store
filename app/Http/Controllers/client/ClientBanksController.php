@@ -6,6 +6,8 @@ use App\Models\BankCard;
 use Illuminate\Http\Request;
 use App\Models\TransferRequest;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ClientBanksController extends Controller
 {
@@ -15,18 +17,18 @@ class ClientBanksController extends Controller
     public function index()
     {
         // Lấy tất cả các bank card
-        $bankCards = BankCard::all();  
-    
+        $bankCards = BankCard::all();
+        $transferRequests = Auth::user()->transferRequests()->paginate(10);
         // Tạo danh sách các chuỗi nội dung chuyển khoản ngẫu nhiên
         $transferContents = [];
         foreach ($bankCards as $bankCard) {
             $transferContents[] = $this->generateTransferContent();
         }
-    
+
         // Truyền dữ liệu vào view
-        return view('Client.ClientBank.ClientBank', compact('bankCards', 'transferContents'));
+        return view('Client.ClientBank.ClientBank', compact('bankCards', 'transferContents', 'transferRequests'));
     }
-    
+
     private function generateTransferContent()
     {
         // Hàm tạo chuỗi ngẫu nhiên 15 ký tự
@@ -42,7 +44,7 @@ class ClientBanksController extends Controller
         // Giả sử bạn đã xác thực người dùng (vì bạn đang sử dụng user_id)
         $userId = auth()->id(); // Lấy ID của người dùng hiện tại
         $customerName = auth()->user()->name; // Lấy tên người dùng hiện tại
-    
+
         // Lưu trữ dữ liệu nạp tiền vào cơ sở dữ liệu
         TransferRequest::create([
             'user_id' => $userId,  // Thêm user_id vào dữ liệu
@@ -52,13 +54,24 @@ class ClientBanksController extends Controller
             'transfer_time' => now(), // Lấy thời gian hiện tại
             'balance' => 0, // Bạn có thể thêm logic tính số dư ở đây nếu cần
         ]);
-    
+
         // Chuyển hướng với thông báo thành công
         return redirect()->back()->with('success', 'Yêu cầu nạp tiền đã được gửi.');
     }
-    
-    
-    
+
+    public function history()
+    {
+        $userId = auth()->id(); // Lấy ID của người dùng hiện tại
+
+        // Lấy các giao dịch của người dùng hiện tại và sắp xếp theo thời gian
+        $transferRequests = TransferRequest::where('user_id', $userId)
+            ->orderBy('transfer_time', 'desc')
+            ->paginate(10);
+
+        return view('Client.ClientBank.ClientBank', compact('transferRequests'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -10,19 +10,17 @@ use App\Models\AdminProducts;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller{
+class HomeController extends Controller
+{
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
         $banners = Banners::where('deleted', false)->get();
         $listCategories = Category::all();
-        $categories = Category::all(); 
-        $productsSale = AdminProducts::with(['category', 'firstImage'])
-            ->orderBy('price_sale', 'asc')
-            ->limit(4)
-            ->get();
-    
+        $categories = Category::all();
+        $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
         $productsSale->transform(function ($product) {
             if ($product->price > 0) {
                 $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
@@ -42,15 +40,12 @@ class HomeController extends Controller{
         //     ->get();
         
         $bestSaller = AdminProducts::select('products.*')
-        ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        ->groupBy('products.id')
-        ->orderByDesc('total_quantity')
-        ->limit(5)
-        ->get();
-    
-
-    
+            ->join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->selectRaw('SUM(order_items.quantity) as total_quantity')
+            ->groupBy('products.id')
+            ->orderBy('total_quantity', 'desc')
+            ->limit(4)
+            ->get();
         $bestSaller->transform(function ($productSeller) {
             if ($productSeller->price > 0) {
                 $productSeller->discount_percentage = 100 - (($productSeller->price_sale / $productSeller->price) * 100);
@@ -59,8 +54,24 @@ class HomeController extends Controller{
             }
             return $productSeller;
         });
-    
+
+        // dd($products);
         return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories'));
+
+
+        /**
+         * Store a newly created resource in storage.
+         */
+
+
+        /**
+         * Display the specified resource.
+         */
+
+        // public function show(string $id)
+        // {
+        //     $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
+        //     return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
+        // }
     }
-    
 }

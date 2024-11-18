@@ -44,8 +44,14 @@
                                     <div class="main-cart-data-full-item-image">
                                         <a href="/two-line-halter-neck-top">
                                             <img title="TWO LINE HALTER NECK TOP"
-                                                src="{{ Storage::url($item->image) }}"
-                                                alt="{{ $item->name }}" />
+                                            @if($item->variation && $item->variation->image)
+    <img src="{{ Storage::url($item->variation->image->image_path) }}" 
+         alt="{{ $item->product->name }}"
+         title="{{ $item->product->name }}"/>
+@else
+    <img src="{{ asset('path/to/default/image.jpg') }}" 
+         alt="Default Image"/>
+@endif
                                         </a>
                                     </div>
                                     <div class="main-cart-data-full-item-info">
