@@ -13,6 +13,88 @@
 <script src="{{asset('admin/js/jvector-map.js')}}"></script>
 <script src="{{asset('admin/js/slickslider.min.js')}}"></script>
 <script src="{{asset('admin/js/main.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<script>
+    $(function() {
+    $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    $("#datepicker2").datepicker({ dateFormat: "yy-mm-dd" });
+});
+
+var chart = new Morris.Bar({
+    element: 'myfirstchart',
+    data: [],
+    xkey: 'ngayDat', 
+    ykeys: ['total', 'soLuongDon'], // Tổng doanh thu và số lượng đơn
+    labels: ['Doanh thu', 'Số lượng đơn'], // Nhãn cột
+    parseTime: false,
+    hoverCallback: function (index, options, content, row) {
+        return content + '<br>Số lượng đơn hàng: ' + row.soLuongDon;
+    }
+});
+
+$('#btn-dashboard-filter').click(function(){
+    var _token = $('input[name="_token"]').val();
+    var from_date = $('#datepicker').val();
+    var to_date = $('#datepicker2').val();
+
+    $.ajax({
+        url: "{{url('/admin/filter-by-date')}}",
+        method: "POST",
+        dataType: "JSON",
+        data: {from_date: from_date, to_date: to_date, _token: _token},
+        success: function(data) {   
+            chart.setData(data);
+            console.log("Data loaded successfully.");
+        },
+        error: function(xhr, status, error) {
+            console.error("Lỗi:", error);
+        }
+    });
+});
+
+
+$('#dashboard-filter').change(function() {
+    var dashboard_value = $(this).val();
+    var _token = $('input[name="_token"]').val();
+
+    $.ajax({
+        url: "{{ route('dashboard.filterByBtn') }}", // URL Laravel route
+        method: "POST",
+        dataType: "JSON",
+        data: {
+            dashboard_value: dashboard_value,
+            _token: _token
+        },
+        success: function(data) {
+            chart.setData(data);
+            console.log("Data loaded successfully.");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+            console.log("Response:", xhr.responseText);
+        }
+    });
+});
+
+// Cấu hình biểu đồ
+// var chart = new Morris.Bar({
+//     element: 'myfirstchart', // ID của phần tử HTML chứa biểu đồ
+//     data: [], // Dữ liệu sẽ được cập nhật qua AJAX
+//     xkey: 'ngayDat', // Trục X (Ngày đặt hàng)
+//     ykeys: ['total', 'soLuongDon'], // Trục Y (Doanh thu, Số lượng đơn)
+//     labels: ['Doanh thu', 'Số lượng đơn'], // Nhãn cho các cột
+//     parseTime: false,
+//     hoverCallback: function(index, options, content, row) {
+//         return content + '<br>Số lượng đơn hàng: ' + row.soLuongDon;
+//     }
+// });
+
+</script>
+
 
 <script>
     $(document).ready( function () {

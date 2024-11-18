@@ -54,7 +54,7 @@ use App\Http\Controllers\client\CheckoutController;
 use App\Http\Controllers\client\ProductsController;
 
 use App\Http\Controllers\client\RegisterController;
-use App\Http\Controllers\Admin1\AdminHomeController;
+use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
 
@@ -156,6 +156,10 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
  Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
+//dashboard admin
+Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard.index');
+Route::post('/filter-by-date', [AdminHomeController::class, 'filterByDate'])->name('dashboard.filterByDate');
+Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name('dashboard.filterByBtn');
 
  // Route cho tin tức
  Route::resource('new', AdminNewsController::class);
@@ -427,7 +431,11 @@ Route::middleware(['auth'])->group(function () {
     ->name('client.product.submitReview');
 });
 Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
-
+//lọc
+Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
+Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
+//thuong hiệu
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
 
 
