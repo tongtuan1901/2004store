@@ -104,7 +104,6 @@ class CardController extends Controller
         return view('Client.ClientCheckout.Checkout',compact('cart','email', 'addresses'));
     }
     }
-    uyuy
 
     /**
      * Display the user's cart items.

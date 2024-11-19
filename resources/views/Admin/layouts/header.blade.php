@@ -35,7 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     {{-- <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> --}}
-    
+No modifications are needed as there is no selected code portion.    
 </head>
 
 <body id="sherah-dark-light">
@@ -44,7 +44,7 @@
         <!-- sherah Admin Menu -->
         <div class="sherah-smenu">
             <!-- Admin Menu -->
-            <div class="admin-menu">
+            <div class="admin-menu">    
 
                 <!-- Logo -->
                 <div class="logo sherah-sidebar-padding">
