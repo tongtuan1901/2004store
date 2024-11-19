@@ -2,111 +2,161 @@
 
 namespace App\Http\Controllers\client;
 
+use App\Http\Controllers\admin\AdminProductsController;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Models\Banners;
-use App\Models\Brand;
-use App\Models\Color;
-use App\Models\Size; // Nhập mô hình Size
-
 use App\Models\AdminProducts;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Size;
+use Illuminate\Http\Request;
 
 class ClientCategories extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
 {
-    $banners = Banners::where('deleted', false)->get();
-    $brands = Brand::all();
-    $colors = Color::all();
-    $listCategories = Category::all();
     $categories = Category::all();
+    $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
+    $colors = Color::all();
     $sizes = Size::all();
-    
-    // Thiết lập các giá trị mặc định
-    $sortBy = $request->input('sortBy', 'name:asc'); // Mặc định là sắp xếp theo tên tăng dần
-    $sortField = 'name'; // Trường mặc định
-    $sortDirection = 'asc'; // Hướng mặc định
+    $selectedCategories = [];
+    $selectedPrices = [];
+    $selectedFilters = [];
+    $selectedColors = [];
+    $selectedSizes = [];
 
-    // Phân tích giá trị sắp xếp
-    if ($sortBy) {
-        list($sortField, $sortDirection) = explode(':', $sortBy);
-    }
-
-    // Thay đổi số lượng sản phẩm mỗi trang thành 12
-    $productsSale = AdminProducts::with(['category', 'firstImage']);
-
-    // Sắp xếp theo các trường tương ứng
-    switch ($sortField) {
-        case 'price_min':
-            $productsSale->orderBy('price_sale', $sortDirection); // Sắp xếp theo giá bán
-            break;
-        case 'created_on':
-            // Nếu là trường created_on, sử dụng created_at để sắp xếp
-            if ($sortDirection === 'asc') {
-                $productsSale->orderBy('created_at', 'asc'); // Hàng mới nhất
-            } else {
-                $productsSale->orderBy('created_at', 'desc'); // Hàng cũ nhất
-            }
-            break;
-        default:
-            $productsSale->orderBy($sortField, $sortDirection); // Sắp xếp theo trường mặc định (tên)
-            break;
-    }
-
-    // Lấy danh sách sản phẩm đã sắp xếp và phân trang
-    $productsSale = $productsSale->paginate(12); // Sử dụng paginate để phân trang
-
-    // Tính toán phần trăm giảm giá cho từng sản phẩm
-    $productsSale->transform(function ($product) {
-        if ($product->price > 0) {
-            $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
-        } else {
-            $product->discount_percentage = 0;
-        }
-        return $product;
-    });
-
-    // Lấy danh sách sản phẩm bán chạy nhất
-    $bestSaller = AdminProducts::select('products.*')
-        ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        ->groupBy('products.id')
-        ->orderBy('total_quantity', 'desc')
-        ->limit(4)
-        ->get();
-
-    // Tính toán phần trăm giảm giá cho sản phẩm bán chạy
-    $bestSaller->transform(function ($productSeller) {
-        if ($productSeller->price > 0) {
-            $productSeller->discount_percentage = 100 - (($productSeller->price_sale / $productSeller->price) * 100);
-        } else {
-            $productSeller->discount_percentage = 0;
-        }
-        return $productSeller;
-    });
-
-    return view('client.clientcategories.listcategories', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'sortBy','brands','colors','sizes'));
+    return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
 }
+    public function showByBrand($id)
+    {
+        $categories = Category::all(); // Nếu bạn cần hiển thị danh mục
+        $products = AdminProducts::where('brand_id', $id)->paginate(8); // Lấy sản phẩm theo ID thương hiệu
+    
+        $colors = Color::all();
+        $sizes = Size::all();
+        $selectedCategories = [];
+        $selectedPrices = [];
+        $selectedFilters = [];
+        $selectedColors = [];
+        $selectedSizes = [];
+    
+        return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
+    }
+    
+
+    public function filter(Request $request)
+    {
+        // Lấy các bộ lọc đã chọn từ request
+        $selectedCategories = $request->input('category', []);
+        $selectedPrices = $request->input('price', []);
+        $selectedColors = $request->input('color', []);
+        $selectedSizes = $request->input('size', []);
+        
+        // Khởi tạo mảng để lưu các bộ lọc đã chọn
+        $selectedFilters = [];
+        
+        // Lọc theo danh mục
+        if (!empty($selectedCategories)) {
+            $categories = Category::whereIn('id', $selectedCategories)->get();
+            foreach ($categories as $category) {
+                $selectedFilters['category[' . $category->id . ']'] = 'Danh mục: ' . $category->name;
+            }
+        }
+    
+        // Lọc theo giá
+        if (!empty($selectedPrices)) {
+            foreach ($selectedPrices as $priceRange) {
+                $selectedFilters['price[' . $priceRange . ']'] = match ($priceRange) {
+                    '<1000000' => 'Dưới 1.000.000₫',
+                    '>=1000000 AND <=3000000' => 'Từ 1.000.000₫ - 3.000.000₫',
+                    '>=3000000 AND <=5000000' => 'Từ 3.000.000₫ - 5.000.000₫',
+                    '>=5000000 AND <=10000000' => 'Từ 5.000.000₫ - 10.000.000₫',
+                    '>10000000' => 'Trên 10.000.000₫',
+                    default => '',
+                };
+            }
+        }
+    
+        // Lọc theo màu sắc
+        if (!empty($selectedColors)) {
+            $colors = Color::whereIn('id', $selectedColors)->get();
+            foreach ($colors as $color) {
+                $selectedFilters['color[' . $color->id . ']'] = 'Màu: ' . $color->color;
+            }
+        }
+    
+        // Lọc theo kích thước
+        if (!empty($selectedSizes)) {
+            $sizes = Size::whereIn('id', $selectedSizes)->get();
+            foreach ($sizes as $size) {
+                $selectedFilters['size[' . $size->id . ']'] = 'Kích thước: ' . $size->size;
+            }
+        }
+    
+        // Lọc sản phẩm
+        $products = AdminProducts::query();
+    
+        // Lọc theo danh mục
+        if (!empty($selectedCategories)) {
+            $products->whereIn('category_id', $selectedCategories);
+        }
+    
+        // Lọc theo giá
+        if (!empty($selectedPrices)) {
+            foreach ($selectedPrices as $range) {
+                if (strpos($range, '<') === 0) {
+                    $products->where('price', '<', (int)str_replace('<', '', $range));
+                } elseif (strpos($range, '>=') === 0 && strpos($range, '<=') !== false) {
+                    list($minPrice, $maxPrice) = explode(' AND ', str_replace(['>=', '<='], '', $range));
+                    $products->whereBetween('price', [(int)$minPrice, (int)$maxPrice]);
+                } elseif (strpos($range, '>') === 0) {
+                    $products->where('price', '>', (int)str_replace('>', '', $range));
+                }
+            }
+        }
+    
+        // Lọc theo màu sắc
+        if (!empty($selectedColors)) {
+            $products->whereHas('variations', function ($query) use ($selectedColors) {
+                $query->whereIn('color_id', $selectedColors);
+            });
+        }
+    
+        // Lọc theo kích thước
+        if (!empty($selectedSizes)) {
+            $products->whereHas('variations', function ($query) use ($selectedSizes) {
+                $query->whereIn('size_id', $selectedSizes);
+            });
+        }
+    
+        // Áp dụng phân trang
+        $products = $products->paginate(8);  // Sử dụng paginate thay vì get()
+    
+        // Lấy tất cả danh mục, màu sắc, và kích thước
+        $categories = Category::all();
+        $colors = Color::all();
+        $sizes = Size::all();
+    
+        // Trả về view với dữ liệu cần thiết
+        return view('Client.ClientCategories.ListCategories', [
+            'products' => $products, // Đây là đối tượng Paginator
+            'categories' => $categories,
+            'colors' => $colors,
+            'sizes' => $sizes,
+            'selectedFilters' => $selectedFilters,
+            'selectedCategories' => $selectedCategories,
+            'selectedPrices' => $selectedPrices,
+            'selectedColors' => $selectedColors,
+            'selectedSizes' => $selectedSizes,
+        ]);
+    }
 
 
 
     
 
-
-
-    // public function index()
-    // {
-    //     $categories = Category::all();
-    //     return view("Client.ClientCategories.ListCategories", compact('categories'));
-    // }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //

@@ -45,230 +45,309 @@
                                         </g>
                                     </svg></button>
                             </div>
-                            <div class="shop-filter-choose">
-                                <label>Bạn chọn: <button type="button" data-type="shop-filter-choose-remove"
-                                        title="Bỏ hết">Bỏ hết</button></label>
-                                <ul class="shop-filter-choose-data">
+                         
+                            <div class="container">
+                                <form action="{{ route('client.categories.filter') }}" method="GET">
+                                    <div class="shop-filter-choose">
+                                        <label>Bạn chọn:
+                                            <button type="button" id="remove-all-filters" title="Bỏ hết">Bỏ hết</button>
+                                        </label>
+                                        <ul class="shop-filter-choose-data" id="selected-filters-list">
+                                            @foreach($selectedFilters as $key => $value)
+                                                <li class="filter-item">
+                                                    <span>{{ $value }}</span>
+                                                    <button type="button" class="remove-filter" data-filter-key="{{ $key }}">×</button>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+           
+                                    
+                            
+                                    <!-- Bộ lọc danh mục -->
+                                    <div class="shop-filter" data-type="vendor">
+                                        <h4>Danh mục sản phẩm</h4>
+                                        <div class="shop-filter-list">
+                                            @foreach($categories as $category)
+                                                <div class="shop-filter-item">
+                                                    <!-- Tạo checkbox và giữ trạng thái checked nếu đã chọn -->
+                                                    <input type="checkbox" 
+                                                           id="shop-filter-vendor-{{ $category->id }}" 
+                                                           name="category[]" 
+                                                           value="{{ $category->id }}"
+                                                           {{ in_array($category->id, $selectedCategories) ? 'checked' : '' }}>
+                                                    <label for="shop-filter-vendor-{{ $category->id }}">{{ $category->name }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <style>
+                                        /* Tùy chỉnh cho checkbox */
+                                        .shop-filter-item input[type="checkbox"] {
+    width: 20px;  /* Điều chỉnh kích thước của checkbox */
+    height: 20px;
+    margin-right: 10px;  /* Khoảng cách giữa checkbox và label */
+    cursor: pointer;  /* Thêm hiệu ứng khi hover */
+    appearance: none;  /* Tắt kiểu dáng mặc định của checkbox */
+    border: 2px solid #000000; /* Viền màu đen */
+    border-radius: 4px;  /* Bo góc */
+    position: relative; /* Để tạo dấu V */
+    background-color: #fff; /* Màu nền khi chưa chọn */
+}
 
-                                </ul>
-                            </div>
-                            <div class="shop-filter" data-type="vendor">
-                                <h4>Thương hiệu sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    @foreach($brands as $brand)
-                                        <div class="shop-filter-item">
-                                            <input type="checkbox" id="shop-filter-vendor-{{ $brand->id }}" data-group="vendor"
-                                                data-field="vendor" data-text="{{ $brand->name }}" value="{{ $brand->name }}" data-operator="OR">
-                                            <label for="shop-filter-vendor-{{ $brand->id }}">{{ $brand->name }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>                   
-                            <div class="shop-filter" data-type="category">
-                                <h4>Danh mục sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    @foreach($categories as $category)
-                                        <div class="shop-filter-item">
-                                            <input type="checkbox" id="shop-filter-category-{{ $category->id }}" data-group="category"
-                                                data-field="category" data-text="{{ $category->name }}" value="{{ $category->name }}" data-operator="OR">
-                                            <label for="shop-filter-category-{{ $category->id }}">{{ $category->name }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>                   
-                            <div class="shop-filter" data-type="size">
-                                <h4>Kích thước sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    @foreach($sizes as $size)
-                                        <div class="shop-filter-item">
-                                            <input type="checkbox" id="shop-filter-size-{{ $size->id }}" data-group="size"
-                                                data-field="size" data-text="{{ $size->size }}" value="{{ $size->size }}" data-operator="OR">
-                                            <label for="shop-filter-size-{{ $size->id }}">{{ $size->size }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="shop-filter" data-type="color">
-                                <h4>Màu sắc sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    @foreach($colors as $color)
-                                        <div class="shop-filter-item">
-                                            <input type="checkbox" id="shop-filter-color-{{ $color->id }}" data-group="color"
-                                                data-field="color" data-text="{{ $color->color }}" value="{{ $color->color }}" data-operator="OR">
-                                            <label for="shop-filter-color-{{ $color->id }}">{{ $color->color }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="shop-filter" data-type="price">
-                                <h4>Giá sản phẩm</h4>
-                                <div class="shop-filter-list">
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item1" data-group="price"
-                                            data-field="price_min" data-text="Dưới 1.000.000₫" value="(&lt;1000000)"
-                                            data-operator="OR">
-                                        <label for="shop-filter-price-item1" title="Dưới 1.000.000₫">Dưới
-                                            1.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item2" data-group="price"
-                                            data-field="price_min" data-text="Từ 1.000.000₫ - 3.000.000₫"
-                                            value="(&gt;=1000000 AND &lt;=3000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item2" title="Từ 1.000.000₫ - 3.000.000₫">Từ
-                                            1.000.000₫ - 3.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item3" data-group="price"
-                                            data-field="price_min" data-text="Từ 3.000.000₫ - 5.000.000₫"
-                                            value="(&gt;=3000000 AND &lt;=5000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item3" title="Từ 3.000.000₫ - 5.000.000₫">Từ
-                                            3.000.000₫ - 5.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item4" data-group="price"
-                                            data-field="price_min" data-text="Từ 5.000.000₫ - 10.000.000₫"
-                                            value="(&gt;=5000000 AND &lt;=10000000)" data-operator="OR">
-                                        <label for="shop-filter-price-item4" title="Từ 5.000.000₫ - 10.000.000₫">Từ
-                                            5.000.000₫ - 10.000.000₫</label>
-                                    </div>
-                                    <div class="shop-filter-item">
-                                        <input type="checkbox" id="shop-filter-price-item5" data-group="price"
-                                            data-field="price_min" data-text="Trên 10.000.000₫" value="(&gt;10000000)"
-                                            data-operator="OR">
-                                        <label for="shop-filter-price-item5" title="Trên 10.000.000₫">Trên
-                                            10.000.000₫</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-collection-right ">
-                        <div class="main-collection-head">
-                            <div class="shop-sort-style">
-                                <strong>Hiển thị</strong>
-                                <div class="shop-filter-mobile-btn">
-                                    <button type="button" data-type="shop-filter-mobile-btn" title="Bộ lọc">
-                                        <!-- SVG icon -->
-                                    </button>
-                                </div>
-                                <div class="shop-sort-item" data-show="two"></div>
-                                <div class="shop-sort-item" data-show="three"></div>
-                                <div class="shop-sort-item" data-show="four"></div>
-                            </div>
-                            <div class="shop-sort-by">
-                                <label for="shopSortSelect">Sắp xếp theo</label>
-                                <select aria-label="Sắp xếp theo" id="shopSortSelect" onchange="sortProducts(this.value)">
-                                    <option value="">Mặc định</option>
-                                    <option value="name:asc" {{ $sortBy === 'name:asc' ? 'selected' : '' }}>A &rarr; Z</option>
-                                    <option value="name:desc" {{ $sortBy === 'name:desc' ? 'selected' : '' }}>Z &rarr; A</option>
-                                    <option value="price_min:asc" {{ $sortBy === 'price_min:asc' ? 'selected' : '' }}>Giá tăng dần</option>
-                                    <option value="price_min:desc" {{ $sortBy === 'price_min:desc' ? 'selected' : '' }}>Giá giảm dần</option>
-                                    <option value="created_on:asc" {{ $sortBy === 'created_on:asc' ? 'selected' : '' }}>Hàng mới nhất</option>
-                                    <option value="created_on:desc" {{ $sortBy === 'created_on:desc' ? 'selected' : '' }}>Hàng cũ nhất</option>
-                                </select>
-                            </div>
-                            <script>
-                                function sortProducts(value) {
-                                    const url = new URL(window.location.href);
-                                    url.searchParams.set('sortBy', value);
-                                    window.location.href = url.toString();
-                                }
-                            </script>
+/* Tạo dấu 'V' khi checkbox được chọn */
+.shop-filter-item input[type="checkbox"]:checked {
+    background-color: #007BFF;  /* Màu nền khi checkbox được chọn */
+    border-color: #007BFF;  /* Màu viền khi checkbox được chọn */
+}
+
+/* Tạo dấu 'V' khi checkbox được chọn */
+.shop-filter-item input[type="checkbox"]:checked::after {
+    content: '✔';  /* Dấu 'V' */
+    color: white;  /* Màu chữ trắng */
+    font-size: 16px;  /* Kích thước chữ */
+    position: absolute;
+    top: 50%; /* Căn giữa dấu V theo chiều dọc */
+    left: 50%; /* Căn giữa dấu V theo chiều ngang */
+    transform: translate(-50%, -50%); /* Căn chính xác dấu V vào giữa */
+}
+
+/* Tùy chỉnh label (chữ bên cạnh checkbox) */
+.shop-filter-item label {
+    font-size: 16px;
+    cursor: pointer;
+}
+                                    </style>
                             
-                        </div>
-                        
-                        <div class="main-collection-info">
-                            <h1 class="titleStyle1">2004 Store</h1>
-                            <div class="main-collection-info-description">
-                                Những mẫu váy tinh tế, thanh lịch, thường may bằng các chất liệu cao cấp như lụa, ren,
-                                chiffon hoặc nhung. Chiều dài váy khoảng trên đầu gối đến dưới gối, tạo vẻ quý phái, sang
-                                trọng. Các thiết kế có nhiều kiểu dáng khác nhau như cổ chéo, cổ V, tay lửng hoặc không tay.
-                                Các màu sắc phổ biến bao gồm đen, đỏ, xanh đen, tím than và các gam màu trung tính tinh tế.
-                                Những chiếc váy này thường được mặc tới các bữa tiệc, sự kiện chính thức hoặc dạ tiệc.
-                            </div>
-                        </div>
-                        <div class="main-collection-data four">
-                            @foreach ($productsSale as $product)
-    <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ Str::slug($product->name, '-') }}">
-        <div class="product-item-wrap">
-            <div class="product-item-top">
-                <div class="product-item-top-image">
-                    <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
-                        <img src="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
-                             alt="{{ $product->name }}" title="{{ $product->name }}"
-                             width="480" height="480" loading="lazy" decoding="async">
-                    </a>
-                </div>
-                <div class="product-item-label-sale"><span>-{{ number_format($product->discount_percentage, 2) }}%</span></div>
-                <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
-                    <!-- SVG yêu thích -->
-                </button>
-                <div class="product-item-actions">
-                    <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
-                    <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
-                </div>
-            </div>
-            <div class="product-item-detail">
-                <div class="product-item-detail-flex">
-                    <a class="product-item-detail-vendor" href="{{ route('client-products.index') }}" title="{{ $product->category->name ?? '' }}" aria-label="{{ $product->category->name ?? '' }}">
-                        <span>{{ $product->category->name ?? '' }}</span>
-                    </a>
-                    <div class="sapo-product-reviews-badge" data-id="{{ $product->id }}"></div>
-                </div>
-                <h3 class="product-item-detail-title">
-                    <a href="{{ route('client-products.show', $product->id) }}" title="{{ $product->name }}" aria-label="{{ $product->name }}">{{ $product->name }}</a>
-                </h3>
-                <div class="product-item-detail-price">
-                    <strong>{{ number_format($product->price_sale, 0, ',', '.') }}₫</strong>
-                    <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
-                </div>
-            </div>
-        </div>
-    </div>
-@endforeach
-                            <div class="shop-pagination">
-                                <!-- Nút Trang trước -->
-                                @if (!$productsSale->onFirstPage())
-                                    <a href="{{ $productsSale->previousPageUrl() }}" title="Trang trước" aria-label="Trang trước">
-                                        Trước
-                                    </a>
-                                @endif
+                                    <!-- Bộ lọc giá -->
+                                    <div class="shop-filter" data-type="price">
+                                        <h4>Giá sản phẩm</h4>
+                                        <div class="shop-filter-list">
+                                            <div class="shop-filter-item">
+                                                <input type="checkbox" id="shop-filter-price-item1" name="price[]" value="<1000000"
+                                                       {{ in_array('<1000000', $selectedPrices) ? 'checked' : '' }}>
+                                                <label for="shop-filter-price-item1">Dưới 1.000.000₫</label>
+                                            </div>
+                                            <div class="shop-filter-item">
+                                                <input type="checkbox" id="shop-filter-price-item2" name="price[]" value=">=1000000 AND <=3000000"
+                                                       {{ in_array('>=1000000 AND <=3000000', $selectedPrices) ? 'checked' : '' }}>
+                                                <label for="shop-filter-price-item2">Từ 1.000.000₫ - 3.000.000₫</label>
+                                            </div>
+                                            <div class="shop-filter-item">
+                                                <input type="checkbox" id="shop-filter-price-item3" name="price[]" value=">=3000000 AND <=5000000"
+                                                       {{ in_array('>=3000000 AND <=5000000', $selectedPrices) ? 'checked' : '' }}>
+                                                <label for="shop-filter-price-item3">Từ 3.000.000₫ - 5.000.000₫</label>
+                                            </div>
+                                            <div class="shop-filter-item">
+                                                <input type="checkbox" id="shop-filter-price-item4" name="price[]" value=">=5000000 AND <=10000000"
+                                                       {{ in_array('>=5000000 AND <=10000000', $selectedPrices) ? 'checked' : '' }}>
+                                                <label for="shop-filter-price-item4">Từ 5.000.000₫ - 10.000.000₫</label>
+                                            </div>
+                                            <div class="shop-filter-item">
+                                                <input type="checkbox" id="shop-filter-price-item5" name="price[]" value=">10000000"
+                                                       {{ in_array('>10000000', $selectedPrices) ? 'checked' : '' }}>
+                                                <label for="shop-filter-price-item5">Trên 10.000.000₫</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="shop-filter" data-type="color">
+                                        <h4>Màu sắc</h4>
+                                        <div class="shop-filter-list">
+                                            @foreach($colors as $color)
+                                                <div class="shop-filter-item">
+                                                    <input type="checkbox" id="shop-filter-color-{{ $color->id }}" name="color[]" 
+                                                           value="{{ $color->id }}" {{ in_array($color->id, $selectedColors) ? 'checked' : '' }}>
+                                                    <label for="shop-filter-color-{{ $color->id }}">{{ ucfirst($color->color) }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bộ lọc kích thước -->
+                                    <div class="shop-filter" data-type="size">
+                                        <h4>Kích thước</h4>
+                                        <div class="shop-filter-list">
+                                            @foreach($sizes as $size)
+                                                <div class="shop-filter-item">
+                                                    <input type="checkbox" id="shop-filter-size-{{ $size->id }}" name="size[]" 
+                                                           value="{{ $size->id }}" {{ in_array($size->id, $selectedSizes) ? 'checked' : '' }}>
+                                                    <label for="shop-filter-size-{{ $size->id }}">{{ strtoupper($size->size) }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <button type="submit">Lọc</button>
+                                </form>
                             
-                                <!-- Xác định phạm vi hiển thị -->
-                                @php
-                                    $currentPage = $productsSale->currentPage();
-                                    $lastPage = $productsSale->lastPage();
-                                    $startPage = max(1, $currentPage - 4); // Bắt đầu từ trang hiện tại - 4
-                                    $endPage = min($lastPage, $startPage + 9); // Kết thúc tại trang bắt đầu + 9
+                                <script>
+                                    // Cập nhật danh sách các bộ lọc đã chọn
+                                    function updateSelectedFilters() {
+                                        const selectedFiltersList = document.getElementById("selected-filters-list");
+                                        const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
                             
-                                    // Điều chỉnh để đảm bảo chúng ta không vượt quá phạm vi
-                                    if ($endPage - $startPage < 9) {
-                                        $startPage = max(1, $endPage - 9); // Nếu không đủ 10 trang, điều chỉnh lại startPage
+                                        // Xóa các bộ lọc cũ
+                                        selectedFiltersList.innerHTML = "";
+                            
+                                        // Thêm các bộ lọc mới
+                                        checkboxes.forEach((checkbox) => {
+                                            const label = document.querySelector(`label[for="${checkbox.id}"]`).innerText;
+                                            const listItem = document.createElement("li");
+                                            listItem.textContent = label;
+                                            selectedFiltersList.appendChild(listItem);
+                                        });
+                            
+                                        // Hiển thị thông báo nếu không có bộ lọc nào
+                                        if (checkboxes.length === 0) {
+                                            const listItem = document.createElement("li");
+                                            listItem.textContent = "Không có bộ lọc nào được chọn.";
+                                            listItem.id = "no-filters";
+                                            selectedFiltersList.appendChild(listItem);
+                                        }
                                     }
-                                @endphp
                             
-                                <!-- Hiển thị các số trang -->
-                                @for ($page = $startPage; $page <= $endPage; $page++)
-                                    @if ($page == $currentPage)
-                                        <!-- Trang hiện tại -->
-                                        <span class="current">{{ $page }}</span>
-                                    @else
-                                        <!-- Trang không phải trang hiện tại -->
-                                        <a href="{{ $productsSale->url($page) }}" title="Trang {{ $page }}" aria-label="Trang {{ $page }}">{{ $page }}</a>
-                                    @endif
-                                @endfor
+                                    // Xóa tất cả bộ lọc đã chọn khi nhấn nút "Bỏ hết"
+                                    document.getElementById("remove-all-filters").addEventListener("click", function(event) {
+                                        event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
+                                        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+                                        checkboxes.forEach((checkbox) => checkbox.checked = false);
+                                        updateSelectedFilters();
+                                    });
                             
-                                <!-- Nút Trang sau -->
-                                @if ($productsSale->hasMorePages())
-                                    <a href="{{ $productsSale->nextPageUrl() }}" title="Trang sau" aria-label="Trang sau">
-                                        Sau
-                                    </a>
-                                @endif
-                            </div>                            
+                                    // Cập nhật lại danh sách bộ lọc khi checkbox thay đổi
+                                    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+                                        checkbox.addEventListener("change", updateSelectedFilters);
+                                    });
+                                    document.addEventListener('DOMContentLoaded', function () {
+    const removeFilterButtons = document.querySelectorAll('.remove-filter');
+
+    removeFilterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const filterKey = this.getAttribute('data-filter-key');
+            const url = new URL(window.location.href);
+
+            // Remove the filter from URL
+            url.searchParams.delete(filterKey);
+
+            // Reload the page with the updated URL
+            window.location.href = url.toString();
+        });
+    });
+});
+document.getElementById("remove-all-filters").addEventListener("click", function(event) {
+    event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
+    
+    // Tắt tất cả các checkbox
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+    
+    // Gửi lại form với các bộ lọc đã bị xóa
+    document.querySelector("form").submit();  // Submit form sau khi bỏ tất cả bộ lọc
+});
+
+    
+
+
+
+                                    
+                                </script>
+                            </div>
+                        
+                        <div class="main-collection-right">
+                            <div class="main-collection-head">
+                                <div class="shop-sort-style">
+                                    <strong>Hiển thị</strong>
+                                    <div class="shop-filter-mobile-btn">
+                                        <button type="button" data-type="shop-filter-mobile-btn" title="Bộ lọc">
+                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve">
+                                                <g>
+                                                    <path d="M486.585 243.429-15.502-8.401c-1.179-.639-1.82-1.981-1.596-3.339 1.048-6.346 1.58-12.843 1.58-19.309 0-6.467-.532-12.963-1.58-19.308-.225-1.359.417-2.701 1.596-3.34l15.502-8.4c4.266-2.311 7.376-6.145 8.757-10.796 1.382-4.65.87-9.561-1.441-13.825l-17.226-31.788c-4.772-8.804-15.817-12.085-24.621-7.314l-15.518 8.409c-1.178.64-2.641.453-3.637-.461-12.001-11.015-25.858-19.283-41.188-24.576-1.341-.463-2.242-1.679-2.242-3.025v-17.615c0-10.015-8.148-18.162-18.162-18.162h-36.154c-10.014 0-18.162 8.147-18.162 18.162v17.615c0 1.346-.901 2.562-2.241 3.025-15.331 5.293-29.189 13.562-41.188 24.576-.997.915-2.459 1.1-3.638.461l-15.518-8.41c-8.805-4.771-19.849-1.488-24.621 7.316l-17.225 31.787c-2.311 4.265-2.823 9.175-1.441 13.825.563 1.896 1.427 3.646 2.525 5.222h-95.46c-4.143 0-7.502 3.358-7.502 7.502 0 4.143 3.359 7.502 7.502 7.502h237.64c.436 0 .791.355.791.791v42.447h-325.714v-42.446c0-.437.355-.791.791-.791h52.484c4.143 0 7.502-3.358 7.502-7.502 0-4.143-3.359-7.502-7.502-7.502h-52.484c-8.709 0-15.794 7.085-15.794 15.794v49.948c0 .053.007.104.008.156.002.085.008.168.013.253.014.267.042.531.084.79.01.062.017.124.028.185.061.325.141.642.242.95.013.041.03.081.044.121.097.279.21.55.338.812.026.055.051.11.079.164.15.291.316.571.502.839.03.043.064.084.095.127.171.236.356.461.553.675.029.032.051.068.081.099l134.961 141.809c1.399 1.47 2.169 3.397 2.169 5.425v76.002c0 4.577 2.475 8.82 6.457 11.072l51.878 29.35c1.967 1.113 4.118 1.669 6.267 1.668 2.204 0 4.406-.584 6.407-1.75 3.953-2.305 6.313-6.413 6.313-10.99v-36.555c0-4.143-3.359-7.502-7.502-7.502s-7.502 3.358-7.502 7.502v32.643l-47.316-26.769v-74.671c0-5.896-2.239-11.496-6.305-15.768l-122.898-129.135h305.726l-15.143 15.912c-.015.016-.03.032-.045.048l-107.713 113.178c-4.065 4.271-6.304 9.871-6.304 15.767v33.79c0 4.143 3.359 7.502 7.502 7.502s7.502-3.358 7.502-7.502v-33.79c0-2.029.77-3.955 2.169-5.424l66.857-70.25c4.322 2.116 8.773 3.983 13.304 5.547 1.341.463 2.242 1.679 2.242 3.025v17.615c0 10.015 8.148 18.162 18.162 18.162h36.154c10.014 0 18.162-8.147 18.162-18.162v-17.615c0-1.346.901-2.562 2.242-3.025 15.332-5.294 29.19-13.562 41.188-24.576.998-.914 2.459-1.098 3.638-.461l15.518 8.41c8.804 4.771 19.849 1.489 24.621-7.316l17.224-31.788c2.311-4.265 2.823-9.175 1.441-13.825-1.381-4.652-4.491-8.485-8.756-10.796z" fill="#000000"></path>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="shop-sort-item" data-show="two"></div>
+                            <div class="shop-sort-item" data-show="three"></div>
+                            <div class="shop-sort-item" data-show="four"></div>
+                        </div>
+                        <div class="shop-sort-by">
+                           
                         </div>
                     </div>
+                    <div class="main-collection-info">
+                       
+                      
+                        <h1 class="titleStyle1">Sản phẩm của chúng tôi</h1>
+                   
+                       
+
+<div class="main-collection-data four">
+  
+    @foreach ($products as $product)
+   
+        <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ $product->slug }}">
+            <div class="product-item-wrap">
+                <div class="product-item-top">
+                    <div class="product-item-top-image">
+                        <a href="#" class="product-item-top-image-showcase">
+                            <img src="{{ Storage::url($product->images->first()->image_path) }}"
+                                 alt="{{ $product->name }}"
+                                 title="{{ $product->name }}" width="480" height="480" loading="lazy" decoding="async">
+                        </a>
+            
+                    </div>
+                    
+                    {{-- @if($product->sale_percentage > 0)
+                        <div class="product-item-label-sale"><span>-{{ $product->sale_percentage }}%</span></div>
+                    @endif --}}
+                    <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
+                        <!-- SVG icon for wishlist button -->
+                    </button>
+                    <div class="product-item-actions">
+                        <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
+                        <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
+                    </div>
+                    
+                </div>
+                <div class="product-item-details">
+                           <!-- Hiển thị danh mục -->
+                    <p class="product-item-category" style="font-size: 0.7em; color: #888; opacity: 0.7; margin-bottom: 10px;">
+                        {{ $product->category->name }} <!-- Lấy tên danh mục từ mối quan hệ với Category -->
+                   </p>
+
+                    <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;">{{ $product->name }}</h2> <!-- Giảm phông chữ của tên sản phẩm -->
+                
+                 
+                   
+                
+                    <p class="product-item-price">
+                        <span class="original-price" style="color: red; font-size: 1.2em;">
+                            {{ number_format($product->price, 0, ',', '.') }} VNĐ
+                        </span>
+                
+                        <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
+                            {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>
+       
+    @endforeach
+     </div>
+     <div class="pagination">
+        {{ $products->links() }} <!-- Hiển thị phân trang -->
+    </div>
+                </div>
+               
+            </div>
+        </div>
+        
+                  
+        
     </main>
 @endsection

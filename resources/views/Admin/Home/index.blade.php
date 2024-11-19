@@ -1,4 +1,7 @@
+
 @extends('Admin.layouts.master')
+
+
 
 @section('contentAdmin')
     <section class="sherah-adashboard sherah-show">
@@ -31,24 +34,17 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Total Sells</span>
+                                                <span class="sherah-pcolor">Doanh thu tháng này</span>
                                                 <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$654.66k</b></h4>
+                                                        class="count-animate">{{number_format($doanhThu, 0, ',', '.')}} VND</b></h4>
+                                                        
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color3">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.407" height="15.353"
-                                                        viewBox="0 0 8.407 15.353">
-                                                        <g id="Arrow_Icon" data-name="Arrow Icon"
-                                                            transform="translate(-584.97 -306)">
-                                                            <path id="Path_247" data-name="Path 247"
-                                                                d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
-                                                                transform="translate(321.362 224.389)" fill="#09ad95" />
-                                                        </g>
-                                                    </svg>
-                                                    +16.24 %
+                                                    
+                                                    
                                                 </p>
-                                                <a href="#" class="sherah-see-all">View net earnings</a>
+                                               
                                             </div>
 
                                         </div>
@@ -73,24 +69,16 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Total Orders</span>
+                                                <span class="sherah-pcolor">Doanh thu ngày hôm nay</span>
                                                 <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$854.66k</b></h4>
+                                                        class="count-animate">{{number_format($doanhThuToday, 0, ',', '.')}} VND</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color2">
-                                                    <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
-                                                        width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
-                                                        <g id="Arrow_Icon" data-name="Arrow Icon"
-                                                            transform="translate(593.377 321.353) rotate(180)">
-                                                            <path id="Path_247" data-name="Path 247"
-                                                                d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
-                                                                transform="translate(321.362 224.389)" />
-                                                        </g>
-                                                    </svg>
-                                                    +80.00 %
+                                                    
+                                                 
                                                 </p>
-                                                <a href="#" class="sherah-see-all">View all orders</a>
+                                               
                                             </div>
 
                                         </div>
@@ -122,24 +110,16 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Daily Visitors</span>
+                                                <span class="sherah-pcolor">Số đơn hàng tháng này</span>
                                                 <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$987.21M</b></h4>
+                                                        class="count-animate">{{$soDonHang}}</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color1">
-                                                    <svg class="sherah-color1__fill" xmlns="http://www.w3.org/2000/svg"
-                                                        width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
-                                                        <g id="Arrow_Icon" data-name="Arrow Icon"
-                                                            transform="translate(-584.97 -306)">
-                                                            <path id="Path_247" data-name="Path 247"
-                                                                d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
-                                                                transform="translate(321.362 224.389)"></path>
-                                                        </g>
-                                                    </svg>
-                                                    +80.00 %
+                                                    
+                                                  
                                                 </p>
-                                                <a href="#" class="sherah-see-all">See details</a>
+                                                
                                             </div>
 
                                         </div>
@@ -171,9 +151,9 @@
                                         </div>
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
-                                                <span class="sherah-pcolor">Daily Visitors</span>
+                                                <span class="sherah-pcolor">Tài khoản đăng ký tháng này</span>
                                                 <h4 class="sherah-progress-card__title"><b
-                                                        class="count-animate">$987.21M</b></h4>
+                                                        class="count-animate">{{$countAcc}}</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color4">
@@ -186,9 +166,8 @@
                                                                 transform="translate(321.362 224.389)"></path>
                                                         </g>
                                                     </svg>
-                                                    +80.00 %
+                               
                                                 </p>
-                                                <a href="#" class="sherah-see-all">See details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -201,139 +180,99 @@
 
                                 <div class="col-lg-6 col-12">
                                     <!-- Charts Two -->
-                                    <div class="charts-main sherah-default-bg charts-home-two sherah-border mg-top-30">
+                                    <div class="charts-main sherah-default-bg charts-home-two sherah-border mg-top-30" style="height: 390px;">
                                         <div class="charts-main__heading  mg-btm-20 charts-main__heading--v2">
-                                            <h3 class="sherah-heading__title">Total sales</h3>
+                                            <h3 class="sherah-heading__title">Khách hàng chi tiêt nhiều nhất</h3>
                                             <div class="sherah-charts-tabs">
                                                 <!-- Tab List -->
-                                                <div class="sherah-charts-tabs__list list-group " id="list-tab"
-                                                    role="tablist">
-                                                    <a class="list-group-item" data-bs-toggle="list" href="#sherah_tab1"
-                                                        role="tab" href="profile.html">7 Days</a>
-                                                    <a class="list-group-item active" data-bs-toggle="list"
-                                                        href="#sherah_tab1" role="tab">Monthly</a>
-                                                    <a class="list-group-item" data-bs-toggle="list" href="#sherah_tab1"
-                                                        role="tab">Yearly</a>
-                                                </div>
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="top-customer-tab" data-toggle="tab"
+                                                            href="#" role="tab" aria-controls="top-customer-home"
+                                                            aria-selected="true">Top 5</a>
+                                                    </li>
                                             </div>
                                             <!-- End Topbar -->
                                         </div>
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="sherah_tab1" role="tabpanel"
                                                 aria-labelledby="sherah_tab1">
+                                                
                                                 <div class="sherah-chart__inside sherah-chart__total--sales">
-                                                    <canvas id="myChart_Total_Sales_Home"></canvas>
+                                                    <canvas id="khachHangMuaNhieu" style="width:100%;max-width:600px"></canvas>
+                                                    <script>
+                                                        var customersData = @json($topCustomers);
+                                                        var xValues = customersData.map(customer => customer.name);
+                                                        var yValues = customersData.map(customer => customer.total_spent);
+                                                        var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145"];
+                                                        new Chart("khachHangMuaNhieu", {
+                                                            type: "bar",
+                                                            data: {
+                                                                labels: xValues,
+                                                                datasets: [{
+                                                                    backgroundColor: barColors,
+                                                                    data: yValues
+                                                                }]
+                                                            },
+                                                            options: {
+                                                                title: {
+                                                                    display: true,
+                                                                }
+                                                            }
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- End Charts Two -->
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <!-- Sherah Order Card -->
-                                            <div
-                                                class="sherah-order-card sherah-default-bg sherah-border sherah-flex-between mg-top-30">
-                                                <div class="sherah-order-card__first">
-                                                    <p class="sherah-order-card__text mg-btm-10">Active Creator <span
-                                                            class="sherah-bcolor">86,346</span></p>
-                                                    <div class="sherah-chart__inside sherah-chart__inside--aorder">
-                                                        <canvas id="myChart_active_creators"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="sherah-progress__single circle__one" data-value="0.115">
-                                                </div>
-                                            </div>
-                                            <!-- End Sherah Order Card -->
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <!-- Sherah Order Card -->
-                                            <div
-                                                class="sherah-order-card sherah-default-bg sherah-border sherah-flex-between mg-top-30">
-                                                <div class="sherah-order-card__first">
-                                                    <p class="sherah-order-card__text mg-btm-10">Recent Order <span
-                                                            class="sherah-bcolor">135,86,346</span></p>
-                                                    <div class="sherah-chart__inside sherah-chart__inside--aorder">
-                                                        <canvas id="myChart_recent_orders"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="sherah-progress__single circle__two" data-value="0.115"></div>
-                                            </div>
-                                            <!-- End Sherah Order Card -->
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-12">
                                     <!-- Charts One -->
                                     <div class="charts-main sherah-default-bg charts-home-two sherah-border mg-top-30">
                                         <!-- Top Heading -->
                                         <div class="charts-main__heading  mg-btm-20">
-                                            <h3 class="sherah-heading__title">Monthly Statistics</h3>
+                                            <h3 class="sherah-heading__title">Tỷ lệ đặt hàng(%)</h3>
                                         </div>
                                         <div class="sherah-flex-between mg-btm-30">
                                             <div class="charts-main__middle m-0">
-                                                <ul
-                                                    class="sherah-progress-list sherah-progress-list__bg sherah-progress-list__inline sherah-gap-50">
-                                                    <li>
-                                                        <span class="sherah-progress-list__color sherah-color4__bg"></span>
-                                                        <p>Profit <span>13,570</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <span class="sherah-progress-list__color sherah-color1__bg"></span>
-                                                        <p>Refunds<span>455,877</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <span class="sherah-progress-list__color sherah-color3__bg"></span>
-                                                        <p>Expenses<span>455,877</span></p>
-                                                    </li>
-                                                </ul>
+                                               
                                             </div>
                                             <!-- Chart Dropdown Menu -->
                                             <div class="sherah-chart__dropdown sherah-chart__dropdown--bg">
-                                                <ul class="nav nav-tabs sherah-dropdown__list" id="nav-tab"
-                                                    role="tablist">
-                                                    <li class="nav-item dropdown">
-                                                        <a class="sherah-sidebar_btn sherah-offset-bg  sherah-border sherah-heading__tabs nav-link dropdown-toggle"
-                                                            data-bs-toggle="dropdown" href="#" role="button"
-                                                            aria-expanded="false">Last 7 days <svg width="13"
-                                                                height="6" viewBox="0 0 13 6" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.7"
-                                                                    d="M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z">
-                                                                </path>
-                                                            </svg></a>
-                                                        <ul class="dropdown-menu sherah-sidebar_dropdown">
-                                                            <a class="list-group-item" data-bs-toggle="list"
-                                                                data-bs-target="#sherah-chart__t1" role="tab">Last 15
-                                                                Days</a>
-                                                            <a class="list-group-item" data-bs-toggle="list"
-                                                                data-bs-target="#sherah-chart__t1" role="tab">Last 7
-                                                                Days</a>
-                                                            <a class="list-group-item" data-bs-toggle="list"
-                                                                data-bs-target="#sherah-chart__t1" role="tab">Last
-                                                                Month</a>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
+                                                
+                                                        
+                                                
                                             </div>
                                             <!-- End Chart Dropdown Menu -->
                                         </div>
                                         <div class="charts-main__one">
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="sherah-chart__t1"
-                                                    role="tabpanel" aria-labelledby="sherah-chart__t1">
-                                                    <div class="sherah-chart__inside sherah-chart__monthly--states">
-                                                        <!-- Chart One -->
-                                                        <canvas id="myChart_one_monthly"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="sherah-chart__t1" role="tabpanel"
-                                                    aria-labelledby="sherah-chart__t1">
-                                                    <div class="sherah-chart__inside sherah-chart__monthly--states">
-                                                        <!-- Chart One -->
-                                                        <canvas id="myChart_one_monthly"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+                                                <script>
+                                                var successRate = {{ $successRate }};
+                                                var failureRate = {{ $failureRate }};
+
+                                                var xValues = ["Thành công", "Thất bại"];
+                                                var yValues = [successRate, failureRate];
+                                                var barColors = ["#00aba9", "#b91d47"];
+
+                                                new Chart("myChart", {
+                                                type: "pie",
+                                                data: {
+                                                labels: xValues,
+                                                datasets: [{
+                                                    backgroundColor: barColors,
+                                                    data: yValues
+                                                }]
+                                            },
+                                                options: {
+                                                    title: {
+                                                    display: true,
+                                                    }
+                                                }
+                                                });
+                                                </script>
                                         </div>
                                     </div>
                                     <!-- End Charts One -->
@@ -344,413 +283,48 @@
                                 <div class="col-12">
                                     <div class="sherah-table sherah-default-bg sherah-border mg-top-30">
                                         <div class="sherah-table__heading">
-                                            <h3 class="sherah-heading__title mb-0">Recent Orders</h3>
+                                            <h3 class="sherah-heading__title mb-0">Doanh thu</h3>
                                         </div>
                                         <!-- sherah Table -->
-                                        <table id="sherah-table__main"
-                                            class="sherah-table__main sherah-table__main--front sherah-table__main-v1">
+                                        <table id=""
+                                            class=" ">
                                             <!-- sherah Table Head -->
                                             <thead class="sherah-table__head">
                                                 <tr>
-                                                    <th class="sherah-table__column-1 sherah-table__h1">Order Id</th>
-                                                    <th class="sherah-table__column-2 sherah-table__h2">Customer</th>
-                                                    <th class="sherah-table__column-3 sherah-table__h3">Prodcut</th>
-                                                    <th class="sherah-table__column-4 sherah-table__h4">Amount</th>
-                                                    <th class="sherah-table__column-5 sherah-table__h5">Vendor</th>
-                                                    <th class="sherah-table__column-7 sherah-table__h7">Status</th>
+                                                    <form autocomplete="off" action="{{route('dashboard.filterByDate')}}" method="POST">
+                                                        @csrf
+                                                        <div class="d-flex">
+                                                            <div class="col-md-2 d-flex">
+                                                                <input type="text" id="datepicker" class="form-control" placeholder="Từ ngày">
+                                                            </div>
+                                                            <div class="col-md-2 d-flex">
+                                                                <input type="text" id="datepicker2" class="form-control" placeholder="Đến ngày">
+                                                            </div>
+                                                            <div class="col-md-2 d-flex">
+                                                                <input type="button" name="" id="btn-dashboard-filter" class="btn btn-primary" value="Lọc">
+                                                                <select id="dashboard-filter" class="form-control">
+                                                                    <option value="7day">7 ngày qua</option>
+                                                                    <option value="thangTrc">Tháng trước</option>
+                                                                    <option value="thangNay">Tháng này</option>
+                                                                    <option value="365day">365 ngày qua</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </form>
+                                                    
                                                 </tr>
+                                               
+                                                    
+                                              
                                             </thead>
                                             <!-- sherah Table Body -->
                                             <tbody class="sherah-table__body">
                                                 <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025417</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-1.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Alshan</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-1.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Leather bag</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$55.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Garikokar Fashion</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color2 sherah-color2__bg--opactity">
-                                                            Paid</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025418</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-2.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Gogdukh</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-2.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Fashion jeket</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$98.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Hamasto Fashion</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">
-                                                            Pending</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025419</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-3.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Nichara Jhon</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-3.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Cotton tops</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$60.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Technologies</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color1 sherah-color1__bg--opactity">
-                                                            Unpaid</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025420</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-4.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Aslihan Jaga</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-4.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Black half shirt</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$50.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Design Fashion </h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">
-                                                            Pending</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025421</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-5.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Nishachor</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-5.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Leather shoe</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$85.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Nihari Shoes</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color1 sherah-color1__bg--opactity">
-                                                            Unpaid</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025417</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-1.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Alshan</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-1.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Leather bag</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$55.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Garikokar Fashion</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color2 sherah-color2__bg--opactity">
-                                                            Paid</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025418</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-2.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Gogdukh</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-2.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Fashion jeket</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$98.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Hamasto Fashion</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">
-                                                            Pending</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025419</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-3.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Nichara Jhon</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-3.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Cotton tops</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$60.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Technologies</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color1 sherah-color1__bg--opactity">
-                                                            Unpaid</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025420</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-4.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Aslihan Jaga</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-4.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Black half shirt</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$50.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Design Fashion </h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">
-                                                            Pending</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
-                                                        <div class="sherah-table__product--id">
-                                                            <p class="crany-table__product--number"><a
-                                                                    href="#">#Kz025421</a></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/customer-5.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Nishachor</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product">
-                                                            <div class="sherah-table__product-img">
-                                                                <img src="img/product-5.png" alt="#">
-                                                            </div>
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">Leather shoe</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <h5 class="sherah-table__inner--title">$85.00</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <h5 class="sherah-table__inner--title">Nihari Shoes</h5>
-                                                    </td>
-                                                    <td class="sherah-table__column-7 sherah-table__data-7">
-                                                        <div
-                                                            class="sherah-table__status sherah-color1 sherah-color1__bg--opactity">
-                                                            Unpaid</div>
-                                                    </td>
+                                                    <div class="col-md-12">
+                                                        <div id="myfirstchart" style="height: 250px;"></div>
+                                                    </div>
+                                                    
                                                 </tr>
                                             </tbody>
                                             <!-- End sherah Table Body -->
