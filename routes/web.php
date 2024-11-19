@@ -39,9 +39,15 @@ use App\Http\Controllers\client\AddressController;
 use App\Http\Controllers\admin\AdminCardController;
 
 
+
+use App\Http\Controllers\client\ProductsController;
+use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\Admin\AdminHomeController;
+
 use App\Http\Controllers\admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\HomeAdminController;
+
 
 use App\Http\Controllers\client\CheckoutController;
 
@@ -104,8 +110,7 @@ use App\Http\Controllers\client\ContactController;
 
 Route::prefix('admin')->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
-
-
+    
     // Đăng nhập admin và nhân viên
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
@@ -117,6 +122,11 @@ Route::prefix('admin')->group(function () {
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
 
+
+//dashboard admin
+Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard.index');
+Route::post('/filter-by-date', [AdminHomeController::class, 'filterByDate'])->name('dashboard.filterByDate');
+Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name('dashboard.filterByBtn');
 
 
 
@@ -548,3 +558,6 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // // danh mục admin
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
+
+tesst day code len tem
+audhgauyhbfiabfdiafoa

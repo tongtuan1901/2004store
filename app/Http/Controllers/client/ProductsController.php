@@ -36,5 +36,5 @@ class ProductsController extends Controller
         return redirect()->route('client-products.show', $productId)->with('success', 'Bình luận của bạn đã được gửi.');
     }
 
-
 }
+

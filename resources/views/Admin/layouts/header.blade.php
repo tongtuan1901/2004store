@@ -32,10 +32,14 @@
     <link rel="stylesheet" href="{{ asset('admin/css/reset.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
 
+    {{-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    {{-- <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> --}}
 
-No modifications are needed as there is no selected code portion.    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> 
 </head>
 
 <body id="sherah-dark-light">
