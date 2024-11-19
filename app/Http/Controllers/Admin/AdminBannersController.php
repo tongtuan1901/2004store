@@ -16,13 +16,13 @@ class AdminBannersController extends Controller
     const PATH_VIEW  = 'Admin.banners.';
     public function index()
     {
-        $listBanners = DB::table('banners')->where('deleted',0)->get();
+        $listBanners = DB::table('banners')->where('deleted', 0)->get();
 
         return view(self::PATH_VIEW . __FUNCTION__, compact("listBanners"));
     }
     public function trash()
     {
-        $listBanners = DB::table('banners')->where('deleted',1)->get();
+        $listBanners = DB::table('banners')->where('deleted', 1)->get();
 
         return view(self::PATH_VIEW . __FUNCTION__, compact("listBanners"));
     }
@@ -83,7 +83,7 @@ class AdminBannersController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'image' => 'nullable|image|max:2048',
-        ],[
+        ], [
             'title.required' => 'Tieu de la bat buoc!',
             'title.regex' => 'Tieu de chi duoc chua cac ky tu chu va khoang trang!',
             'content.required' => 'Noi dung la bat buoc!',
@@ -111,9 +111,9 @@ class AdminBannersController extends Controller
      */
     public function delete(string $id)
     {
-        
+
         $banner = Banners::findOrFail($id);
-        $banner->deleted= true;
+        $banner->deleted = true;
         $banner->save();
 
         return back();

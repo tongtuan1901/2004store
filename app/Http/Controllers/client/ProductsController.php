@@ -3,65 +3,38 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\AdminProducts;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('Client.ClientProducts.ClientDetailProduct');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
-        return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
+        $productDetail = AdminProducts::with(['category', 'brand', 'images', 'variations.size', 'variations.color', 'comments.user','reviews.user'])->latest()
+            ->findOrFail($id);
+        $relatedProducts = AdminProducts::where('category_id', $productDetail->category_id)
+            ->where('id', '!=', $id)
+            ->take(4)
+            ->get();
+
+        return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail', 'relatedProducts'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function storeComment(Request $request, $productId)
     {
-        //
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        Comment::create([
+            'product_id' => $productId,
+            'user_id' => auth()->id(),
+            'content' => $request->input('content'),
+        ]);
+
+        return redirect()->route('client-products.show', $productId)->with('success', 'Bình luận của bạn đã được gửi.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

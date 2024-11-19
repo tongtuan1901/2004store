@@ -13,7 +13,7 @@
     <link rel="shortcut icon"
         href="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/faviconb1ed.png') }}"
         type="image/png">
-    <title>F1GENZ Model Fashion</title>
+    <title>2004Store</title>
     <link rel="canonical" href="">
     <link rel="alternate" href="" hreflang="vi-vn">
     <meta name="keywords" content="F1GENZ - COSMETIC,  Mỹ Phẩm, Son, Nước hoa..">
@@ -60,6 +60,10 @@
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scss.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/cart.scssb1ed.css')}}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
     <script src="{{ asset('assets/f1genz.com/ps.js') }}"></script>
 
     <script fetchpriority="low" defer
@@ -236,6 +240,44 @@
     </script>
 
     <style>
+
+        
+        .modal-toggle {
+  display: none; /* Ẩn checkbox */
+}
+
+.modal {
+  display: none; /* Ẩn mặc định */
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Hiện modal khi checkbox được chọn */
+.modal-toggle:checked ~ .modal {
+  display: block; 
+}
         .preload * {
             -webkit-transition: none !important;
             -moz-transition: none !important;
@@ -530,30 +572,42 @@
                 </div>
                 <div class="headers3-right">
                 <button class="shop-tool" type="button" title="Tài khoản">
-    @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
-        <span class="username">{{ Auth::user()->name }}</span> <!-- Hiển thị tên tài khoản -->
-        <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
-        </form>
-    @else
+                @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
+                    <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản -->
+                    <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a>
+                    <div class="wallet-balance">
+                    <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a>
+            <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong>
+    </div>
+                    <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
+                    </form>
+
+                    <!-- Nút đổi mật khẩu -->
+                    <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
+                   
+                @else
         <a href="{{ route('client-login.index') }}">
             <i class="fal fa-user"></i>
         </a>
     @endif
 </button>
+
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
-                        title="Yêu thích">
-                        <i class="fal fa-heart"></i>
-                        <span class="shop-wishlist-count">0</span>
+                        title="Yêu thích"> <i class="fal fa-heart"></i>
+                        <span class="shop-wishlist-count">0</span> 
+                        
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
                         title="Giỏ hàng">
+                        <a href="{{route('client-card.index')}}" class="">
                         <i class="fal fa-shopping-bag"></i>
                         <span class="shop-cart-count">0</span>
+                        </a>
                     </button>
                 </div>
                 <div class="headers3-bot">
@@ -617,7 +671,7 @@
                                     aria-label="Xu hướng thời trang">Xu hướng thời trang</a>
                             </li>
                             <li class="">
-                                <a href="{{route('client-news.index')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
+                                <a href="{{route('user.contact')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
                             </li>
                             <li class="headers3-bot-menu-mob-foot">
                                 <div class="section-title-all">

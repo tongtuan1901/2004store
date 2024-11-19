@@ -11,40 +11,45 @@ use App\Http\Controllers\Controller;
 class AdminCouponsController extends Controller
 {
     public function index()
-    {
-        // Lấy tất cả mã giảm giá cùng với thông tin danh mục và sản phẩm liên quan
-        $coupons = AdminCoupons::with(['category', 'product'])->get();
-        foreach ($coupons as $coupon) {
-            if ($coupon->product) {
-                // Giá gốc của sản phẩm
-                $originalPrice = $coupon->product->price;
-                // Tính toán giá sau khi áp dụng mã giảm giá
-                if ($coupon->type === 'fixed') {
-                    $discountedPrice = max($originalPrice - $coupon->value, 0); // Không cho phép giá âm
-                } elseif ($coupon->type === 'percentage') {
-                    $discountedPrice = max($originalPrice - ($originalPrice * $coupon->value / 100), 0);
-                } else {
-                    $discountedPrice = $originalPrice;
-                }
+{
+    $coupons = AdminCoupons::with(['category', 'product'])->get();
+
+    foreach ($coupons as $coupon) {
+        if ($coupon->product) {
+
+            $originalPrice = $coupon->product->price;
+            $coupon->original_price = $originalPrice;
+
+            if ($coupon->type === 'fixed') {
+                $discountedPrice = max($originalPrice - $coupon->value, 0);
+            } elseif ($coupon->type === 'percentage') {
+                $discountedPrice = max($originalPrice - ($originalPrice * $coupon->value / 100), 0);
+            } else {
+                $discountedPrice = $originalPrice;
             }
+
+            $coupon->discounted_price = $discountedPrice;
         }
-        return view('admin.coupons.index', compact('coupons'));
     }
+
+    return view('Admin.Coupons.index', compact('coupons'));
+}
+
 
     public function create(Request $request)
     {
         // Lấy tất cả các danh mục
         $categories = Category::all();
         $products = [];
-    
+
         // Kiểm tra nếu có category_id được chọn thì lấy danh sách sản phẩm theo danh mục
         if ($request->has('category_id')) {
             $products = AdminProducts::where('category_id', $request->category_id)->get();
         }
-    
-        return view('admin.coupons.create', compact('categories', 'products'));
+
+        return view('Admin.Coupons.create', compact('categories', 'products'));
     }
-    
+
     public function store(Request $request)
 {
     // Validate dữ liệu
@@ -71,7 +76,7 @@ class AdminCouponsController extends Controller
 
     return redirect()->route('admin-coupons.index')->with('success', 'Thêm mã giảm giá thành công.');
 }
-    
+
 
 public function edit($id, Request $request)
 {
@@ -86,7 +91,7 @@ public function edit($id, Request $request)
         $admin_coupon->category_id = $request->category_id; // Cập nhật category_id
     }
 
-    return view('admin.coupons.edit', compact('admin_coupon', 'categories', 'products'));
+    return view('Admin.coupons.edit', compact('admin_coupon', 'categories', 'products'));
 }
 
 
@@ -102,10 +107,10 @@ public function edit($id, Request $request)
             'starts_at' => 'required|date',
             'expires_at' => 'required|date|after:starts_at',
         ]);
-    
+
         // Tìm coupon để cập nhật
         $admin_coupon = AdminCoupons::findOrFail($id);
-    
+
         // Cập nhật dữ liệu coupon
         $admin_coupon->category_id = $request->category_id;
         $admin_coupon->product_id = $request->product_id;
@@ -114,10 +119,10 @@ public function edit($id, Request $request)
         $admin_coupon->value = $request->value;
         $admin_coupon->starts_at = $request->starts_at;
         $admin_coupon->expires_at = $request->expires_at;
-    
+
         // Lưu thay đổi vào cơ sở dữ liệu
         $admin_coupon->save();
-    
+
         // Thông báo thành công
         return redirect()->route('admin-coupons.index')->with('success', 'Cập nhật mã giảm giá thành công!');
     }

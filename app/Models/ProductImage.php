@@ -7,21 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductImage extends Model
 {
-    
     use HasFactory;
-    protected $table = 'product_images';
+
     protected $fillable = [
         'product_id',
         'image_path',
+        'alt_text',
+        'order',
     ];
 
-    // Định nghĩa quan hệ với AdminProducts
     public function product()
     {
         return $this->belongsTo(AdminProducts::class, 'product_id');
     }
-    public function adminProduct()
+
+    public function variations()
     {
-        return $this->belongsTo(AdminProducts::class);
+        return $this->hasMany(ProductVariation::class, 'image_id');
     }
 }

@@ -22,7 +22,7 @@ class Customeraddress extends Controller
      */
     public function create()
     {
-        //
+        return view('admin\customeraddress.create');
     }
 
     /**
@@ -30,7 +30,26 @@ class Customeraddress extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'name' => 'required',
+        //     'address' => 'required',
+        //     'phone' => 'required',
+        // ], [
+        //     'name.required' => 'Vui lòng nhập tên',
+        //     'address.required' => 'Vui lòng nhập địa chỉ',
+        //     'phone.required' => 'Vui lòng nhập số điện thoại',
+        // ]);
+    
+        $fullAddress = $request->address . ', ' . $request->ward_name . ', ' . $request->district_name . ', ' . $request->province_name;
+
+        DB::table('customeraddresses')->insert([
+            'name' => $request->name,
+            'address' => $fullAddress, // lưu địa chỉ đầy đủ vào cột 'address'
+            'phone' => $request->phone,
+        ]);
+        
+    
+        return redirect()->route('customeraddress.index');
     }
 
     /**
