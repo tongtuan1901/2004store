@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banners;
 
 use App\Models\AdminProducts;
-
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -18,6 +18,7 @@ class HomeController extends Controller{
         $banners = Banners::where('deleted', false)->get();
     $listCategories = Category::all();
     $categories = Category::all(); 
+    $listBrands = Brand::all();
         $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
         $productsSale->transform(function ($product) {
             if ($product->price > 0) {
@@ -44,7 +45,7 @@ class HomeController extends Controller{
             });
 
         // dd($products);
-        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories'));
+        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands'));
 
 
     /**
