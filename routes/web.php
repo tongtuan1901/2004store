@@ -488,6 +488,9 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // Route::resource('admin1-home',AdminHomeController ::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
 
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+
 
 
 // Route::get('/customeraddress', [Customeraddress::class, 'index'])->name('customeraddress.index');
@@ -548,3 +551,4 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // // danh mục admin
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
+
