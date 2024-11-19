@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -66,8 +67,10 @@ class HomeController extends Controller
             return $productSeller;
         });
 
+        //list 3 tin tức
+        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
         // dd($products);
-        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands'));
+        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
 
 
         /**
