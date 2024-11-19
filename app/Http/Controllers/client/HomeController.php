@@ -15,6 +15,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -77,8 +78,9 @@ class HomeController extends Controller
 
         // dd($products);
         $listBrands = Brand::all();
+        $news = News::latest()->limit(5)->get();
 
-        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands'));
+        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news'));
 
         
 
