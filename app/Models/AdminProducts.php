@@ -57,6 +57,11 @@ protected  $table = "products";
 
     // Relationship with ProductVariation
 
+    
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id');
+    }
 
 
     public function variations()
@@ -77,11 +82,6 @@ protected  $table = "products";
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
     }
 
     // public function firstImage()

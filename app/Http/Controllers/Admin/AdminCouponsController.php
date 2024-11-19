@@ -13,10 +13,10 @@ class AdminCouponsController extends Controller
     public function index()
 {
     $coupons = AdminCoupons::with(['category', 'product'])->get();
-    
+
     foreach ($coupons as $coupon) {
         if ($coupon->product) {
-            
+
             $originalPrice = $coupon->product->price;
             $coupon->original_price = $originalPrice;
 
@@ -27,11 +27,11 @@ class AdminCouponsController extends Controller
             } else {
                 $discountedPrice = $originalPrice;
             }
-            
+
             $coupon->discounted_price = $discountedPrice;
         }
     }
-    
+
     return view('Admin.Coupons.index', compact('coupons'));
 }
 
@@ -41,15 +41,15 @@ class AdminCouponsController extends Controller
         // Lấy tất cả các danh mục
         $categories = Category::all();
         $products = [];
-    
+
         // Kiểm tra nếu có category_id được chọn thì lấy danh sách sản phẩm theo danh mục
         if ($request->has('category_id')) {
             $products = AdminProducts::where('category_id', $request->category_id)->get();
         }
-    
+
         return view('Admin.Coupons.create', compact('categories', 'products'));
     }
-    
+
     public function store(Request $request)
 {
     // Validate dữ liệu
@@ -76,7 +76,7 @@ class AdminCouponsController extends Controller
 
     return redirect()->route('admin-coupons.index')->with('success', 'Thêm mã giảm giá thành công.');
 }
-    
+
 
 public function edit($id, Request $request)
 {
@@ -107,10 +107,10 @@ public function edit($id, Request $request)
             'starts_at' => 'required|date',
             'expires_at' => 'required|date|after:starts_at',
         ]);
-    
+
         // Tìm coupon để cập nhật
         $admin_coupon = AdminCoupons::findOrFail($id);
-    
+
         // Cập nhật dữ liệu coupon
         $admin_coupon->category_id = $request->category_id;
         $admin_coupon->product_id = $request->product_id;
@@ -119,10 +119,10 @@ public function edit($id, Request $request)
         $admin_coupon->value = $request->value;
         $admin_coupon->starts_at = $request->starts_at;
         $admin_coupon->expires_at = $request->expires_at;
-    
+
         // Lưu thay đổi vào cơ sở dữ liệu
         $admin_coupon->save();
-    
+
         // Thông báo thành công
         return redirect()->route('admin-coupons.index')->with('success', 'Cập nhật mã giảm giá thành công!');
     }

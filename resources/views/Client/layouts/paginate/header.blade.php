@@ -60,6 +60,10 @@
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scss.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/cart.scssb1ed.css')}}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
     <script src="{{ asset('assets/f1genz.com/ps.js') }}"></script>
 
     <script fetchpriority="low" defer
@@ -572,6 +576,10 @@
                 @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
                     <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản -->
                     <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a>
+                    <div class="wallet-balance">
+                    <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a>
+            <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong>
+    </div>
                     <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
                         @csrf
                         <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
@@ -664,7 +672,7 @@
                                     aria-label="Xu hướng thời trang">Xu hướng thời trang</a>
                             </li>
                             <li class="">
-                                <a href="{{route('client-news.index')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
+                                <a href="{{route('user.contact')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
                             </li>
                             <li class="headers3-bot-menu-mob-foot">
                                 <div class="section-title-all">

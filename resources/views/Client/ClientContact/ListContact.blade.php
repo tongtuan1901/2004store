@@ -47,9 +47,9 @@
                         </div>
                     </div>
                     <div class="page-about-new-contact">
-                        <form method="post" action="https://f1genz-model-fashion.mysapo.net/postcontact" id="contact"
-                            accept-charset="UTF-8"><input name="FormType" type="hidden" value="contact" /><input
-                                name="utf8" type="hidden" value="true" /><input type="hidden"
+                        <form method="POST" action="{{ route('user.store', ['userId' => $userId]) }}" id="contact" accept-charset="UTF-8">
+                            @csrf
+                            <input name="utf8" type="hidden" value="true" /><input type="hidden"
                                 id="Token-6512115532924f62be47d870d54ecb0d" name="Token" />
                             <script src="../www.google.com/recaptcha/apif78f.js?render=6Ldtu4IUAAAAAMQzG1gCw3wFlx_GytlZyLrXcsuK"></script>
                             <script>

@@ -29,8 +29,15 @@ return new class extends Migration
             $table->string('state');
             $table->string('house_address');
             $table->string('payment_method');
+            $table->string('discount_code')->nullable();
+            $table->decimal('discount_value', 10, 2)->default(0);  
+            $table->string('discount_id')->nullable();
             $table->timestamps(); // Tạo trường created_at và updated_at
             $table->softDeletes();
+            $table->timestamp('pending_time')->nullable();
+    $table->timestamp('processing_time')->nullable();
+    $table->timestamp('shipping_time')->nullable();
+    $table->timestamp('completed_time')->nullable();
 
           
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -43,7 +50,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('discount_code');
+            $table->dropColumn('discount_value');
+            $table->dropColumn('discount_id'); // Xóa cột discount_code khi rollback migration
+        });
     }
 };
 

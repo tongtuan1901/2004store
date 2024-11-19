@@ -585,6 +585,8 @@
             jQuery.event.special.touchstart={setup:function(e,t,n){this.addEventListener("touchstart",n,{passive:!t.includes("noPreventDefault")})}},jQuery.event.special.touchmove={setup:function(e,t,n){this.addEventListener("touchmove",n,{passive:!t.includes("noPreventDefault")})}};
         }
     </script>		<button class="overplay-all" title="Đóng"></button>
+
+<script lang="javascript">var __vnp = {code : 23475,key:'', secret : '0c873798f9cbd575da20e2f7bf003366'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = '//core.vchat.vn/code/tracking.js?v=69290'; var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
         </body>
     
     <!-- Mirrored from f1genz-model-fashion.mysapo.net/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 Sep 2024 15:51:24 GMT -->

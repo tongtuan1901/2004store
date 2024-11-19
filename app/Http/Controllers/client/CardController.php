@@ -19,6 +19,7 @@ class CardController extends Controller
     public function add(Request $request)
     {
         $action = $request->input('action');
+
         if($action === 'addToCart'){
         $productId = $request->input('product_id');
         $sizeId = $request->input('size');
@@ -30,10 +31,21 @@ class CardController extends Controller
         // \Log::info('Selected Color: ' . $colorId);
         // \Log::info('Selected Size: ' . $sizeId);
         // dd($request);
+
+        $productId = $request->input('product_id');
+        $sizeId = $request->input('size');
+        $colorId = $request->input('color');
+        $quantity = $request->input('quantity', 1);
+        $userId = auth()->id();
+    
+
         if (!$userId) {
-            return redirect()->route('login')->with('error', 'Please log in to add products to your cart.');
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
         }
     
+
+        // Validate product and variation
+
         $product = AdminProducts::findOrFail($productId);
         $variation = $product->variations()
             ->where('size_id', $sizeId)
@@ -41,8 +53,9 @@ class CardController extends Controller
             ->first();
     
         if (!$variation) {
-            return redirect()->route('cart.index')->with('error', 'The selected product variation does not exist.');
+            return redirect()->back()->with('error', 'Biến thể sản phẩm không hợp lệ.');
         }
+
         $cartItem = Cart::where('product_id', $productId)
                         ->where('user_id', $userId)
                         ->where('size', $sizeId)
@@ -55,13 +68,19 @@ class CardController extends Controller
         } else {
             Cart::create([
                 'session_id' => session()->getId(),
+
+    
+        if ($action === 'buyNow') {
+            // Create cart item for buy now
+            $cartItem = [
+
                 'product_id' => $productId,
-                'user_id' => $userId,
                 'quantity' => $quantity,
                 'size' => $sizeId,
                 'color' => $colorId,
                 'image' => $variation->image->image_path ?? 'default/path/to/image.jpg',
                 'name' => $product->name,
+
                 'price' => $product->price_sale,
                 'original_price' => $product->price,
                 'variation_id' => $variation->id, // Đảm bảo rằng bạn lưu variation_id
@@ -103,7 +122,39 @@ class CardController extends Controller
         // dd($cart);
         return view('Client.ClientCheckout.Checkout',compact('cart','email', 'addresses'));
     }
+
+                'price' => $variation->price ?? $product->price,
+                'variation_id' => $variation->id
+            ];
+    
+            // Store in session and redirect to checkout
+            session()->put('buyNow', $cartItem);
+            return redirect()->route('client-checkout.index');
+        } else {
+            // Add to cart
+            $existingCartItem = Cart::where('user_id', $userId)
+                ->where('product_id', $productId)
+                ->where('variation_id', $variation->id)
+                ->first();
+    
+            if ($existingCartItem) {
+                $existingCartItem->quantity += $quantity;
+                $existingCartItem->save();
+            } else {
+                Cart::create([
+                    'user_id' => $userId,
+                    'product_id' => $productId,
+                    'variation_id' => $variation->id,
+                    'quantity' => $quantity
+                ]);
+            }
+    
+            return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+        }
+
     }
+    
+    
 
     /**
      * Display the user's cart items.
@@ -111,12 +162,14 @@ class CardController extends Controller
     public function index()
     {
         $userId = auth()->id();
-    
+        
         if (!$userId) {
             return redirect()->route('login')->with('error', 'Please log in to view your cart.');
         }
     
-        // Lấy giỏ hàng với eager loading cho variation
+        // Clear buyNow session when viewing cart
+        session()->forget('buyNow');
+        
         $cart = Cart::where('user_id', $userId)
                     ->with(['product', 'variation.size', 'variation.color'])
                     ->get();

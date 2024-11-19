@@ -225,6 +225,7 @@
                     </div>
                 </div> --}}
                 <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
+
                     @csrf
                         <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
                         <div class="product-sw-line">
@@ -314,6 +315,89 @@
                     <span>Chọn ngay sản phẩm bạn yêu thích</span>
                 </button>
                 </form>
+
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
+    
+    <!-- Color selection -->
+    <div class="product-sw-line">
+        <div class="product-sw-select">
+            <div class="product-sw-title">Color</div>
+            <div class="variation mb-3">
+                <div class="variation-content d-flex">
+                    @php $uniqueColors = []; @endphp
+                    @foreach ($productDetail->variations as $variation)
+                        @if (!in_array($variation->color->color, $uniqueColors))
+                            <span class="product-sw-select-item">
+                                <input type="radio" 
+                                    name="color" 
+                                    value="{{ $variation->color->id }}"
+                                    data-color="{{ $variation->color->color }}"
+                                    data-image="{{ $variation->image ? asset('storage/' . $variation->image->image_path) : asset('path/to/placeholder/image.jpg') }}"
+                                    data-price="{{ $variation->price }}"
+                                    class="trigger-option-sw d-none"
+                                    id="product-choose-color-{{ $variation->color->id }}" required>
+                                <label for="product-choose-color-{{ $variation->color->id }}"
+                                    class="product-sw-select-item-span">{{ $variation->color->color }}</label>
+                            </span>
+                            @php $uniqueColors[] = $variation->color->color; @endphp
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Size selection -->
+    <div class="product-sw-line">
+        <div class="product-sw-select">
+            <div class="product-sw-title">Size</div>
+            <div class="variation mb-3">
+                <div class="variation-content d-flex">
+                    @php $uniqueSizes = []; @endphp
+                    @foreach ($productDetail->variations as $variation)
+                        @if (!in_array($variation->size->size, $uniqueSizes))
+                            <span class="product-sw-select-item">
+                                <input type="radio" 
+                                    name="size" 
+                                    value="{{ $variation->size->id }}"
+                                    data-size="{{ $variation->size->size }}"
+                                    class="trigger-option-sw d-none"
+                                    id="product-choose-size-{{ $variation->size->id }}" required>
+                                <label for="product-choose-size-{{ $variation->size->id }}"
+                                    class="product-sw-select-item-span">{{ $variation->size->size }}</label>
+                            </span>
+                            @php $uniqueSizes[] = $variation->size->size; @endphp
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="main-product-quantity shop-quantity-wrap">
+        <label>Số lượng</label>
+        <div class="shop-quantity">
+            <button type="button" data-type="shop-quantity-minus" class="quantity-btn">-</button>
+            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+            <button type="button" data-type="shop-quantity-plus" class="quantity-btn">+</button>
+        </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="main-product-cta">
+        <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
+            <strong>Thêm vào giỏ</strong>
+            <span>Chọn ngay sản phẩm bạn yêu thích</span>
+        </button>
+        <button type="submit" name="action" value="buyNow" class="buy-now-btn">
+            <strong>Mua ngay</strong>
+            <span>Mua ngay sản phẩm này</span>
+        </button>
+    </div>
+</form>
+
                 <!-- HTML remains the same -->
                 <button type="button" data-type="main-product-send-help" title="Tư vấn">
                     <strong>Tư vấn</strong>
@@ -366,6 +450,97 @@
             </div>
 
         </div>
+
+
+        <div>
+            <div class="comments-section mt-4">
+            <div class="btn-group mb-3">
+                <button id="btn-comments" class="btn btn-primary">Bình luận</button>
+                <button id="btn-reviews" class="btn btn-secondary">Đánh giá</button>
+            </div>
+            
+            <div id="comments-section">
+                <h5>Bình luận:</h5>
+                @if($productDetail->comments)
+                    @foreach ($productDetail->comments as $comment)
+                        <div class="comment-item mb-3">
+                            <div class="comment-header">
+                                <strong>{{ $comment->user->name }}</strong>
+                                <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
+                            </div>
+                            <div class="comment-content">
+                                {{ $comment->content }}
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            
+                @auth
+                    <form method="POST" action="{{ route('client-products.comments.store', $productDetail->id) }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Viết bình luận của bạn:</label>
+                            <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                    </form>
+                @else
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Viết bình luận của bạn:</label>
+                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a> để bình luận.</p>
+                @endauth
+            </div>
+            
+            <div id="reviews-section" style="display: none;">
+                <h2>Đánh giá sản phẩm</h2>
+                <div id="reviews-section">
+                    @if($productDetail->reviews->isEmpty())
+                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                    @else
+                        @foreach ($productDetail->reviews as $review)
+                            <div class="review">
+                                <h4>{{ $review->user->name }}</h4>
+                                
+                                <!-- Hiển thị sao đánh giá -->
+                                <div class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $review->rating)
+
+                                        <i class="fa fa-star text-warning"></i> <!-- Sao vàng -->
+                                        @else
+                                            <i class="fa fa-star text-secondary"></i> <!-- Sao xám -->
+                                        @endif
+                                    @endfor
+                                </div>
+            
+                                <p>{{ $review->comment }}</p>
+                                <small>Đăng vào ngày {{ $review->created_at->format('d/m/Y') }}</small>
+                            </div>
+                            <hr>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            
+            
+            <script>
+                document.getElementById('btn-comments').addEventListener('click', function () {
+                    document.getElementById('comments-section').style.display = 'block';
+                    document.getElementById('reviews-section').style.display = 'none';
+                });
+            
+                document.getElementById('btn-reviews').addEventListener('click', function () {
+                    document.getElementById('comments-section').style.display = 'none';
+                    document.getElementById('reviews-section').style.display = 'block';
+                });
+            </script>
+            
+        </div>
+
+
+
 
         <div class="main-product-relate">
             <div class="section-title-all">
@@ -526,15 +701,27 @@
             var input = document.querySelector('input[name="quantity"]');
             input.value = parseInt(input.value) + 1;
         });
-        document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
-            input.addEventListener('change', function() {
-                if (this.checked) {
-                    var newImage = this.getAttribute('data-image');
-                    document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src =
-                        newImage;
-                }
-            });
-        });
+       // Cập nhật hình ảnh khi chọn màu
+document.querySelectorAll('input[name="color"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+        if (this.checked) {
+            var newImage = this.getAttribute('data-image');
+            document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src = newImage;
+        }
+    });
+});
+
+
+// Kiểm tra form trước khi submit
+document.getElementById('cart-form').addEventListener('submit', function(e) {
+    var color = document.querySelector('input[name="color"]:checked');
+    var size = document.querySelector('input[name="size"]:checked');
+    
+    if (!color || !size) {
+        e.preventDefault();
+        alert('Vui lòng chọn màu sắc và kích thước');
+    }
+});
         document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
             input.addEventListener('change', updatePrice);
         });
@@ -752,5 +939,8 @@
         }
 
         /* Đảm bảo rằng không có khoảng cách giữa các phần tử carousel */
+
+        
+
     </style>
 @endsection

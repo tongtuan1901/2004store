@@ -33,6 +33,19 @@
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
 
 </head>
+@if (session('message'))
+                            <div class="alert alert-success mb-4">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger mb-4">
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </div>
+                        @endif
 <section class="sherah-wc sherah-wc__full sherah-bg-cover" >
     <div class="container-fluid p-0">
         <div class="row g-0">
@@ -78,26 +91,19 @@
                                         <label for="checkbox">Remember me later</label>
                                     </div>
                                     <div class="sherah-wc__forgot">
-                                        <a href="" class="forgot-pass">Forget Password?</a>
-                                    </div>
+    <a href="{{ route('admin.forgot.password') }}" class="forgot-pass">Quên mật khẩu</a>
+</div>
                                 </div>
                             </div>
                             <!-- Form Group -->
                             <div class="form-group form-mg-top25">
                                 <div class="sherah-wc__button sherah-wc__button--bottom">
                                     <button class="ntfmax-wc__btn" type="submit">Login</button>
-                                    <div class="sherah-wc__inside--group">
-                                        <button class="ntfmax-wc__btn ntfmax-wc__btn-social " type="button"><div class="ntfmax-wc__btn-icon"><i class="fa-brands fa-google"></i></div>Sign In with Google</button>
-                                        <button class="ntfmax-wc__btn ntfmax-wc__btn-social " type="button"><div class="ntfmax-wc__btn-icon"><i class="fa-brands fa-twitter"></i></div>Sign In with Twitter</button>
-                                    </div>
+                                  
                                 </div>
                             </div>
                             <!-- Form Group -->
-                            <div class="form-group mg-top-20">
-                                <div class="sherah-wc__bottom">
-                                    <p class="sherah-wc__text">Don’t have an account? <a href="">Sign up free</a></p>
-                                </div>
-                            </div>
+                          
                         </form>  
                         <!-- End Sign in Form -->
                     </div>
