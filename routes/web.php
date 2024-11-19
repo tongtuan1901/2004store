@@ -558,3 +558,5 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // // danh mục admin
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
+
+tesst day code len tem
