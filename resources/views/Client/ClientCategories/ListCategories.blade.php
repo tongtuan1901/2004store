@@ -326,11 +326,11 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                 
                     <p class="product-item-price">
                         <span class="original-price" style="color: red; font-size: 1.2em;">
-                            {{ number_format($product->price, 0, ',', '.') }} VNĐ
-                        </span>
-                
-                        <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
                             {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
+                        </span>
+                      
+                        <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
+                            {{ number_format($product->price, 0, ',', '.') }} VNĐ
                         </span>
                     </p>
                 </div>

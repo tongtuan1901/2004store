@@ -435,7 +435,11 @@ Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'sho
 Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
 Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
 //thuong hiệu
-Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+
+
+
 
 
 

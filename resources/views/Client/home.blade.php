@@ -587,12 +587,11 @@
                 </div>
                 <div class="home-vendor-item-wrapper">
                     @foreach ($listBrands as $brand)
-                                    <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}" title="{{ $brand->name }}">
-                                        <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" width="400" height="165" loading="lazy" decoding="async" fetchpriority="auto">
-                                        {{-- <p style="text-align: center; margin-top: 5px;">{{ $brand->name }}</p> <!-- Căn giữa tên thương hiệu --> --}}
-                                    </a>
-                                @endforeach
-                    </div>
+                        <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}" title="{{ $brand->name }}">
+                            <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" width="400" height="165" loading="lazy" decoding="async" fetchpriority="auto">
+                        </a>
+                    @endforeach
+                </div>
 
             </div>
         </div>
