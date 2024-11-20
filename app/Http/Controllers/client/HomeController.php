@@ -76,7 +76,12 @@ class HomeController extends Controller
         //     return $productSeller;
         // });
 
+        //list 3 tin tức
+        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
         // dd($products);
+
+        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
+
         $listBrands = Brand::all();
         $news = News::latest()->limit(5)->get();
 
