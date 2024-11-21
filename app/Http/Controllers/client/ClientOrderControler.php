@@ -27,8 +27,6 @@ class ClientOrderControler extends Controller
     public function cancel($id)
     {
         $order = AdminOrder::findOrFail($id);
-    
-        // Kiểm tra nếu phương thức thanh toán là ví
         if ($order->payment_method == 'wallet') {
             $user = User::findOrFail($order->user_id);
             $user->balance += $order->total; // Hoàn tiền vào ví

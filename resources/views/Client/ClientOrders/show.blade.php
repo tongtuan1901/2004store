@@ -131,8 +131,6 @@
         <a href="{{ route('client.order', ['userId' => $userOrder->id]) }}" class="btn btn-secondary">Quay lại</a>
     </div>
 </div> --}}
-
-
 <div class="container">
     <!-- Title -->
     <h2>Chi tiết đơn hàng</h2>
@@ -160,7 +158,7 @@
    </div>
    <div class="progress-labels">
        <div class="label">
-        Chờ Xử lý
+        <i class="bi bi-1-circle-fill"></i>
         <br>
 
       </div>
@@ -209,11 +207,16 @@
                   </td>
                   <td>{{ $item->quantity }}</td>
                   <td class="text-end">{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }} VNĐ</td>
-                  @if($order->status == 'Hoàn thành') <!-- Kiểm tra trạng thái để hiển thị cột đánh giá -->
-                    <td>
-                        <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
-                    </td>
+                  @if($order->status == 'Hoàn thành' && !\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
+                      <td>
+                          <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
+                      </td>
+                  @else
+                      <td>
+                          <span class="text-muted">Đã đánh giá</span>
+                      </td>
                   @endif
+
                 </tr>
                 @endforeach
               </tbody>

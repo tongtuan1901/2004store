@@ -17829,19 +17829,19 @@
 										</div>
 										<div class="row">
                                         <div class="col col--md-two">
-    <h2>Phương thức thanh toán</h2>
-    <p>
-        @if($order->payment_method == 'bank_transfer')
-            Chuyển khoản
-        @elseif($order->payment_method == 'cod')
-            Thanh toán khi nhận hàng
-        @elseif($order->payment_method == 'wallet')
-            Thanh toán qua ví
-        @else
-            Phương thức thanh toán không xác định
-        @endif
-    </p>
-</div>
+                                            <h2>Phương thức thanh toán</h2>
+                                            <p>
+                                                @if($order->payment_method == 'bank_transfer')
+                                                    Chuyển khoản
+                                                @elseif($order->payment_method == 'cod')
+                                                    Thanh toán khi nhận hàng
+                                                @elseif($order->payment_method == 'wallet')
+                                                    Thanh toán qua ví
+                                                @else
+                                                    Phương thức thanh toán không xác định
+                                                @endif
+                                            </p>
+                                        </div>
 											<div class="col col--md-two">
 												<h2>Phương thức vận chuyển</h2>
 												<p>Giao hàng tận nơi</p>

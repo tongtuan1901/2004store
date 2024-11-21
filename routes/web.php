@@ -171,8 +171,11 @@ Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name
 
 
  Route::resource('discount', DiscountController::class);
-Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
-Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
+ Route::post('/cart/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('remove.discount');
+
 // Route::resource('admin-comments', AdminCommentsController::class);
 Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
@@ -343,7 +346,10 @@ Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->
 
 // Route::resource('client-checkout', CheckoutController::class);
 
-Route::resource('client-thankyou', CheckoutThankyouController::class);
+// Route::resource('client-thankyou', CheckoutThankyouController::class);
+Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('client-thankyou.index');
+
+
 //nạp tiền khách hàng
 Route::resource('client-banks', ClientBanksController::class);
 
