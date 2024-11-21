@@ -437,6 +437,11 @@ Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->na
 //thuong hiệu
 Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
+//search user
+Route::get('/users/search', [AdminUserController::class, 'search'])->name('users.search');
+//search category
+Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
+
 
 
 

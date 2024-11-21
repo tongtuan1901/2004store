@@ -21,6 +21,7 @@ class AdminCategoriesController extends Controller
     {
         return view('Admin.Categories.create');
     }
+  
 
     // Store new category
     public function store(Request $request)
