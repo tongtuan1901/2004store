@@ -142,7 +142,7 @@
                             <div class="product-item-wrap">
                                 <div class="product-item-top">
                                     <div class="product-item-top-image">
-                                        <a href="{{ route('client-products.show', $product->id) }}"
+                                                   <a href="{{ route('client-products.show', $product->id) }}"
                                             class="product-item-top-image-showcase">
                                             <img src="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
                                                 alt='{{ $product->name }}' title='{{ $product->name }}' width="480"

@@ -372,60 +372,50 @@
             <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a>
                 để bình luận.</p>
         @endauth
-
-
-
-
-
         <div class="main-product-relate">
             <div class="section-title-all">
                 <h2>Sản phẩm liên quan</h2>
             </div>
             <div class="main-product-relate-data">
-
-                <div class="product-item" data-id="120912676" data-handle="ao-phong-co-chu-v-logo-rosy">
-                    <div class="product-item-wrap">
-                        <div class="related-products">
-                            @foreach ($relatedProducts as $relatedProduct)
-                                <div class="product-item-detail">
-                                    <div class="product-item-top-image">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            class="product-item-top-image-showcase">
-                                            <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
-                                                alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}'
-                                                width="300" height="480" loading="lazy" decoding="async">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-item-detail-flex">
-                                        <a class="product-item-detail-vendor"
-                                            href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->brand->name }}"
-                                            aria-label="{{ $relatedProduct->brand->name }}">
-                                            <span>{{ $relatedProduct->brand->name }}</span>
-                                        </a>
-                                        <div class="sapo-product-reviews-badge" data-id="{{ $relatedProduct->id }}">
-                                        </div>
-                                    </div>
-                                    <h3 class="product-item-detail-title">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->name }}"
-                                            aria-label="{{ $relatedProduct->name }}">
-                                            {{ $relatedProduct->name }}
-                                        </a>
-                                    </h3>
-                                    <div class="product-item-detail-price">
-                                        <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
-                                        <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
-                                    </div>
-
+                <div class="related-products">
+                    @foreach ($relatedProducts as $relatedProduct)
+                        <div class="product-item-detail" data-id="120912676" data-handle="ao-phong-co-chu-v-logo-rosy">
+                            <div class="product-item-wrap">
+                                <div class="product-item-top-image">
+                                    <a href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        class="product-item-top-image-showcase">
+                                        <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
+                                            alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}' width="300"
+                                            height="480" loading="lazy" decoding="async">
+                                    </a>
                                 </div>
-                            @endforeach
+                                <div class="product-item-detail-flex">
+                                    <a class="product-item-detail-vendor"
+                                        href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        title="{{ $relatedProduct->brand->name }}"
+                                        aria-label="{{ $relatedProduct->brand->name }}">
+                                        <span>{{ $relatedProduct->brand->name }}</span>
+                                    </a>
+                                    <div class="sapo-product-reviews-badge" data-id="{{ $relatedProduct->id }}">
+                                    </div>
+                                </div>
+                                <h3 class="product-item-detail-title">
+                                    <a href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        title="{{ $relatedProduct->name }}" aria-label="{{ $relatedProduct->name }}">
+                                        {{ $relatedProduct->name }}
+                                    </a>
+                                </h3>
+                                <div class="product-item-detail-price">
+                                    <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
+                                    <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-
             </div>
+        </div>
+
         </div>
         </div>
         </div>
@@ -757,5 +747,65 @@
             font-size: 16px;
             color: #333;
         }
+/* Styles for the related products section */
+.main-product-relate {
+    padding: 20px;
+}
+
+.section-title-all {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-product-relate-data {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure no wrapping */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+.related-products {
+    display: flex;
+    gap: 20px; /* Space between items */
+    flex-wrap: nowrap; /* Ensure no wrapping */
+}
+
+.product-item-detail {
+    flex: 0 0 300px; /* Fixed width for each item */
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.product-item-detail:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.product-item-top-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-item-detail h3 {
+    font-size: 16px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.product-item-detail-price {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.product-item-detail-vendor {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
     </style>
 @endsection
