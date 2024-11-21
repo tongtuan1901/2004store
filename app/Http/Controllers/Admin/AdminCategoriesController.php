@@ -10,12 +10,19 @@ use Illuminate\Support\Facades\Storage;
 class AdminCategoriesController extends Controller
 {
     // List categories
-    public function index()
+    public function index(Request $request)
     {
-        $listCategories = Category::all();
-        return view("Admin.Categories.index", compact("listCategories"));
+        $query = Category::query(); // Model của bạn
+    
+        // Kiểm tra nếu có từ khóa tìm kiếm
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+    
+        $listCategories = $query->orderBy('id', 'desc')->paginate(10);
+    
+        return view('admin.categories.index', compact('listCategories'));
     }
-
     // Show create category form
     public function create()
     {
