@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -12,7 +13,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('Client.ClientNews.ListNews');
+        $data = News::all();
+        return view('client.ClientNews.ListNews', compact('data'));
     }
 
     /**
@@ -36,7 +38,8 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        return view('Client.ClientNews.DetailNews');
+        $news = News::findOrFail($id);
+        return view('client.ClientNews.DetailNews', compact('news'));
     }
 
     /**

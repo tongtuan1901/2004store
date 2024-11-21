@@ -12,11 +12,17 @@ class ProductImage extends Model
     protected $fillable = [
         'product_id',
         'image_path',
+        'alt_text',
+        'order',
     ];
 
-    // Định nghĩa quan hệ với AdminProducts
     public function product()
     {
         return $this->belongsTo(AdminProducts::class, 'product_id');
+    }
+
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class, 'image_id');
     }
 }

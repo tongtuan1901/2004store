@@ -17,7 +17,7 @@ class AdminNewsController extends Controller
     public function index()
     {
         $data = DB::table('news')->get();
-        return view('admin\new.index', compact('data'));
+        return view('admin.new.index', compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class AdminNewsController extends Controller
      */
     public function create()
     {
-        return view('admin\new.create');
+        return view('admin.new.create');
     }
 
     /**
@@ -33,30 +33,29 @@ class AdminNewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
         $request->validate([
-
-            'title'=>'required',
-            'content'=>'required',
-            'image'=>'required',
-        ],[
-            'title.required'=>'Vui lòng nhập tiêu đề',
-            'content.required'=>'Vui lòng nhập nội dung',
-            'image.required'=>'Vui lòng nhập ảnh',
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required|image',
+        ], [
+            'title.required' => 'Vui lòng nhập tiêu đề',
+            'content.required' => 'Vui lòng nhập nội dung',
+            'image.required' => 'Vui lòng nhập ảnh',
         ]);
-
-        if($request->hasFile('image')) {
-            $url = Storage::put('new', $request->file('image'));
-        } else {
-            $url = '';
+    
+        $url = ''; // Khởi tạo biến đường dẫn
+    
+        if ($request->hasFile('image')) {
+            $url = $request->file('image')->store('new', 'public'); // Lưu vào thư mục 'new' trong 'storage/app/public'
+            // $url = 'storage/' . $url; // Tạo URL truy cập
         }
-
+    
         DB::table('news')->insert([
             'title' => $request->title,
             'image' => $url,
             'content' => $request->content,
         ]);
+    
         return redirect()->route('new.index');
     }
 
@@ -67,7 +66,7 @@ class AdminNewsController extends Controller
     {
 
         $new = News::all()->where('id',$id);
-        return view('admin/new/show',compact('new'));
+        return view('admin.new.show',compact('new'));
 
     }
 
@@ -77,7 +76,7 @@ class AdminNewsController extends Controller
     public function edit(string $id)
     {
         $model = DB::table('news')->where('id', $id)->first();
-        return view('admin/new.edit', compact('model'));
+        return view('admin.new.edit', compact('model'));
     }
 
     /**
@@ -85,30 +84,34 @@ class AdminNewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $request->validate([
-            'title'=>'required',
-            'content'=>'required',
-            'image'=>'required',
-        ],[
-            'title.required'=>'Vui lòng nhập tiêu đề',
-            'content.required'=>'Vui lòng nhập nội dung',
-            'image.required'=>'Vui lòng nhập ảnh',
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'nullable|image', // Ảnh không bắt buộc
+        ], [
+            'title.required' => 'Vui lòng nhập tiêu đề',
+            'content.required' => 'Vui lòng nhập nội dung',
+            'image.required' => 'Vui lòng nhập ảnh',
         ]);
-          
-        if($request->hasFile('image')) {
-            $url = Storage::put('new', $request->file('image'));
-        } else {
-            $url = '';
+    
+        // Kiểm tra và lưu ảnh mới nếu có
+        $url = DB::table('news')->where('id', $id)->value('image'); // Lấy đường dẫn cũ
+    
+        if ($request->hasFile('image')) {
+            // Nếu có ảnh mới, lưu lại và cập nhật đường dẫn
+            $url = $request->file('image')->store('new', 'public');
+            // $url = 'storage/' . $url; // Tạo URL truy cập
         }
-
+    
         DB::table('news')->where('id', $id)->update([
             'title' => $request->title,
             'image' => $url,
             'content' => $request->content,
         ]);
+    
         return redirect()->route('new.index');
     }
+    
 
     /**
      * Remove the specified resource from storage.

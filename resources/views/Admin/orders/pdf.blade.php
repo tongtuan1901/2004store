@@ -1,116 +1,153 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Order PDF</title>
-    <style>
-        body {
-            font-family: DejaVu Sans, sans-serif;
-            margin: 20px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<style>
+        .product-carousel {
+            max-width: 200px;
+            margin: auto;
         }
 
-        h1,
-        h2,
-        h3 {
-            text-align: center;
-        }
-
-        table {
+        .product-carousel .carousel-inner img {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        .badge {
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .bg-secondary {
-            background-color: #6c757d;
-            color: #fff;
-        }
-
-        .bg-success {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        .bg-warning {
-            background-color: #ffc107;
-            color: #fff;
-        }
-
-        .product-image {
-            max-width: 100px;
             height: auto;
+            object-fit: cover;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #000;
         }
     </style>
-</head>
+<div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+                style="height: 70px;">
+                <h1 class="mb-0" style="font-size: 1.5rem;">Chi Tiết Đơn Hàng</h1>
+                <a href="{{ url()->previous() }}" class="btn btn-warning text-white">Trở Lại</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 style="font-size: 1.5rem;">Chi tiết Vận Chuyển</h4>
+                        <br>
+                        <hr> <br>
+                        <div class="mb-3">
+                            <strong>ID Đơn Hàng:</strong> <span class="badge bg-secondary">{{ $order->id }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Tên khách hàng:</strong> <span>{{ $order->name }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Email:</strong> <span>{{ $order->email }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Số điện thoại:</strong> <span>{{ $order->phone }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Địa chỉ:</strong> <span>{{ $order->address }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Trạng thái:</strong> <span>{{ $order->status }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 style="font-size: 1.5rem;">Chi Tiết Đơn Hàng</h4>
+                        <br>
+                        <hr>
+                        <br>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Giá</th>
+                                    <th>Hình Ảnh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($order->products as $product)
+                                    <tr>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->pivot->quantity }}</td>
+                                        <td>{{ number_format($product->price) }} VNĐ</td>
+                                        <td>
+                                            <div class="product-carousel">
+                                                <div id="productCarousel{{ $product->id }}" class="carousel slide"
+                                                    data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                        @foreach ($product->images as $key => $image)
+                                                            <div
+                                                                class="carousel-item @if ($key === 0) active @endif">
+                                                                <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                    class="d-block w-100" alt="Product Image">
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button"
+                                                        data-bs-target="#productCarousel{{ $product->id }}"
+                                                        data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button"
+                                                        data-bs-target="#productCarousel{{ $product->id }}"
+                                                        data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="mb-3">
+                            <strong style="font-size: 1.5rem;">Tổng cộng:</strong> <span
+                                style="font-size: 20px">{{ number_format($order->total) }} VNĐ</span>
+                        </div>
+                        <form action="{{ route('admin-ordersdangvanchuyen.update', $order->id) }}" method="POST"
+                            class="mb-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Cập nhật Trạng thái</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử
+                                        lý</option>
+                                    <option value="Đã xử lý" {{ $order->status == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý
+                                    </option>
+                                    <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>
+                                        Đã giao hàng</option>
+                                    <option value="Đã nhận hàng" {{ $order->status == 'Đã nhận hàng' ? 'selected' : '' }}>
+                                        Đã nhận hàng</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn btn-primary">Cập nhật Trạng thái</button>
+                                @if ($order->status == 'Chờ xử lý')
+                                    <a href="{{ route('admin-orders.approve', $order->id) }}" class="btn btn-success">Duyệt
+                                        Đơn Hàng</a>
+                                @endif
+                                <a class="btn btn-success" href="{{ route('admin-orders.generatePDF', $order->id) }}">
+                                    <i class="fa fa-file-pdf"></i> Tải PDF
+                                </a>
+                            </div>
+                        </form>
 
-<body>
-    <h1>Chi Tiết Đơn Hàng</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div>
-        <strong>ID Đơn Hàng:</strong> <span class="badge bg-secondary">{{ $order->id }}</span>
-    </div>
-    <div>
-        <strong>Tên Khách Hàng:</strong> {{ $order->name }}
-    </div>
-    <div>
-        <strong>Email:</strong> {{ $order->email }}
-    </div>
-    <div>
-        <strong>Số Điện Thoại:</strong> {{ $order->phone }}
-    </div>
-    <div>
-        <strong>Địa Chỉ:</strong> {{ $order->address }}
-    </div>
-    <div>
-        <strong>Tổng Cộng:</strong>{{ number_format($order->total) }} VNĐ</span>
-    </div>
-    <div>
-        <strong>Trạng Thái:</strong>{{ $order->status }}</span>
-    </div>
 
-    <h3>Sản Phẩm</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Tên Sản Phẩm</th>
-                <th>Số Lượng</th>
-                <th>Giá</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($order->products as $product)
-                <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->pivot->quantity }}</td>
-                    <td>{{ number_format($product->price) }} VNĐ</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h3>Thông Tin Khác</h3>
-    <p><strong>Ngày Tạo Đơn:</strong> {{ $order->created_at->format('d/m/Y H:i:s') }}</p>
-    <p><strong>Ngày Cập Nhật:</strong> {{ $order->updated_at->format('d/m/Y H:i:s') }}</p>
 </body>
-
 </html>
+    
+ 

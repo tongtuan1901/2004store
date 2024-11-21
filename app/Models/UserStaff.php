@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract; // Thêm dòng này
-use Illuminate\Auth\Authenticatable; // Thêm dòng này
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 
-class UserStaff extends Model implements AuthenticatableContract // Thay đổi dòng này
+class UserStaff extends Model implements AuthenticatableContract
 {
-    use HasFactory, SoftDeletes, Authenticatable; // Thêm Authenticatable vào đây
-
+    use HasFactory, SoftDeletes, Authenticatable;
     protected $table = 'users_staff';
 
-    protected $fillable = [
-        'name', 
-        'email', 
-        'password', 
-        'role'
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role'];
 }

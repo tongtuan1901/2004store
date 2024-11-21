@@ -1,77 +1,100 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminCategoriesController extends Controller
 {
-  //list
-    public function index()
+    // List categories
+    public function index(Request $request)
     {
-        $listCategories = Category::all();
-         return view("Admin.Categories.index",compact("listCategories"));
+        $query = Category::query(); // Model của bạn
+    
+        // Kiểm tra nếu có từ khóa tìm kiếm
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+    
+        $listCategories = $query->orderBy('id', 'desc')->paginate(10);
+    
+        return view('admin.categories.index', compact('listCategories'));
     }
-// add
+    // Show create category form
     public function create()
     {
         return view('Admin.Categories.create');
     }
+  
 
-   //store
+    // Store new category
     public function store(Request $request)
     {
         $validateData = $request->validate([
             'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validateData['image'] = $imagePath;
+        }
 
-
-        $category = Category::create([
+        Category::create([
             'name' => $validateData['name'],
+            'image' => $validateData['image'] ?? null,
         ]);
 
-        return redirect()->route('admin-categories.index');
+        return redirect()->route('admin-categories.index')->with('success', 'Category created successfully.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    //edit
+    // Show edit category form
     public function edit(string $id)
     {
-        $category = Category::FindorFail($id);
+        $category = Category::findOrFail($id);
         return view('Admin.Categories.edit', compact('category'));
     }
 
-   // update
+    // Update category
     public function update(Request $request, string $id)
     {
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
         ]);
-        $category = Category::FindorFail($id);
 
-        $category -> update([
+        $category = Category::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            // Store new image
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validateData['image'] = $imagePath;
+        }
+
+        $category->update([
             'name' => $validateData['name'],
+            'image' => $validateData['image'] ?? $category->image, // Keep old image if no new image uploaded
         ]);
-        return redirect()->route('admin-categories.index');
+
+        return redirect()->route('admin-categories.index')->with('success', 'Category updated successfully.');
     }
-// delete
+
+    // Delete category
     public function destroy(string $id)
     {
-        $category = Category::FindorFail($id);
-        $category -> delete();
-        return redirect()->route('admin-categories.index');
+        $category = Category::findOrFail($id);
+        // Optionally delete image
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+        $category->delete();
+        return redirect()->route('admin-categories.index')->with('success', 'Category deleted successfully.');
     }
-
 }

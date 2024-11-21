@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('password', 255);
             $table->string('remember_token', 100)->nullable();
             $table->string('phone_number', 20)->nullable();
+            $table->decimal('balance', 15, 2)->default(0);
             $table->timestamps(); // Tạo trường created_at và updated_at
+            $table->softDeletes();
         });
     }
 

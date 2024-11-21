@@ -10,20 +10,23 @@ class AdminProducts extends Model
 {
 
 
-    use HasFactory, SoftDeletes; 
+    use HasFactory, SoftDeletes;
+
+
+protected  $table = "products";
+
+   
 
 
     protected $fillable = [
         'category_id',
+        'brand_id',
         'name',
         'description',
         'price',
         'price_sale',
         'status',
         'quantity',
-        'sizes',
-        'colors',
-
     ];
 
     public function category()
@@ -31,31 +34,91 @@ class AdminProducts extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-
-    // Quan hệ với ProductImage
-
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
+    public function comments() 
+    {
+         return $this->hasMany(Comment::class, 'product_id');
+     }
 
-
+    // Relationship with AdminOrder
     public function orders()
     {
         return $this->belongsToMany(AdminOrder::class, 'order_product', 'product_id', 'order_id')->withPivot('quantity');
     }
 
-    public function getTable()
+    // Relationship with AdminCoupons
+    // public function coupons()
+    // {
+    //     return $this->hasMany(AdminCoupons::class);
+    // }
+
+    // Relationship with ProductVariation
+
+    
+    public function reviews()
     {
-        return 'products';
+        return $this->hasMany(Review::class, 'product_id');
     }
 
-    public function getTable()
+
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class, 'product_id');
+    }
+
+
+    // Override the table name if needed
+    // public function getTable()
+
+    // public function coupons()
+
+    // {
+    //     return $this->hasMany(AdminCoupons::class);
+    // }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    // public function firstImage()
+    // {
+    //     return $this->hasOne(ProductImage::class, 'product_id');
+    // }
+
+    public function coupons()
+    {
+        return $this->hasMany(AdminCoupons::class);
+    }
+    // public function brand()
+    // {
+    //     return $this->hasOne(Brand::class);
+    // }
+    // public function reviews()
+    // {
+    //     return $this->hasMany(Review::class);
+    // }
+
+//     public function getTable()
+//     {
+//         return 'products';
+//     }
+
+//     public function getTable()
+// {
+//     return 'products';
+// }
+
+public function firstImage()
 {
-    return 'products';
+    return $this->hasOne(ProductImage::class, 'product_id');
 }
-public function coupons()
+public function review()
 {
-    return $this->hasMany(AdminCoupons::class);
+    return $this->hasMany(Review::class);
+}
 
 }

@@ -1,143 +1,103 @@
-@extends('Admin/layouts/master/master')
-@section('content')
-    <div class="w-full relative mb-4">
-        <div class="flex-auto p-0 md:p-4">
-            <div class="flex flex-wrap gap-4 mb-3">
-                {{-- <div class="mb-2 w-44">
-                    <select id="Category"
-                        class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                        <option class="dark:text-slate-700">Tất cả danh mục</option>
-                        <option class="dark:text-slate-700">Áo</option>
-                        <option class="dark:text-slate-700">Quần</option>
-                    </select>
-                </div> --}}
-                <div class="ms-auto">
-                    <form>
-                        <div class="relative">
-                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
-                            </div>
-                            <input type="search" id="productSearch"
-                                class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700 pl-10 p-2.5"
-                                placeholder="search">
+@extends('Admin.layouts.master')
+@section('contentAdmin')
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <button class="btn btn-primary">
+                                <a href="{{ route('admin-banners.create') }}" class="text-white">Thêm banner</a>
+                            </button>
+
+                            {{-- <button class="btn btn-secondary">
+                                <a href="{{ url('Admin/Banners/trash') }}" class="text-white">Thùng rác</a>
+                            </button> --}}
                         </div>
-                    </form>
-                </div>
-                <div>
-                    <button
-                        class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
-                        <a href="{{route('admin-banners.create')}}"> Thêm banner</a>
-                    </button>
-                    <button
-                        class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
-                        <a href="{{url('Admin/Banners/trash')}}"> Thung rac</a>
-                    </button>
-                </div>
-            </div>
 
-
-            <div id="myTabContent">
-                <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-900" id="all" role="tabpanel"
-                    aria-labelledby="all-tab">
-                    <div class="grid grid-cols-1 p-0 md:p-4">
-                        <div class="sm:-mx-6 lg:-mx-8">
-                            <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                                <table class="w-full">
-                                    <thead class="bg-gray-50 dark:bg-slate-700/20">
+                        <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
+                            <div class="sherah-table p-0">
+                                <table id="sherah-table__banner" class="sherah-table__main sherah-table__main-v3">
+                                    <!-- sherah Table Head -->
+                                    <thead class="sherah-table__head">
                                         <tr>
-                                            <th scope="col" class="p-3">
-                                                <label class="custom-label">
-                                                    <div
-                                                        class="bg-white dark:bg-slate-600/40 border border-slate-200 dark:border-slate-600 rounded w-5 h-5  inline-block  text-center -mb-[5px]">
-                                                        <input type="checkbox" class="hidden">
-                                                        <i
-                                                            class="icofont-verification-check hidden text-ms text-brand-500 dark:text-slate-200 leading-5"></i>
-                                                    </div>
-                                                </label>
-                                            </th>
-                                            <th scope="col"
-                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                STT
-                                            </th>
-                                            <th scope="col"
-                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Title
-                                            </th>
-
-                                            <th scope="col"
-                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Content
-                                            </th>
-                                            <th scope="col"
-                                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                Image
-                                            </th>
+                                            <th class="sherah-table__column-1 sherah-table__h1">STT</th>
+                                            <th class="sherah-table__column-2 sherah-table__h2">Tiêu đề</th>
+                                            <th class="sherah-table__column-3 sherah-table__h3">Nội dung</th>
+                                            <th class="sherah-table__column-4 sherah-table__h4">Hình ảnh</th>
+                                            <th class="sherah-table__column-9 sherah-table__h8">Hành động</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!-- 1 -->
-                                        @foreach ($listBanners as $key => $banner)
-                                            <tr
-                                                class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
-                                                <td class="w-4 p-4">
-                                                    <label class="custom-label">
-                                                        <div
-                                                            class="bg-white dark:bg-slate-600/40 border border-slate-200 dark:border-slate-600 rounded w-5 h-5  inline-block  text-center -mb-[5px]">
-                                                            <input type="checkbox" class="hidden">
-                                                            <i
-                                                                class="icofont-verification-check hidden text-ms text-brand-500 dark:text-slate-200 leading-5"></i>
-                                                        </div>
-                                                    </label>
-                                                </td>
-                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
-                                                        {{++$key}}
+                                    <tbody class="sherah-table__body">
+                                        @forelse ($listBanners as $key => $banner)
+                                            <tr>
+                                                <td class="sherah-table__column-1 sherah-table__data-1">
+                                                    <div class="sherah-table__product">
+                                                        {{ $key + 1 }}
                                                     </div>
                                                 </td>
-                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
-                                                        {{$banner->title}}
+                                                <td class="sherah-table__column-2 sherah-table__data-2">
+                                                    <div class="sherah-table__vendor">
+                                                        <h4 class="sherah-table__vendor--title">{{ $banner->title }}</h4>
                                                     </div>
                                                 </td>
-                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white w-[100px]">
-                                                    <div class="flex items-center">
-                                                        {{$banner->content}}
+                                                <td class="sherah-table__column-3 sherah-table__data-3">
+                                                    <div class="sherah-table__product-content">
+                                                        {{ $banner->content }}
                                                     </div>
                                                 </td>
-                                                
-                                                <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
+                                                <td class="sherah-table__column-4 sherah-table__data-4">
+                                                    <div class="sherah-table__product-content">
                                                         @if ($banner->image)
-                                                            <img src="{{asset('storage/'.$banner->image)}}" style="max-height: 150 ; max-width: 150"  alt="">
+                                                            <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner Image" class="w-20 h-20 object-cover">
                                                         @else
-                                                            Khong co anh
+                                                            <span>Không có ảnh</span>
                                                         @endif
-                                                        
                                                     </div>
                                                 </td>
-                                                <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                    <a href="{{route('admin-banners.edit',$banner->id)}}"><i
-
-                                                        class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400">Sửa</i>
-                                                    </a>
-                                                    <form action="{{url('Admin/Banners/delete',$banner->id)}}" method="post">
-                                                        @csrf                                               
-                                                        <button onclick="confirm('Are you sure???')" type="submit"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400">Xoá</i></button>
-                                                    </form>
+                                                <td class="sherah-table__column-9 sherah-table__data-9">
+                                                    <div class="sherah-table__status__group">
+                                                        <!-- Sửa -->
+                                                        <a href="{{ route('admin-banners.edit', $banner->id) }}" class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">
+                                                            <svg class="sherah-color3__fill" xmlns="http://www.w3.org/2000/svg" width="18.29" height="18.252" viewBox="0 0 18.29 18.252">
+                                                                <g id="Group_132" data-name="Group 132" transform="translate(-234.958 -37.876)">
+                                                                    <path id="Path_481" data-name="Path 481" d="M242.545,95.779h-5.319a2.219,2.219,0,0,1-2.262-2.252c-.009-1.809,0-3.617,0-5.426q0-2.552,0-5.1a2.3,2.3,0,0,1,2.419-2.419q2.909,0,5.818,0c.531,0,.87.274.9.715a.741.741,0,0,1-.693.8c-.3.026-.594.014-.892.014q-2.534,0-5.069,0c-.7,0-.964.266-.964.976q0,5.122,0,10.245c0,.687.266.955.946.955q5.158,0,10.316,0c.665,0,.926-.265.926-.934q0-2.909,0-5.818a.765.765,0,0,1,.791-.853.744.744,0,0,1,.724.808c.007,1.023,0,2.047,0,3.07s.012,2.023-.006,3.034A2.235,2.235,0,0,1,248.5,95.73a1.83,1.83,0,0,1-.458.048Q245.293,95.782,242.545,95.779Z" transform="translate(0 -39.652)" fill="#09ad95" />
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                        <!-- Xóa -->
+                                                        <form action="{{ route('admin-banners.destroy', $banner->id) }}" method="post" style="display:inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="sherah-table__action sherah-color2" style="border: none; background: none;" onclick="return confirm('Bạn có chắc chắn muốn xóa banner này không?');">
+                                                                <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg" width="16.247" height="18.252" viewBox="0 0 16.247 18.252">
+                                                                    <g id="Icon" transform="translate(-160.007 -18.718)">
+                                                                        <path id="Path_484" data-name="Path 484" d="M185.344,88.136c0,1.393,0,2.786,0,4.179-.006,1.909-1.523,3.244-3.694,3.248q-3.623.007-7.246,0c-2.15,0-3.682-1.338-3.687-3.216q-.01-4.349,0-8.7a.828.828,0,0,1,.822-.926.871.871,0,0,1,1,.737c.016.162.006.326.006.489q0,4.161,0,8.321c0,1.061.711,1.689,1.912,1.69q3.58,0,7.161,0c1.2,0,1.906-.631,1.906-1.695q0-4.311,0-8.622a.841.841,0,0,1,.708-.907.871.871,0,0,1,1.113.844C185.349,85.1,185.343,86.618,185.344,88.136Z" transform="translate(-9.898 -58.597)" />
+                                                                        <path id="Path_485" data-name="Path 485" d="M164.512,21.131c0-.517,0-.98,0-1.443.006-.675.327-.966,1.08-.967q2.537,0,5.074,0c.755,0,1.074.291,1.082.966.005.439.005.878.009,1.317a.615.615,0,0,0,.047.126h.428c1,0,2,0,3,0,.621,0,1.013.313,1.019.788s-.4.812-1.04.813q-7.083,0-14.165,0c-.635,0-1.046-.327-1.041-.811s.4-.786,1.018-.789C162.165,21.127,163.3,21.131,164.512,21.131Zm1.839-.021H169.9v-.764h-3.551Z" transform="translate(0 0)" />
+                                                                        <path id="Path_486" data-name="Path 486" d="M225.582,107.622c0,.9,0,1.806,0,2.709a.806.806,0,0,1-.882.815c-.5,0-.912-.393-.915-.867s0-1.66,0-2.465c0-.472.398-.865.887-.866.465,0,.879.405.882.875C225.582,107.806,225.582,107.713,225.582,107.622Z" transform="translate(-50.204 -66.006)" />
+                                                                    </g>
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                        @endforeach
-                                        <!-- 2 -->
-
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center">Không có banner nào.</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
-                            </div><!--end div-->
-                        </div><!--end div-->
-                    </div><!--end grid-->
-                </div>
-            </div>
-        </div><!--end card-body-->
-    </div><!--end card-->
-    </div><!--end col-->
-    </div> <!--e  qnd grid-->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section>
+
 @endsection
