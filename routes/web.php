@@ -13,9 +13,6 @@ use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\UsersController;
-
-use App\Http\Controllers\Admin\AdminCouponsController;
-use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\UserController;
 
@@ -31,9 +28,6 @@ use App\Http\Controllers\UserController;
 */
 //View Admin
 Route::resource('admin-home', HomeAdminController::class);
-Route::resource('admin-products', AdminProductsController::class);
-// Danh mục
-Route::resource('admin-categories', AdminCategoriesController::class);
 
 
 
