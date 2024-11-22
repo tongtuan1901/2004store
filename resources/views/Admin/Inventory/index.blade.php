@@ -50,19 +50,31 @@
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                             </div>
                                             <div class="ml-4 flex items-end">
-                                                <button type="submit"
-                                                    class="inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Lọc</button>
+                                                <button type="submit" 
+                                                    style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: 1px solid #0d6efd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); font-size: 14px; font-weight: 500; color: white; background-color: #0d6efd; cursor: pointer; transition: all 0.3s ease;" 
+                                                    onmouseover="this.style.backgroundColor='#0b5ed7'" 
+                                                    onmouseout="this.style.backgroundColor='#0d6efd'">
+                                                    Lọc
+                                                </button>
+
+
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end"> <button> <a
-                                            href="{{ route('inventory.create') }}"
-                                            class="inline-flex items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+                                <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end"> 
+                                    <button 
+                                        style="display: inline-block; padding: 10px 20px; border: 1px solid #198754; border-radius: 8px; background-color: #198754; color: white; font-size: 14px; font-weight: 500; text-align: center; cursor: pointer; text-decoration: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;" 
+                                        onmouseover="this.style.backgroundColor='#157347'" 
+                                        onmouseout="this.style.backgroundColor='#198754'">
+                                        <a href="{{ route('inventory.create') }}" style="color: inherit; text-decoration: none;">
                                             Thêm Bản Ghi Tồn Kho
-                                        </a> </button> </div>
+                                        </a>
+                                    </button>
+    
+                                </div>
                             </div>
                             <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
                                 <div class="sherah-table p-0">

@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.master')
 @section('contentAdmin')
     <section class="sherah-adashboard sherah-show">
@@ -15,6 +14,15 @@
                                     </div>
 
                                 </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form action="{{ route('admin-categories.index') }}" method="GET" class="d-flex mb-3">
+                                            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Tìm kiếm danh mục...">
+                                            <button type="submit" class="btn btn-primary btn-sm ml-1">Tìm kiếm</button>
+                                        </form>
+                                    </div>
+                                </div>
+                             
                                 <div style="display: flex; justify-content: flex-end;">
                                     <a href="{{ route('admin-categories.create') }}" class="sherah-btn sherah-gbcolor">Add
                                         New</a>
@@ -135,5 +143,3 @@
     </div>
     </section>
 @endsection
-
-

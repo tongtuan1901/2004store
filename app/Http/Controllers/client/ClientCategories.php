@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\admin\AdminProductsController;
 use App\Http\Controllers\Controller;
 use App\Models\AdminProducts;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
@@ -29,22 +30,21 @@ class ClientCategories extends Controller
 
     return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
 }
-    public function showByBrand($id)
-    {
-        $categories = Category::all(); // Nếu bạn cần hiển thị danh mục
-        $products = AdminProducts::where('brand_id', $id)->paginate(8); // Lấy sản phẩm theo ID thương hiệu
-    
-        $colors = Color::all();
-        $sizes = Size::all();
-        $selectedCategories = [];
-        $selectedPrices = [];
-        $selectedFilters = [];
-        $selectedColors = [];
-        $selectedSizes = [];
-    
-        return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
-    }
-    
+public function showByBrand($id)
+{
+    $categories = Category::all();
+    $products = AdminProducts::where('brand_id', $id)->paginate(8);
+    $brand = Brand::find($id); 
+    $colors = Color::all();
+    $sizes = Size::all();
+    $selectedCategories = [];
+    $selectedPrices = [];
+    $selectedFilters = [];
+    $selectedColors = [];
+    $selectedSizes = [];
+
+    return view("Client.ClientCategories.ListBrand", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes','brand'));
+}
 
     public function filter(Request $request)
     {

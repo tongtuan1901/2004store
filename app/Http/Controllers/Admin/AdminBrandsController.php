@@ -10,10 +10,16 @@ use Illuminate\Support\Facades\Storage;
 class AdminBrandsController extends Controller
 {
     // List brands
-    public function index()
+    public function index(Request $request)
     {
-        $listBrands = Brand::all();
-        return view("Admin.Brands.index", compact("listBrands"));
+        $query = Brand::query();
+    
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+    
+        $listBrands = $query->paginate(10); // Sử dụng phân trang nếu cần
+        return view('admin.brands.index', compact('listBrands'));
     }
 
     // Show create brand form
