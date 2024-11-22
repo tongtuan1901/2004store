@@ -32,6 +32,20 @@ public function index(Request $request)
 //     $users = User::withTrashed()->get();
 //     return view('Customer.users.index', compact('users'));
 // }
+public function search(Request $request)
+{
+    $keyword = $request->keyword;
+
+    $users = User::query()
+        ->when($keyword, function ($query, $keyword) {
+            $query->where('name', 'like', "%{$keyword}%")
+                  ->orWhere('email', 'like', "%{$keyword}%")
+                  ->orWhere('phone_number', 'like', "%{$keyword}%");
+        })
+        ->get();
+
+    return response()->json($users);
+}
 
     public function create()
     {

@@ -16,7 +16,8 @@ use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-
+// use App\Http\Controllers\Admin\HomeAdminController;
+// use App\Http\Controllers\UserController;
 use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\Admin\BankCardController;
@@ -33,6 +34,8 @@ use App\Http\Controllers\Admin\DiscountController;
 |
 */
 //View Admin
+// Route::resource('admin-home', HomeAdminController::class);
+
 
 
 use App\Http\Controllers\client\AddressController;
@@ -449,7 +452,16 @@ Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'sho
 Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
 Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
 //thuong hiệu
-Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+//search user
+Route::get('/users/search', [AdminUserController::class, 'search'])->name('users.search');
+//search category
+Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
+
+
+
+
 
 
 
