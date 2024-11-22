@@ -13,6 +13,34 @@
                                     <div class="sherah-breadcrumb mg-top-30">
                                         <h2 class="sherah-breadcrumb__title">Danh sách sản phẩm</h2>
                                     </div>
+                                    <form action="{{ route('admin-products.index') }}" method="GET">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select name="price_range" class="form-control">
+                                                    <option value="">-- Chọn khoảng giá --</option>
+                                                    <option value="0-100000" {{ request('price_range') == '0-100000' ? 'selected' : '' }}>Dưới 100,000 VND</option>
+                                                    <option value="100000-500000" {{ request('price_range') == '100000-500000' ? 'selected' : '' }}>100,000 - 500,000 VND</option>
+                                                    <option value="500000-1000000" {{ request('price_range') == '500000-1000000' ? 'selected' : '' }}>500,000 - 1,000,000 VND</option>
+                                                    <option value="1000000-5000000" {{ request('price_range') == '1000000-5000000' ? 'selected' : '' }}>1,000,000 - 5,000,000 VND</option>
+                                                    <option value="5000000+" {{ request('price_range') == '5000000+' ? 'selected' : '' }}>Trên 5,000,000 VND</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select name="status" class="form-control">
+                                                    <option value="">-- Chọn trạng thái --</option>
+                                                    <option value="in_stock" {{ request('status') == 'in_stock' ? 'selected' : '' }}>Tồn hàng</option>
+                                                    <option value="out_of_stock" {{ request('status') == 'out_of_stock' ? 'selected' : '' }}>Hết hàng</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                <a href="{{ route('admin-products.index') }}" class="btn btn-secondary">Reset</a>
+                                            </div>
+                                        </div>
+                                    </form>
 
 
                                 </div>
