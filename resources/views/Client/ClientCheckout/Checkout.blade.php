@@ -843,7 +843,7 @@
 		</svg>
 	</div>
 	<!-- xóa dữ liệu mua ngay khi thoát ra -->
-	<script>
+	<!-- <script>
 window.addEventListener('beforeunload', function() {
     if (@json($clearBuyNow ?? false)) {
         fetch('{{ route("clear-buy-now") }}', {
@@ -854,7 +854,7 @@ window.addEventListener('beforeunload', function() {
         });
     }
 });
-</script>
+</script> -->
 
 </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
 </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>
