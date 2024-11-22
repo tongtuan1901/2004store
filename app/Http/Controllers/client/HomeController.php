@@ -57,20 +57,16 @@ class HomeController extends Controller
         $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
         // dd($products);
 
-<<<<<<< HEAD
+
         // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
 
         $listBrands = Brand::all();
         $news = News::latest()->limit(5)->get();
 
         return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
-=======
-        
-        $listBrands = Brand::all();
-        $news = News::latest()->limit(5)->get();
 
-        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
->>>>>>> 44987d029045ce66c46803b14943862e75e608ac
+        
+
 
         
 

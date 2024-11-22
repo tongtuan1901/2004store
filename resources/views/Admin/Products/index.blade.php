@@ -197,10 +197,14 @@
                                                                 </svg>
                                                             </a>
                                                         </div>
+                                                     
                                                     </td>
+                                                   
+                                                   
 
 
                                                 </tr>
+                                                
 
                                             @empty
                                                 <tr>
@@ -209,9 +213,14 @@
                                                         nào được tìm thấy.</td>
                                                 </tr>
                                             @endforelse
+                                         
 
                                         </tbody>
+                                      
                                     </table>
+                                    <div class="pagination">
+                                        {{ $listProducts->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
