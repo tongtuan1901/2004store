@@ -16,7 +16,8 @@ use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-
+// use App\Http\Controllers\Admin\HomeAdminController;
+// use App\Http\Controllers\UserController;
 use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\Admin\BankCardController;
@@ -33,6 +34,8 @@ use App\Http\Controllers\Admin\DiscountController;
 |
 */
 //View Admin
+// Route::resource('admin-home', HomeAdminController::class);
+
 
 
 use App\Http\Controllers\client\AddressController;
