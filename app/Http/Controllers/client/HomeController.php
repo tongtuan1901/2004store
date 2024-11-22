@@ -44,6 +44,15 @@ class HomeController extends Controller
     
        
 
+        // $bestSaller = AdminProducts::select('products.*')
+        // ->join('order_items', 'products.id', '=', 'order_items.product_id')
+        // ->selectRaw('SUM(order_items.quantity) as total_quantity')
+        // ->groupBy('products.id')
+        // ->orderByDesc('total_quantity')
+        // ->limit(5)
+        // ->get();
+
+        
         $bestSaller = AdminProducts::select('products.*')
         ->join('order_items', 'products.id', '=', 'order_items.product_id')
         ->selectRaw('SUM(order_items.quantity) as total_quantity')
