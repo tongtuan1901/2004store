@@ -17,33 +17,57 @@ use App\Models\Size;
 class AdminProductsController extends Controller
 {
     public function index(Request $request)
-    {
-        $brands = Brand::all();
-        $categories = Category::all();
-        $listProducts = AdminProducts::with(['category', 'images', 'variations.size', 'variations.color'])
-            ->withTrashed()
-            ->select('products.*')
-            ->get();
+{
+    // Lấy dữ liệu cần thiết
+    $brands = Brand::all();
+    $categories = Category::all();
 
-        $query = AdminProducts::query();
+    // Truy vấn cơ bản
+    $query = AdminProducts::with(['category', 'images', 'variations.size', 'variations.color'])
+        ->withTrashed()
+        ->select('products.*');
 
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        if ($request->filled('price_range')) {
-            $priceRange = explode('-', $request->price_range);
-            if (count($priceRange) === 2) {
-                $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
-            } elseif ($priceRange[0] === '500000+') {
-                $query->where('price_sale', '>', 500000);
-            }
-        }
-
-        $listProducts = $query->paginate(10);
-
-        return view('admin.Products.index', compact('listProducts', 'categories', 'brands'));
+    // Tìm kiếm theo từ khóa (tên sản phẩm, mô tả, danh mục, thương hiệu)
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', '%' . $search . '%')
+              ->orWhere('description', 'like', '%' . $search . '%')
+              ->orWhereHas('category', function ($catQuery) use ($search) {
+                  $catQuery->where('name', 'like', '%' . $search . '%');
+              })
+              ->orWhereHas('brand', function ($brandQuery) use ($search) {
+                  $brandQuery->where('name', 'like', '%' . $search . '%');
+              })
+              ->orWhere('price_sale', 'like', '%' . $search . '%');
+        });
     }
+
+    // Tìm kiếm theo trạng thái tồn hàng hay hết hàng
+    if ($request->filled('status')) {
+        if ($request->status === 'in_stock') {
+            $query->where('status', '=', 0); // Tồn hàng
+        } elseif ($request->status === 'out_of_stock') {
+            $query->where('status', '=', 1); // Hết hàng
+        }
+    }
+
+    // Tìm kiếm theo khoảng giá
+    if ($request->filled('price_range')) {
+        $priceRange = explode('-', $request->price_range);
+        if (count($priceRange) === 2) {
+            $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
+        } elseif ($priceRange[0] === '5000000+') {
+            $query->where('price_sale', '>', 5000000);
+        }
+    }
+
+    // Lấy kết quả phân trang
+    $listProducts = $query->paginate(10);
+
+    // Trả về view với dữ liệu
+    return view('admin.Products.index', compact('listProducts', 'categories', 'brands'));
+}
 
     public function create()
     {

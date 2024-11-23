@@ -749,15 +749,28 @@
                                                     $finalTotal = $totalPrice + $shippingFee;
                                                 @endphp		
                                                 @php
-                                                    $totalPrice = 0;
-                                                    foreach ($cart as $item) {
-                                                        $price = $item->variation->price ?? $item->product->price;
-                                                        $totalPrice += $price * $item->quantity;
-                                                    }
-                                                    $shippingFee = 40000;
-                                                    $discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
-                                                    $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
-                                                @endphp								
+    $totalPrice = 0;
+    foreach ($cart as $item) {
+        // Kiểm tra $item có phải là object không
+        if (is_object($item)) {
+            $price = $item->variation->price ?? $item->product->price ?? 0;
+            $quantity = $item->quantity ?? 0;
+        } elseif (is_array($item)) {
+            // Trường hợp $item là mảng
+            $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
+            $quantity = $item['quantity'] ?? 0;
+        } else {
+            $price = 0;
+            $quantity = 0;
+        }
+
+        $totalPrice += $price * $quantity;
+    }
+
+    $shippingFee = 40000;
+    $discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
+    $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+@endphp							
                                                     <th class="total-line__name">
 														Tạm tính
 													</th>
@@ -895,7 +908,7 @@
 		</svg>
 	</div>
 	<!-- xóa dữ liệu mua ngay khi thoát ra -->
-	<script>
+	<!-- <script>
 window.addEventListener('beforeunload', function() {
     if (@json($clearBuyNow ?? false)) {
         fetch('{{ route("clear-buy-now") }}', {
@@ -906,7 +919,11 @@ window.addEventListener('beforeunload', function() {
         });
     }
 });
-</script>
+
+</script> -->
+
+<!-- 
+</script> -->
 <style>
     .discount-wrapper {
       display: flex; /* Hiển thị các phần tử trên cùng một hàng */
@@ -946,5 +963,6 @@ window.addEventListener('beforeunload', function() {
   }
   
   </style>
+
 </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
 </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>
