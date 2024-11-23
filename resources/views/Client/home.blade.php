@@ -300,12 +300,12 @@
                                 </div>
                                 <div class="product-item-detail">
                                     <div class="product-item-detail-flex">
-                                        <a class="product-item-detail-vendor" href="{{ route('client-products.index') }}"
+                                        <a class="product-item-detail-vendor" href="{{ route('client-products.show', $product->id) }}"
                                             title="CHACOAL"
                                             aria-label="CHACOAL"><span>{{ $product->category->name ?? '' }}</span></a>
                                         <div class="sapo-product-reviews-badge" data-id="36389533"></div>
                                     </div>
-                                    <h3 class="product-item-detail-title"><a href="{{ route('client-products.index') }}"
+                                    <h3 class="product-item-detail-title"><a href="{{ route('client-products.show', $product->id) }}"
                                             title="{{ $product->name }}"
                                             aria-label="{{ $product->name }}">{{ $product->name }}</a></h3>
                                     <div class="product-item-detail-price">
