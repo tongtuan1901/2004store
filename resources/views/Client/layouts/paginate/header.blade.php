@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html class="no-js" lang="vi">
 
@@ -520,6 +521,11 @@
         .product-item-detail-variants-colors .product-item-detail-variants-color-den {
             background-color: #000000;
         }
+        .headers3-right .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0; /* Tùy chỉnh để tránh khoảng cách */
+}
+
     </style>
     </script>
     <script>
@@ -553,46 +559,83 @@
 @endif
 
 
-            <div class="headers3-wrap">
-                <div class="headers3-left">
-                    <form class="tool-search" action="">
-                        <input type="hidden" name="type" value="product">
-                        <input required name="q" autocomplete="off" type="text"
-                            placeholder="Tìm kiếm sản phẩm...">
-                        <button type="submit" title="Tìm kiếm"><i class="fal fa-search"></i></button>
-                        <button class="tool-search-overplay" title="Đóng"></button>
-                        <div class="tool-search-smart"></div>
-                    </form>
-                </div>
-                <div class="headers3-center">
-                    <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
-                        <img src="{{ asset('assets/images/2004Store.png') }}"
-                            alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion" >
-                    </a>
-                </div>
-                <div class="headers3-right">
-                <button class="shop-tool" type="button" title="Tài khoản">
-                @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
-                    <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản -->
-                    <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a>
+                <div class="headers3-wrap">
+                    <div class="headers3-left">
+                        <form class="tool-search" action="">
+                            <input type="hidden" name="type" value="product">
+                            <input required name="q" autocomplete="off" type="text"
+                                placeholder="Tìm kiếm sản phẩm...">
+                            <button type="submit" title="Tìm kiếm"><i class="fal fa-search"></i></button>
+                            <button class="tool-search-overplay" title="Đóng"></button>
+                            <div class="tool-search-smart"></div>
+                        </form>
+                    </div>
+                    <div class="headers3-center">
+                        <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
+                            <img src="{{ asset('assets/images/2004Store.png') }}"
+                                alt="F1GENZ Model Fashion" title="F1GENZ Model Fashion" >
+                        </a>
+                    </div>
+                    <div class="headers3-right">
+                        {{-- <button class="shop-tool" type="button" title="Tài khoản"> --}}
+                        @if (Auth::check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
+                        {{-- <a href="{{route('address.list', ['userId' => Auth::user()->id])}}"><span class="username">{{ Auth::user()->name }}</span> </a><!-- Hiển thị tên tài khoản --> --}}
+                        {{-- <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a> --}}
+                        Số dư ví: {{ number_format(Auth::user()->balance, 0, ',', '.') }} VND
                     <div class="wallet-balance">
-                    <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a>
-            <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong>
-    </div>
-                    <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
-                    </form>
 
-                    <!-- Nút đổi mật khẩu -->
-                    <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a>
+                        {{-- <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a> --}}
+                        {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
+                        <div class="headers3-right">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle shop-tool" type="button" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if (Auth::check())
+                                        {{ Auth::user()->name }} <!-- Hiển thị tên người dùng -->
+                                    @else
+                                        <i class="fal fa-user"></i> <!-- Hiển thị icon người dùng -->
+                                    @endif
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                                    @if (Auth::check())
 
-                @else
-        <a href="{{ route('client-login.index') }}">
-            <i class="fal fa-user"></i>
-        </a>
-    @endif
-</button>
+                                        <!-- Mục dropdown khi người dùng đã đăng nhập -->
+                                        <a class="dropdown-item" href="{{ route('address.list', ['userId' => Auth::user()->id]) }}">Địa chỉ</a>
+                                        <a class="dropdown-item" href="{{ route('client.order', ['userId' => Auth::user()->id]) }}">Danh sách đơn hàng</a>
+                                        <div class="dropdown-item">
+                                            <a href="{{ route('client-banks.index', ['userId' => Auth::user()->id]) }}">Nạp Ví</a>
+                                            {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
+                                        </div>
+                                        <div class="dropdown-item">
+                                            <a href="{{ route('client-banks.viewRutTien', ['userId' => Auth::user()->id]) }}">Rút tiền</a>
+                                            {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
+                                        </div>
+                                        <a class="dropdown-item" href="{{ route('client-password.change') }}">Đổi mật khẩu</a>
+                                        <form action="{{ route('client-logout') }}" method="POST" class="dropdown-item p-0">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link text-danger">Đăng xuất</button>
+                                        </form>
+                                    @else
+                                        <!-- Mục dropdown khi người dùng chưa đăng nhập -->
+                                        <a class="dropdown-item" href="{{ route('client-login.index') }}">Đăng nhập</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        {{-- <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-logout" title="Đăng xuất">Đăng xuất</button>
+                        </form> --}}
+
+                        <!-- Nút đổi mật khẩu -->
+                        {{-- <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a> --}}
+
+                    @else
+                <a href="{{ route('client-login.index') }}">
+                <i class="fal fa-user"></i>
+                </a>
+                @endif
+                </button>
 
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>

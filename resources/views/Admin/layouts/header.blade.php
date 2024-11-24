@@ -35,7 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
-No modifications are needed as there is no selected code portion.    
+   
 </head>
 
 <body id="sherah-dark-light">
@@ -522,6 +522,9 @@ No modifications are needed as there is no selected code portion.
                                                         class="menu-bar__name">Đang chờ duyệt</span></span></a></li>
                                         <li><a href='{{ route('admin.approved-customers') }}'><span
                                                     class="menu-bar__text"><span class="menu-bar__name">Danh sách khách hàng đã nạp
+                                                    </span></span></a></li>
+                                        <li><a href='{{ route('admin.listYeuCauRutTien') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Yêu cầu rút tiền
                                                     </span></span></a></li>
                                     </ul>
                                 </div>

@@ -50,12 +50,12 @@ class HomeController extends Controller
         //     ->get();
 
         $bestSaller = AdminProducts::select('products.*')
-        ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        ->groupBy('products.id')
-        ->orderByDesc('total_quantity')
-        ->limit(5)
-        ->get();
+            ->join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->selectRaw('SUM(order_items.quantity) as total_quantity')
+            ->groupBy('products.id')
+            ->orderByDesc('total_quantity')
+            ->limit(5)
+            ->get();
 
         $bestSaller->transform(function ($productSeller) {
             if ($productSeller->price > 0) {
@@ -67,7 +67,7 @@ class HomeController extends Controller
         });
 
         // dd($products);
-        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands'));
+        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'listBrands'));
 
 
         /**

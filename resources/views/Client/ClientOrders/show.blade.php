@@ -102,11 +102,16 @@
                                     <td>{{ $item->quantity }}</td>
                                     <td>{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }} VND</td>
                                     <td>{{ number_format($item->product->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
-                                    @if($order->status == 'Hoàn thành')
+                                    @if($order->status == 'Hoàn thành' && !\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
                                         <td>
-                                            <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-secondary btn-sm">Đánh giá</a>
+                                            <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <span class="text-muted">Đã đánh giá</span>
                                         </td>
                                     @endif
+
                                 </tr>
                             @endforeach
                         </tbody>

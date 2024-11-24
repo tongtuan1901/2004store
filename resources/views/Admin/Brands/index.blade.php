@@ -14,6 +14,28 @@
                                         <h2 class="sherah-breadcrumb__title">Danh sách thương hiệu</h2>
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form action="{{ route('admin-brands.index') }}" method="GET" class="d-flex mb-3">
+                                            <input 
+                                                type="text" 
+                                                name="search" 
+                                                value="{{ request('search') }}" 
+                                                class="form-control" 
+                                                placeholder="Tìm kiếm thương hiệu..."
+                                            >
+                                            <button 
+                                                type="submit" 
+                                                class="btn btn-primary btn-sm ml-1"
+                                            >
+                                                Tìm kiếm
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                
                                 <div style="display: flex; justify-content: flex-end;">
                                     <a href="{{ route('admin-brands.create') }}" class="sherah-btn sherah-gbcolor">Thêm
                                         mới</a>

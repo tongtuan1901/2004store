@@ -553,6 +553,14 @@
     </script>
     
     <script >
+//         $(document).ready(function () {
+//     $('.dropdown').hover(function () {
+//         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+//     }, function () {
+//         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+//     });
+// });
+
         $("body").removeClass("preload");
         document.addEventListener('lazybeforeunveil', function(e){
             var bg = e.target.getAttribute('data-bg');

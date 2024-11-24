@@ -293,7 +293,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
             <div class="product-item-wrap">
                 <div class="product-item-top">
                     <div class="product-item-top-image">
-                        <a href="#" class="product-item-top-image-showcase">
+                        <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
                             <img src="{{ Storage::url($product->images->first()->image_path) }}"
                                  alt="{{ $product->name }}"
                                  title="{{ $product->name }}" width="480" height="480" loading="lazy" decoding="async">
@@ -307,19 +307,168 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                     <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
                         <!-- SVG icon for wishlist button -->
                     </button>
+                    <style>
+                        /* Modal Styles */
+                        .modal {
+                            display: none;
+                            position: fixed;
+                            z-index: 1000;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            overflow: auto;
+                            background-color: rgba(0, 0, 0, 0.5);
+                        }
+                    
+                        .modal-content {
+                            background-color: #fff;
+                            margin: 10% auto;
+                            padding: 20px;
+                            border-radius: 8px;
+                            width: 90%;
+                            max-width: 500px;
+                            position: relative;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    
+                        .close {
+                            position: absolute;
+                            top: 10px;
+                            right: 15px;
+                            color: #333;
+                            font-size: 24px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+                    
+                        .form-group {
+                            margin-bottom: 15px;
+                        }
+                    
+                        .form-group label {
+                            display: block;
+                            margin-bottom: 5px;
+                            font-weight: bold;
+                        }
+                    
+                        .form-group select,
+                        .form-group input {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            font-size: 14px;
+                        }
+                    
+                        .ft1 {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            background-color: #007bff;
+                            color: #fff;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            text-align: center;
+                            font-size: 14px;
+                        }
+
+                        .shop-addLoop-button {
+                            display: inline-block;
+                            padding: 10px 15px;
+                            background-color: #28a745;
+                            color: #fff;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            text-decoration: none;
+                        }
+                    
+                        .shop-addLoop-button:hover {
+                            background-color: #218838;
+                        }
+                    
+                        .shop-quickview-button {
+                            display: inline-block;
+                            padding: 10px 15px;
+                            background-color: #ffc107;
+                            color: #333;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            text-decoration: none;
+                        }
+                    
+                        .shop-quickview-button:hover {
+                            background-color: #e0a800;
+                        }
+                    
+                        /* Toggle Modal */
+                        .modal-toggle:checked ~ .modal {
+                            display: block;
+                        }
+                    </style>
+                    
                     <div class="product-item-actions">
-                        <button type="button" title="Thêm vào giỏ" class="shop-addLoop-button" data-type="shop-addLoop-button">Thêm vào giỏ</button>
+                        <!-- Button to trigger modal -->
+                        <label for="modal-toggle-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
+                        <input type="checkbox" id="modal-toggle-{{ $product->id }}" class="modal-toggle" style="display: none;" />
+                    
+                        <!-- Modal -->
+                        <div class="modal">
+                            <div class="modal-content">
+                                <label for="modal-toggle-{{ $product->id }}" class="close">&times;</label>
+                                <h2>Chọn biến thể và số lượng</h2>
+                    
+                                @if (auth()->check())
+                                    <form id="productForm-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="name" value="{{ $product->name }}">
+                                        <input type="hidden" name="price" value="{{ $product->price_sale }}">
+                                        <input type="hidden" name="image" value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
+                    
+                                        <div class="form-group">
+                                            <label for="size-{{ $product->id }}">Kích thước:</label>
+                                            <select id="size-{{ $product->id }}" name="size">
+                                                @foreach ($product->variations as $variation)
+                                                    <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                    
+                                        <div class="form-group">
+                                            <label for="color-{{ $product->id }}">Màu:</label>
+                                            <select id="color-{{ $product->id }}" name="color">
+                                                @foreach ($product->variations as $variation)
+                                                    <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                    
+                                        <div class="form-group">
+                                            <label for="quantity-{{ $product->id }}">Số lượng:</label>
+                                            <input type="number" id="quantity-{{ $product->id }}" name="quantity" min="1" value="1">
+                                        </div>
+                                        <button type="submit">Thêm vào giỏ</button>
+                                    </form>
+                                @else
+                                    <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
+                                    <a href="{{ route('client-login.index') }}" class="ft1">Đăng nhập</a>
+                                @endif
+                            </div>
+                        </div>
+                    
                         <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
                     </div>
+                    
                     
                 </div>
                 <div class="product-item-details">
                            <!-- Hiển thị danh mục -->
                     <p class="product-item-category" style="font-size: 0.7em; color: #888; opacity: 0.7; margin-bottom: 10px;">
-                        {{ $product->category->name }} <!-- Lấy tên danh mục từ mối quan hệ với Category -->
+                        <a href="{{ route('client-products.show', $product->id) }}">{{ $product->name }}</a> <!-- Lấy tên danh mục từ mối quan hệ với Category -->
                    </p>
 
-                    <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;">{{ $product->name }}</h2> <!-- Giảm phông chữ của tên sản phẩm -->
+                    <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;"><a href="{{ route('client-products.show', $product->id) }}">{{ $product->name }}</a></h2> <!-- Giảm phông chữ của tên sản phẩm -->
                 
                  
                    

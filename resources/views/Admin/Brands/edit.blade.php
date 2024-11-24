@@ -14,8 +14,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25 p-0 container-fluid">
+                            <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25 p-0 container-fluid">
                                 <form class="sherah-wc__form-main" action="{{ route('admin-brands.update', $brand->id) }}"
                                     method="POST" enctype="multipart/form-data">
                                     @csrf

@@ -16,7 +16,8 @@ use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-
+// use App\Http\Controllers\Admin\HomeAdminController;
+// use App\Http\Controllers\UserController;
 use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\Admin\BankCardController;
@@ -33,6 +34,8 @@ use App\Http\Controllers\Admin\DiscountController;
 |
 */
 //View Admin
+// Route::resource('admin-home', HomeAdminController::class);
+
 
 
 use App\Http\Controllers\client\AddressController;
@@ -89,6 +92,7 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminContactController;
 
 use App\Http\Controllers\Admin\AdminStatisticsController;
+use App\Http\Controllers\Admin\AdminYeuCauRutTienController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\CheckoutThankyouController;
@@ -282,6 +286,16 @@ Route::get('/transfer-requests', [AdminTransferController::class, 'index'])->nam
 Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 'approve'])->name('admin.transfer-requests.approve');
 Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
+// Yêu cầu rút tiền client
+Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+//cập nhật yêu cầu rút tiền
+Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
+//lọc các yêu cầu thanh toán
+Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
+
+
+
 
 //quên mật khẩu
 Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
@@ -352,6 +366,9 @@ Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('cli
 
 //nạp tiền khách hàng
 Route::resource('client-banks', ClientBanksController::class);
+//rút tiền khách hàng
+Route::get('client-banks-rut-tỉen', [ClientBanksController::class, 'viewRutTien'])->name('client-banks.viewRutTien');
+
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);

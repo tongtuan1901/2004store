@@ -9,14 +9,6 @@
                     <div class="w-full relative mb-4">
                         <div class="flex-auto p-0 md:p-4">
                             <div class="flex flex-wrap gap-4 mb-3">
-                                {{-- <div class="mb-2 w-44">
-                                    <select id="Category"
-                                        class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                                        <option class="dark:text-slate-700">Tất cả danh mục</option>
-                                        <option class="dark:text-slate-700">Áo</option>
-                                        <option class="dark:text-slate-700">Quần</option>
-                                    </select>
-                                </div> --}}
                                 <div class="ms-auto">
                                     <form>
                                         <div class="relative">
@@ -143,10 +135,6 @@
                     </div><!--end card-->
                     </div><!--end col-->
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
