@@ -292,15 +292,21 @@
                     <!-- Action buttons -->
                     <div class="main-product-cta">
                         <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
-                            <strong>Thêm vào giỏ</strong>
+                            <strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                </svg> Thêm vào giỏ</strong>
                             <span>Chọn ngay sản phẩm bạn yêu thích</span>
                         </button>
-                        <button type="submit" name="action" value="buyNow" class="buy-now-btn">
+                        <button style="color: white; background-color: #e95d00" type="submit" name="action"
+                            value="buyNow" class="buy-now-btn">
                             <strong>Mua ngay</strong>
                             <span>Mua ngay sản phẩm này</span>
                         </button>
                     </div>
                 </form>
+                <br>
                 <!-- HTML remains the same -->
                 <button type="button" data-type="main-product-send-help" title="Tư vấn">
                     <strong>Tư vấn</strong>
@@ -774,42 +780,51 @@
 
         /* Đảm bảo rằng không có khoảng cách giữa các phần tử carousel */
         .main-product-relate-data {
-    display: flex;
-    flex-wrap: wrap;  /* Cho phép các sản phẩm xuống dòng khi không đủ không gian */
-    gap: 20px;        /* Khoảng cách giữa các sản phẩm là 20px */
-    justify-content: flex-start; /* Căn chỉnh các sản phẩm sang bên trái */
-}
+            display: flex;
+            flex-wrap: wrap;
+            /* Cho phép các sản phẩm xuống dòng khi không đủ không gian */
+            gap: 20px;
+            /* Khoảng cách giữa các sản phẩm là 20px */
+            justify-content: flex-start;
+            /* Căn chỉnh các sản phẩm sang bên trái */
+        }
 
-.related-products {
-    display: flex;
-    flex-wrap: wrap;  /* Đảm bảo các sản phẩm nằm ngang */
-    gap: 20px;        /* Khoảng cách giữa các sản phẩm là 20px */
-}
+        .related-products {
+            display: flex;
+            flex-wrap: wrap;
+            /* Đảm bảo các sản phẩm nằm ngang */
+            gap: 20px;
+            /* Khoảng cách giữa các sản phẩm là 20px */
+        }
 
-.product-item-detail {
-    flex: 1 1 calc(25% - 20px); /* Mỗi sản phẩm chiếm 25% chiều rộng, trừ 20px cho khoảng cách */
-    box-sizing: border-box;     /* Đảm bảo không bị tràn ra ngoài */
-    text-align: center;
-}
+        .product-item-detail {
+            flex: 1 1 calc(25% - 20px);
+            /* Mỗi sản phẩm chiếm 25% chiều rộng, trừ 20px cho khoảng cách */
+            box-sizing: border-box;
+            /* Đảm bảo không bị tràn ra ngoài */
+            text-align: center;
+        }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .product-item-detail {
-        flex: 1 1 calc(33.33% - 20px); /* 3 sản phẩm mỗi hàng trên tablet */
-    }
-}
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-item-detail {
+                flex: 1 1 calc(33.33% - 20px);
+                /* 3 sản phẩm mỗi hàng trên tablet */
+            }
+        }
 
-@media (max-width: 768px) {
-    .product-item-detail {
-        flex: 1 1 calc(50% - 20px); /* 2 sản phẩm mỗi hàng trên điện thoại */
-    }
-}
+        @media (max-width: 768px) {
+            .product-item-detail {
+                flex: 1 1 calc(50% - 20px);
+                /* 2 sản phẩm mỗi hàng trên điện thoại */
+            }
+        }
 
-@media (max-width: 480px) {
-    .product-item-detail {
-        flex: 1 1 100%; /* 1 sản phẩm mỗi hàng trên màn hình nhỏ */
-    }
-}
-
+        @media (max-width: 480px) {
+            .product-item-detail {
+                flex: 1 1 100%;
+                /* 1 sản phẩm mỗi hàng trên màn hình nhỏ */
+            }
+        }
     </style>
 @endsection
