@@ -6,7 +6,9 @@ use App\Models\BankCard;
 use Illuminate\Http\Request;
 use App\Models\TransferRequest;
 use App\Http\Controllers\Controller;
+use App\Models\AdminYeuCauRutTien;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ClientBanksController extends Controller
@@ -69,6 +71,55 @@ class ClientBanksController extends Controller
             ->paginate(10);
 
         return view('Client.ClientBank.ClientBank', compact('transferRequests'));
+    }
+    public function viewRutTien()
+    {
+        $userId = auth()->id();
+        $lichSuRut = AdminYeuCauRutTien::where('user_id', $userId)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        return view('Client.ClientBank.ClientBankRutTien', compact('lichSuRut'));
+    }
+    public function RequestRutTien(Request $request)
+    {
+        $userId = auth()->id();
+
+        $request->validate([
+            'so_tien_rut' => 'required|numeric|min:1000|max:' . Auth::user()->balance,
+            'ngan_hang' => 'required|string|max:255',
+            'stk' => 'required|string|max:50',
+            'customer_name'=>'required|string'
+        ], [
+            'so_tien_rut.required' => 'Vui lòng nhập số tiền cần rút.',
+            'so_tien_rut.numeric' => 'Số tiền cần rút phải là một số.',
+            'so_tien_rut.min' => 'Số tiền cần rút phải lớn hơn hoặc bằng 1,000.',
+            'so_tien_rut.max' => 'Số tiền cần rút không được lớn hơn số dư hiện tại.',
+            'ngan_hang.required' => 'Vui lòng chọn ngân hàng.',
+            'stk.required' => 'Vui lòng nhập số tài khoản.',
+            'customer_name.required' => 'Vui lòng nhập tên tài khoản.',
+        ]);
+
+        $withdrawRequest = new AdminYeuCauRutTien();
+        $withdrawRequest->user_id = Auth::user()->id;
+        $withdrawRequest->so_du = Auth::user()->balance;
+        $withdrawRequest->so_tien_rut = $request->so_tien_rut;
+        $withdrawRequest->ngan_hang = $request->ngan_hang;
+        $withdrawRequest->stk = $request->stk;
+        $withdrawRequest->request_type = $request->request_type;
+        $withdrawRequest->is_approved = 0;
+        $withdrawRequest->customer_name = $request->customer_name;
+        $withdrawRequest->amount = null;
+        $withdrawRequest->transfer_time = Carbon::now('Asia/Ho_Chi_Minh');
+        $withdrawRequest->balance = Auth::user()->balance;
+        $withdrawRequest->save();
+
+        $user = Auth::user();
+        $user->balance -= $request->so_tien_rut;
+        $user->save();
+
+        // Redirect với thông báo
+        return redirect()->back()->with('success', 'Yêu cầu rút tiền của bạn đã được gửi thành công.');
     }
 
 
