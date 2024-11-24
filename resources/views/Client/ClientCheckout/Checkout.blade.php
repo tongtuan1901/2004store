@@ -649,164 +649,212 @@
                             </div>
 
                         </main>
-                        <aside class="sidebar">
-                            <div class="sidebar__header">
-                                <h2 class="sidebar__title">
-                                    Đơn hàng (1 sản phẩm)
-                                </h2>
-                            </div>
-                            <div class="sidebar__content">
-                                <div id="order-summary" class="order-summary order-summary--is-collapsed">
-                                    <div class="order-summary__sections">
-                                        <div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
-                                        <table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
-            <caption class="visually-hidden">Chi tiết đơn hàng</caption>
-            <thead class="product-table__header">
-                <tr>
-                    <th><span class="visually-hidden">Ảnh sản phẩm</span></th>
-                    <th><span class="visually-hidden">Tên và biến thể</span></th>
-                    <th><span class="visually-hidden">Số lượng</span></th>
-                    <th><span class="visually-hidden">Đơn giá</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($cart as $item)
-                    <tr class="product">
+                      <!-- aside -->
 
-                        <td class="product__image">
-                            <div class="product-thumbnail">
-                                <div class="product-thumbnail__wrapper">
-                                    <img src="{{ Storage::url($item->image) }}" alt="" class="product-thumbnail__image">
-                                    <span class="product-thumbnail__quantity">{{ $item->quantity }}</span>
-                                </div>
-                            </div>
-                        </td>
-                        <th class="product__description">
-                            <span class="product__description__name">{{ $item->product->name }}</span>
-                            <span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
-                        </th>
-                        <td class="product__quantity"><em>Số lượng:</em> {{ $item->quantity }}</td>
-                        <td class="product__price">{{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-                                        </div>
-                                        <div class="order-summary__section" id="discountCode">
-            <h3 class="visually-hidden">Mã khuyến mại</h3>
-            <div class="edit_checkout">
-                <div class="fieldset">
-                    <div class="field">
-                        <div class="field__input-btn-wrapper">
-                            <div class="field__input-wrapper">
-                                <label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
-                                <input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
-                            </div>
-                            <button class="field__input-btn btn" type="button" disabled>
-                                <span class="spinner-label">Áp dụng</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                                    <use href="#spinner"></use>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+					  <aside class="sidebar">
+						<div class="sidebar__header">
+							<h2 class="sidebar__title">
+								Đơn hàng (1 sản phẩm)
+							</h2>
+						</div>
+						<div class="sidebar__content">
+							<div id="order-summary" class="order-summary order-summary--is-collapsed">
+								<div class="order-summary__sections">
+									<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
+									<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
+		<caption class="visually-hidden">Chi tiết đơn hàng</caption>
+		<thead class="product-table__header">
+			<tr>
+				<th><span class="visually-hidden">Ảnh sản phẩm</span></th>
+				<th><span class="visually-hidden">Tên và biến thể</span></th>
+				<th><span class="visually-hidden">Số lượng</span></th>
+				<th><span class="visually-hidden">Đơn giá</span></th>
+			</tr>
+		</thead>
+		<tbody>
+		@php
+    // Kiểm tra xem có phải là mua ngay không
+    $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
+@endphp
+
+@foreach ($cartItems as $item)
+    <tr class="product">
+        <td class="product__image">
+            <div class="product-thumbnail">
+                <div class="product-thumbnail__wrapper">
+				@if(session()->has('buyNow'))
+    <img src="{{ Storage::url($item['image']) }}" alt="" class="product-thumbnail__image">
+@else
+    @if($item->variation && $item->variation->image)
+        <img src="{{ Storage::url($item->variation->image->image_path) }}" alt="" class="product-thumbnail__image">
+    @endif
+@endif
                 </div>
             </div>
-        </div>
-                                        <div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
-                                            <table class="total-line-table">
-                                                <caption class="visually-hidden">Tổng giá trị</caption>
-                                                <thead>
-                                                    <tr>
-                                                        <td><span class="visually-hidden">Mô tả</span></td>
-                                                        <td><span class="visually-hidden">Giá tiền</span></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="total-line-table__tbody">
-                                                    <tr class="total-line total-line--subtotal">
-                                                    @php
-            $totalPrice = 0;
-            foreach ($cart as $item) {
-                $price = $item->variation->price ?? $item->product->price;
-                $totalPrice += $price * $item->quantity;
+        </td>
+        <th class="product__description">
+            @if(session()->has('buyNow'))
+                <span class="product__description__name">{{ $item['name'] }}</span>
+                <span class="product__description__property">
+                    {{ App\Models\Color::find($item['color'])->color ?? '' }} / 
+                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
+                </span>
+            @else
+                <span class="product__description__name">{{ $item->product->name }}</span>
+                <span class="product__description__property">
+                    {{ $item->variation->color->color ?? '' }} / 
+                    {{ $item->variation->size->size ?? '' }}
+                </span>
+            @endif
+        </th>
+        <td class="product__quantity">
+            <em>Số lượng:</em> 
+            {{ session()->has('buyNow') ? $item['quantity'] : $item->quantity }}
+        </td>
+        <td class="product__price">
+            @if(session()->has('buyNow'))
+                {{ number_format($item['price'], 0, ',', '.') }}₫
+            @else
+                {{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫
+            @endif
+        </td>
+    </tr>
+@endforeach
+		</tbody>
+	</table>
+									</div>
+									<div class="order-summary__section" id="discountCode">
+		<h3 class="visually-hidden">Mã khuyến mại</h3>
+		<div class="edit_checkout">
+			<div class="fieldset">
+				<div class="field">
+					<div class="field__input-btn-wrapper">
+						<div class="field__input-wrapper">
+							<label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
+							<input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
+						</div>
+						<button class="field__input-btn btn" type="button" disabled>
+							<span class="spinner-label">Áp dụng</span>
+							<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+								<use href="#spinner"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
+										<table class="total-line-table">
+											<caption class="visually-hidden">Tổng giá trị</caption>
+											<thead>
+												<tr>
+													<td><span class="visually-hidden">Mô tả</span></td>
+													<td><span class="visually-hidden">Giá tiền</span></td>
+												</tr>
+											</thead>
+											<tbody class="total-line-table__tbody">
+												<tr class="total-line total-line--subtotal">
+												@php
+    // Tính tổng tiền
+    $totalPrice = 0;
+    foreach ($cartItems as $item) {
+        if(session()->has('buyNow')) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        } else {
+            $price = $item->variation->price ?? $item->product->price;
+            $totalPrice += $price * $item->quantity;
+        }
+    }
+    $shippingFee = 40000;
+    $finalTotal = $totalPrice + $shippingFee;
+@endphp										<th class="total-line__name">
+														Tạm tính
+													</th>
+													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+												</tr>
+												
+												
+												
+												<tr class="total-line total-line--shipping-fee">
+													<th class="total-line__name">
+														Phí vận chuyển
+													</th>
+													<td class="total-line__price">
+														<span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
+														<span data-bind="getTextShippingPriceFinal()">40.000₫</span>
+													</td>
+												</tr>
+												
+												
+												
+											</tbody>
+											<tfoot class="total-line-table__footer">
+												<tr class="total-line payment-due">
+													<th class="total-line__name">
+														<span class="payment-due__label-total">
+															Tổng cộng
+														</span>
+													</th>
+													<td class="total-line__price">
+														<span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+													</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
+										<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
+											<span class="spinner-label">ĐẶT HÀNG</span>
+											<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+												<use href="#spinner"></use>
+											</svg>
+										</button>
+										</form>
+									
+									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
+										<i class="previous-link__arrow">❮</i>
+										<span class="previous-link__content">Quay về giỏ hàng</span>
+									</a>
+									
+								</div>
+								<div id="common-alert-sidebar" data-tg-refresh="refreshError">
+									
+									
+									<div class="alert alert--danger hide-on-mobile hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</aside>
+
+			</div>
+		</form>
+		
+		
+		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+			<symbol id="spinner">
+				<svg viewBox="0 0 30 30">
+					<circle stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="85%" cx="50%" cy="50%" r="40%">
+						<animateTransform attributeName="transform" type="rotate" from="0 15 15" to="360 15 15" dur="0.7s" repeatCount="indefinite"></animateTransform>
+					</circle>
+				</svg>
+			</symbol>
+		</svg>
+	</div>
+	<!-- xóa dữ liệu mua ngay khi thoát ra -->
+	<script>
+window.addEventListener('beforeunload', function() {
+    if (@json($clearBuyNow ?? false)) {
+        fetch('{{ route("clear-buy-now") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }
-            $shippingFee = 40000; // Phí vận chuyển cố định
-            $finalTotal = $totalPrice + $shippingFee;
-        @endphp
-                                                        <th class="total-line__name">
-                                                            Tạm tính
-                                                        </th>
-                                                        <td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
-                                                    </tr>
+        });
+    }
+});
+</script>
 
-
-
-                                                    <tr class="total-line total-line--shipping-fee">
-                                                        <th class="total-line__name">
-                                                            Phí vận chuyển
-                                                        </th>
-                                                        <td class="total-line__price">
-                                                            <span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
-                                                            <span data-bind="getTextShippingPriceFinal()">40.000₫</span>
-                                                        </td>
-                                                    </tr>
-
-
-
-                                                </tbody>
-                                                <tfoot class="total-line-table__footer">
-                                                    <tr class="total-line payment-due">
-                                                        <th class="total-line__name">
-                                                            <span class="payment-due__label-total">
-                                                                Tổng cộng
-                                                            </span>
-                                                        </th>
-                                                        <td class="total-line__price">
-                                                            <span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
-                                            <button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-                                                <span class="spinner-label">ĐẶT HÀNG</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                                                    <use href="#spinner"></use>
-                                                </svg>
-                                            </button>
-                                            </form>
-
-                                        <a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
-                                            <i class="previous-link__arrow">❮</i>
-                                            <span class="previous-link__content">Quay về giỏ hàng</span>
-                                        </a>
-
-                                    </div>
-                                    <div id="common-alert-sidebar" data-tg-refresh="refreshError">
-
-
-                                        <div class="alert alert--danger hide-on-mobile hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-            </form>
-
-
-            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                <symbol id="spinner">
-                    <svg viewBox="0 0 30 30">
-                        <circle stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="85%" cx="50%" cy="50%" r="40%">
-                            <animateTransform attributeName="transform" type="rotate" from="0 15 15" to="360 15 15" dur="0.7s" repeatCount="indefinite"></animateTransform>
-                        </circle>
-                    </svg>
-                </symbol>
-            </svg>
-        </div>
-
-
-    </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
-    </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>
+</body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
+</style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>

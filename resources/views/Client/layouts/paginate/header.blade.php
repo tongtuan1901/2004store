@@ -60,6 +60,10 @@
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scss.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/cart.scssb1ed.css')}}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
     <script src="{{ asset('assets/f1genz.com/ps.js') }}"></script>
 
     <script fetchpriority="low" defer
@@ -667,7 +671,7 @@
                                     aria-label="Xu hướng thời trang">Xu hướng thời trang</a>
                             </li>
                             <li class="">
-                                <a href="{{route('client-news.index')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
+                                <a href="{{route('user.contact')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
                             </li>
                             <li class="headers3-bot-menu-mob-foot">
                                 <div class="section-title-all">

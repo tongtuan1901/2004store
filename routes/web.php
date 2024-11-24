@@ -2,25 +2,25 @@
 
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
+
 use App\Http\Middleware\AdminMiddleware;
-
-
 use App\Http\Controllers\client\CardController;
+
+
+
 use App\Http\Controllers\client\HomeController;
-
-
-
 use App\Http\Controllers\client\NewsController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\client\LoginController;
-use App\Http\Controllers\client\UsersController;
 
+use App\Http\Controllers\client\UsersController;
 use App\Http\Controllers\client\ClientCategories;
 use App\Http\Controllers\Admin\BankCardController;
 use App\Http\Controllers\Admin\DiscountController;
-use App\Http\Controllers\client\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +35,15 @@ use App\Http\Controllers\client\AddressController;
 //View Admin
 
 
+use App\Http\Controllers\client\AddressController;
 use App\Http\Controllers\admin\AdminCardController;
+
+
 use App\Http\Controllers\admin\AdminNewsController;
-
-
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\HomeAdminController;
-use App\Http\Controllers\client\CheckoutController;
 
-use App\Http\Controllers\client\ProductsController;
+use App\Http\Controllers\client\CheckoutController;
 
 
 
@@ -51,40 +51,50 @@ use App\Http\Controllers\client\ProductsController;
 
 //admin banner
 // use App\Http\Controllers\Admin\AdminBannersController;
-use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\client\ProductsController;
 
-use App\Http\Controllers\Admin1\AdminHomeController;
+use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\admin\AdminLoginController;
+
+
+
 use App\Http\Controllers\admin\AdminSizesController;
-
-
-
 use App\Http\Controllers\admin\AdminBrandsController;
 use App\Http\Controllers\admin\AdminColorsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\client\ClientOrderControler;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\client\ClientBanksController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminTransferController;
-use App\Http\Controllers\Admin1\AdminCustomerController;
-use App\Http\Controllers\Admin\AdminCommentsController;
 
+
+
+use App\Http\Controllers\Admin1\AdminCustomerController;
+
+
+use App\Http\Controllers\Admin\AdminCommentsController;
 
 
 use App\Http\Controllers\admin\AdminInventoryController;
 
 use App\Http\Controllers\Admin\AdminUserStaffController;
-
 use App\Http\Controllers\Admin\AdminCategoriesController;
+
+
+use App\Http\Controllers\Admin\AdminContactController;
 
 use App\Http\Controllers\Admin\AdminStatisticsController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
+use App\Http\Controllers\client\ClientReviewsController;
+use App\Http\Controllers\client\ContactController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -146,6 +156,10 @@ Route::put('admin/orders/{id}/update-status', [AdminOrdersController::class, 'up
  Route::get('/admin/statistics', [AdminStatisticsController::class, 'index'])->name('admin.statistics');
  Route::get('/admin/statistics/fetch', [AdminStatisticsController::class, 'getStatistics'])->name('admin.statistics.fetch');
 
+//dashboard admin
+Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard.index');
+Route::post('/filter-by-date', [AdminHomeController::class, 'filterByDate'])->name('dashboard.filterByDate');
+Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name('dashboard.filterByBtn');
 
  // Route cho tin tức
  Route::resource('new', AdminNewsController::class);
@@ -247,6 +261,8 @@ Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('addr
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::get('Client/orders/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('/orders/{id}/show', [ClientOrderControler::class, 'showOrder'])->name('orders.show');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
 // Route để hủy đơn hàng
 Route::put('/admin/orders/{orderId}/cancel', [AdminOrdersController::class, 'cancelOrder'])->name('orders.cancel');
@@ -264,10 +280,29 @@ Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 
 Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
 
+//quên mật khẩu
+Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
+
+
+//reset mật khẩu
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
+Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
+
 
 });
 
 
+// Xóa dữ liệu mua ngay khi thoát ra
+Route::post('/clear-buy-now', function() {
+    session()->forget('buyNow');
+    return response()->json(['success' => true]);
+})->name('clear-buy-now');
+
+Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
+Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
 // dang nhap admin và nhân viên
 
 // Route cho view client
@@ -280,6 +315,7 @@ Route::resource('client-register', RegisterController::class);
 Route::get('client-password/reset', [ForgotPasswordController::class, 'showResetForm'])->name('client-password.reset');
 Route::post('client-password/email', [ForgotPasswordController::class, 'sendResetLink'])->name('client-password.email');
 Route::resource('client-products', ProductsController::class);
+
 // đổi mật khẩu khách hàng
 Route::get('client-password/change', [ChangePasswordController::class, 'index'])->name('client-password.change');
 Route::post('client-password/update', [ChangePasswordController::class, 'update'])->name('client-password.update');
@@ -340,6 +376,11 @@ Route::resource('admin-orders', AdminOrdersController::class);
 // in pdf
 Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
+//contact
+Route::get('client/contact',[ContactController::class,'index'])->name('user.contact');
+Route::post('client/contact/',[ContactController::class,'store'])->name('user.store');
+Route::get('admin/contact',[AdminContactController::class,'index'])->name('admin.contact.index');
+
 
 
 
@@ -373,9 +414,33 @@ Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddr
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
-Route::get('/orders/{id}', [ClientOrderControler::class, 'show'])->name('orders.show');
+Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận
 Route::post('/client-products/{product}/comments', [ProductsController::class, 'storeComment'])->name('client-products.comments.store');
+
+Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// Route::post('/order/store', [AdminOrdersController::class, 'store'])->name('order.store');
+// routes/web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('client-checkout.removeDiscount');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'showProductReviewForm'])
+    ->name('client.product.review.form');
+    Route::post('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'submitReview'])
+    ->name('client.product.submitReview');
+});
+Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
+//lọc
+Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
+Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
+//thuong hiệu
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+
+
+
+
 
 
 

@@ -495,7 +495,7 @@
 
                             <li>
                                 <a href="#!" class="collapsed" data-bs-toggle="collapse"
-                                    data-bs-target="#menu-item_thuoctinh">
+                                    data-bs-target="#menu-item_vi">
                                     <span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -510,7 +510,7 @@
                                     <span class="sherah__toggle"></span>
                                 </a>
                                 <!-- Dropdown Menu -->
-                                <div class="collapse sherah__dropdown" id="menu-item_thuoctinh"
+                                <div class="collapse sherah__dropdown" id="menu-item_vi"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='{{ route('admin.transfer-requests.index') }}'><span
@@ -522,7 +522,14 @@
                                     </ul>
                                 </div>
                             </li>
-
+                            <li><a class='collapsed' href='{{route('admin.contact.index')}}'><span class="menu-bar__text">
+                                <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm3-4a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm9-7a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Zm-2 2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1h3Zm2 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Z"/>
+                                      </svg>
+                                </span>
+                                <span class="menu-bar__name">Contact</span></span></a></span>
+                    </li>
                         </ul>
                     </div>
                     <!-- End Nav Menu -->
