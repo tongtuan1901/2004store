@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html class="floating-labels"><head>
     <link rel="icon" data-savepage-href="https://bizweb.dktcdn.net/assets/sapo_favicon.png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAB3RJTUUH4gUHAhkPylTHBwAAAr9JREFUOE9lk3tIU3EUx39EQQ81UzMDs6KioCCCoChKMqL+igisPysqor/8J4L+E5vOaaaVKZnaQ7AXWokgRUFaEGmlu3v42JxvnS23dC/dnft2zs/dVXTGuXe/x/mc5xXpphKRrBSKOKNOiO/XxBbzrSXxxvykRZ25Wxd35h5e2pV3gc6KVioFrxIVvWmVoveSupIUfWmaqThVnLc1ixTFsCNJKcyhC6Vk3JhhLmnP7KsdOul4On3C8UQ90FeDjZZSEARxxnz5JlUJUsHesxOVgv4E2kwxFeLMUCPezzgwqfowG1ExFwnDEw5CCThR4WpHlu0hkukeQygSn6CHnRdEQ97EB/jnQ2CJkP5U/ZgIeREkkCYMPjXwPBaJIO9ykWV7AHc4IC+Nh2ZwZewN9vRWYVdPJY476lHp6oCTjJt+9WCztQwJShTAjxVGHXJGW6QxS91UF5Ybr5PqCK6T5+wo01aLbdY7iI8a/wO4NNwkw2axz07h4vBr7OypQLr5BucqQcsI+rdxDMCb27vL8c0/HkUAamQeo5RKh38MLzxmFDjbkD3wDOstN/+PQIPs7b2PerciaxCOaPH8ES5mm3cQh6heGiQGYI2jTW7R7t57ODv0EobJj2jwWNEVmIAv2h2WVoKsM5fIQsYAvOBWcr5cE1buDq8zKOxzBHRRW1ncNBf7+6plXSSAjdeai1E0+UkqT90CYEG5eJssZegOuiSA54NbzA4ET+BqkwF3XV+oCwu/z74ROQdH7Y9x0FaD0zQ4DR4LQlRYlpZpm3TItjRI+gDnfXmkGdbgD3lBE57K6fCs7IgmX6kr/G1wESm9gKC8qymNsNbKq2Nv8W6mH4NzHvkNMMCpetHuH4XO2SrvRDvAH1OVSDUZ0uhPOdHcfMA5c3g8wkfsj3Csvw77qGAbqC58HvU8RTa31yhFab8B+6bZyCRWaakAAAAASUVORK5CYII=">
         <meta charset="utf-8">
@@ -325,8 +326,50 @@
     </div>
             </div>
         </header>
-        <aside>
 
+        <aside>
+          {{-- <div class="order-summary__section" id="discountCode">
+            <h3 class="visually-hidden">Mã khuyến mại</h3>
+            <div class="edit_checkout">
+              <div class="fieldset">
+                <div class="field">
+                  <div class="field__input-btn-wrapper">
+                    <div class="field__input-wrapper">
+                      <form action="{{ route('client-checkout.store') }}" method="POST">
+                        @csrf
+                        <div class="field__input-wrapper">
+                          <input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off" oninput="toggleApplyButton()" placeholder="Nhập mã giảm giá">
+                        </div>
+                        <button class="field__input-btn btn" type="submit" id="applyDiscountButton">
+                          <span class="spinner-label">Áp dụng</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+                            <use href="#spinner"></use>
+                          </svg>
+                        </button>
+                      </form>
+
+                      <!-- Nút Xóa mã giảm giá -->
+                      @if(session('discount_code'))
+                        <form action="{{ route('client-checkout.removeDiscount') }}" method="POST" style="display: inline;">
+                          @csrf
+                          <button type="submit" class="btn btn-danger">Xoá mã giảm giá</button>
+                        </form>
+                      @endif
+                    </div>
+
+                    <script>
+                      function toggleApplyButton()
+                      {
+                      const discountCode = document.getElementById('discount_code').value;
+                      const applyButton = document.getElementById('applyDiscountButton');
+                      applyButton.disabled = !discountCode.trim();
+                      }
+                      </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> --}}
             <form action="{{ route('client-checkout.store') }}" method="POST">
             @csrf
                 <button class="order-summary-toggle" data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed">
@@ -339,6 +382,7 @@
                         </span>
                     </span>
                 </button>
+            </form>
             </aside>
 
 
@@ -364,7 +408,7 @@
                     <a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
                 </h1>
 
-        </div>
+            </div>
                             </header>
                             <div class="main__content" data-select2-id="select2-data-214-jgm2">
                                 <article class="animate-floating-labels row">
@@ -640,10 +684,20 @@
                                         </section>
                                     </div>
                                 </article>
+								<div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
+									<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
+										<span class="spinner-label">ĐẶT HÀNG</span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+											<use href="#spinner"></use>
+										</svg>
+									</button>
+									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
+										<i class="previous-link__arrow">❮</i>
+										<span class="previous-link__content">Quay về giỏ hàng</span>
+									</a>
 
+								</div>
                                 <div id="common-alert" data-tg-refresh="refreshError">
-
-
                                     <div class="alert alert--danger hide-on-desktop hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
                                 </div>
                             </div>
@@ -662,142 +716,112 @@
 								<div class="order-summary__sections">
 									<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
 									<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
-		<caption class="visually-hidden">Chi tiết đơn hàng</caption>
-		<thead class="product-table__header">
-			<tr>
-				<th><span class="visually-hidden">Ảnh sản phẩm</span></th>
-				<th><span class="visually-hidden">Tên và biến thể</span></th>
-				<th><span class="visually-hidden">Số lượng</span></th>
-				<th><span class="visually-hidden">Đơn giá</span></th>
-			</tr>
-		</thead>
-		<tbody>
-		@php
-    // Kiểm tra xem có phải là mua ngay không
-    $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
-@endphp
+                    <caption class="visually-hidden">Chi tiết đơn hàng</caption>
+                    <thead class="product-table__header">
+                      <tr>
+                        <th><span class="visually-hidden">Ảnh sản phẩm</span></th>
+                        <th><span class="visually-hidden">Tên và biến thể</span></th>
+                        <th><span class="visually-hidden">Số lượng</span></th>
+                        <th><span class="visually-hidden">Đơn giá</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                    // Kiểm tra xem có phải là mua ngay không
+                    $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
+                @endphp
 
-@foreach ($cartItems as $item)
-    <tr class="product">
-        <td class="product__image">
-            <div class="product-thumbnail">
-                <div class="product-thumbnail__wrapper">
-				@if(session()->has('buyNow'))
-    <img src="{{ Storage::url($item['image']) }}" alt="" class="product-thumbnail__image">
-@else
-    @if($item->variation && $item->variation->image)
-        <img src="{{ Storage::url($item->variation->image->image_path) }}" alt="" class="product-thumbnail__image">
-    @endif
-@endif
-                </div>
-            </div>
-        </td>
-        <th class="product__description">
-            @if(session()->has('buyNow'))
-                <span class="product__description__name">{{ $item['name'] }}</span>
-                <span class="product__description__property">
-                    {{ App\Models\Color::find($item['color'])->color ?? '' }} / 
-                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
-                </span>
-            @else
-                <span class="product__description__name">{{ $item->product->name }}</span>
-                <span class="product__description__property">
-                    {{ $item->variation->color->color ?? '' }} / 
-                    {{ $item->variation->size->size ?? '' }}
-                </span>
-            @endif
-        </th>
-        <td class="product__quantity">
-            <em>Số lượng:</em> 
-            {{ session()->has('buyNow') ? $item['quantity'] : $item->quantity }}
-        </td>
-        <td class="product__price">
-            @if(session()->has('buyNow'))
-                {{ number_format($item['price'], 0, ',', '.') }}₫
-            @else
-                {{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫
-            @endif
-        </td>
-    </tr>
-@endforeach
-		</tbody>
-	</table>
+                @foreach ($cartItems as $item)
+                    <tr class="product">
+                        <td class="product__image">
+                            <div class="product-thumbnail">
+                                <div class="product-thumbnail__wrapper">
+                        @if(session()->has('buyNow'))
+                    <img src="{{ Storage::url($item['image']) }}" alt="" class="product-thumbnail__image">
+                @else
+                    @if($item->variation && $item->variation->image)
+                        <img src="{{ Storage::url($item->variation->image->image_path) }}" alt="" class="product-thumbnail__image">
+                    @endif
+                @endif
+                                </div>
+                            </div>
+                        </td>
+                        <th class="product__description">
+                            @if(session()->has('buyNow'))
+                                <span class="product__description__name">{{ $item['name'] }}</span>
+                                <span class="product__description__property">
+                                    {{ App\Models\Color::find($item['color'])->color ?? '' }} /
+                                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
+                                </span>
+                            @else
+                                <span class="product__description__name">{{ $item->product->name }}</span>
+                                <span class="product__description__property">
+                                    {{ $item->variation->color->color ?? '' }} /
+                                    {{ $item->variation->size->size ?? '' }}
+                                </span>
+                            @endif
+                        </th>
+                        <td class="product__quantity">
+                            <em>Số lượng:</em>
+                            {{ session()->has('buyNow') ? $item['quantity'] : $item->quantity }}
+                        </td>
+                        <td class="product__price">
+                            @if(session()->has('buyNow'))
+                                {{ number_format($item['price'], 0, ',', '.') }}₫
+                            @else
+                                {{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+                    </tbody>
+                  </table>
 									</div>
-									<div class="order-summary__section" id="discountCode">
-		<h3 class="visually-hidden">Mã khuyến mại</h3>
-		<div class="edit_checkout">
-			<div class="fieldset">
-				<div class="field">
-					<div class="field__input-btn-wrapper">
-						<div class="field__input-wrapper">
-							<label for="reductionCode" class="field__label">Nhập mã giảm giá</label>
-							<input name="reductionCode" id="reductionCode" type="text" class="field__input" autocomplete="off">
-						</div>
-						<button class="field__input-btn btn" type="button" disabled>
-							<span class="spinner-label">Áp dụng</span>
-							<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-								<use href="#spinner"></use>
-							</svg>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
 										<table class="total-line-table">
 											<caption class="visually-hidden">Tổng giá trị</caption>
 											<thead>
 												<tr>
-													<td><span class="visually-hidden">Mô tả</span></td>
-													<td><span class="visually-hidden">Giá tiền</span></td>
+													<td>Mô tả</td>
+													<td>Giá tiền</td>
 												</tr>
 											</thead>
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
-												@php
-    // Tính tổng tiền
-    $totalPrice = 0;
-    foreach ($cartItems as $item) {
-        if(session()->has('buyNow')) {
-            $totalPrice += $item['price'] * $item['quantity'];
-        } else {
-            $price = $item->variation->price ?? $item->product->price;
-            $totalPrice += $price * $item->quantity;
-        }
-    }
-    $shippingFee = 40000;
-    $finalTotal = $totalPrice + $shippingFee;
-@endphp										<th class="total-line__name">
-														Tạm tính
-													</th>
-													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+													@php
+														$totalPrice = 0;
+														foreach ($cart as $item) {
+															$price = $item->variation->price ?? $item->product->price;
+															$totalPrice += $price * $item->quantity;
+														}
+														$shippingFee = 40000;
+														$discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
+														$finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+													@endphp
+
+													<th>Tạm tính</th>
+													<td>{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
 												</tr>
-												
-												
-												
 												<tr class="total-line total-line--shipping-fee">
-													<th class="total-line__name">
-														Phí vận chuyển
-													</th>
-													<td class="total-line__price">
-														<span class="origin-price" data-bind="getTextShippingPriceOriginal()"></span>
-														<span data-bind="getTextShippingPriceFinal()">40.000₫</span>
-													</td>
+													<th>Phí vận chuyển</th>
+													<td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
 												</tr>
-												
-												
-												
 											</tbody>
 											<tfoot class="total-line-table__footer">
 												<tr class="total-line payment-due">
-													<th class="total-line__name">
-														<span class="payment-due__label-total">
-															Tổng cộng
-														</span>
-													</th>
-													<td class="total-line__price">
-														<span class="payment-due__price" data-bind="getTextTotalPrice()">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+													<th>Tổng cộng</th>
+													<td>
+														@if(session('discount_code'))
+															<p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+															<p>Giá trị giảm: -{{ number_format(session('discount_value'), 0, ',', '.') }}₫</p>
+														@endif
+
+														@if(session('discount_error'))
+															<p style="color: red;">{{ session('discount_error') }}</p>
+														@endif
+
+														<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
 													</td>
 												</tr>
 											</tfoot>
@@ -811,16 +835,111 @@
 											</svg>
 										</button>
 										</form>
-									
+
 									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
 										<span class="previous-link__content">Quay về giỏ hàng</span>
 									</a>
-									
+									{{-- <div class="order-summary__section" id="discountCode">
+                    <h3 class="visually-hidden">Mã khuyến mại</h3>
+                    <div class="edit_checkout">
+                      <div class="fieldset">
+                        <div class="field">
+                          <div class="field__input-btn-wrapper">
+                            <div class="field__input-wrapper">
+                              <form action="{{ route('client-checkout.store') }}" method="POST">
+                                @csrf
+                                <div class="field__input-wrapper">
+                                  <input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off" oninput="toggleApplyButton()" placeholder="Nhập mã giảm giá">
+                                </div>
+                                <button class="field__input-btn btn" type="submit" id="applyDiscountButton">
+                                  <span class="spinner-label">Áp dụng</span>
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+                                    <use href="#spinner"></use>
+                                  </svg>
+                                </button>
+                              </form>
+
+                              <!-- Nút Xóa mã giảm giá -->
+                              @if(session('discount_code'))
+                                <form action="{{ route('client-checkout.removeDiscount') }}" method="POST" style="display: inline;">
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger">Xoá mã giảm giá</button>
+                                </form>
+                              @endif
+                            </div>
+
+                            <script>
+                              function toggleApplyButton()
+                              {
+                              const discountCode = document.getElementById('discount_code').value;
+                              const applyButton = document.getElementById('applyDiscountButton');
+                              applyButton.disabled = !discountCode.trim();
+                              }
+                              </script>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> --}}
 								</div>
 								<div id="common-alert-sidebar" data-tg-refresh="refreshError">
-									
-									
+
+                  <div class="order-summary__section" id="discountCode">
+                    <h3 class="visually-hidden">Mã khuyến mại</h3>
+                    <div class="edit_checkout">
+                      <div class="fieldset">
+                        <div class="field">
+                            <div class="field__input-wrapper">
+                              <!-- Hiển thị thông báo lỗi -->
+                            @if(session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                            @endif
+
+                            <!-- Hiển thị thông báo thành công -->
+                            @if(session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            <div class="discount-wrapper">
+                              <form action="{{ route('client-checkout.store') }}" method="POST" class="discount-form">
+                                  @csrf
+                                  <input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off" oninput="toggleApplyButton()" placeholder="Nhập mã giảm giá">
+                                  <button class="field__input-btn btn" type="submit" id="applyDiscountButton">
+                                      <span class="spinner-label">Áp dụng</span>
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
+                                          <use href="#spinner"></use>
+                                      </svg>
+                                  </button>
+                              </form>
+
+                              @if(session('discount_code'))
+                              <form action="{{ route('client-checkout.removeDiscount') }}" method="POST" class="remove-discount-form">
+                                  @csrf
+                                  <button type="submit" class="btn-remove-discount">
+                                      Xoá mã
+                                  </button>
+                              </form>
+                              @endif
+                          </div>
+                            </div>
+                            <script>
+                              function toggleApplyButton()
+                              {
+                              const discountCode = document.getElementById('discount_code').value;
+                              const applyButton = document.getElementById('applyDiscountButton');
+                              applyButton.disabled = !discountCode.trim();
+                              }
+                              </script>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
 									<div class="alert alert--danger hide-on-mobile hide" data-bind-show="!isSubmitingCheckout && isSubmitingCheckoutError" data-bind="submitingCheckoutErrorMessage">Có lỗi xảy ra khi xử lý. Vui lòng thử lại</div>
 								</div>
 							</div>
@@ -830,8 +949,8 @@
 
 			</div>
 		</form>
-		
-		
+
+
 		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 			<symbol id="spinner">
 				<svg viewBox="0 0 30 30">
@@ -855,6 +974,45 @@ window.addEventListener('beforeunload', function() {
     }
 });
 </script>
+<style>
+  .discount-wrapper {
+    display: flex; /* Hiển thị các phần tử trên cùng một hàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.discount-form {
+    display: flex; /* Đưa input và nút Áp dụng trên cùng một hàng */
+    align-items: center;
+    gap: 5px; /* Khoảng cách giữa input và nút Áp dụng */
+}
+
+.field__input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1; /* Cho phép input co dãn linh hoạt */
+}
+
+.field__input-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-remove-discount {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+</style>
 
 </body><savior-host style="all: unset; position: absolute; top: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template data-savepage-shadowroot=""><style>/*savepage-import-url=chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css*/
 </style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>

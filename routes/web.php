@@ -171,8 +171,11 @@ Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name
 
 
  Route::resource('discount', DiscountController::class);
-Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
-Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
+ Route::post('/cart/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('remove.discount');
+
 // Route::resource('admin-comments', AdminCommentsController::class);
 Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
@@ -343,7 +346,10 @@ Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->
 
 // Route::resource('client-checkout', CheckoutController::class);
 
-Route::resource('client-thankyou', CheckoutThankyouController::class);
+// Route::resource('client-thankyou', CheckoutThankyouController::class);
+Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('client-thankyou.index');
+
+
 //nạp tiền khách hàng
 Route::resource('client-banks', ClientBanksController::class);
 
@@ -436,6 +442,16 @@ Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('
 Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
 //thuong hiệu
 Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
+//search user
+Route::get('/users/search', [AdminUserController::class, 'search'])->name('users.search');
+//search category
+Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
+
+
+
+
 
 
 
@@ -487,6 +503,9 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 
 // Route::resource('admin1-home',AdminHomeController ::class);
 // Route::resource('admin1-kh',AdminCustomerController ::class);
+
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
+
 
 
 
@@ -548,3 +567,4 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // // danh mục admin
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
+

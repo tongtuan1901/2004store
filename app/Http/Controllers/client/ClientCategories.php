@@ -5,10 +5,12 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\admin\AdminProductsController;
 use App\Http\Controllers\Controller;
 use App\Models\AdminProducts;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
 use Illuminate\Http\Request;
+
 
 class ClientCategories extends Controller
 {
@@ -16,24 +18,9 @@ class ClientCategories extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $categories = Category::all();
-    $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
-    $colors = Color::all();
-    $sizes = Size::all();
-    $selectedCategories = [];
-    $selectedPrices = [];
-    $selectedFilters = [];
-    $selectedColors = [];
-    $selectedSizes = [];
-
-    return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
-}
-    public function showByBrand($id)
     {
-        $categories = Category::all(); // Nếu bạn cần hiển thị danh mục
-        $products = AdminProducts::where('brand_id', $id)->paginate(8); // Lấy sản phẩm theo ID thương hiệu
-
+        $categories = Category::all();
+        $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
         $colors = Color::all();
         $sizes = Size::all();
         $selectedCategories = [];
@@ -42,9 +29,23 @@ class ClientCategories extends Controller
         $selectedColors = [];
         $selectedSizes = [];
 
-        return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
+        return view("Client.ClientCategories.ListCategories", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes'));
     }
+    public function showByBrand($id)
+    {
+        $categories = Category::all();
+        $products = AdminProducts::where('brand_id', $id)->paginate(8);
+        $brand = Brand::find($id);
+        $colors = Color::all();
+        $sizes = Size::all();
+        $selectedCategories = [];
+        $selectedPrices = [];
+        $selectedFilters = [];
+        $selectedColors = [];
+        $selectedSizes = [];
 
+        return view("Client.ClientCategories.ListBrand", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes', 'brand'));
+    }
 
     public function filter(Request $request)
     {

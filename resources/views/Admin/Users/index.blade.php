@@ -36,7 +36,7 @@
                                                 <th class="sherah-table__column-2 sherah-table__h2">Email</th>
                                                 <th class="sherah-table__column-3 sherah-table__h3">Số điện thoại</th>
                                                 <th class="sherah-table__column-4 sherah-table__h4">Mật khẩu</th>
-                                                <th class="sherah-table__column-5 sherah-table__6">Hoạt động</th>
+                                                <th class="sherah-table__column-5 sherah-table__h5">Hoạt động</th>
 
                                             </tr>
                                         </thead>
