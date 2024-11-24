@@ -97,12 +97,16 @@
                                                                 <div id="image-preview-container"
                                                                     class="image-preview-container">
                                                                     @foreach ($product->images as $image)
-                                                                        <img src="{{ asset('storage/' . $image->path) }}"
+                                                                        <img src="{{ asset('storage/' . $image->image_path) }}"
                                                                             class="uploaded-image">
                                                                     @endforeach
                                                                 </div>
-                                                                <input type="file" name="images[]" id="input-img"
-                                                                    multiple accept="image/*">
+                                                                <div class="upload-section">
+                                                                    <input type="file" name="images[]" class="btn-check"
+                                                                        id="input-img" multiple accept="image/*">
+                                                                    <label class="image-upload-label" for="input-img">Tải
+                                                                        lên ảnh mới</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <!-- Hiển thị biến thể sản phẩm -->
@@ -169,11 +173,21 @@
                                                                                     required>
                                                                             </div>
                                                                             <div class="col-md-4">
+                                                                                <label class="form-label">Hình ảnh:</label>
+                                                                                @if ($variation->image)
+                                                                                    <img src="{{ asset('storage/' . $variation->image->image_path) }}"
+                                                                                        alt="Hình ảnh biến thể"
+                                                                                        class="img-fluid"
+                                                                                        style="max-width: 100%; height: auto;">
+                                                                                @else
+                                                                                    <p>Không có hình ảnh</p>
+                                                                                @endif
                                                                                 <label class="form-label">Hình ảnh biến
                                                                                     thể</label>
                                                                                 <input type="file"
                                                                                     name="variation[image][]"
                                                                                     class="form-control" multiple>
+
                                                                             </div>
                                                                         </div>
                                                                         <button type="button"

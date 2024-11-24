@@ -25,15 +25,15 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-    
+
         // Kiểm tra người dùng
         $user = User::where('email', $request->email)->first();
-    
+
         if ($user && Hash::check($request->password, $user->password)) { // So sánh mật khẩu đã mã hóa
             Auth::login($user);
             return redirect()->route('client-home.index')->with('success', 'Đăng nhập thành công!');
         }
-    
+
         return back()->with('error', 'Thông tin đăng nhập không đúng.');
     }
     public function logout(Request $request)
