@@ -74,14 +74,12 @@ class HomeController extends Controller
 
         return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
 
-        
-<<<<<<< HEAD
+
         // $listBrands = Brand::all();
         // $news = News::latest()->limit(5)->get();
 
         // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
-=======
->>>>>>> fc6233639700adad942e870ab8474fbef0d0eedd
+
 
 
         

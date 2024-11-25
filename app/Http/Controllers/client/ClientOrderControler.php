@@ -24,7 +24,7 @@ class ClientOrderControler extends Controller
         
         return view('Client.ClientOrders.index', compact('userOrder'));
     }
-    public function cancel($id)
+    public function cancel($id,Request $request)
     {
         $order = AdminOrder::findOrFail($id);
     
@@ -36,6 +36,7 @@ class ClientOrderControler extends Controller
         }
     
         $order->status = 'Hủy';
+        $order->cancellation_reason = $request->cancellation_reason;
         $order->save();
     
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công và số tiền đã được hoàn vào ví.');

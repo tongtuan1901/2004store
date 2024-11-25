@@ -145,7 +145,7 @@
         <h3>List các nhóm sản phẩm nổi bật nhất</h3>
         <div class="home-collection_list-wrapper">
             @foreach ($categories as $category)
-                <a class="home-collection-list-item" href="{{ url('collections/all') }}" title="{{ $category->name }}">
+                <a class="home-collection-list-item" href="{{route('client-categories.index')}}" title="{{ $category->name }}">
                     <div class="home-collection-list-item-image-holder">
                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                             title="{{ $category->name }}"
