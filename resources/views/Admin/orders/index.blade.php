@@ -1,3 +1,4 @@
+
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -15,8 +16,38 @@
                                 </div>
                             </div>
                         </div>
+                        <form action="{{ route('admin-orders.index') }}" method="GET">
+                            <div class="row align-items-center">
+                                <!-- Tìm kiếm đơn hàng -->
+                                <div class="col-md-4">
+                                    <input type="text" name="search" class="form-control form-control-sm" placeholder="Tìm kiếm đơn hàng..." value="{{ request('search') }}">
+                                </div>
+                        
+                                <!-- Lọc theo trạng thái -->
+                                <div class="col-md-4">
+                                    <select name="status" class="form-control form-control-sm">
+                                        <option value="">-- Lọc theo trạng thái --</option>
+                                        <option value="Chờ xử lý" {{ request('status') == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
+                                        <option value="Đang xử lý" {{ request('status') == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+                                        <option value="Đang giao hàng" {{ request('status') == 'Đang giao hàng' ? 'selected' : '' }}>Đang giao hàng</option>
+                                        <option value="Hoàn thành" {{ request('status') == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
+                                    </select>
+                                </div>
+                        
+                                <!-- Nút tìm kiếm và reset -->
+                                <div class="col-md-4 d-flex">
+                                    <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
+                                    <a href="{{ route('admin-orders.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+                                </div>
+                            </div>
+                        </form>
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
                         @endif
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-25">
                             <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3">

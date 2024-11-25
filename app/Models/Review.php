@@ -20,7 +20,6 @@ class Review extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
     public static function hasUserReviewed($userId, $productId)
     {
         return self::where('user_id', $userId)

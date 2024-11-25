@@ -14,22 +14,39 @@ use Illuminate\Support\Facades\Storage;
     class AdminOrdersController extends Controller
     {
 
-        public function index()
-        {
-            $orders = AdminOrder::with(['user', 'orderItems.variation.size','orderItems.variation.color'])
-            ->where('status','!=','Hủy')->where('status','!=','Chờ xử lý')->get();
-            // $orders = AdminOrder::all();
-            // Trong phương thức index
-            // dd($orders->toArray());die;
-            foreach ($orders as $order) {
-                // Thêm kiểm tra để chỉ hiển thị nút duyệt cho các đơn hàng chờ xử lý
-                if ($order->status === 'Đang Xử lý') {
-                    // Hiển thị nút duyệt
-                }
-            }
+        public function index(Request $request)
+{
+    // Khởi tạo query với các quan hệ cần thiết
+    $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
+        ->where('status', '!=', 'Hủy');
 
-            return view('Admin.orders.index', compact('orders'));
-        }
+    // Xử lý tìm kiếm
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('id', 'like', "%$search%")
+                ->orWhere('name', 'like', "%$search%")
+                ->orWhereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%$search%");
+                })
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('phone', 'like', "%$search%")
+                ->orWhere('address', 'like', "%$search%")
+                ->orWhere('status', 'like', "%$search%");
+        });
+    }
+
+    // Lọc theo trạng thái
+    if ($request->filled('status')) {
+        $query->where('status', $request->input('status'));
+    }
+
+    // Lấy danh sách đơn hàng
+    $orders = $query->get();
+
+    return view('Admin.orders.index', compact('orders'));
+}
+        
 
     public function approveIndex()
     {
@@ -117,6 +134,10 @@ use Illuminate\Support\Facades\Storage;
     {
         // Fetch the order first
         $order = AdminOrder::findOrFail($id);
+
+        if ($order->status === 'Hoàn thành') {
+            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
+        }
 
         if ($request->has('status')) {
             $validated = $request->validate([
