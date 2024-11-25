@@ -33,7 +33,8 @@ class AdminOrder extends Model
         'payment_method', 
         'discount_id',
         'discount_code',
-        'discount_value'
+        'discount_value',
+        'cancellation_reason'
     ];
 
 

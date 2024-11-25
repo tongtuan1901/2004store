@@ -67,7 +67,29 @@ class HomeController extends Controller
         });
 
         // dd($products);
-        return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories', 'listBrands'));
+
+
+
+        // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
+
+        $listBrands = Brand::all();
+        $news = News::latest()->limit(5)->get();
+
+        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
+
+
+        // $listBrands = Brand::all();
+        // $news = News::latest()->limit(5)->get();
+
+        // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
+
+
+
+        
+
+
+        
+
 
 
         /**

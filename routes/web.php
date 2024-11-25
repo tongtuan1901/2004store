@@ -346,6 +346,8 @@ Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
 Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
 
+//route sản phẩm danh mục
+Route::get('/client-product-categori', [CardController::class, 'index'])->name('cart.index');
 
 
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
