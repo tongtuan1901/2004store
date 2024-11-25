@@ -17642,11 +17642,11 @@
 	<header class="banner">
 		<div class="wrap">
 			<div class="logo logo--left">
-	
+
 		<h1 class="shop__name">
 			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
 		</h1>
-	
+
 </div>
 		</div>
 	</header>
@@ -17656,11 +17656,11 @@
 				<main class="main main--nosidebar">
 					<header class="main__header">
 						<div class="logo logo--left">
-	
+
 		<h1 class="shop__name">
 			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
 		</h1>
-	
+
 </div>
 					</header>
 					<div class="main__content">
@@ -17677,13 +17677,13 @@
 									</div>
 									<div class="thankyou-message-container">
 										<h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
-										
+
 										<p class="section__text">
 											Một email xác nhận đã được gửi tới {{ $order->email }}.  <br>
 											Xin vui lòng kiểm tra email của bạn
 										</p>
-										
-										
+
+
 									</div>
 								</section>
 							</div>
@@ -17710,26 +17710,26 @@
 															<div class="product-thumbnail">
                                                             <div class="product-thumbnail__wrapper">
                                                             <img src="{{ asset('storage/' . $item->image) }}" alt="" class="product-thumbnail__image">
-                                                            
+
 </div>
 																<span class="product-thumbnail__quantity unprintable">1</span>
 															</div>
 														</td>
 														<th class="product__description">
 															<span class="product__description__name">{{ $item->product->name }}</span>
-															
+
 															<span class="product__description__property">{{ $item->variation->color->color ?? '' }} / {{ $item->variation->size->size ?? '' }}</span>
-															
-															
-															
+
+
+
 														</th>
 														<th class="product__quantity printable-only">
 															x {{ $item->quantity }}
 														</th>
 														<td class="product__price">
-															
+
                                                         {{ number_format($item->price, 0, ',', '.') }}₫
-															
+
 														</td>
 													</tr>
                                                     @endforeach
@@ -17754,7 +17754,7 @@
                                                             <th class="total-line__name">Số tiền trừ từ ví</th>
                                                             <td class="total-line__price">{{ number_format($order->total, 0, ',', '.') }}₫</td>
                                                         </tr>
-                                                    @endif			
+                                                    @endif
 												</tbody>
 											</table>
 										</div>
@@ -17772,19 +17772,19 @@
                                                                     <p>Giá trị giảm: -{{ number_format($order->discount_value, 0, ',', '.') }}₫</p>
                                                                     <p>{{ $order->$finalTotal }}</p>
                                                                 @endif
-    
+
                                                                 <!-- Hiển thị thông báo nếu có lỗi mã giảm giá -->
                                                                 @if(session('discount_error'))
                                                                     <p style="color: red;">{{ session('discount_error') }}</p>
                                                                 @endif
-    
+
                                                                 <!-- Tổng cộng sau khi áp dụng giảm giá và phí vận chuyển -->
                                                                 <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
-    
+
                                                             </td>
 														</td>
 													</tr>
-                                                    
+
 												</tbody>
 											</table>
 
@@ -17795,59 +17795,59 @@
 							<div class="col col--primary">
 								<section class="section">
 									<div class="section__content section__content--bordered">
-										
+
 										<div class="row">
-											
+
 											<div class="col col--md-two">
 												<h2>Thông tin mua hàng</h2>
 												<p>{{ $user->name }}</p>
-												
+
 												<p>{{ $user->email }}</p>
-												
-												
+
+
 												<p>{{ $user->phone_number }}</p>
-												
+
 											</div>
-											
+
 											<div class="col col--md-two">
 												<h2>Thông tin người nhận</h2>
 												<p>{{ $order->name }}</p>
                                                 <p>{{ $order->phone }}</p>
-												
+
 												<p>{{ $order->house_address }}</p>
-												
-												
+
+
                                                 <p>{{ $order->state }}</p>
-												
+
 												<p>{{ $order->street }}</p>
                                                 <p>{{ $order->city }}</p>
-												
-												
-												
-												
+
+
+
+
 											</div>
 										</div>
 										<div class="row">
                                         <div class="col col--md-two">
-    <h2>Phương thức thanh toán</h2>
-    <p>
-        @if($order->payment_method == 'bank_transfer')
-            Chuyển khoản
-        @elseif($order->payment_method == 'cod')
-            Thanh toán khi nhận hàng
-        @elseif($order->payment_method == 'wallet')
-            Thanh toán qua ví
-        @else
-            Phương thức thanh toán không xác định
-        @endif
-    </p>
-</div>
+                                            <h2>Phương thức thanh toán</h2>
+                                            <p>
+                                                @if($order->payment_method == 'bank_transfer')
+                                                    Chuyển khoản
+                                                @elseif($order->payment_method == 'cod')
+                                                    Thanh toán khi nhận hàng
+                                                @elseif($order->payment_method == 'wallet')
+                                                    Thanh toán qua ví
+                                                @else
+                                                    Phương thức thanh toán không xác định
+                                                @endif
+                                            </p>
+                                        </div>
 											<div class="col col--md-two">
 												<h2>Phương thức vận chuyển</h2>
 												<p>Giao hàng tận nơi</p>
 											</div>
 										</div>
-										
+
 									</div>
 								</section>
 								<section class="section unprintable">
@@ -17862,12 +17862,11 @@
 							</div>
 						</article>
 					</div>
-					
+
 				</main>
 			</div>
 		</form>
 	</div>
->>>>>>> a8b92f3f5fe7bb5b9e25849f2aa1126abaf23586
 
                 <h1 class="shop__name">
                     <a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>

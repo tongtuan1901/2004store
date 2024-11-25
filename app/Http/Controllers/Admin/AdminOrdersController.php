@@ -135,6 +135,10 @@ use Illuminate\Support\Facades\Storage;
         // Fetch the order first
         $order = AdminOrder::findOrFail($id);
 
+        if ($order->status === 'Hoàn thành') {
+            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
+        }
+
         if ($request->has('status')) {
             $validated = $request->validate([
                 'status' => 'required|string|max:50',

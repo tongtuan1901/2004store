@@ -11,40 +11,41 @@ use App\Models\Color;
 use App\Models\Size;
 use Illuminate\Http\Request;
 
+
 class ClientCategories extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-{
-    $categories = Category::all();
-    $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
-    $colors = Color::all();
-    $sizes = Size::all();
-    $selectedCategories = [];
-    $selectedPrices = [];
-    $selectedFilters = [];
-    $selectedColors = [];
-    $selectedSizes = [];
+    {
+        $categories = Category::all();
+        $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
+        $colors = Color::all();
+        $sizes = Size::all();
+        $selectedCategories = [];
+        $selectedPrices = [];
+        $selectedFilters = [];
+        $selectedColors = [];
+        $selectedSizes = [];
 
-    return view("Client.ClientCategories.ListCategories", compact('categories', 'products','colors','sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters','selectedColors','selectedSizes'));
-}
-public function showByBrand($id)
-{
-    $categories = Category::all();
-    $products = AdminProducts::where('brand_id', $id)->paginate(8);
-    $brand = Brand::find($id); 
-    $colors = Color::all();
-    $sizes = Size::all();
-    $selectedCategories = [];
-    $selectedPrices = [];
-    $selectedFilters = [];
-    $selectedColors = [];
-    $selectedSizes = [];
+        return view("Client.ClientCategories.ListCategories", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes'));
+    }
+    public function showByBrand($id)
+    {
+        $categories = Category::all();
+        $products = AdminProducts::where('brand_id', $id)->paginate(8);
+        $brand = Brand::find($id);
+        $colors = Color::all();
+        $sizes = Size::all();
+        $selectedCategories = [];
+        $selectedPrices = [];
+        $selectedFilters = [];
+        $selectedColors = [];
+        $selectedSizes = [];
 
-    return view("Client.ClientCategories.ListBrand", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes','brand'));
-}
+        return view("Client.ClientCategories.ListBrand", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes', 'brand'));
+    }
 
     public function filter(Request $request)
     {
@@ -53,10 +54,10 @@ public function showByBrand($id)
         $selectedPrices = $request->input('price', []);
         $selectedColors = $request->input('color', []);
         $selectedSizes = $request->input('size', []);
-        
+
         // Khởi tạo mảng để lưu các bộ lọc đã chọn
         $selectedFilters = [];
-        
+
         // Lọc theo danh mục
         if (!empty($selectedCategories)) {
             $categories = Category::whereIn('id', $selectedCategories)->get();
@@ -64,7 +65,7 @@ public function showByBrand($id)
                 $selectedFilters['category[' . $category->id . ']'] = 'Danh mục: ' . $category->name;
             }
         }
-    
+
         // Lọc theo giá
         if (!empty($selectedPrices)) {
             foreach ($selectedPrices as $priceRange) {
@@ -78,7 +79,7 @@ public function showByBrand($id)
                 };
             }
         }
-    
+
         // Lọc theo màu sắc
         if (!empty($selectedColors)) {
             $colors = Color::whereIn('id', $selectedColors)->get();
@@ -86,7 +87,7 @@ public function showByBrand($id)
                 $selectedFilters['color[' . $color->id . ']'] = 'Màu: ' . $color->color;
             }
         }
-    
+
         // Lọc theo kích thước
         if (!empty($selectedSizes)) {
             $sizes = Size::whereIn('id', $selectedSizes)->get();
@@ -94,15 +95,15 @@ public function showByBrand($id)
                 $selectedFilters['size[' . $size->id . ']'] = 'Kích thước: ' . $size->size;
             }
         }
-    
+
         // Lọc sản phẩm
         $products = AdminProducts::query();
-    
+
         // Lọc theo danh mục
         if (!empty($selectedCategories)) {
             $products->whereIn('category_id', $selectedCategories);
         }
-    
+
         // Lọc theo giá
         if (!empty($selectedPrices)) {
             foreach ($selectedPrices as $range) {
@@ -116,29 +117,29 @@ public function showByBrand($id)
                 }
             }
         }
-    
+
         // Lọc theo màu sắc
         if (!empty($selectedColors)) {
             $products->whereHas('variations', function ($query) use ($selectedColors) {
                 $query->whereIn('color_id', $selectedColors);
             });
         }
-    
+
         // Lọc theo kích thước
         if (!empty($selectedSizes)) {
             $products->whereHas('variations', function ($query) use ($selectedSizes) {
                 $query->whereIn('size_id', $selectedSizes);
             });
         }
-    
+
         // Áp dụng phân trang
         $products = $products->paginate(8);  // Sử dụng paginate thay vì get()
-    
+
         // Lấy tất cả danh mục, màu sắc, và kích thước
         $categories = Category::all();
         $colors = Color::all();
         $sizes = Size::all();
-    
+
         // Trả về view với dữ liệu cần thiết
         return view('Client.ClientCategories.ListCategories', [
             'products' => $products, // Đây là đối tượng Paginator
@@ -155,7 +156,7 @@ public function showByBrand($id)
 
 
 
-    
+
 
     public function create()
     {
