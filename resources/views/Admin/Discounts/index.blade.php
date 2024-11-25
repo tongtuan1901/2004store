@@ -9,12 +9,33 @@
 
                     <div class="sherah-dsinner">
                         <div class="row mg-top-30">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form action="{{ route('discount.index') }}" method="GET" class="form-inline">
+                                        <div class="form-group mr-3">
+                                            <label for="valid_from" class="mr-2">Từ ngày:</label>
+                                            <input type="date" name="valid_from" id="valid_from" class="form-control" 
+                                                   value="{{ request('valid_from') }}">
+                                        </div>
+                                        <div class="form-group mr-3">
+                                            <label for="valid_to" class="mr-2">Đến ngày:</label>
+                                            <input type="date" name="valid_to" id="valid_to" class="form-control" 
+                                                   value="{{ request('valid_to') }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mr-2">Tìm kiếm</button>
+                                        <!-- Nút Reset -->
+                                        <a href="{{ route('discount.index') }}" class="btn btn-secondary">Reset</a>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="col-12 sherah-flex-between">
                                 <!-- Sherah Breadcrumb -->
                                 <div class="sherah-breadcrumb">
                                     <h2 class="sherah-breadcrumb__title">Danh sách mã giảm giá</h2>
+                                 
                                     
                                 </div>
+                                
                                 <!-- End Sherah Breadcrumb -->
                                 <a href="{{ route('discount.create') }}" class="sherah-btn sherah-gbcolor">Thêm mã giảm giá</a>
                             </div>
