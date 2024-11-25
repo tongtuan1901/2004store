@@ -34,22 +34,7 @@ class HomeController extends Controller
             return $product;
         });
 
-        // Truy vấn để lấy top 5 sản phẩm bán chạy nhất dựa trên tổng số lượng đã bán
-        // $bestSaller = AdminProducts::select('products.*')
-        //     ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        //     ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        //     ->groupBy('products.id')
-        //     ->orderByDesc('total_quantity')
-        //     ->limit(5)
-        //     ->get();
-
-        // $bestSaller = AdminProducts::select('products.*')
-        //     ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        //     ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        //     ->groupBy('products.id')
-        //     ->orderBy('total_quantity', 'desc')
-        //     ->limit(4)
-        //     ->get();
+       
 
         $bestSaller = AdminProducts::select('products.*')
         ->with(['variations.size', 'variations.color', 'category', 'images']) // Thêm eager loading
@@ -81,32 +66,6 @@ class HomeController extends Controller
         return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
 
         
-        // $listBrands = Brand::all();
-        // $news = News::latest()->limit(5)->get();
-
-        // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
-
-
-        
-
-
-      
-
-
-
-        /**
-         * Store a newly created resource in storage.
-         */
-
-
-        /**
-         * Display the specified resource.
-         */
-
-        // public function show(string $id)
-        // {
-        //     $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
-        //     return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
-        // }
+    
     }
 }

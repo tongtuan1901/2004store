@@ -61,12 +61,31 @@ class DiscountController extends Controller
     }
 
     // Hiển thị danh sách mã giảm giá
-    public function index()
-    {
-        $discounts = Discount::all();
-        return view('Admin.Discounts.index', compact('discounts'));
+    public function index(Request $request)
+{
+    // Lấy dữ liệu từ request
+    $validFrom = $request->input('valid_from');
+    $validTo = $request->input('valid_to');
+
+    // Khởi tạo query builder
+    $query = Discount::query();
+
+    // Áp dụng điều kiện lọc nếu có ngày bắt đầu
+    if (!empty($validFrom)) {
+        $query->where('valid_from', '>=', $validFrom);
     }
 
+    // Áp dụng điều kiện lọc nếu có ngày kết thúc
+    if (!empty($validTo)) {
+        $query->where('valid_to', '<=', $validTo);
+    }
+
+    // Lấy danh sách mã giảm giá sau khi áp dụng các điều kiện
+    $discounts = $query->get();
+
+    // Trả về view kèm dữ liệu
+    return view('Admin.Discounts.index', compact('discounts', 'validFrom', 'validTo'));
+}
     // Hiển thị form tạo mã giảm giá
     public function create()
     {

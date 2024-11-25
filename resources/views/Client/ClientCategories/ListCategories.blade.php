@@ -307,7 +307,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                     <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
                         <!-- SVG icon for wishlist button -->
                     </button>
-                    <style>
+                    {{-- <style>
                         /* Modal Styles */
                         .modal {
                             display: none;
@@ -405,59 +405,126 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                         .modal-toggle:checked ~ .modal {
                             display: block;
                         }
+                    </style> --}}
+                    <style>
+                        .slide-image {
+                            height: 100px;
+                            /* Thay đổi chiều cao theo yêu cầu */
+                            object-fit: cover;
+                            /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
+                
+                        }
+                
+                        /* Styles for the custom buttons */
+                        .shop-addLoop-button,
+                        .shop-quickview-button {
+                            background-color: #4CAF50;
+                            /* Green */
+                            border: none;
+                            color: white;
+                            padding: 5px 7px;
+                            text-align: center;
+                            text-decoration: none;
+                            display: inline-block;
+                            transition: 0.3s;
+                            cursor: pointer;
+                        }
+                
+                        .shop-addLoop-button:hover,
+                        .shop-quickview-button:hover {
+                            background-color: #f8b4da !important;
+                        }
+                
+                        button.ft1 {
+                            display: inline-block;
+                            opacity: 1;
+                            visibility: visible;
+                            z-index: 10;
+                            background-color: initial;
+                            /* Màu nền mặc định */
+                            transition: background-color 0.3s ease;
+                            /* Hiệu ứng mượt khi đổi màu */
+                        }
+                
+                        button.ft1:hover {
+                            background-color: #f8b4da !important;
+                            /* Màu hồng khi hover */
+                        }
+                        .form-group{
+                            display: left;
+                        }
                     </style>
-                    
                     <div class="product-item-actions">
-                        <!-- Button to trigger modal -->
-                        <label for="modal-toggle-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
-                        <input type="checkbox" id="modal-toggle-{{ $product->id }}" class="modal-toggle" style="display: none;" />
-                    
-                        <!-- Modal -->
+
+                        <!-- Modal for Adding to Cart -->
+                        <label for="modal-toggle-{{ $product->id }}" class="shop-addLoop-button"
+                            title="Thêm vào giỏ">Thêm vào giỏ</label>
+                        <input type="checkbox" id="modal-toggle-{{ $product->id }}"
+                            class="modal-toggle" />
+
+                        <!-- Cửa sổ Modal -->
                         <div class="modal">
                             <div class="modal-content">
-                                <label for="modal-toggle-{{ $product->id }}" class="close">&times;</label>
+                                <label for="modal-toggle-{{ $product->id }}"
+                                    class="close">&times;</label>
                                 <h2>Chọn biến thể và số lượng</h2>
-                    
+
                                 @if (auth()->check())
-                                    <form id="productForm-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST">
+                                    <form id="productForm-{{ $product->id }}"
+                                        action="{{ route('cart.add') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="name" value="{{ $product->name }}">
-                                        <input type="hidden" name="price" value="{{ $product->price_sale }}">
-                                        <input type="hidden" name="image" value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
-                    
+                                        <input type="hidden" name="product_id"
+                                            value="{{ $product->id }}">
+                                        <input type="hidden" name="name"
+                                            value="{{ $product->name }}">
+                                        <input type="hidden" name="price"
+                                            value="{{ $product->price_sale }}">
+                                        <input type="hidden" name="image"
+                                            value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
+
                                         <div class="form-group">
                                             <label for="size-{{ $product->id }}">Kích thước:</label>
-                                            <select id="size-{{ $product->id }}" name="size">
+                                            <select id="size-{{ $product->id }}" name="size"
+                                                class="form-control">
                                                 @foreach ($product->variations as $variation)
-                                                    <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
+                                                    <option value="{{ $variation->size_id }}">
+                                                        {{ $variation->size->size }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                    
+
                                         <div class="form-group">
                                             <label for="color-{{ $product->id }}">Màu:</label>
-                                            <select id="color-{{ $product->id }}" name="color">
+                                            <select id="color-{{ $product->id }}" name="color"
+                                                class="form-control">
                                                 @foreach ($product->variations as $variation)
-                                                    <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
+                                                    <option value="{{ $variation->color_id }}">
+                                                        {{ $variation->color->color }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                    
+
                                         <div class="form-group">
                                             <label for="quantity-{{ $product->id }}">Số lượng:</label>
-                                            <input type="number" id="quantity-{{ $product->id }}" name="quantity" min="1" value="1">
+                                            <input type="number" id="quantity-{{ $product->id }}"
+                                                name="quantity" min="1" value="1"
+                                                class="form-control">
                                         </div>
-                                        <button type="submit">Thêm vào giỏ</button>
+                                        <br>
+                                        <button type="submit" class="ft1">Thêm vào
+                                            giỏ</button>
                                     </form>
                                 @else
                                     <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
-                                    <a href="{{ route('client-login.index') }}" class="ft1">Đăng nhập</a>
+                                    <a href="{{ route('client-login.index') }}"
+                                        class="btn btn-secondary">Đăng nhập</a>
                                 @endif
                             </div>
                         </div>
-                    
-                        <button type="button" title="Xem nhanh" class="shop-quickview-button" data-type="shop-quickview-button">Xem nhanh</button>
+
+
+                        <button type="button" title="Xem nhanh" class="shop-quickview-button"
+                            data-type="shop-quickview-button">Xem nhanh</button>
                     </div>
                     
                     
