@@ -50,6 +50,53 @@ class CheckoutThankyouController extends Controller
         return view('Client.ClientCheckout.Checkoutthankyou', compact('order', 'shippingFee', 'finalTotal', 'user', 'walletBalance', 'amountPaidByWallet'));
     }
 
+//     public function index(Request $request)
+// {
+//     // Lấy ID đơn hàng từ query string
+//     $orderId = $request->query('order_id');
+
+//     // Truy vấn cơ sở dữ liệu để lấy thông tin đơn hàng
+//     $order = AdminOrder::with(['orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color', 'orderItems.variation.image'])
+//                         ->findOrFail($orderId);
+//     $user = User::findOrFail($order->user_id);
+
+//     // Phí vận chuyển
+//     $shippingFee = 40000;
+
+//     // Thông tin mã giảm giá
+//     $discountCode = $order->discount_code ?? null; // Lấy mã giảm giá từ đơn hàng, nếu có
+//     $discountValue = $order->discount_value ?? 0; // Giá trị giảm giá
+//     $hasDiscount = $discountCode && $discountValue > 0; // Kiểm tra xem đơn hàng có giảm giá không
+
+//     // Tổng tiền trước và sau giảm giá
+//     $subtotal = $order->total + $discountValue; // Tổng trước giảm giá
+//     $finalTotal = max(0, $subtotal - $discountValue); // Tổng sau giảm giá
+
+//     // Lấy số dư ví của người dùng
+//     $walletBalance = $user->balance;
+
+//     // Tính toán số tiền đã thanh toán bằng ví
+//     $amountPaidByWallet = 0;
+//     if ($order->payment_method == 'wallet') {
+//         $amountPaidByWallet = $finalTotal;
+//         $finalTotal = 0; // Tổng cộng sẽ là 0 nếu thanh toán toàn bộ bằng ví
+//     }
+
+//     return view('Client.ClientCheckout.Checkoutthankyou', compact(
+//         'order',
+//         'shippingFee',
+//         'finalTotal',
+//         'subtotal',
+//         'discountCode',
+//         'discountValue',
+//         'hasDiscount',
+//         'user',
+//         'walletBalance',
+//         'amountPaidByWallet'
+//     ));
+// }
+
+
 
 
 

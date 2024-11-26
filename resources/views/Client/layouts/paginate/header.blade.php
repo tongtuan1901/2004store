@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html class="no-js" lang="vi">
 
@@ -55,7 +56,7 @@
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/collection.scssb1ed.css')}}">
 <!-- INDEX -->
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/blog.scssb1ed.css')}}">
-<link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/article.scssb1ed.css')}}"> 
+<link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/article.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/page.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scssb1ed.css')}}">
 <link rel="preload stylesheet" as="style" fetchpriority="low" href="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/customer.scss.css')}}">
@@ -71,7 +72,7 @@
     <script fetchpriority="low" defer src="{{asset('assets/cdn.jsdelivr.net/npm/@fancyapps/u@4.0/dist/fancybox.umd.js')}}"></script>
     <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/assets/themes_support/option_selection.js')}}"></script>
     <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/assets/themes_support/api.jquery.js')}}"></script>
-    <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/mainb1ed.js')}}">    
+    <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/mainb1ed.js')}}">
     </script>
     <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/assets/themes_support/search_filter.js')}}"></script>
     <script fetchpriority="low" defer src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/collectionb1ed.js')}}"></script>
@@ -84,10 +85,10 @@
 	var Bizweb = Bizweb || {};
 	Bizweb.id = '520624';
 	Bizweb.store = 'f1genz-model-fashion.mysapo.net';
-	
+
 	Bizweb.template = 'checkout';
 	Bizweb.Checkout = Bizweb.Checkout || {};
-	
+
 </script>
 
 <script src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/blogb1ed.js')}}"></script>
@@ -241,29 +242,29 @@
 
     <style>
 
-        
+
         .modal-toggle {
   display: none; /* Ẩn checkbox */
 }
 
 .modal {
   display: none; /* Ẩn mặc định */
-  position: fixed; 
-  z-index: 1; 
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0, 0, 0, 0.4); 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; 
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; 
+  width: 80%;
 }
 
 .close {
@@ -276,7 +277,7 @@
 
 /* Hiện modal khi checkbox được chọn */
 .modal-toggle:checked ~ .modal {
-  display: block; 
+  display: block;
 }
         .preload * {
             -webkit-transition: none !important;
@@ -582,7 +583,7 @@
                         {{-- <a href="{{route('client.order',['userId' => Auth::user()->id])}}">Danh sách đơn hàng</a> --}}
                         Số dư ví: {{ number_format(Auth::user()->balance, 0, ',', '.') }} VND
                     <div class="wallet-balance">
-                        
+
                         {{-- <a href="{{route('client-banks.index',['userId' => Auth::user()->id])}}">Nạp Ví:</a> --}}
                         {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
                         <div class="headers3-right">
@@ -596,18 +597,18 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="accountDropdown">
                                     @if (Auth::check())
-                                    
+
                                         <!-- Mục dropdown khi người dùng đã đăng nhập -->
                                         <a class="dropdown-item" href="{{ route('address.list', ['userId' => Auth::user()->id]) }}">Địa chỉ</a>
                                         <a class="dropdown-item" href="{{ route('client.order', ['userId' => Auth::user()->id]) }}">Danh sách đơn hàng</a>
                                         <div class="dropdown-item">
                                             <a href="{{ route('client-banks.index', ['userId' => Auth::user()->id]) }}">Nạp Ví</a>
                                             {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
-                                        </div>  
+                                        </div>
                                         <div class="dropdown-item">
                                             <a href="{{ route('client-banks.viewRutTien', ['userId' => Auth::user()->id]) }}">Rút tiền</a>
                                             {{-- <strong>{{ number_format(Auth::user()->balance, 0, ',', '.') }} VND</strong> --}}
-                                        </div>  
+                                        </div>
                                         <a class="dropdown-item" href="{{ route('client-password.change') }}">Đổi mật khẩu</a>
                                         <form action="{{ route('client-logout') }}" method="POST" class="dropdown-item p-0">
                                             @csrf
@@ -619,7 +620,7 @@
                                     @endif
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                         {{-- <form action="{{ route('client-logout') }}" method="POST" style="display: inline;">
                             @csrf
@@ -628,7 +629,7 @@
 
                         <!-- Nút đổi mật khẩu -->
                         {{-- <a href="{{ route('client-password.change') }}" class="btn btn-change-password" title="Đổi mật khẩu">Đổi mật khẩu</a> --}}
-                    
+
                     @else
                 <a href="{{ route('client-login.index') }}">
                 <i class="fal fa-user"></i>
@@ -641,8 +642,8 @@
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
                         title="Yêu thích"> <i class="fal fa-heart"></i>
-                        <span class="shop-wishlist-count">0</span> 
-                        
+                        <span class="shop-wishlist-count">0</span>
+
                     </button>
                     <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
                         title="Giỏ hàng">

@@ -18,7 +18,8 @@ class ClientReviewsController extends Controller
         }
         return view('Client.ClientRating.create', compact('order', 'product'));
     }
-    
+
+
     public function submitReview(Request $request, AdminOrder $order, AdminProducts $product)
     {
         $userId = Auth::id();
@@ -40,12 +41,6 @@ class ClientReviewsController extends Controller
         ]);
 
         return redirect()->route('client-products.show', ['client_product' => $product->id])
-                        ->with('success', 'Đánh giá của bạn đã được gửi.');
+            ->with('success', 'Đánh giá của bạn đã được gửi.');
     }
-    
-
-
-    
 }
-
-

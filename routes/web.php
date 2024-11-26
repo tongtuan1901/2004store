@@ -80,7 +80,7 @@ use App\Http\Controllers\Admin\AdminTransferController;
 use App\Http\Controllers\Admin1\AdminCustomerController;
 
 
-use App\Http\Controllers\Admin\AdminCommentsController; 
+use App\Http\Controllers\Admin\AdminCommentsController;
 
 
 use App\Http\Controllers\admin\AdminInventoryController;
@@ -175,8 +175,11 @@ Route::post('/dashboard-btn', [AdminHomeController::class, 'filterByBtn'])->name
 
 
  Route::resource('discount', DiscountController::class);
-Route::post('/apply-discount', [DiscountController::class, 'applyDiscount'])->name('apply.discount');
-Route::post('/remove-discount', [DiscountController::class, 'removeDiscount'])->name('remove.discount');
+ Route::post('/cart/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+
+// web.php
+Route::post('/remove-discount', [CheckoutController::class, 'removeDiscount'])->name('remove.discount');
+
 // Route::resource('admin-comments', AdminCommentsController::class);
 Route::resource('admin-brands', AdminBrandController::class);
 Route::resource('admin-ordersdangvanchuyen', AdminOrdersController::class);
@@ -343,6 +346,8 @@ Route::post('/cart/add', [CardController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CardController::class, 'index'])->name('cart.index');
 Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('cart.remove');
 
+//route sản phẩm danh mục
+Route::get('/client-product-categori', [CardController::class, 'index'])->name('cart.index');
 
 
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
@@ -357,7 +362,10 @@ Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->
 
 // Route::resource('client-checkout', CheckoutController::class);
 
-Route::resource('client-thankyou', CheckoutThankyouController::class);
+// Route::resource('client-thankyou', CheckoutThankyouController::class);
+Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('client-thankyou.index');
+
+
 //nạp tiền khách hàng
 Route::resource('client-banks', ClientBanksController::class);
 //rút tiền khách hàng
@@ -452,6 +460,7 @@ Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'sho
 Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
 Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->name('client.categories.filter');
 //thuong hiệu
+Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
 //search user
@@ -578,3 +587,5 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
 
+//thay đổi số lượng
+Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->name('cart.update');

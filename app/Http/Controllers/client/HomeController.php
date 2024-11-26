@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\client;
 
+use App\Models\News;
 use App\Models\Brand;
+
 use App\Models\Banners;
 
-
-use App\Models\AdminProducts;
-
-
-
 use App\Models\Category;
-
 use Illuminate\Http\Request;
-
+use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
-use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -25,13 +20,10 @@ class HomeController extends Controller
     public function index()
     {
         $banners = Banners::where('deleted', false)->get();
-
-    $listCategories = Category::all();
-    $categories = Category::all(); 
-   
-
-       
-
+        $listCategories = Category::all();
+        $categories = Category::all();
+        $listBrands = Brand::all();
+        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
         $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
         $productsSale->transform(function ($product) {
             if ($product->price > 0) {
@@ -41,19 +33,11 @@ class HomeController extends Controller
             }
             return $product;
         });
-    
+
        
 
-        // $bestSaller = AdminProducts::select('products.*')
-        // ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        // ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        // ->groupBy('products.id')
-        // ->orderByDesc('total_quantity')
-        // ->limit(5)
-        // ->get();
-
-        
         $bestSaller = AdminProducts::select('products.*')
+        ->with(['variations.size', 'variations.color', 'category', 'images']) // Thêm eager loading
         ->join('order_items', 'products.id', '=', 'order_items.product_id')
         ->selectRaw('SUM(order_items.quantity) as total_quantity')
         ->groupBy('products.id')
@@ -61,10 +45,17 @@ class HomeController extends Controller
         ->limit(5)
         ->get();
 
-     
-        //list 3 tin tức
-        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
+        $bestSaller->transform(function ($productSeller) {
+            if ($productSeller->price > 0) {
+                $productSeller->discount_percentage = 100 - (($productSeller->price_sale / $productSeller->price) * 100);
+            } else {
+                $productSeller->discount_percentage = 0;
+            }
+            return $productSeller;
+        });
+
         // dd($products);
+
 
 
         // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
@@ -75,7 +66,7 @@ class HomeController extends Controller
         return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
 
         
-// <<<<<<< HEAD
+
 //         // $listBrands = Brand::all();
 //         // $news = News::latest()->limit(5)->get();
 
@@ -102,5 +93,6 @@ class HomeController extends Controller
         //     $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
         //     return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
         // }
+
     }
 }

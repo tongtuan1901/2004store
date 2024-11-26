@@ -1,4 +1,3 @@
-use Illuminate\Support\Facades\Auth;
 @extends('Admin.layouts.master')
 
 @section('contentAdmin')
@@ -18,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Tên người nhận</th>
+                                                <th>Lý do hủy</th>
                                                <th>tên người gửi</th>
                                                 <th>Sản phẩm</th>
                                                 <th>Hình ảnh</th>
@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Auth;
                                                         {{ $order->address }}
                                      
                                                     </td>
+                                                    <td>{{ $order->cancellation_reason }}</td>
                                                     <td>{{$user->name}}</td>
                                                     <td>
                                                     @foreach ($order->orderItems as $item)

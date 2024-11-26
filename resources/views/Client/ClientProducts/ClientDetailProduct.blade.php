@@ -225,87 +225,88 @@
                     </div>
                 </div> --}}
                 <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
-    @csrf
-    <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
-    
-    <!-- Color selection -->
-    <div class="product-sw-line">
-        <div class="product-sw-select">
-            <div class="product-sw-title">Color</div>
-            <div class="variation mb-3">
-                <div class="variation-content d-flex">
-                    @php $uniqueColors = []; @endphp
-                    @foreach ($productDetail->variations as $variation)
-                        @if (!in_array($variation->color->color, $uniqueColors))
-                            <span class="product-sw-select-item">
-                                <input type="radio" 
-                                    name="color" 
-                                    value="{{ $variation->color->id }}"
-                                    data-color="{{ $variation->color->color }}"
-                                    data-image="{{ $variation->image ? asset('storage/' . $variation->image->image_path) : asset('path/to/placeholder/image.jpg') }}"
-                                    data-price="{{ $variation->price }}"
-                                    class="trigger-option-sw d-none"
-                                    id="product-choose-color-{{ $variation->color->id }}" required>
-                                <label for="product-choose-color-{{ $variation->color->id }}"
-                                    class="product-sw-select-item-span">{{ $variation->color->color }}</label>
-                            </span>
-                            @php $uniqueColors[] = $variation->color->color; @endphp
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
 
-    <!-- Size selection -->
-    <div class="product-sw-line">
-        <div class="product-sw-select">
-            <div class="product-sw-title">Size</div>
-            <div class="variation mb-3">
-                <div class="variation-content d-flex">
-                    @php $uniqueSizes = []; @endphp
-                    @foreach ($productDetail->variations as $variation)
-                        @if (!in_array($variation->size->size, $uniqueSizes))
-                            <span class="product-sw-select-item">
-                                <input type="radio" 
-                                    name="size" 
-                                    value="{{ $variation->size->id }}"
-                                    data-size="{{ $variation->size->size }}"
-                                    class="trigger-option-sw d-none"
-                                    id="product-choose-size-{{ $variation->size->id }}" required>
-                                <label for="product-choose-size-{{ $variation->size->id }}"
-                                    class="product-sw-select-item-span">{{ $variation->size->size }}</label>
-                            </span>
-                            @php $uniqueSizes[] = $variation->size->size; @endphp
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+                    <!-- Color selection -->
+                    <div class="product-sw-line">
+                        <div class="product-sw-select">
+                            <div class="product-sw-title">Color</div>
+                            <div class="variation mb-3">
+                                <div class="variation-content d-flex">
+                                    @php $uniqueColors = []; @endphp
+                                    @foreach ($productDetail->variations as $variation)
+                                        @if (!in_array($variation->color->color, $uniqueColors))
+                                            <span class="product-sw-select-item">
+                                                <input type="radio" name="color" value="{{ $variation->color->id }}"
+                                                    data-color="{{ $variation->color->color }}"
+                                                    data-image="{{ $variation->image ? asset('storage/' . $variation->image->image_path) : asset('path/to/placeholder/image.jpg') }}"
+                                                    data-price="{{ $variation->price }}" class="trigger-option-sw d-none"
+                                                    id="product-choose-color-{{ $variation->color->id }}" required>
+                                                <label for="product-choose-color-{{ $variation->color->id }}"
+                                                    class="product-sw-select-item-span">{{ $variation->color->color }}</label>
+                                            </span>
+                                            @php $uniqueColors[] = $variation->color->color; @endphp
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Quantity -->
-    <div class="main-product-quantity shop-quantity-wrap">
-        <label>Số lượng</label>
-        <div class="shop-quantity">
-            <button type="button" data-type="shop-quantity-minus" class="quantity-btn">-</button>
-            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-            <button type="button" data-type="shop-quantity-plus" class="quantity-btn">+</button>
-        </div>
-    </div>
+                    <!-- Size selection -->
+                    <div class="product-sw-line">
+                        <div class="product-sw-select">
+                            <div class="product-sw-title">Size</div>
+                            <div class="variation mb-3">
+                                <div class="variation-content d-flex">
+                                    @php $uniqueSizes = []; @endphp
+                                    @foreach ($productDetail->variations as $variation)
+                                        @if (!in_array($variation->size->size, $uniqueSizes))
+                                            <span class="product-sw-select-item">
+                                                <input type="radio" name="size" value="{{ $variation->size->id }}"
+                                                    data-size="{{ $variation->size->size }}"
+                                                    class="trigger-option-sw d-none"
+                                                    id="product-choose-size-{{ $variation->size->id }}" required>
+                                                <label for="product-choose-size-{{ $variation->size->id }}"
+                                                    class="product-sw-select-item-span">{{ $variation->size->size }}</label>
+                                            </span>
+                                            @php $uniqueSizes[] = $variation->size->size; @endphp
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Action buttons -->
-    <div class="main-product-cta">
-        <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
-            <strong>Thêm vào giỏ</strong>
-            <span>Chọn ngay sản phẩm bạn yêu thích</span>
-        </button>
-        <button type="submit" name="action" value="buyNow" class="buy-now-btn">
-            <strong>Mua ngay</strong>
-            <span>Mua ngay sản phẩm này</span>
-        </button>
-    </div>
-</form>
+                    <!-- Quantity -->
+                    <div class="main-product-quantity shop-quantity-wrap">
+                        <label>Số lượng</label>
+                        <div class="shop-quantity">
+                            <button type="button" data-type="shop-quantity-minus" class="quantity-btn">-</button>
+                            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                            <button type="button" data-type="shop-quantity-plus" class="quantity-btn">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="main-product-cta">
+                        <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
+                            <strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                </svg> Thêm vào giỏ</strong>
+                            <span>Chọn ngay sản phẩm bạn yêu thích</span>
+                        </button>
+                        <button style="color: white; background-color: #e95d00" type="submit" name="action"
+                            value="buyNow" class="buy-now-btn">
+                            <strong>Mua ngay</strong>
+                            <span>Mua ngay sản phẩm này</span>
+                        </button>
+                    </div>
+                </form>
+                <br>
                 <!-- HTML remains the same -->
                 <button type="button" data-type="main-product-send-help" title="Tư vấn">
                     <strong>Tư vấn</strong>
@@ -361,143 +362,135 @@
 
         <div>
             <div class="comments-section mt-4">
-            <div class="btn-group mb-3">
-                <button id="btn-comments" class="btn btn-primary">Bình luận</button>
-                <button id="btn-reviews" class="btn btn-secondary">Đánh giá</button>
-            </div>
-            
-            <div id="comments-section">
-                <h5>Bình luận:</h5>
-                @if($productDetail->comments)
-                    @foreach ($productDetail->comments as $comment)
-                        <div class="comment-item mb-3">
-                            <div class="comment-header">
-                                <strong>{{ $comment->user->name }}</strong>
-                                <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
+                <div class="btn-group mb-3">
+                    <button id="btn-comments" class="btn btn-primary">Bình luận</button>
+                    <button id="btn-reviews" class="btn btn-secondary">Đánh giá</button>
+                </div>
+
+                <div id="comments-section">
+                    <h5>Bình luận:</h5>
+                    @if ($productDetail->comments)
+                        @foreach ($productDetail->comments as $comment)
+                            <div class="comment-item mb-3">
+                                <div class="comment-header">
+                                    <strong>{{ $comment->user->name }}</strong>
+                                    <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <div class="comment-content">
+                                    {{ $comment->content }}
+                                </div>
                             </div>
-                            <div class="comment-content">
-                                {{ $comment->content }}
+                        @endforeach
+                    @endif
+
+                    @auth
+                        <form method="POST" action="{{ route('client-products.comments.store', $productDetail->id) }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Viết bình luận của bạn:</label>
+                                <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
                             </div>
-                        </div>
-                    @endforeach
-                @endif
-            
-                @auth
-                    <form method="POST" action="{{ route('client-products.comments.store', $productDetail->id) }}">
-                        @csrf
+                            <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                        </form>
+                    @else
                         <div class="mb-3">
                             <label for="content" class="form-label">Viết bình luận của bạn:</label>
                             <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Gửi bình luận</button>
-                    </form>
-                @else
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Viết bình luận của bạn:</label>
-                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <p class="text-muted">Bạn phải <a class="btn btn-success" href="{{ route('client-login.index') }}">đăng nhập</a> để bình luận.</p>
-                @endauth
-            </div>
-            
-            <div id="reviews-section" style="display: none;">
-                <h2>Đánh giá sản phẩm</h2>
-                <div id="reviews-section">
-                    @if($productDetail->reviews->isEmpty())
-                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
-                    @else
-                        @foreach ($productDetail->reviews as $review)
-                            <div class="review">
-                                <h4>{{ $review->user->name }}</h4>
-                                
-                                <!-- Hiển thị sao đánh giá -->
-                                <div class="rating">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $review->rating)
-
-                                        <i class="fa fa-star text-warning"></i> <!-- Sao vàng -->
-                                        @else
-                                            <i class="fa fa-star text-secondary"></i> <!-- Sao xám -->
-                                        @endif
-                                    @endfor
-                                </div>
-            
-                                <p>{{ $review->comment }}</p>
-                                <small>Đăng vào ngày {{ $review->created_at->format('d/m/Y') }}</small>
-                            </div>
-                            <hr>
-                        @endforeach
-                    @endif
+                        <p class="text-muted">Bạn phải <a class="btn btn-success"
+                                href="{{ route('client-login.index') }}">đăng nhập</a> để bình luận.</p>
+                    @endauth
                 </div>
-            </div>
-            
-            
-            <script>
-                document.getElementById('btn-comments').addEventListener('click', function () {
-                    document.getElementById('comments-section').style.display = 'block';
-                    document.getElementById('reviews-section').style.display = 'none';
-                });
-            
-                document.getElementById('btn-reviews').addEventListener('click', function () {
-                    document.getElementById('comments-section').style.display = 'none';
-                    document.getElementById('reviews-section').style.display = 'block';
-                });
-            </script>
-            
-        </div>
 
+                <div id="reviews-section" style="display: none;">
+                    <h2>Đánh giá sản phẩm</h2>
+                    <div id="reviews-section">
+                        @if ($productDetail->reviews->isEmpty())
+                            <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                        @else
+                            @foreach ($productDetail->reviews as $review)
+                                <div class="review">
+                                    <h4>{{ $review->user->name }}</h4>
 
-
-        <div class="main-product-relate">
-            <div class="section-title-all">
-                <h2>Sản phẩm liên quan</h2>
-            </div>
-            <div class="main-product-relate-data">
-
-                <div class="product-item" data-id="120912676" data-handle="ao-phong-co-chu-v-logo-rosy">
-                    <div class="product-item-wrap">
-                        <div class="related-products">
-                            @foreach ($relatedProducts as $relatedProduct)
-                                <div class="product-item-detail">
-                                    <div class="product-item-top-image">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            class="product-item-top-image-showcase">
-                                            <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
-                                                alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}'
-                                                width="300" height="480" loading="lazy" decoding="async">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-item-detail-flex">
-                                        <a class="product-item-detail-vendor"
-                                            href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->brand->name }}"
-                                            aria-label="{{ $relatedProduct->brand->name }}">
-                                            <span>{{ $relatedProduct->brand->name }}</span>
-                                        </a>
-                                        <div class="sapo-product-reviews-badge" data-id="{{ $relatedProduct->id }}">
-                                        </div>
-                                    </div>
-                                    <h3 class="product-item-detail-title">
-                                        <a href="{{ route('client-products.show', $relatedProduct->id) }}"
-                                            title="{{ $relatedProduct->name }}"
-                                            aria-label="{{ $relatedProduct->name }}">
-                                            {{ $relatedProduct->name }}
-                                        </a>
-                                    </h3>
-                                    <div class="product-item-detail-price">
-                                        <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
-                                        <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
+                                    <!-- Hiển thị sao đánh giá -->
+                                    <div class="rating">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                <i class="fa fa-star text-warning"></i> <!-- Sao vàng -->
+                                            @else
+                                                <i class="fa fa-star text-secondary"></i> <!-- Sao xám -->
+                                            @endif
+                                        @endfor
                                     </div>
 
+                                    <p>{{ $review->comment }}</p>
+                                    <small>Đăng vào ngày {{ $review->created_at->format('d/m/Y') }}</small>
                                 </div>
+                                <hr>
                             @endforeach
-                        </div>
+                        @endif
                     </div>
                 </div>
 
+
+                <script>
+                    document.getElementById('btn-comments').addEventListener('click', function() {
+                        document.getElementById('comments-section').style.display = 'block';
+                        document.getElementById('reviews-section').style.display = 'none';
+                    });
+
+                    document.getElementById('btn-reviews').addEventListener('click', function() {
+                        document.getElementById('comments-section').style.display = 'none';
+                        document.getElementById('reviews-section').style.display = 'block';
+                    });
+                </script>
+
             </div>
-        </div>
+
+
+
+            <div class="main-product-relate">
+                <div class="section-title-all">
+                    <h2>Sản phẩm liên quan</h2>
+                </div>
+                <div class="main-product-relate-data">
+                    <!-- Sử dụng flexbox để hiển thị các sản phẩm ngang -->
+                    <div class="related-products">
+                        @foreach ($relatedProducts as $relatedProduct)
+                            <div class="product-item-detail">
+                                <div class="product-item-top-image">
+                                    <a href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        class="product-item-top-image-showcase">
+                                        <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
+                                            alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}'
+                                            width="300" height="480" loading="lazy" decoding="async">
+                                    </a>
+                                </div>
+                                <div class="product-item-detail-flex">
+                                    <a class="product-item-detail-vendor"
+                                        href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        title="{{ $relatedProduct->brand->name }}"
+                                        aria-label="{{ $relatedProduct->brand->name }}">
+                                        <span>{{ $relatedProduct->brand->name }}</span>
+                                    </a>
+                                    <div class="sapo-product-reviews-badge" data-id="{{ $relatedProduct->id }}"></div>
+                                </div>
+                                <h3 class="product-item-detail-title">
+                                    <a href="{{ route('client-products.show', $relatedProduct->id) }}"
+                                        title="{{ $relatedProduct->name }}" aria-label="{{ $relatedProduct->name }}">
+                                        {{ $relatedProduct->name }}
+                                    </a>
+                                </h3>
+                                <div class="product-item-detail-price">
+                                    <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
+                                    <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
         </div>
         </div>
 
@@ -547,27 +540,28 @@
             var input = document.querySelector('input[name="quantity"]');
             input.value = parseInt(input.value) + 1;
         });
-       // Cập nhật hình ảnh khi chọn màu
-document.querySelectorAll('input[name="color"]').forEach(function(input) {
-    input.addEventListener('change', function() {
-        if (this.checked) {
-            var newImage = this.getAttribute('data-image');
-            document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src = newImage;
-        }
-    });
-});
+        // Cập nhật hình ảnh khi chọn màu
+        document.querySelectorAll('input[name="color"]').forEach(function(input) {
+            input.addEventListener('change', function() {
+                if (this.checked) {
+                    var newImage = this.getAttribute('data-image');
+                    document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src =
+                        newImage;
+                }
+            });
+        });
 
 
-// Kiểm tra form trước khi submit
-document.getElementById('cart-form').addEventListener('submit', function(e) {
-    var color = document.querySelector('input[name="color"]:checked');
-    var size = document.querySelector('input[name="size"]:checked');
-    
-    if (!color || !size) {
-        e.preventDefault();
-        alert('Vui lòng chọn màu sắc và kích thước');
-    }
-});
+        // Kiểm tra form trước khi submit
+        document.getElementById('cart-form').addEventListener('submit', function(e) {
+            var color = document.querySelector('input[name="color"]:checked');
+            var size = document.querySelector('input[name="size"]:checked');
+
+            if (!color || !size) {
+                e.preventDefault();
+                alert('Vui lòng chọn màu sắc và kích thước');
+            }
+        });
         document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
             input.addEventListener('change', updatePrice);
         });
@@ -785,6 +779,52 @@ document.getElementById('cart-form').addEventListener('submit', function(e) {
         }
 
         /* Đảm bảo rằng không có khoảng cách giữa các phần tử carousel */
-        
+        .main-product-relate-data {
+            display: flex;
+            flex-wrap: wrap;
+            /* Cho phép các sản phẩm xuống dòng khi không đủ không gian */
+            gap: 20px;
+            /* Khoảng cách giữa các sản phẩm là 20px */
+            justify-content: flex-start;
+            /* Căn chỉnh các sản phẩm sang bên trái */
+        }
+
+        .related-products {
+            display: flex;
+            flex-wrap: wrap;
+            /* Đảm bảo các sản phẩm nằm ngang */
+            gap: 20px;
+            /* Khoảng cách giữa các sản phẩm là 20px */
+        }
+
+        .product-item-detail {
+            flex: 1 1 calc(25% - 20px);
+            /* Mỗi sản phẩm chiếm 25% chiều rộng, trừ 20px cho khoảng cách */
+            box-sizing: border-box;
+            /* Đảm bảo không bị tràn ra ngoài */
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-item-detail {
+                flex: 1 1 calc(33.33% - 20px);
+                /* 3 sản phẩm mỗi hàng trên tablet */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-item-detail {
+                flex: 1 1 calc(50% - 20px);
+                /* 2 sản phẩm mỗi hàng trên điện thoại */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-item-detail {
+                flex: 1 1 100%;
+                /* 1 sản phẩm mỗi hàng trên màn hình nhỏ */
+            }
+        }
     </style>
 @endsection
