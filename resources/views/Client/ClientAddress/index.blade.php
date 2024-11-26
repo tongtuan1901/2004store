@@ -14,7 +14,7 @@
         @else
             <ul>
                 @foreach($addresses as $address)
-                    <li>
+                    <li class="table">
                         <span> Tên:{{ $address->name }}, Số điện thoại:{{ $address->phone_number }},Xã:{{ $address->street }}, Thành phố:{{ $address->city }}, Huyện{{ $address->state }},Địa chỉ nhà{{ $address->house_address }}</span>
                         <a href="{{ route('address.edit', ['id' => $address->id]) }}">
                             <svg width="16" height="16" fill="currentColor" class="icon icon-edit" viewBox="0 0 24 24">

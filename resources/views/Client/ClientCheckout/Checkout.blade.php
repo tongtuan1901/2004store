@@ -734,51 +734,38 @@
 											</thead>
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
-												@php
-    // Tính tổng tiền
-                                                    $totalPrice = 0;
-                                                    foreach ($cartItems as $item) {
-                                                        if(session()->has('buyNow')) {
-                                                            $totalPrice += $item['price'] * $item['quantity'];
-                                                        } else {
-                                                            $price = $item->variation->price ?? $item->product->price;
-                                                            $totalPrice += $price * $item->quantity;
-                                                        }
-                                                    }
-                                                    $shippingFee = 40000;
-                                                    $finalTotal = $totalPrice + $shippingFee;
-                                                @endphp		
                                                 @php
-    $totalPrice = 0;
-    foreach ($cart as $item) {
-        // Kiểm tra $item có phải là object không
-        if (is_object($item)) {
-            $price = $item->variation->price ?? $item->product->price ?? 0;
-            $quantity = $item->quantity ?? 0;
-        } elseif (is_array($item)) {
-            // Trường hợp $item là mảng
-            $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
-            $quantity = $item['quantity'] ?? 0;
-        } else {
-            $price = 0;
-            $quantity = 0;
-        }
-
-        $totalPrice += $price * $quantity;
-    }
-
-    $shippingFee = 40000;
-    $discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
-    $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
-@endphp							
+                                                $totalPrice = 0;
+                                                if (session()->has('buyNow')) {
+                                                    $buyNow = session('buyNow');
+                                                    $price = $buyNow['price'] ?? 0;
+                                                    $quantity = $buyNow['quantity'] ?? 0;
+                                                    $totalPrice = $price * $quantity;
+                                                } else {
+                                                    foreach ($cartItems as $item) {
+                                                        $price = 0;
+                                                        $quantity = 0;
+                                                        if (is_object($item)) {
+                                                            $price = $item->variation->price ?? $item->product->price ?? 0;
+                                                            $quantity = $item->quantity ?? 0;
+                                                        }
+                                                        elseif (is_array($item)) {
+                                                            $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
+                                                            $quantity = $item['quantity'] ?? 0;
+                                                        }
+                                                        $totalPrice += $price * $quantity;
+                                                    }
+                                                }
+                                                $shippingFee = 40000;
+                                                $discountValue = session('discount_value', 0);
+                                                $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+                                            @endphp
+                                            
                                                     <th class="total-line__name">
 														Tạm tính
 													</th>
 													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
 												</tr>
-												
-												
-												
 												<tr class="total-line total-line--shipping-fee">
 													<th class="total-line__name">
 														Phí vận chuyển

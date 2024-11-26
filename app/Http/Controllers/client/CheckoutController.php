@@ -232,19 +232,19 @@ class CheckoutController extends Controller
             });
         }
 
-        $cart = Cart::where('user_id', $userId)
-            ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
-            ->get();
-        if ($cart->isEmpty()) 
-        {
-            return redirect()->back()->with('error', 'Gio hang rong.');
-        }
+        // $cart = Cart::where('user_id', $userId)
+        //     ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
+        //     ->get();
+        // if ($cart->isEmpty()) 
+        // {
+        //     return redirect()->back()->with('error', 'Gio hang rong.');
+        // }
 
-        $totalPrice = $cart->sum(function ($item) 
-        {
-            $price = $item->variation->price ?? $item->product->price;
-            return $price * $item->quantity;
-        });
+        // $totalPrice = $cart->sum(function ($item) 
+        // {
+        //     $price = $item->variation->price ?? $item->product->price;
+        //     return $price * $item->quantity;
+        // });
         // Tính toán chi phí
         $shippingFee = 40000;
         $discountCode = $request->input('discount_code');
