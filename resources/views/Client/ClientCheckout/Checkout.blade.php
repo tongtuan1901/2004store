@@ -854,7 +854,7 @@
 										</button>
 										</form>
 
-									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
+									<a data-savepage-href="/cart" href="{{url('client-home')}}" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
 										<span class="previous-link__content">Quay về giỏ hàng</span>
 									</a>
