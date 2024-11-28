@@ -325,7 +325,9 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 // Route cho view client
 Route::resource('client-home', HomeController::class);
 Route::resource('client-user', UsersController::class);
-Route::resource('client-categories', ClientCategories::class);
+// Route::resource('client-categories', ClientCategories::class);
+Route::get('client-categories/{id?}', [ClientCategories::class, 'index'])->name('client-categories.index');
+
 Route::resource('client-login', LoginController::class);
 Route::resource('client-register', RegisterController::class);
 //quên mật khẩu

@@ -89,7 +89,7 @@ class CardController extends Controller
         $userId = auth()->id();
         
         if (!$userId) {
-            return redirect()->route('login')->with('error', 'Please log in to view your cart.');
+            return redirect()->route('client-login.index')->with('error', 'Please log in to view your cart.');
         }
     
         // Clear buyNow session when viewing cart

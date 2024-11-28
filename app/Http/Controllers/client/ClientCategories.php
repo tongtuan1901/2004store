@@ -17,20 +17,58 @@ class ClientCategories extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $categories = Category::all();
-        $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
-        $colors = Color::all();
-        $sizes = Size::all();
-        $selectedCategories = [];
-        $selectedPrices = [];
-        $selectedFilters = [];
-        $selectedColors = [];
-        $selectedSizes = [];
+    // public function index()
+    // {
+    //     $categories = Category::all();
+    //     $products = AdminProducts::with(['brand', 'images'])->paginate(8); // Lấy danh sách sản phẩm với các quan hệ thương hiệu và hình ảnh
+    //     $colors = Color::all();
+    //     $sizes = Size::all();
+    //     $selectedCategories = [];
+    //     $selectedPrices = [];
+    //     $selectedFilters = [];
+    //     $selectedColors = [];
+    //     $selectedSizes = [];
 
-        return view("Client.ClientCategories.ListCategories", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes'));
+    //     return view("Client.ClientCategories.ListCategories", compact('categories', 'products', 'colors', 'sizes', 'selectedCategories', 'selectedPrices', 'selectedFilters', 'selectedColors', 'selectedSizes'));
+    // }
+    public function index($id = null)
+{
+    $categories = Category::all(); // Lấy tất cả danh mục
+    $colors = Color::all();        // Lấy danh sách màu
+    $sizes = Size::all();          // Lấy danh sách kích thước
+
+    // Nếu có ID danh mục, lọc sản phẩm theo danh mục
+    if ($id) {
+        $products = AdminProducts::with(['brand', 'images'])
+            ->where('category_id', $id)
+            ->paginate(8); // Lọc theo category_id
+        $selectedCategory = Category::findOrFail($id); // Lấy danh mục được chọn
+    } else {
+        // Nếu không có ID, lấy tất cả sản phẩm
+        $products = AdminProducts::with(['brand', 'images'])->paginate(8);
+        $selectedCategory = null; // Không có danh mục nào được chọn
     }
+
+    $selectedCategories = [];
+    $selectedPrices = [];
+    $selectedFilters = [];
+    $selectedColors = [];
+    $selectedSizes = [];
+
+    return view("Client.ClientCategories.ListCategories", compact(
+        'categories',
+        'products',
+        'colors',
+        'sizes',
+        'selectedCategories',
+        'selectedPrices',
+        'selectedFilters',
+        'selectedColors',
+        'selectedSizes',
+        'selectedCategory'
+    ));
+}
+
     public function showByBrand($id)
     {
         $categories = Category::all();

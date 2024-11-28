@@ -38,6 +38,7 @@ return new class extends Migration
     $table->timestamp('processing_time')->nullable();
     $table->timestamp('shipping_time')->nullable();
     $table->timestamp('completed_time')->nullable();
+    $table->text('cancellation_reason')->nullable();
 
           
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

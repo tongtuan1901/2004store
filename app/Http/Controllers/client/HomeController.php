@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -23,14 +24,26 @@ class HomeController extends Controller
         $categories = Category::all();
         $listBrands = Brand::all();
         $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
-        $productsSale->transform(function ($product) {
+        // $productsSale->transform(function ($product) {
+        //     if ($product->price > 0) {
+        //         $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
+        //     } else {
+        //         $product->discount_percentage = 0;
+        //     }
+        //     return $product;
+        // });
+
+        $filteredProductsSale = $productsSale->transform(function ($product) {
             if ($product->price > 0) {
                 $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
             } else {
                 $product->discount_percentage = 0;
             }
             return $product;
-        });
+        })->filter(function ($product) {
+            // Chỉ lấy sản phẩm có discount_percentage > 75
+            return $product->discount_percentage > 75;
+        })->take(4);
 
         // Truy vấn để lấy top 5 sản phẩm bán chạy nhất dựa trên tổng số lượng đã bán
         // $bestSaller = AdminProducts::select('products.*')
@@ -75,7 +88,10 @@ class HomeController extends Controller
         $listBrands = Brand::all();
         $news = News::latest()->limit(5)->get();
 
-        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
+        //list 3 tin tức
+        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
+
+        return view('Client.home',compact('listCategories','filteredProductsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
 
 
         // $listBrands = Brand::all();
