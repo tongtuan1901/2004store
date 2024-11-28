@@ -589,3 +589,5 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
 
+//thay đổi số lượng
+Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->name('cart.update');

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\client;
 
+use App\Models\News;
 use App\Models\Brand;
+
 use App\Models\Banners;
 
 use App\Models\Category;
-
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,7 @@ class HomeController extends Controller
         $listCategories = Category::all();
         $categories = Category::all();
         $listBrands = Brand::all();
+        $latestNews = News::orderBy('created_at', 'desc')->take(3)->get();
         $productsSale = AdminProducts::with(['category', 'firstImage'])->orderBy('price_sale', 'asc')->limit(4)->get();
         // $productsSale->transform(function ($product) {
         //     if ($product->price > 0) {
@@ -45,30 +47,16 @@ class HomeController extends Controller
             return $product->discount_percentage > 75;
         })->take(4);
 
-        // Truy vấn để lấy top 5 sản phẩm bán chạy nhất dựa trên tổng số lượng đã bán
-        // $bestSaller = AdminProducts::select('products.*')
-        //     ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        //     ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        //     ->groupBy('products.id')
-        //     ->orderByDesc('total_quantity')
-        //     ->limit(5)
-        //     ->get();
-
-        // $bestSaller = AdminProducts::select('products.*')
-        //     ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        //     ->selectRaw('SUM(order_items.quantity) as total_quantity')
-        //     ->groupBy('products.id')
-        //     ->orderBy('total_quantity', 'desc')
-        //     ->limit(4)
-        //     ->get();
+       
 
         $bestSaller = AdminProducts::select('products.*')
-            ->join('order_items', 'products.id', '=', 'order_items.product_id')
-            ->selectRaw('SUM(order_items.quantity) as total_quantity')
-            ->groupBy('products.id')
-            ->orderByDesc('total_quantity')
-            ->limit(5)
-            ->get();
+        ->with(['variations.size', 'variations.color', 'category', 'images']) // Thêm eager loading
+        ->join('order_items', 'products.id', '=', 'order_items.product_id')
+        ->selectRaw('SUM(order_items.quantity) as total_quantity')
+        ->groupBy('products.id')
+        ->orderByDesc('total_quantity')
+        ->limit(5)
+        ->get();
 
         $bestSaller->transform(function ($productSeller) {
             if ($productSeller->price > 0) {
@@ -93,15 +81,14 @@ class HomeController extends Controller
 
         return view('Client.home',compact('listCategories','filteredProductsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
 
-
-        // $listBrands = Brand::all();
-        // $news = News::latest()->limit(5)->get();
-
-        // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
-
-
-
         
+
+//         // $listBrands = Brand::all();
+//         // $news = News::latest()->limit(5)->get();
+
+//         // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
+// =======
+// >>>>>>> fc6233639700adad942e870ab8474fbef0d0eedd
 
 
         
@@ -122,5 +109,6 @@ class HomeController extends Controller
         //     $productDetail = AdminProducts::with(['category', 'firstImage'])->findOrFail($id);
         //     return view('Client.ClientProducts.ClientDetailProduct',compact('productDetail'));
         // }
+
     }
 }

@@ -1,6 +1,5 @@
 @extends('Client.layouts.paginate.master')
 @section('contentClient')
-
     <main class="main-layout">
         <div class="main-cart">
             <div class="main-cart-breadcrumb" title="Giỏ hàng">
@@ -10,8 +9,9 @@
                     </div>
                     <div class="breadcrumb-wrap">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/" aria-label="Trang chủ" title="Trang chủ">Trang
-                                    chủ</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="/" aria-label="Trang chủ" title="Trang chủ">Trang chủ</a>
+                            </li>
                             @if (Session::has('success'))
                                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                             @endif
@@ -33,32 +33,27 @@
                         </div>
                         <div class="main-cart-data-full">
                             <div class="main-cart-data-full-list">
-                                <div class="main-cart-data-full-item" data-id="120912660">
-
-
-                                </div>
-
-
                                 @foreach ($cart as $item)
-                                    <div class="main-cart-data-full-item" data-id="120912709">
+                                    <div class="main-cart-data-full-item">
                                         <div class="main-cart-data-full-item-image">
-                                            <a href="/two-line-halter-neck-top">
-                                                <img title="TWO LINE HALTER NECK TOP"
-                                                    @if ($item->variation && $item->variation->image) <img src="{{ Storage::url($item->variation->image->image_path) }}"
-         alt="{{ $item->product->name }}"
-         title="{{ $item->product->name }}"/>
-@else
-    <img src="{{ asset('path/to/default/image.jpg') }}"
-         alt="Default Image"/> @endif
-                                                    </a>
+                                            <a href="/products/{{ $item->product->slug }}">
+                                                @if ($item->variation && $item->variation->image)
+                                                    <img src="{{ Storage::url($item->variation->image->image_path) }}"
+                                                         alt="{{ $item->product->name }}"
+                                                         title="{{ $item->product->name }}"/>
+                                                @else
+                                                    <img src="{{ asset('path/to/default/image.jpg') }}"
+                                                         alt="Default Image"/>
+                                                @endif
+                                            </a>
                                         </div>
                                         <div class="main-cart-data-full-item-info">
-                                            <h3 class="main-cart-data-full-item-info-title"><a
-                                                    href="Lỗi liquid: Exception has been thrown by the target of an invocation."
-                                                    title="TWO LINE HALTER NECK TOP">{{ $item->product->name }}</a></h3>
+                                            <h3 class="main-cart-data-full-item-info-title">
+                                                <a href="/products/{{ $item->product->slug }}"
+                                                   title="{{ $item->product->name }}">{{ $item->product->name }}</a>
+                                            </h3>
                                             <div class="main-cart-data-full-item-info-price">
                                                 <label>Giá: </label>
-
                                                 @if ($item->variation)
                                                     {{ number_format($item->variation->price, 0, ',', '.') }}₫
                                                 @else
@@ -71,31 +66,30 @@
                                                 @if ($item->variation)
                                                     <span>{{ $item->variation->color->color }} /
                                                         {{ $item->variation->size->size }}</span>
-                                                @else
-                                                    <p>Không có biến thể được chọn. {{ dd($item->variation) }}</p>
                                                 @endif
                                             </div>
 
                                             <div class="main-cart-data-full-item-info-quantity shop-quantity-wrap">
                                                 <label>Số lượng</label>
                                                 <div class="shop-quantity">
-                                                    <button type="button" data-type="shop-quantity-minus"
-                                                        title="Giảm">-</button>
-                                                    <input type="number" name="quantity_120912709"
-                                                        value="{{ $item->quantity }}" min="1" readonly
-                                                        data-vid="120912709">
-                                                    <button type="button" data-type="shop-quantity-plus"
-                                                        title="Tăng">+</button>
+                                                    <form action="{{ route('cart.update', $item->id) }}" method="POST" style="display: flex;">
+                                                        @csrf
+                                                        <button type="submit" name="action" value="decrease" 
+                                                                class="quantity-btn" {{ $item->quantity <= 1 ? 'disabled' : '' }}>-</button>
+                                                        <input type="number" name="quantity" value="{{ $item->quantity }}" 
+                                                               min="1" readonly>
+                                                        <button type="submit" name="action" value="increase" 
+                                                                class="quantity-btn">+</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="main-cart-data-full-item-action">
-                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST"
-                                                style="display: inline;">
+                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" title="Xóa sản phẩm">
-                                                    <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
+                                                <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
                                                         width="16.247" height="18.252" viewBox="0 0 16.247 18.252">
                                                         <g id="Icon" transform="translate(-160.007 -18.718)">
                                                             <path id="Path_484" data-name="Path 484"
@@ -117,17 +111,12 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                @endif
-                                <div class="main-cart-data-full-note">
-                                    <label>Ghi chú đơn hàng</label>
-                                    <textarea id="main-cart-data-full-note" name="note" rows="4" placeholder="Nhập thông tin ghi chú của bạn ..."></textarea>
-                                </div>
                             </div>
+
                             <div class="main-cart-data-full-total">
                                 <h2>Thông tin đơn hàng</h2>
                                 <div class="main-cart-data-full-total-sub">
                                     <div class="main-cart-data-full-total-sub-price">
-
                                         @php
                                             $totalPrice = 0;
                                             foreach ($cart as $item) {
@@ -138,39 +127,15 @@
                                                 }
                                             }
                                         @endphp
-
                                         <label>Tổng tiền:</label>
                                         <span>{{ number_format($totalPrice, 0, ',', '.') }}₫</span>
-
-                                    </div>
-                                    <div class="main-cart-data-full-total-text">Phí vận chuyển sẽ được tính ở trang thanh
-                                        toán.
-                                        </br>
-                                        Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.</div>
-                                </div>
-                                <div class="main-cart-data-full-invoice">
-
-                                    <div class="main-cart-data-full-invoice-data">
-                                        <input type="text" name="Công ty" id="main-cart-data-full-invoice-data-company"
-                                            value="" placeholder="Tên công ty">
-                                        <input type="text" name="Mã số thuế" id="main-cart-data-full-invoice-data-tax"
-                                            value="" placeholder="Mã số thuế">
-                                        <input type="text" name="Người đại diện"
-                                            id="main-cart-data-full-invoice-data-address" value=""
-                                            placeholder="Địa chỉ công ty">
-                                        <input type="text" name="Địa chỉ" id="main-cart-data-full-invoice-data-name"
-                                            value="" placeholder="Người nhận hóa đơn">
                                     </div>
                                 </div>
                                 <div class="main-cart-data-full-total-action">
-                                    <a href="{{ route('client-home.index') }}" title="Tiếp tục mua hàng">Tiếp tục mua
-                                        hàng</a>
-
+                                    <a href="{{ route('client-home.index') }}" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
                                 </div>
                                 <div class="text-center" style="padding-bottom: 40px">
-                                    <a class="ft2" href="{{ route('client-checkout.index') }}"
-                                        title="Thanh toán">Thanh toán</a>
-
+                                    <a class="ft2" href="{{ route('client-checkout.index') }}" title="Thanh toán">Thanh toán</a>
                                 </div>
                             </div>
                         </div>
@@ -178,8 +143,6 @@
                 </div>
             </div>
         </div>
-        <div class="sapo-buyxgety-module-cart-v2 container"></div>
-        <div class="sapo-buyxgety-module-cart-v2 container"></div>
-
     </main>
+@endif
 @endsection

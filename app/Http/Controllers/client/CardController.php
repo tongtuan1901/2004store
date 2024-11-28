@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
-    /**
-     * Add a product to the cart.
-     */
     public function add(Request $request)
     {
         $action = $request->input('action');
@@ -29,7 +26,6 @@ class CardController extends Controller
             return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
         }
     
-        // Validate product and variation
         $product = AdminProducts::findOrFail($productId);
         $variation = $product->variations()
             ->where('size_id', $sizeId)
@@ -41,7 +37,6 @@ class CardController extends Controller
         }
     
         if ($action === 'buyNow') {
-            // Create cart item for buy now
             $cartItem = [
                 'product_id' => $productId,
                 'quantity' => $quantity,
@@ -53,11 +48,9 @@ class CardController extends Controller
                 'variation_id' => $variation->id
             ];
     
-            // Store in session and redirect to checkout
             session()->put('buyNow', $cartItem);
             return redirect()->route('client-checkout.index');
         } else {
-            // Add to cart
             $existingCartItem = Cart::where('user_id', $userId)
                 ->where('product_id', $productId)
                 ->where('variation_id', $variation->id)
@@ -78,21 +71,17 @@ class CardController extends Controller
             return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
         }
     }
-    
-    
 
-    /**
-     * Display the user's cart items.
-     */
     public function index()
     {
         $userId = auth()->id();
         
         if (!$userId) {
+
             return redirect()->route('client-login.index')->with('error', 'Please log in to view your cart.');
+
         }
     
-        // Clear buyNow session when viewing cart
         session()->forget('buyNow');
         
         $cart = Cart::where('user_id', $userId)
@@ -101,27 +90,51 @@ class CardController extends Controller
         return view('client.clientcard.card', compact('cart'));
     }
 
-    /**
-     * Remove a product from the cart.
-     */
-    public function remove(Request $request, $id)
+    public function remove($id)
     {
         $userId = auth()->id();
     
         if (!$userId) {
-            return redirect()->route('login')->with('error', 'Please log in to modify your cart.');
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để thực hiện thao tác này.');
         }
     
         $cartItem = Cart::where('id', $id)->where('user_id', $userId)->first();
     
         if ($cartItem) {
             $cartItem->delete();
-            return redirect()->route('cart.index')->with('success', 'Product removed from cart!');
+            return redirect()->route('cart.index')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
         }
     
-        return redirect()->route('cart.index')->with('error', 'Product not found in cart.');
+        return redirect()->route('cart.index')->with('error', 'Không tìm thấy sản phẩm trong giỏ hàng.');
     }
-    
 
-    // Other resource methods (create, store, show, edit, update, destroy) can be implemented as needed
+    public function updateQuantity(Request $request, $id)
+    {
+        $userId = auth()->id();
+        
+        if (!$userId) {
+            return redirect()->back()->with('error', 'Vui lòng đăng nhập để thực hiện thao tác này.');
+        }
+
+        $cartItem = Cart::where('id', $id)
+                       ->where('user_id', $userId)
+                       ->first();
+
+        if (!$cartItem) {
+            return redirect()->back()->with('error', 'Không tìm thấy sản phẩm trong giỏ hàng.');
+        }
+
+        $action = $request->input('action');
+        $currentQuantity = $cartItem->quantity;
+
+        if ($action === 'increase') {
+            $cartItem->quantity = $currentQuantity + 1;
+        } elseif ($action === 'decrease' && $currentQuantity > 1) {
+            $cartItem->quantity = $currentQuantity - 1;
+        }
+
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Đã cập nhật số lượng sản phẩm.');
+    }
 }
