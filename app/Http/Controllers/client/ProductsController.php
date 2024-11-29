@@ -18,6 +18,17 @@ class ProductsController extends Controller
             ->take(4)
             ->get();
 
+            //lấy giảm
+            // $ggiaSale = $productDetail->transform(function ($product) {
+            //     if ($product->price > 0) {
+            //         $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
+            //     } else {
+            //         $product->discount_percentage = 0;
+            //     }
+            //     return $product;
+            // });
+        
+
         return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail', 'relatedProducts'));
     }
 

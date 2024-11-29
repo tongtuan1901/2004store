@@ -100,8 +100,8 @@
                                     <td>{{ $item->variation->size->size ?? 'Không có' }}</td>
                                     <td>{{ $item->variation->color->color ?? 'Không có' }}</td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }} VND</td>
-                                    <td>{{ number_format($item->product->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
+                                    <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
+                                    <td>{{ number_format($item->variation->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
                                     @if($order->status == 'Hoàn thành' && !\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
                                         <td>
                                             <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
@@ -124,7 +124,7 @@
                         <tbody>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
-                                <td class="text-end" style="width: 40%;">{{ number_format($item->product->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
+                                <td class="text-end" style="width: 40%;">{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
                             </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phí vận chuyển</td>

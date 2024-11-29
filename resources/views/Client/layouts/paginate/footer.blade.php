@@ -1,20 +1,6 @@
 <footer class="footers2" style="background-image: url({{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/footers2_backgroundb1ed.jpg')}})">
 
-    <section class="section_index--newletter">
-        <div class="container">
-            <div class="section_index--newletter-wrap">
-                <div class="section_index--newletter-wrap-left">
-                    <h2> Nhận ưu đãi và coupon mới nhất!</h2>
-                    <p>Chúng tôi cam kết bảo mật không lộ thông tin của bạn.</p>
-                    <form id="mc-form10" action="">
-                        <input aria-label="Địa chỉ Email" type="email" placeholder="Nhập địa chỉ email của bạn" name="EMAIL" required autocomplete="off">
-                        <button type="submit" aria-label="Đăng ký nhận tin" name="subscribe">Đăng ký</button>
-                    </form>
-                    <p>Nhận ngay coupon giảm <b>15%</b> khi đăng ký ngay</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
         <div class="container">
             <div class="footers2-wrap">
                 <div class="footers2-top">
@@ -192,35 +178,7 @@
             </ul>
         </div>
     </div>
-    <div class="modal" tabindex="-1" role="dialog" id="shop-modal-contact">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="modal-contact">
-                    <div class="modal-contact-wrap">
-                        <div class="modal-contact-wrap-right">
-                            <div class="modal-contact-wrap-right-content">
-                                <div class="section-title-all">
-                                    <span>Đăng ký nhận tin</span>
-                                    <p>Để lại thông tin, để nhận ngay khuyến mãi từ chúng tôi nhé!</p>
-                                </div>
-                                <form id="mc-form2" action="">
-                                    <input title="Địa chỉ Email" type="email" placeholder="Nhập email ưu đãi" name="EMAIL" required autocomplete="off" >
-                                    <button type="submit" title="Đăng ký nhận tin" name="subscribe">Đăng ký</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-contact-wrap-left">
-                            <img width="480" height="480" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/shop_modal_contact_imageb1ed.jpg')}}" alt=" - Contact">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <div class="modal-phone" id="shop-modal-phone">
         <div class="modal-phone-wrap">
             <div class="section-title-all">

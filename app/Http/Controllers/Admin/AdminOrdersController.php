@@ -131,43 +131,69 @@ use Illuminate\Support\Facades\Storage;
     }
 
     public function update(Request $request, $id)
-    {
-        // Fetch the order first
-        $order = AdminOrder::findOrFail($id);
+{
+    // Fetch the order
+    $order = AdminOrder::findOrFail($id);
 
-        if ($order->status === 'Hoàn thành') {
-            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
-        }
+    if ($order->status === 'Hoàn thành') {
+        return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
+    }
 
-        if ($request->has('status')) {
-            $validated = $request->validate([
-                'status' => 'required|string|max:50',
-            ]);
-            $order->update(['status' => $validated['status']]);
-            return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
-        }
+    // Define valid status flow
+    $validStatusFlow = [
+        'Chờ xử lý' => 'Đang xử lý',
+        'Đang xử lý' => 'Đang giao hàng',
+        'Đang giao hàng' => 'Hoàn thành',
+    ];
 
+    if ($request->has('status')) {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'total' => 'required|numeric',
             'status' => 'required|string|max:50',
-            'products' => 'required|array',
-            'products.*' => 'exists:products,id',
-            'quantities' => 'required|array',
-            'quantities.*' => 'integer|min:1',
         ]);
 
-        $order->update($validated);
-        $order->products()->detach();
-        foreach ($validated['products'] as $index => $productId) {
-            $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
+        $newStatus = $validated['status'];
+
+        // Check if the status update follows the valid flow
+        if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
+            return redirect()->route('admin-orders.index')->with(
+                'error',
+                'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' -> ', array_keys($validStatusFlow)) . ' -> Hoàn thành'
+            );
         }
-        session()->put('cart_total', $order->total);
-        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
+
+        // Update the status
+        $order->update(['status' => $newStatus]);
+
+        return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
     }
+
+    // Handle other fields update
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|string|max:15',
+        'address' => 'required|string|max:255',
+        'total' => 'required|numeric',
+        'status' => 'required|string|max:50',
+        'products' => 'required|array',
+        'products.*' => 'exists:products,id',
+        'quantities' => 'required|array',
+        'quantities.*' => 'integer|min:1',
+    ]);
+
+    $order->update($validated);
+
+    // Update products relationship
+    $order->products()->detach();
+    foreach ($validated['products'] as $index => $productId) {
+        $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
+    }
+
+    session()->put('cart_total', $order->total);
+
+    return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
+}
+
     public function approve($id)
     {
         $order = AdminOrder::findOrFail($id);
