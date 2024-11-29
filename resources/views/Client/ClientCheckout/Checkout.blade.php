@@ -963,7 +963,7 @@
 		</svg>
 	</div>
 	<!-- xóa dữ liệu mua ngay khi thoát ra -->
-	<script>
+	<!-- <script>
 window.addEventListener('beforeunload', function() {
     if (@json($clearBuyNow ?? false)) {
         fetch('{{ route("clear-buy-now") }}', {
@@ -974,7 +974,7 @@ window.addEventListener('beforeunload', function() {
         });
     }
 });
-</script>
+</script> -->
 <style>
   .discount-wrapper {
     display: flex; /* Hiển thị các phần tử trên cùng một hàng */
