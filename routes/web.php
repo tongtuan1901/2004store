@@ -143,7 +143,7 @@ Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
  // Route để hiển thị trang duyệt đơn hàng
-Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
+// Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
 Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
 Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
 Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');

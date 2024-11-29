@@ -292,7 +292,7 @@
                                 <div class="collapse sherah__dropdown" id="menu-item__orders"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
-                                        <li><a href='{{route('admin-orders.index')}}'><span class="menu-bar__text"><span
+                                        <li><a href='{{route('admin-orders.approve.index')}}'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Danh sách đơn hàng</span></span></a></li>
                                         <li><a href='{{route('admin-orders.approve.index')}}'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Đơn hàng cần duyệt</span></span></a></li>
