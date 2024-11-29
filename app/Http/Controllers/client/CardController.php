@@ -77,7 +77,9 @@ class CardController extends Controller
         $userId = auth()->id();
         
         if (!$userId) {
-            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để xem giỏ hàng.');
+
+            return redirect()->route('client-login.index')->with('error', 'Please log in to view your cart.');
+
         }
     
         session()->forget('buyNow');

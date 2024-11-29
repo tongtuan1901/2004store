@@ -301,9 +301,11 @@ document.getElementById("remove-all-filters").addEventListener("click", function
             
                     </div>
                     
-                    {{-- @if($product->sale_percentage > 0)
-                        <div class="product-item-label-sale"><span>-{{ $product->sale_percentage }}%</span></div>
-                    @endif --}}
+                    @if($product->price > 0 && $product->price_sale < $product->price)
+                    <div class="product-item-label-sale">
+                        <span>{{ number_format(100 - (($product->price_sale / $product->price) * 100), 2) }}%</span>
+                    </div>
+                @endif
                     <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
                         <!-- SVG icon for wishlist button -->
                     </button>

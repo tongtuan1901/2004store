@@ -13,7 +13,7 @@
                                         <h2 class="sherah-breadcrumb__title">Quản lí tồn kho</h2>
                                     </div>
                                     @if (!empty($lowStockItems))
-                                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4"
+                                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 alert alert-danger"
                                             role="alert">
                                             <p class="font-bold">Cảnh Báo: Các sản phẩm sau sắp hết hàng!</p>
                                             <ul>

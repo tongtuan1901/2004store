@@ -145,7 +145,7 @@
         <h3>List các nhóm sản phẩm nổi bật nhất</h3>
         <div class="home-collection_list-wrapper">
             @foreach ($categories as $category)
-                <a class="home-collection-list-item" href="{{route('client-categories.index')}}" title="{{ $category->name }}">
+                <a class="home-collection-list-item" href="{{ route('client-categories.index', ['id' => $category->id]) }}" title="{{ $category->name }}">
                     <div class="home-collection-list-item-image-holder">
                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                             title="{{ $category->name }}"
@@ -174,7 +174,7 @@
                 </div>
                 <div class="home-flashsale-right">
 
-                    @foreach ($productsSale as $product)
+                    @foreach ($filteredProductsSale as $product)
                         <div class="product-item">
                             <div class="product-item-wrap">
                                 <div class="product-item-top">
@@ -601,9 +601,8 @@
                 </h3>
                 <div class="home-blogs-bottom">
                     <div class="home-blogs-items">
-
                         @foreach ($latestNews as $list3New)
-                        <div class="article-item ">
+                        <div class="article-item " data-index="2">
                             <div class="article-item-wrap">
                                 <a href= "{{ route('client-news.show', $list3New->id) }}"
                                     class="article-item-image"
@@ -617,8 +616,6 @@
                                     <h3 class="article-item-detail-title"><a
                                             title="{{$list3New->title}}"
                                             href="{{ route('client-news.show', $list3New->id) }}">{{$list3New->title}}</a></h3>
-                                    <div class="article-item-detail-info">
-                                    </div>
                                     <div class="article-item-detail-content">
                                         {{$list3New->content}}
                                     </div>
@@ -626,7 +623,6 @@
                                     <a title="Xem thêm"
                                         href="{{ route('client-news.show', $list3New->id) }}"
                                         class="article-item-detail-more">Xem thêm</a>
-
                                 </div>
                             </div>
                         </div>

@@ -100,7 +100,7 @@
                                                     <div class="sherah-table__status__group">
                                                         <a href="{{ route('admin-orders.show', $order) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
                                                         @if ($order->status === 'Chờ xử lý')
-                                                            <a href="{{ route('admin-order.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>
+                                                            <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>
                                                         @endif
                                                     </div>
                                                 </td>

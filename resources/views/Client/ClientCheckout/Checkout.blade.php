@@ -748,19 +748,28 @@
                             </div>
                         </td>
                         <th class="product__description">
-                            @if(session()->has('buyNow'))
-                                <span class="product__description__name">{{ $item['name'] }}</span>
-                                <span class="product__description__property">
-                                    {{ App\Models\Color::find($item['color'])->color ?? '' }} /
-                                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
-                                </span>
-                            @else
-                                <span class="product__description__name">{{ $item->product->name }}</span>
-                                <span class="product__description__property">
-                                    {{ $item->variation->color->color ?? '' }} /
-                                    {{ $item->variation->size->size ?? '' }}
-                                </span>
-                            @endif
+                        @if(session()->has('buyNow'))
+    <span class="product__description__name">
+        {{ $item['name'] ?? 'Sản phẩm không tồn tại' }}
+    </span>
+    <span class="product__description__property">
+        {{ App\Models\Color::find($item['color'])->color ?? 'Không xác định' }} /
+        {{ App\Models\Size::find($item['size'])->size ?? 'Không xác định' }}
+    </span>
+@else
+    @if ($item->product)
+        <span class="product__description__name">
+            {{ $item->product->name }}
+        </span>
+        <span class="product__description__property">
+            {{ $item->variation->color->color ?? 'Không xác định' }} /
+            {{ $item->variation->size->size ?? 'Không xác định' }}
+        </span>
+    @else
+        <span class="product__description__name">Sản phẩm không tồn tại</span>
+        <span class="product__description__property">Không có thông tin</span>
+    @endif
+@endif
                         </th>
                         <td class="product__quantity">
                             <em>Số lượng:</em>
@@ -790,19 +799,36 @@
 											</thead>
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
-													@php
-														$totalPrice = 0;
-														foreach ($cart as $item) {
-															$price = $item->variation->price ?? $item->product->price;
-															$totalPrice += $price * $item->quantity;
-														}
-														$shippingFee = 40000;
-														$discountValue = session('discount_value', 0); // Lấy giá trị giảm giá từ session
-														$finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
-													@endphp
-
-													<th>Tạm tính</th>
-													<td>{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+                          @php
+                          $totalPrice = 0;
+                          if (session()->has('buyNow')) {
+                              $buyNow = session('buyNow');
+                              $price = $buyNow['price'] ?? 0;
+                              $quantity = $buyNow['quantity'] ?? 0;
+                              $totalPrice = $price * $quantity;
+                          } else {
+                              foreach ($cartItems as $item) {
+                                  $price = 0;
+                                  $quantity = 0;
+                                  if (is_object($item)) {
+                                      $price = $item->variation->price ?? $item->product->price ?? 0;
+                                      $quantity = $item->quantity ?? 0;
+                                  }
+                                  elseif (is_array($item)) {
+                                      $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
+                                      $quantity = $item['quantity'] ?? 0;
+                                  }
+                                  $totalPrice += $price * $quantity;
+                              }
+                          }
+                          $shippingFee = 40000;
+                          $discountValue = session('discount_value', 0);
+                          $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+                      @endphp
+                          <th class="total-line__name">
+														Tạm tính
+													</th>
+													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
 												</tr>
 												<tr class="total-line total-line--shipping-fee">
 													<th>Phí vận chuyển</th>
@@ -837,7 +863,7 @@
 										</button>
 										</form>
 
-									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
+									<a data-savepage-href="/cart" href="{{url('client-home')}}" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
 										<span class="previous-link__content">Quay về giỏ hàng</span>
 									</a>
