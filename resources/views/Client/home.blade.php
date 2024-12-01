@@ -88,7 +88,7 @@
                         </a>
                         <hr>
                     </div>
-                    <h3>Artisanal Nomad</h3>
+                    <h3>2004 Store</h3>
                     <p>Chủ đề này khám phá các loại vải sáng tạo, thiết kế tương lai và kiểu dáng đẹp mắt lấy cảm hứng
                         từ thời đại kỹ thuật số. Quần áo kết hợp các yếu tố công nghệ có thể mặc, điểm nhấn sáng và tính
                         thẩm mỹ hiện đại, phản ánh sự kết hợp giữa phong cách và chức năng dành cho tín đồ thời trang am
@@ -354,15 +354,15 @@
                     <picture>
                         <source media="(max-width:767px)"
                             src="https://vn-test-11.slatic.net/p/d09340cb6a7a9663327d7a5f16839c6f.jpg">
-                        <img src="https://vn-test-11.slatic.net/p/d09340cb6a7a9663327d7a5f16839c6f.jpg"
-                            alt="F1 Fashion Style" title="F1 Fashion Style" width="1880" height="720"
+                        <img src="{{asset('admin/img/banner1.jpg')}}"
+                            alt="F1 Fashion Style" title="F1 Fashion Style" width="1500" height="500"
                             loading="lazy" decoding="async" fetchpriority="auto">
                     </picture>
                 </a>
             </div>
         </div>
     </section>
-    <div class="container section-distance">
+    {{-- <div class="container section-distance">
         <div class="home-banner-stylist">
             <div class="home-banner-stylist-wrapper animate">
                 <div class="home-banner-stylist-item">
@@ -420,13 +420,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="home-banner-small container section-distance">
         <div class="home-banner-small-wrapper">
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Vẻ đẹp trường tồn"
                     class="home-banner-small-image-holder face-background">
-                    <img src="https://file.hstatic.net/200000503583/article/shop-do-nam-ha-noi-cardina_2d0a8f320e544c5c9faea65de1550882.jpg"
+                    <img src="{{asset('admin/img/banner3.jpg')}}"
                         alt="Vẻ đẹp trường tồn" title="Vẻ đẹp trường tồn" width="800" height="400" loading="lazy"
                         decoding="async" fetchpriority="auto">
                 </a>
@@ -435,7 +435,7 @@
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Xu hướng thời trang"
                     class="home-banner-small-image-holder face-background">
-                    <img src="https://intphcm.com/data/upload/banner-thoi-trang-nam-tinh.jpg" alt="Xu hướng thời trang"
+                    <img src="{{asset('admin/img/banner4.jpg')}}" alt="Xu hướng thời trang"
                         title="Xu hướng thời trang" width="800" height="400" loading="lazy" decoding="async"
                         fetchpriority="auto">
                 </a>
@@ -578,8 +578,8 @@
                     <picture>
                         <source media="(max-width:767px)"
                             srcset="{{ asset('assets/bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/home_banner_second_lg_image_mb1ed.jpg') }}">
-                        <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/2048x2048/100/520/624/themes/959507/assets/home_banner_second_lg_image_db1ed.jpg') }}"
-                            alt="Always Fashion" title="Always Fashion" width="1880" height="720" loading="lazy"
+                        <img src="{{asset('admin/img/banner2.jpg')}}"
+                            alt="Always Fashion" title="Always Fashion" width="1000" height="300" loading="lazy"
                             decoding="async" fetchpriority="auto">
                     </picture>
                 </a>

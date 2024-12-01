@@ -16,15 +16,15 @@
                                     chủ</a></li>
 
 
-                            <li class="breadcrumb-item active"><span>Cocktail Dresses</span></li>
+                            <li class="breadcrumb-item active"><span>Danh mục</span></li>
                         </ol>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="main-collection-banner">
-                    <img loading="eager" decoding="sync" fetchpriority="high" width="1920" height="640"
-                        src="{{asset('assets/bizweb.dktcdn.net/thumb/2048x2048/100/520/624/collections/h3bfbc9d6abb74530820bd8a71dccc8d-07aaeb016e4a475e97daf80cb8459361b9a8.jpg')}}"
+                    <img loading="eager" decoding="sync" fetchpriority="high" width="1000" height="300"
+                        src="{{asset('admin/img/banner4.jpg')}}"
                         alt="Cocktail Dresses" />
                 </div>
                 <div class="main-collection-wrap vertical">
