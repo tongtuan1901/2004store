@@ -94,7 +94,7 @@
             <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" title="Xóa sản phẩm">
+                <button type="submit" title="Xóa sản phẩm" onclick="return confirm ('Bạn có muốn xóa không')">
                 <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
                         width="16.247" height="18.252" viewBox="0 0 16.247 18.252">
                         <g id="Icon" transform="translate(-160.007 -18.718)">

@@ -25,23 +25,23 @@
                                                     <!-- Title Input -->
                                                     <div class="mb-3">
                                                         <label for="title" class="form-label">Tiêu đề</label>
-                                                        <input type="text" name="title" id="title" value="{{ old('title', $banner['title']) }}" 
+                                                        <input type="text" name="title" id="title" value="{{ old('title', $banner['title']) }}"
                                                                class="form-control @error('title') is-invalid @enderror" placeholder="Mời nhập tiêu đề banner">
                                                         @error('title')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
-                            
+
                                                     <!-- Content Input -->
                                                     <div class="mb-3">
                                                         <label for="content" class="form-label">Nội dung</label>
-                                                        <textarea id="content" name="content" rows="3" 
+                                                        <textarea id="content" name="content" rows="3"
                                                                   class="form-control @error('content') is-invalid @enderror" placeholder="Mời nhập nội dung banner">{{ old('content', $banner['content']) }}</textarea>
                                                         @error('content')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
-                            
+
                                                     <!-- Image Input -->
                                                     <div class="mb-3">
                                                         <label for="image" class="form-label">Hình ảnh</label>
@@ -55,19 +55,23 @@
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
-                            
+
                                                     <!-- Submit and Cancel Buttons -->
-                                                    <div class="d-flex justify-content-end gap-3">
-                                                        <button type="submit" class="btn btn-primary">Cập nhật banner</button>
-                                                        <a href="{{ route('admin-banners.index') }}" class="btn btn-secondary">Hủy</a>
-                                                    </div>
+                                                    <div
+                                                    class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                                    <button type="submit" class="sherah-btn sherah-btn__primary">Cập nhật banner</button>
+                                                    <a class="sherah-btn sherah-btn__third"
+                                                        href="{{ route('admin-banners.index') }}">
+                                                        Cancel
+                                                    </a>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            
+
                         </div><!--end page-wrapper-->
                     </div>
                     <!-- End Dashboard Inner -->
