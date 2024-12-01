@@ -43,6 +43,7 @@
             </svg>
             Thêm địa chỉ mới
         </a>
+        <a class="ft2" href="{{ route('client-checkout.index') }}" title="Thanh toán">Thanh toán</a>
     </div>
 
     <style>

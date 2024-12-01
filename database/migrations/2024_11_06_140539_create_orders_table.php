@@ -35,10 +35,10 @@ return new class extends Migration
             $table->timestamps(); // Tạo trường created_at và updated_at
             $table->softDeletes();
             $table->timestamp('pending_time')->nullable();
-    $table->timestamp('processing_time')->nullable();
-    $table->timestamp('shipping_time')->nullable();
-    $table->timestamp('completed_time')->nullable();
-    $table->text('cancellation_reason')->nullable();
+            $table->timestamp('processing_time')->nullable();
+            $table->timestamp('shipping_time')->nullable();
+            $table->timestamp('completed_time')->nullable();
+            $table->text('cancellation_reason')->nullable();
 
           
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
