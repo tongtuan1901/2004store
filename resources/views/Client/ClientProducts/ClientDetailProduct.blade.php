@@ -17,7 +17,7 @@
                             <li class="breadcrumb-item"><a href="" aria-label="Trang chủ" title="Trang chủ">Trang
                                     chủ</a></li>
                             <li class="breadcrumb-item"><a href="cocktail-dresses.html" aria-label="Cocktail Dresses"
-                                    title="Cocktail Dresses">Cocktail Dresses</a></li>
+                                    title="Cocktail Dresses">Danh mục</a></li>
                             <li class="breadcrumb-item active"><span> {{ $productDetail->name }}</span></li>
                         </ol>
                     </div>
@@ -25,12 +25,6 @@
             </div>
             <div class="container">
                 <!-- Flash Sale -->
-                <div class="productFSale">
-                    <img loading="lazy" decoding="async" src="" alt="productFSale" />
-                    <div data-time="1/4/2025 24:00:00" class="countdownLoop"></div>
-                    <a href="cocktail-dresses.html" aria-label="Xem toàn bộ sản phẩm Flash Sale"
-                        title="Xem toàn bộ sản phẩm Flash Sale">Xem toàn bộ sản phẩm Flash Sale</a>
-                </div>
                 <div class="main-product-wrap">
                     <div class="main-product-left main-product-feature" data-style="style3">
                         <div class="main-product-feature-thumbs">
@@ -308,7 +302,7 @@
                 </form>
                 <br>
                 <!-- HTML remains the same -->
-                <button type="button" data-type="main-product-send-help" title="Tư vấn">
+                {{-- <button type="button" data-type="main-product-send-help" title="Tư vấn">
                     <strong>Tư vấn</strong>
                     <span>Tư vấn kích cỡ phù hợp</span>
                 </button>
@@ -316,17 +310,13 @@
                     title="Liên hệ">
                     <strong>Liên hệ</strong>
                     <span>Chúng tôi luôn bên bạn 24/7</span>
-                </button>
+                </button> --}}
             </div>
-            <div class="main-product-banner">
+            {{-- <div class="main-product-banner">
                 <a href="collections/all.html" aria-label="Beauty Cosmetic" title="Beauty Cosmetic">
-                    <img width="1500" height="300" loading="lazy" decoding="sync"
-                        src="../bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/main_product_bannerb1ed.jpg?1724041824574"
-                        sizes="(max-width: 600px) 480px, 1024px"
-                        srcset="//bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/main_product_banner.jpg?1724041824574 480w, //bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/main_product_banner.jpg?1724041824574 1024w"
-                        alt="Beauty Cosmetic" />
+                    <img width="1500" height="300" loading="lazy" decoding="sync"  src="{{asset('admin/img/2004Store.png')}}">
                 </a>
-            </div>
+            </div> --}}
 
             <div class="main-product-description inSidebar">
                 <div class="main-product-description-items">
