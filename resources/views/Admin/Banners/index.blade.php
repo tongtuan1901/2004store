@@ -6,15 +6,14 @@
             <div class="col-12">
                 <div class="sherah-body">
                     <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-3">
-                            <button class="btn btn-primary">
-                                <a href="{{ route('admin-banners.create') }}" class="text-white">Thêm banner</a>
-                            </button>
-
+                        <br>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <a href="{{ route('admin-banners.create') }}" class="sherah-btn sherah-gbcolor">Thêm banner</a>
+                            </div>
                             {{-- <button class="btn btn-secondary">
                                 <a href="{{ url('Admin/Banners/trash') }}" class="text-white">Thùng rác</a>
                             </button> --}}
-                        </div>
+
 
                         <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
                             <div class="sherah-table p-0">
@@ -92,7 +91,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div><!--end card-body-->
             </div><!--end col-->

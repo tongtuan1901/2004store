@@ -11,6 +11,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
+use App\Models\News;
 
 class HomeController extends Controller
 {

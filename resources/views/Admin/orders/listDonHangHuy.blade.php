@@ -25,6 +25,7 @@
                                                 <th>Số lượng</th>
                                                 <th>Kích thước</th>
                                                 <th>Màu sắc</th>
+                                              <th>Số tiền hoàn</th>
                                               <th>Trạng thái</th>
                                             </tr>
                                         </thead>
@@ -79,6 +80,13 @@
                                                                 <div>Không có màu sắc</div>
                                                                 @endif
                                                         @endforeach
+                                                    </td>
+                                                    <td>
+                                                        @if(in_array($order->payment_method, ['momo', 'wallet', 'vnpay']))
+                                                            <p style="color: red">+{{ number_format($order->total) }}đ</p>
+                                                        @else
+                                                            
+                                                        @endif
                                                     </td>
                                                     <td>{{ $order->status }}</td>
                                                 </tr>

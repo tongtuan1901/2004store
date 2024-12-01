@@ -45,8 +45,7 @@
 
                                 </div>
                                 <div style="display: flex; justify-content: flex-end;">
-                                    <a href="{{ route('admin-products.create') }}" class="sherah-btn sherah-gbcolor">Add
-                                        New</a>
+                                    <a href="{{ route('admin-products.create') }}" class="sherah-btn sherah-gbcolor">Thêm mới</a>
                                 </div>
 
 
@@ -197,14 +196,14 @@
                                                                 </svg>
                                                             </a>
                                                         </div>
-                                                     
+
                                                     </td>
-                                                   
-                                                   
+
+
 
 
                                                 </tr>
-                                                
+
 
                                             @empty
                                                 <tr>
@@ -213,10 +212,10 @@
                                                         nào được tìm thấy.</td>
                                                 </tr>
                                             @endforelse
-                                         
+
 
                                         </tbody>
-                                      
+
                                     </table>
                                     <div class="pagination">
                                         {{ $listProducts->links() }}

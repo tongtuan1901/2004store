@@ -190,7 +190,7 @@
                             VND</del>
                         <span class="main-product-price-this">{{ number_format($productDetail->price_sale, 0, ',', '.') }}
                             VND</span>
-                        <span class="main-product-price-discount">Tiết kiệm 11%</span>
+                        <span class="main-product-price-discount">Tiết kiệm {{ number_format(100 - (($productDetail->price_sale / $productDetail->price) * 100), 2) }}%</span>
                     </div>
                 </div>
                 {{-- <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
@@ -218,6 +218,7 @@
                         </div>
                     </div>
                 </div> --}}
+                
                 <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $productDetail->id }}">
@@ -284,6 +285,7 @@
                     </div>
 
                     <!-- Action buttons -->
+                    @if(auth()->check())
                     <div class="main-product-cta">
                         <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
                             <strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -299,6 +301,9 @@
                             <span>Mua ngay sản phẩm này</span>
                         </button>
                     </div>
+                        @else
+                            <p >Vui lòng <a class="text-primary" href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
+                        @endif
                 </form>
                 <br>
                 <!-- HTML remains the same -->
