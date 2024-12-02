@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Storage;
 
     return view('Admin.orders.index', compact('orders'));
 }
-        
+
 
     public function approveIndex()
     {
@@ -217,9 +217,9 @@ use Illuminate\Support\Facades\Storage;
             $validated = $request->validate([
                 'status' => 'required|string|max:50',
             ]);
-    
+
             $newStatus = $validated['status'];
-    
+
             if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
                 return redirect()->route('admin-orders.index')->with(
                     'error',
@@ -233,7 +233,7 @@ use Illuminate\Support\Facades\Storage;
             } elseif ($newStatus === 'Hoàn thành' && $order->status === 'Đang giao hàng') {
                 $order->forceFill(['completed_time' => now(), 'status' => $newStatus])->save();
             }
-            
+
             $order->update(['status' => $newStatus]);
             return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
         }
@@ -286,7 +286,7 @@ use Illuminate\Support\Facades\Storage;
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
     }
-   
+
     public function restore($id)
     {
         $order = AdminOrder::onlyTrashed()->findOrFail($id);
@@ -315,7 +315,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-   
+
 
     public function listAdrress()
     {
@@ -335,7 +335,7 @@ use Illuminate\Support\Facades\Storage;
         $order = AdminOrder::findOrFail($orderId);
         $order->status = 'Hủy'; // Change status to "Hủy"
         $order->save();
-    
+
         // Redirect lại trang danh sách đơn hàng
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
     }
@@ -348,5 +348,3 @@ public function listDonHangDaHuy()
     return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
 }
 }
-
-

@@ -218,7 +218,7 @@
                         </div>
                     </div>
                 </div> --}}
-                
+
                 <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $productDetail->id }}">

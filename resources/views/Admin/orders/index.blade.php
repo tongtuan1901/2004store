@@ -1,4 +1,3 @@
-
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -22,7 +21,7 @@
                                 <div class="col-md-4">
                                     <input type="text" name="search" class="form-control form-control-sm" placeholder="Tìm kiếm đơn hàng..." value="{{ request('search') }}">
                                 </div>
-                        
+
                                 <!-- Lọc theo trạng thái -->
                                 <div class="col-md-4">
                                     <select name="status" class="form-control form-control-sm">
@@ -33,7 +32,7 @@
                                         <option value="Hoàn thành" {{ request('status') == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
                                     </select>
                                 </div>
-                        
+
                                 <!-- Nút tìm kiếm và reset -->
                                 <div class="col-md-4 d-flex">
                                     <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
