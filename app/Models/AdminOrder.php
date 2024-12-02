@@ -67,4 +67,22 @@ class AdminOrder extends Model
     return $this->belongsTo(Address::class, 'user_id', 'user_id');
 }
 
+public function updateStatusTimes()
+{
+    if ($this->status == 'Chờ xử lý' && !$this->pending_time) {
+        $this->pending_time = now();
+    }
+
+    if ($this->status == 'Đang xử lý' && !$this->processing_time) {
+        $this->processing_time = now();
+    }
+
+    if ($this->status == 'Đang giao hàng' && !$this->shipping_time) {
+        $this->shipping_time = now();
+    }
+
+    if ($this->status == 'Hoàn thành' && !$this->completed_time) {
+        $this->completed_time = now();
+    }
+}
 }

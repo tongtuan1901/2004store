@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="auth-back-btn text-center">
 
-                                <div class="auth-back-btn">
+                                
 
                                     <a href="{{ route('client-register.index') }}">Đăng ký</a>
                                 </div>
