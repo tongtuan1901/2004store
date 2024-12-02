@@ -124,10 +124,12 @@
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered">
                         <tbody>
-                            <tr>
-                                <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
-                                <td class="text-end" style="width: 40%;">{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
-                            </tr>
+                        <tr>
+    <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
+    <td class="text-end" style="width: 40%;">{{ number_format($order->orderItems->sum(function($item) { 
+        return $item->variation->price * $item->quantity;
+    }), 0, ',', '.') }} VND</td>
+</tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phí vận chuyển</td>
                                 <td class="text-end" style="width: 40%;">40.000 VND</td>

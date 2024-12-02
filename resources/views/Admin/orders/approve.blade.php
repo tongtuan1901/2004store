@@ -27,9 +27,9 @@
                                     <strong>ID Đơn Hàng:</strong> <span>{{ $order->id }}</span>
                                 </div>
                                 <div class="col-md-6">
-                                    @foreach ($order->products as $product)
+                                 
                                         <strong>Tên người gửi:</strong> <span>{{ $order->user->name }}</span>
-                                    @endforeach
+                                    
                                 </div>
                             </div>
                             <div class="row mb-3">
