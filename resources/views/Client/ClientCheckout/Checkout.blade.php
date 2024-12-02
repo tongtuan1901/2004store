@@ -748,19 +748,28 @@
                             </div>
                         </td>
                         <th class="product__description">
-                            @if(session()->has('buyNow'))
-                                <span class="product__description__name">{{ $item['name'] }}</span>
-                                <span class="product__description__property">
-                                    {{ App\Models\Color::find($item['color'])->color ?? '' }} /
-                                    {{ App\Models\Size::find($item['size'])->size ?? '' }}
-                                </span>
-                            @else
-                                <span class="product__description__name">{{ $item->product->name }}</span>
-                                <span class="product__description__property">
-                                    {{ $item->variation->color->color ?? '' }} /
-                                    {{ $item->variation->size->size ?? '' }}
-                                </span>
-                            @endif
+                        @if(session()->has('buyNow'))
+    <span class="product__description__name">
+        {{ $item['name'] ?? 'Sản phẩm không tồn tại' }}
+    </span>
+    <span class="product__description__property">
+        {{ App\Models\Color::find($item['color'])->color ?? 'Không xác định' }} /
+        {{ App\Models\Size::find($item['size'])->size ?? 'Không xác định' }}
+    </span>
+@else
+    @if ($item->product)
+        <span class="product__description__name">
+            {{ $item->product->name }}
+        </span>
+        <span class="product__description__property">
+            {{ $item->variation->color->color ?? 'Không xác định' }} /
+            {{ $item->variation->size->size ?? 'Không xác định' }}
+        </span>
+    @else
+        <span class="product__description__name">Sản phẩm không tồn tại</span>
+        <span class="product__description__property">Không có thông tin</span>
+    @endif
+@endif
                         </th>
                         <td class="product__quantity">
                             <em>Số lượng:</em>
@@ -980,7 +989,7 @@
 		</svg>
 	</div>
 	<!-- xóa dữ liệu mua ngay khi thoát ra -->
-	<script>
+	<!-- <script>
 window.addEventListener('beforeunload', function() {
     if (@json($clearBuyNow ?? false)) {
         fetch('{{ route("clear-buy-now") }}', {
@@ -991,7 +1000,7 @@ window.addEventListener('beforeunload', function() {
         });
     }
 });
-</script>
+</script> -->
 <style>
   .discount-wrapper {
     display: flex; /* Hiển thị các phần tử trên cùng một hàng */

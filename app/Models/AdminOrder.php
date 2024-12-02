@@ -84,5 +84,4 @@ class AdminOrder extends Model
             $this->completed_time = now();
         }
     }
-
 }

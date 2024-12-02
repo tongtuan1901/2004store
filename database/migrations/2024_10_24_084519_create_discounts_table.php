@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->enum('type', ['fixed', 'percent']); // 'fixed' for fixed amount, 'percent' for percentage discount
-            $table->decimal('value', 8, 2); // giá trị giảm giá
+            $table->decimal('value', 10, 2); // giá trị giảm giá
             $table->decimal('min_order_value', 10, 2)->nullable(); // giá trị đơn hàng tối thiểu để áp dụng mã
             $table->integer('max_usage')->nullable(); // số lần sử dụng tối đa
             $table->integer('usage_count')->default(0); // số lần mã giảm giá đã được sử dụng
