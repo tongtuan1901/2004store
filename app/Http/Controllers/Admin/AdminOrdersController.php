@@ -11,42 +11,42 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-    class AdminOrdersController extends Controller
-    {
-
-        public function index(Request $request)
+class AdminOrdersController extends Controller
 {
-    // Khởi tạo query với các quan hệ cần thiết
-    $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
-        ->where('status', '!=', 'Hủy');
 
-    // Xử lý tìm kiếm
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where(function ($q) use ($search) {
-            $q->where('id', 'like', "%$search%")
-                ->orWhere('name', 'like', "%$search%")
-                ->orWhereHas('user', function ($userQuery) use ($search) {
-                    $userQuery->where('name', 'like', "%$search%");
-                })
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%")
-                ->orWhere('address', 'like', "%$search%")
-                ->orWhere('status', 'like', "%$search%");
-        });
+    public function index(Request $request)
+    {
+        // Khởi tạo query với các quan hệ cần thiết
+        $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
+            ->where('status', '!=', 'Hủy');
+
+        // Xử lý tìm kiếm
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%$search%")
+                    ->orWhere('name', 'like', "%$search%")
+                    ->orWhereHas('user', function ($userQuery) use ($search) {
+                        $userQuery->where('name', 'like', "%$search%");
+                    })
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('phone', 'like', "%$search%")
+                    ->orWhere('address', 'like', "%$search%")
+                    ->orWhere('status', 'like', "%$search%");
+            });
+        }
+
+        // Lọc theo trạng thái
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        // Lấy danh sách đơn hàng
+        $orders = $query->get();
+
+        return view('Admin.orders.index', compact('orders'));
     }
 
-    // Lọc theo trạng thái
-    if ($request->filled('status')) {
-        $query->where('status', $request->input('status'));
-    }
-
-    // Lấy danh sách đơn hàng
-    $orders = $query->get();
-
-    return view('Admin.orders.index', compact('orders'));
-}
-        
 
     public function approveIndex()
     {
@@ -70,11 +70,12 @@ use Illuminate\Support\Facades\Storage;
 
     public function generatePDF($id)
     {
-        $order = AdminOrder::with('products')->findOrFail($id);
-        session()->put('cart_total', $order->total);
+        $order = AdminOrder::with(['orderItems.variation.size', 'orderItems.variation.color', 'orderItems.variation.image', 'orderItems.product.category', 'orderItems.product.brand'])->findOrFail($id);
         $pdf = PDF::loadView('admin.orders.pdf', compact('order'));
         return $pdf->download('order_' . $order->id . '.pdf');
     }
+
+
 
 
     public function store(Request $request)
@@ -116,7 +117,7 @@ use Illuminate\Support\Facades\Storage;
 
     public function show($id)
     {
-        $order = AdminOrder::with('user','products.variations.size', 'products.variations.color')->findOrFail($id);
+        $order = AdminOrder::with('user', 'products.variations.size', 'products.variations.color')->findOrFail($id);
         return view('admin.orders.show', compact('order'));
     }
 
@@ -131,68 +132,68 @@ use Illuminate\Support\Facades\Storage;
     }
 
     public function update(Request $request, $id)
-{
-    // Fetch the order
-    $order = AdminOrder::findOrFail($id);
+    {
+        // Fetch the order
+        $order = AdminOrder::findOrFail($id);
 
-    if ($order->status === 'Hoàn thành') {
-        return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
-    }
-
-    // Define valid status flow
-    $validStatusFlow = [
-        'Chờ xử lý' => 'Đang xử lý',
-        'Đang xử lý' => 'Đang giao hàng',
-        'Đang giao hàng' => 'Hoàn thành',
-    ];
-
-    if ($request->has('status')) {
-        $validated = $request->validate([
-            'status' => 'required|string|max:50',
-        ]);
-
-        $newStatus = $validated['status'];
-
-        // Check if the status update follows the valid flow
-        if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
-            return redirect()->route('admin-orders.index')->with(
-                'error',
-                'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' -> ', array_keys($validStatusFlow)) . ' -> Hoàn thành'
-            );
+        if ($order->status === 'Hoàn thành') {
+            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
         }
 
-        // Update the status
-        $order->update(['status' => $newStatus]);
+        // Define valid status flow
+        $validStatusFlow = [
+            'Chờ xử lý' => 'Đang xử lý',
+            'Đang xử lý' => 'Đang giao hàng',
+            'Đang giao hàng' => 'Hoàn thành',
+        ];
 
-        return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
+        if ($request->has('status')) {
+            $validated = $request->validate([
+                'status' => 'required|string|max:50',
+            ]);
+
+            $newStatus = $validated['status'];
+
+            // Check if the status update follows the valid flow
+            if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
+                return redirect()->route('admin-orders.index')->with(
+                    'error',
+                    'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' -> ', array_keys($validStatusFlow)) . ' -> Hoàn thành'
+                );
+            }
+
+            // Update the status
+            $order->update(['status' => $newStatus]);
+
+            return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
+        }
+
+        // Handle other fields update
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'total' => 'required|numeric',
+            'status' => 'required|string|max:50',
+            'products' => 'required|array',
+            'products.*' => 'exists:products,id',
+            'quantities' => 'required|array',
+            'quantities.*' => 'integer|min:1',
+        ]);
+
+        $order->update($validated);
+
+        // Update products relationship
+        $order->products()->detach();
+        foreach ($validated['products'] as $index => $productId) {
+            $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
+        }
+
+        session()->put('cart_total', $order->total);
+
+        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
     }
-
-    // Handle other fields update
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'phone' => 'required|string|max:15',
-        'address' => 'required|string|max:255',
-        'total' => 'required|numeric',
-        'status' => 'required|string|max:50',
-        'products' => 'required|array',
-        'products.*' => 'exists:products,id',
-        'quantities' => 'required|array',
-        'quantities.*' => 'integer|min:1',
-    ]);
-
-    $order->update($validated);
-
-    // Update products relationship
-    $order->products()->detach();
-    foreach ($validated['products'] as $index => $productId) {
-        $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
-    }
-
-    session()->put('cart_total', $order->total);
-
-    return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
-}
 
     public function approve($id)
     {
@@ -220,7 +221,7 @@ use Illuminate\Support\Facades\Storage;
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
     }
-   
+
     public function restore($id)
     {
         $order = AdminOrder::onlyTrashed()->findOrFail($id);
@@ -249,38 +250,36 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-   
+
 
     public function listAdrress()
     {
         $users = User::all();
 
-        return view('Admin.orders.listAddress',compact('users'));
+        return view('Admin.orders.listAddress', compact('users'));
     }
     public function showAddress($userId)
     {
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
 
-        return view('Admin.orders.showAddress',compact('user','addresses'));
+        return view('Admin.orders.showAddress', compact('user', 'addresses'));
     }
     public function cancelOrder($orderId)
     {
         $order = AdminOrder::findOrFail($orderId);
         $order->status = 'Hủy'; // Change status to "Hủy"
         $order->save();
-    
+
         // Redirect lại trang danh sách đơn hàng
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
     }
-public function listDonHangDaHuy()
-{
-    $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
-    $donHangDaHuy = AdminOrder::where('status', 'Hủy')
-                             ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
-                             ->get();
-    return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
+    public function listDonHangDaHuy()
+    {
+        $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
+        $donHangDaHuy = AdminOrder::where('status', 'Hủy')
+            ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
+            ->get();
+        return view('Admin.orders.listDonHangHuy', compact('canceledOrders', 'donHangDaHuy'));
+    }
 }
-}
-
-
