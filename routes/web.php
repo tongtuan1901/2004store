@@ -104,16 +104,18 @@ use App\Http\Controllers\client\ContactController;
 // Route::prefix('admin')->group(function () {
 //     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
 
-
-
-Route::prefix('admin')->group(function () {
+//đăng nhập admin
+Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
 
 
     // Đăng nhập admin và nhân viên
-    Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
-    Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+    // Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    // Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+    // Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 
  // Mã giảm giá
@@ -307,7 +309,25 @@ Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLin
 Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
 Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
 
+// Danh mục
+Route::resource('admin-categories', AdminCategoriesController::class);
+// Mã giảm giá
+Route::resource('admin-coupons', AdminCouponsController::class);
+// Đặt hàng
+Route::resource('admin-orders', AdminOrdersController::class);
 
+Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
+Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+
+
+Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
+Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
+Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.edit');
+Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
+Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
+Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
+Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
 });
 
 
@@ -393,15 +413,9 @@ Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('u
 Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
 
-// Danh mục
-Route::resource('admin-categories', AdminCategoriesController::class);
-// Mã giảm giá
-Route::resource('admin-coupons', AdminCouponsController::class);
-// Đặt hàng
-Route::resource('admin-orders', AdminOrdersController::class);
+
 
 // in pdf
-Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
 //contact
 Route::get('client/contact',[ContactController::class,'index'])->name('user.contact');
@@ -421,13 +435,7 @@ Route::get('admin/contact',[AdminContactController::class,'index'])->name('admin
 
 
 
-Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
-Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
-Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.edit');
-Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
-Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
-Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
-Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
+
 
 route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
@@ -436,8 +444,7 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 
-Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
-Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');

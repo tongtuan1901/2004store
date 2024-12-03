@@ -17,57 +17,33 @@ use App\Models\Size;
 class AdminProductsController extends Controller
 {
     public function index(Request $request)
-{
-    // Lấy dữ liệu cần thiết
-    $brands = Brand::all();
-    $categories = Category::all();
+    {
+        $brands = Brand::all();
+        $categories = Category::all();
+        $listProducts = AdminProducts::with(['category', 'images', 'variations.size', 'variations.color'])
+            ->withTrashed()
+            ->select('products.*')
+            ->get();
 
-    // Truy vấn cơ bản
-    $query = AdminProducts::with(['category', 'images', 'variations.size', 'variations.color'])
-        ->withTrashed()
-        ->select('products.*');
+        $query = AdminProducts::query();
 
-    // Tìm kiếm theo từ khóa (tên sản phẩm, mô tả, danh mục, thương hiệu)
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', '%' . $search . '%')
-              ->orWhere('description', 'like', '%' . $search . '%')
-              ->orWhereHas('category', function ($catQuery) use ($search) {
-                  $catQuery->where('name', 'like', '%' . $search . '%');
-              })
-              ->orWhereHas('brand', function ($brandQuery) use ($search) {
-                  $brandQuery->where('name', 'like', '%' . $search . '%');
-              })
-              ->orWhere('price_sale', 'like', '%' . $search . '%');
-        });
-    }
-
-    // Tìm kiếm theo trạng thái tồn hàng hay hết hàng
-    if ($request->filled('status')) {
-        if ($request->status === 'in_stock') {
-            $query->where('status', '=', 0); // Tồn hàng
-        } elseif ($request->status === 'out_of_stock') {
-            $query->where('status', '=', 1); // Hết hàng
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
-    }
 
-    // Tìm kiếm theo khoảng giá
-    if ($request->filled('price_range')) {
-        $priceRange = explode('-', $request->price_range);
-        if (count($priceRange) === 2) {
-            $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
-        } elseif ($priceRange[0] === '5000000+') {
-            $query->where('price_sale', '>', 5000000);
+        if ($request->filled('price_range')) {
+            $priceRange = explode('-', $request->price_range);
+            if (count($priceRange) === 2) {
+                $query->whereBetween('price_sale', [$priceRange[0], $priceRange[1]]);
+            } elseif ($priceRange[0] === '500000+') {
+                $query->where('price_sale', '>', 500000);
+            }
         }
+
+        $listProducts = $query->paginate(10);
+
+        return view('admin.Products.index', compact('listProducts', 'categories', 'brands'));
     }
-
-    // Lấy kết quả phân trang
-    $listProducts = $query->paginate(10);
-
-    // Trả về view với dữ liệu
-    return view('admin.Products.index', compact('listProducts', 'categories', 'brands'));
-}
 
     public function create()
     {
@@ -160,7 +136,6 @@ class AdminProductsController extends Controller
 
         return view('admin.products.edit', compact('product', 'brands', 'categories', 'sizes', 'colors'));
     }
-
     public function update(Request $request, $id)
     {
         $product = AdminProducts::findOrFail($id);
@@ -177,66 +152,74 @@ class AdminProductsController extends Controller
             'variation.quantity.*' => 'required|numeric',
             'variation.price.*' => 'required|numeric',
             'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ảnh sản phẩm chính
         ]);
 
         // Cập nhật sản phẩm chính
-        $product->update($request->only(['name', 'price', 'price_sale', 'description', 'category_id', 'brand_id']));
+        $product->update($request->only(['name', 'price', 'price_sale', 'description', 'category_id']));
 
-        // Cập nhật ảnh cho sản phẩm chính nếu có
-        $this->uploadImages($request, $product->id);
+        // **Lưu ảnh sản phẩm chính (is_variant = false)**
+        if ($request->hasFile('images')) {
+            // Xóa ảnh cũ
+            ProductImage::where('product_id', $product->id)->where('image_id', null)->delete();
 
-        // Cập nhật các biến thể sản phẩm
+            // Thêm ảnh mới
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images/products', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => $path,
+                    'image_id' => null,  // Ảnh chính của sản phẩm không có image_id
+                ]);
+            }
+        }
+
+        // **Cập nhật các biến thể**
         $sizes = $request->input('variation.size');
         $colors = $request->input('variation.color');
         $quantities = $request->input('variation.quantity');
         $prices = $request->input('variation.price');
         $images = $request->file('variation.image');
 
-        // Xóa các biến thể cũ để thêm mới
-        ProductVariation::where('product_id', $product->id)->delete();
+        foreach ($sizes as $index => $size) {
+            $color = $colors[$index];
+            $quantity = $quantities[$index];
+            $price = $prices[$index];
 
-        if (is_array($sizes) && is_array($colors) && is_array($quantities) && is_array($prices)) {
-            foreach ($sizes as $index => $size) {
-                $color = $colors[$index];
-                $quantity = $quantities[$index];
-                $price = $prices[$index];
-                $imagePath = null;
-                $productImage = null;
-
-                // Kiểm tra xem ảnh có tồn tại và hợp lệ không
-                if (isset($images[$index]) && $images[$index]->isValid()) {
-                    $imagePath = $images[$index]->store('images/product_variations', 'public');
-
-                    // Kiểm tra xem ảnh đã tồn tại chưa
-                    $existingImage = ProductImage::where('image_path', $imagePath)->first();
-                    if (!$existingImage) {
-                        $productImage = ProductImage::create([
-                            'product_id' => $product->id,
-                            'image_path' => $imagePath,
-                        ]);
-                    } else {
-                        $productImage = $existingImage;
-                    }
-                }
-
-                // Tạo mới biến thể sản phẩm
-                ProductVariation::create([
+            $variation = ProductVariation::updateOrCreate(
+                [
                     'product_id' => $product->id,
                     'size_id' => $size,
                     'color_id' => $color,
+                ],
+                [
                     'quantity' => $quantity,
                     'price' => $price,
-                    'image_id' => $productImage ? $productImage->id : null,
+                ]
+            );
+
+            // **Lưu ảnh biến thể (is_variant = true)**
+            if (isset($images[$index]) && $images[$index]->isValid()) {
+                // Xóa ảnh cũ
+                if ($variation->image) {
+                    Storage::disk('public')->delete($variation->image->image_path);
+                    $variation->image->delete();
+                }
+
+                $imagePath = $images[$index]->store('images/product_variations', 'public');
+                $productImage = ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => $imagePath,
+                    'image_id' => $variation->id, // Liên kết ảnh với biến thể
                 ]);
+
+                $variation->image_id = $productImage->id;
+                $variation->save();
             }
-        } else {
-            return back()->withErrors('Dữ liệu biến thể sản phẩm không hợp lệ.');
         }
 
         return redirect()->route('admin-products.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
-
-
 
     public function destroy(string $id)
     {

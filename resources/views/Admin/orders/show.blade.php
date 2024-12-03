@@ -14,7 +14,7 @@
                                     <!-- Sherah Breadcrumb -->
                                     <div class="sherah-breadcrumb">
                                         <h2 class="sherah-breadcrumb__title">Chi tiết đơn hàng</h2>
-                                        
+
                                     </div>
                                     <!-- End Sherah Breadcrumb -->
                                 </div>
@@ -86,13 +86,13 @@
                                                             <div class="sherah-table__product-name">
                                                                 @if ($item->variation)
                                                                 <div>
-                                                                    Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
+                                                                    Kích thước: {{ $item->variation->size->size ?? 'N/A' }},
                                                                     Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
                                                                 </div>
                                                                 @else
                                                                     <div>Không có biến thể</div>
                                                                 @endif
-                                                                    <hr> 
+                                                                    <hr>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
@@ -133,14 +133,14 @@
                                             <!-- Hiển thị thông tin tổng giá trị đơn hàng -->
                                             <ul class="order-totals__list">
                                                 <li class="order-totals__list--sub">
-                                                    <span>Tổng cộng:</span> 
+                                                    <span>Tổng cộng:</span>
                                                     <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
                                                 </li>
 
                                                 <!-- Hiển thị giá trị giảm giá nếu có -->
-                                                @if ($order->discount_value > 0)   
+                                                @if ($order->discount_value > 0)
                                                     <li class="order-totals__list--sub">
-                                                        <span>Mã giảm giá:</span> 
+                                                        <span>Mã giảm giá:</span>
                                                         <span class="order-totals__amount">{{ $order->discount_code }}</span>
                                                     </li>
                                                 @endif
@@ -195,7 +195,7 @@
                                     </div>
                                 </div>
 
-                            
+
                                 <div class="col-lg-5 col-md-5 col-12">
                                     <div class="sherah-contact-card sherah-default-bg sherah-border mg-top-30">
                                         <h4 class="sherah-contact-card__title">Địa chỉ giao hàng</h4>
@@ -214,7 +214,7 @@
                                         </div>
                                         <!-- End Dashboard Inner -->
                                     </div>
-                                    
+
                                 </div>
 
 

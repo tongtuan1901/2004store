@@ -75,6 +75,11 @@
             background-color: #f8b4da !important;
             /* Màu hồng khi hover */
         }
+
+        button.ft4:hover {
+            background-color: #f8b4da !important;
+            /* Màu hồng khi hover */
+        }
     </style>
     </home-slider>
     <div class="home-about section-distance">
@@ -88,7 +93,7 @@
                         </a>
                         <hr>
                     </div>
-                    <h3>Artisanal Nomad</h3>
+                    <h3>2004 Store</h3>
                     <p>Chủ đề này khám phá các loại vải sáng tạo, thiết kế tương lai và kiểu dáng đẹp mắt lấy cảm hứng
                         từ thời đại kỹ thuật số. Quần áo kết hợp các yếu tố công nghệ có thể mặc, điểm nhấn sáng và tính
                         thẩm mỹ hiện đại, phản ánh sự kết hợp giữa phong cách và chức năng dành cho tín đồ thời trang am
@@ -145,7 +150,8 @@
         <h3>List các nhóm sản phẩm nổi bật nhất</h3>
         <div class="home-collection_list-wrapper">
             @foreach ($categories as $category)
-                <a class="home-collection-list-item" href="{{ route('client-categories.index', ['id' => $category->id]) }}" title="{{ $category->name }}">
+                <a class="home-collection-list-item" href="{{ route('client-categories.index', ['id' => $category->id]) }}"
+                    title="{{ $category->name }}">
                     <div class="home-collection-list-item-image-holder">
                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                             title="{{ $category->name }}"
@@ -294,8 +300,10 @@
                                         </div>
 
 
-                                        <button type="button" title="Xem nhanh" class="shop-quickview-button"
-                                            data-type="shop-quickview-button">Xem nhanh</button>
+                                        {{-- <button type="button" title="Xem nhanh" class="shop-quickview-button"
+                                            data-type="shop-quickview-button">Xem nhanh</button> --}}
+                                        <button class="ft4" style="background-color: #4CAF50 ; color: white"> Xem
+                                            nhanh</button>
                                     </div>
                                 </div>
                                 <div class="product-item-detail">
@@ -316,28 +324,28 @@
                                     </div>
 
                                     <!-- <div class="product-item-detail-gallery-items">
-                                                                                                    <div class="product-item-detail-gallery-item active"
-                                                                                                        data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
-                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                    </div>
-                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                    </div>
-                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                    </div>
-                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                    </div>
-                                                                                                </div> -->
+                                                                                                                    <div class="product-item-detail-gallery-item active"
+                                                                                                                        data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
+                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
+                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
+                                                                                                                    </div>
+                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
+                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
+                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
+                                                                                                                    </div>
+                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
+                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
+                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
+                                                                                                                    </div>
+                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
+                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
+                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
+                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
+                                                                                                                    </div>
+                                                                                                                </div> -->
 
                                 </div>
                             </div>
@@ -354,15 +362,15 @@
                     <picture>
                         <source media="(max-width:767px)"
                             src="https://vn-test-11.slatic.net/p/d09340cb6a7a9663327d7a5f16839c6f.jpg">
-                        <img src="https://vn-test-11.slatic.net/p/d09340cb6a7a9663327d7a5f16839c6f.jpg"
-                            alt="F1 Fashion Style" title="F1 Fashion Style" width="1880" height="720"
+                        <img src="{{asset('admin/img/banner1.jpg')}}"
+                            alt="F1 Fashion Style" title="F1 Fashion Style" width="1500" height="500"
                             loading="lazy" decoding="async" fetchpriority="auto">
                     </picture>
                 </a>
             </div>
         </div>
     </section>
-    <div class="container section-distance">
+    {{-- <div class="container section-distance">
         <div class="home-banner-stylist">
             <div class="home-banner-stylist-wrapper animate">
                 <div class="home-banner-stylist-item">
@@ -420,13 +428,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="home-banner-small container section-distance">
         <div class="home-banner-small-wrapper">
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Vẻ đẹp trường tồn"
                     class="home-banner-small-image-holder face-background">
-                    <img src="https://file.hstatic.net/200000503583/article/shop-do-nam-ha-noi-cardina_2d0a8f320e544c5c9faea65de1550882.jpg"
+                    <img src="{{asset('admin/img/banner3.jpg')}}"
                         alt="Vẻ đẹp trường tồn" title="Vẻ đẹp trường tồn" width="800" height="400" loading="lazy"
                         decoding="async" fetchpriority="auto">
                 </a>
@@ -435,7 +443,7 @@
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Xu hướng thời trang"
                     class="home-banner-small-image-holder face-background">
-                    <img src="https://intphcm.com/data/upload/banner-thoi-trang-nam-tinh.jpg" alt="Xu hướng thời trang"
+                    <img src="{{asset('admin/img/banner4.jpg')}}" alt="Xu hướng thời trang"
                         title="Xu hướng thời trang" width="800" height="400" loading="lazy" decoding="async"
                         fetchpriority="auto">
                 </a>
@@ -454,118 +462,129 @@
         <h3>Top các sản phẩm bán chạy nhất tuần</h3>
         <div class="home-product-list-wrapper">
             <div class="home-product-list-slider home-product-list-slider-1">
-               
-            @foreach ($bestSaller as $product)
-    <div class="product-item">
-        <!-- <p class="product-quantity">Số lượng đã bán: {{ $product->total_quantity }}</p> -->
-        <div class="product-item-wrap">
-            <div class="product-item-top">
-                <div class="product-item-top-image">
-                    <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
-                        @if($product->images->isNotEmpty())
-                            <img src="{{ Storage::url($product->images->first()->image_path) }}"
-                                alt='{{ $product->name }}' title='{{ $product->name }}' width="480"
-                                height="480" loading="lazy" decoding="async">
-                        @else
-                            <img src="{{ asset('path/to/default/image.jpg') }}"
-                                alt='{{ $product->name }}' title='{{ $product->name }}' width="480"
-                                height="480" loading="lazy" decoding="async">
-                        @endif
-                    </a>
-                </div>
-                
-                @if($product->price > 0 && $product->price_sale < $product->price)
-                    <div class="product-item-label-sale">
-                        <span>{{ number_format(100 - (($product->price_sale / $product->price) * 100), 2) }}%</span>
-                    </div>
-                @endif
 
-                <div class="product-item-actions">
-                    @if($product->variations->isNotEmpty())
-                        <label for="modal-toggle-best-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">
-                            Thêm vào giỏ
-                        </label>
-                        <input type="checkbox" id="modal-toggle-best-{{ $product->id }}" class="modal-toggle" />
+                @foreach ($bestSaller as $product)
+                    <div class="product-item">
+                        <!-- <p class="product-quantity">Số lượng đã bán: {{ $product->total_quantity }}</p> -->
+                        <div class="product-item-wrap">
+                            <div class="product-item-top">
+                                <div class="product-item-top-image">
+                                    <a href="{{ route('client-products.show', $product->id) }}"
+                                        class="product-item-top-image-showcase">
+                                        @if ($product->images->isNotEmpty())
+                                            <img src="{{ Storage::url($product->images->first()->image_path) }}"
+                                                alt='{{ $product->name }}' title='{{ $product->name }}' width="480"
+                                                height="480" loading="lazy" decoding="async">
+                                        @else
+                                            <img src="{{ asset('path/to/default/image.jpg') }}"
+                                                alt='{{ $product->name }}' title='{{ $product->name }}' width="480"
+                                                height="480" loading="lazy" decoding="async">
+                                        @endif
+                                    </a>
+                                </div>
 
-                        <div class="modal">
-                            <div class="modal-content">
-                                <label for="modal-toggle-best-{{ $product->id }}" class="close">&times;</label>
-                                <h2>Chọn biến thể và số lượng</h2>
-
-                                @if(auth()->check())
-                                    <form action="{{ route('cart.add') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                                        <div class="form-group">
-                                            <label for="size-best-{{ $product->id }}">Kích thước:</label>
-                                            <select id="size-best-{{ $product->id }}" name="size" class="form-control" required>
-                                                <option value="">Chọn kích thước</option>
-                                                @foreach($product->variations->unique('size_id') as $variation)
-                                                    <option value="{{ $variation->size_id }}">
-                                                        {{ $variation->size->size }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="color-best-{{ $product->id }}">Màu sắc:</label>
-                                            <select id="color-best-{{ $product->id }}" name="color" class="form-control" required>
-                                                <option value="">Chọn màu sắc</option>
-                                                @foreach($product->variations->unique('color_id') as $variation)
-                                                    <option value="{{ $variation->color_id }}">
-                                                        {{ $variation->color->color }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
-                                            <input type="number" id="quantity-best-{{ $product->id }}" 
-                                                name="quantity" min="1" value="1" class="form-control" required>
-                                        </div>
-
-                                        <button type="submit" class="ft1">Thêm vào giỏ</button>
-                                    </form>
-                                @else
-                                    <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
+                                @if ($product->price > 0 && $product->price_sale < $product->price)
+                                    <div class="product-item-label-sale">
+                                        <span>{{ number_format(100 - ($product->price_sale / $product->price) * 100, 2) }}%</span>
+                                    </div>
                                 @endif
+
+                                <div class="product-item-actions">
+                                    @if ($product->variations->isNotEmpty())
+                                        <label for="modal-toggle-best-{{ $product->id }}" class="shop-addLoop-button"
+                                            title="Thêm vào giỏ">
+                                            Thêm vào giỏ
+                                        </label>
+                                        <input type="checkbox" id="modal-toggle-best-{{ $product->id }}"
+                                            class="modal-toggle" />
+
+                                        <div class="modal">
+                                            <div class="modal-content">
+                                                <label for="modal-toggle-best-{{ $product->id }}"
+                                                    class="close">&times;</label>
+                                                <h2>Chọn biến thể và số lượng</h2>
+
+                                                @if (auth()->check())
+                                                    <form action="{{ route('cart.add') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}">
+
+                                                        <div class="form-group">
+                                                            <label for="size-best-{{ $product->id }}">Kích thước:</label>
+                                                            <select id="size-best-{{ $product->id }}" name="size"
+                                                                class="form-control" required>
+                                                                <option value="">Chọn kích thước</option>
+                                                                @foreach ($product->variations->unique('size_id') as $variation)
+                                                                    <option value="{{ $variation->size_id }}">
+                                                                        {{ $variation->size->size }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="color-best-{{ $product->id }}">Màu sắc:</label>
+                                                            <select id="color-best-{{ $product->id }}" name="color"
+                                                                class="form-control" required>
+                                                                <option value="">Chọn màu sắc</option>
+                                                                @foreach ($product->variations->unique('color_id') as $variation)
+                                                                    <option value="{{ $variation->color_id }}">
+                                                                        {{ $variation->color->color }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="quantity-best-{{ $product->id }}">Số
+                                                                lượng:</label>
+                                                            <input type="number" id="quantity-best-{{ $product->id }}"
+                                                                name="quantity" min="1" value="1"
+                                                                class="form-control" required>
+                                                        </div>
+
+                                                        <button type="submit" class="ft1">Thêm vào giỏ</button>
+                                                    </form>
+                                                @else
+                                                    <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a>
+                                                        để mua hàng</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
+                                    @endif
+
+                                    <button type="button" title="Xem nhanh" class="shop-quickview-button">
+                                        Xem nhanh
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="product-item-detail">
+                                <div class="product-item-detail-flex">
+                                    <a class="product-item-detail-vendor" href="{{ route('client-products.index') }}"
+                                        title="{{ $product->category->name ?? 'Không có danh mục' }}">
+                                        <span>{{ $product->category->name ?? 'Không có danh mục' }}</span>
+                                    </a>
+                                </div>
+                                <h3 class="product-item-detail-title">
+                                    <a href="{{ route('client-products.show', $product->id) }}"
+                                        title="{{ $product->name }}">
+                                        {{ $product->name }}
+                                    </a>
+                                </h3>
+                                <div class="product-item-detail-price">
+                                    <strong>{{ number_format($product->price_sale, 0, ',', '.') }}₫</strong>
+                                    @if ($product->price > $product->price_sale)
+                                        <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    @else
-                        <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
-                    @endif
-
-                    <button type="button" title="Xem nhanh" class="shop-quickview-button">
-                        Xem nhanh
-                    </button>
-                </div>
-            </div>
-
-            <div class="product-item-detail">
-                <div class="product-item-detail-flex">
-                    <a class="product-item-detail-vendor" href="{{ route('client-products.index') }}" 
-                        title="{{ $product->category->name ?? 'Không có danh mục' }}">
-                        <span>{{ $product->category->name ?? 'Không có danh mục' }}</span>
-                    </a>
-                </div>
-                <h3 class="product-item-detail-title">
-                    <a href="{{ route('client-products.show', $product->id) }}" title="{{ $product->name }}">
-                        {{ $product->name }}
-                    </a>
-                </h3>
-                <div class="product-item-detail-price">
-                    <strong>{{ number_format($product->price_sale, 0, ',', '.') }}₫</strong>
-                    @if($product->price > $product->price_sale)
-                        <del>{{ number_format($product->price, 0, ',', '.') }}₫</del>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-@endforeach
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -578,14 +597,38 @@
                     <picture>
                         <source media="(max-width:767px)"
                             srcset="{{ asset('assets/bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/home_banner_second_lg_image_mb1ed.jpg') }}">
-                        <img src="{{ asset('assets/bizweb.dktcdn.net/thumb/2048x2048/100/520/624/themes/959507/assets/home_banner_second_lg_image_db1ed.jpg') }}"
-                            alt="Always Fashion" title="Always Fashion" width="1880" height="720" loading="lazy"
+                        <img src="{{asset('admin/img/banner2.jpg')}}"
+                            alt="Always Fashion" title="Always Fashion" width="1000" height="300" loading="lazy"
                             decoding="async" fetchpriority="auto">
                     </picture>
                 </a>
             </div>
         </div>
     </div>
+    <section class="home-vendor section-distance">
+        <div class="container">
+            <div class="home-vendor-wrapper">
+                <div class="home-vendor-info"
+                    style="--home_vendor_bg: url(../f599a506.rocketcdn.me/wp_contents/uploads/2019/08/fashion.jpg)">
+                    <h2>Thương hiệu</h2>
+                    <hr>
+                    <h3>Các thương hiệu tin dùng chúng tôi</h3>
+                </div>
+                <div class="home-vendor-item-wrapper">
+                    @foreach ($listBrands as $brand)
+                        <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}"
+                            title="{{ $brand->name }}">
+                            <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}"
+                                title="{{ $brand->name }}" width="400" height="165" loading="lazy"
+                                decoding="async" fetchpriority="auto">
+                            {{-- <p style="text-align: center; margin-top: 5px;">{{ $brand->name }}</p> <!-- Căn giữa tên thương hiệu --> --}}
+                        </a>
+                    @endforeach
+                </div>
+
+            </div>
+        </div>
+    </section>
     <div class="home-blogs section-distance">
         <div class="container">
             <div class="home-blogs-wrapper">
@@ -602,82 +645,79 @@
                 <div class="home-blogs-bottom">
                     <div class="home-blogs-items">
                         @foreach ($latestNews as $list3New)
-                        <div class="article-item " data-index="2">
-                            <div class="article-item-wrap">
-                                <a href= "{{ route('client-news.show', $list3New->id) }}"
-                                    class="article-item-image"
-                                    title="{{$list3New->title}}">
-                                    <img loading="lazy" decoding="async" width="600" height="400"
-                                        src="{{ asset('storage/' . $list3New->image) }}"
-                                        alt="{{$list3New->title}}"
-                                        title="{{$list3New->title}}">
-                                </a>
-                                <div class="article-item-detail">
-                                    <h3 class="article-item-detail-title"><a
-                                            title="{{$list3New->title}}"
-                                            href="{{ route('client-news.show', $list3New->id) }}">{{$list3New->title}}</a></h3>
-                                    <div class="article-item-detail-content">
-                                        {{$list3New->content}}
-                                    </div>
+                            <div class="article-item " data-index="2">
+                                <div class="article-item-wrap">
+                                    <a href= "{{ route('client-news.show', $list3New->id) }}" class="article-item-image"
+                                        title="{{ $list3New->title }}">
+                                        <img loading="lazy" decoding="async" width="600" height="400"
+                                            src="{{ asset('storage/' . $list3New->image) }}"
+                                            alt="{{ $list3New->title }}" title="{{ $list3New->title }}">
+                                    </a>
+                                    <div class="article-item-detail">
+                                        <h3 class="article-item-detail-title"><a title="{{ $list3New->title }}"
+                                                href="{{ route('client-news.show', $list3New->id) }}">{{ $list3New->title }}</a>
+                                        </h3>
+                                        <div class="article-item-detail-content">
+                                            {{ $list3New->content }}
+                                        </div>
 
-                                    <a title="Xem thêm"
-                                        href="{{ route('client-news.show', $list3New->id) }}"
-                                        class="article-item-detail-more">Xem thêm</a>
+                                        <a title="Xem thêm" href="{{ route('client-news.show', $list3New->id) }}"
+                                            class="article-item-detail-more">Xem thêm</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- <div class="home-tiktok section-distance">
-        <div class="container">
-            <div class="home-tiktok-data">
-                <div class="home-tiktok-icon">
-                    <div class="home-tiktok-left-header home-product-list-header-wrapper">
-                        <hr>
-                        <a href="#" title="F1GENZ Model Fashion TikTok">
-                            <h2>F1GENZ Model Fashion TikTok</h2>
-                        </a>
-                        <hr>
-                    </div>
-                    <h3>Theo dõi chúng tôi trên TikTok</h3>
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
-                        style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
-                        <g>
-                            <g fill="#f00044">
-                                <path
-                                    d="M182.1 265.4c-40.6 0-73.4 32.8-72.8 73 .4 25.8 14.6 48.2 35.5 60.7-7.1-10.9-11.3-23.8-11.5-37.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-80.5c-7.5-1.1-15.2-1.7-22.9-1.7H205V269c-7.2-2.3-14.9-3.6-22.9-3.6zM357.6 24H336.2c6 30.1 22.9 56.3 46.5 74.1C367.2 77.6 357.8 52 357.6 24z"
-                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
-                                <path
-                                    d="M480 146.5c-7.9 0-15.5-.8-23-2.2V202c-27.2 0-53.6-5.3-78.4-15.9-16-6.8-30.9-15.5-44.6-26l.4 177.9c-.2 40-16 77.5-44.6 105.8-23.3 23-52.8 37.7-84.8 42.4-7.5 1.1-15.2 1.7-22.9 1.7-34.2 0-66.8-11.1-93.3-31.6 3 3.6 6.2 7.1 9.7 10.5 28.8 28.4 67 44.1 107.7 44.1 7.7 0 15.4-.6 22.9-1.7 32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8L357 183.1c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9"
-                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
-                            </g>
-                            <path fill="#08fff9"
-                                d="M98.2 254.1c28.5-28.3 66.4-44 106.8-44.3v-21.3c-7.5-1.1-15.2-1.7-22.9-1.7-40.8 0-79.1 15.7-107.9 44.3-28.3 28.1-44.5 66.5-44.4 106.4 0 40.2 15.9 77.9 44.6 106.4 4.6 4.5 9.3 8.7 14.3 12.5-22.6-26.9-34.9-60.5-35-95.9.1-39.9 16.2-78.3 44.5-106.4zM457 144.3v-21.4h-.2c-27.8 0-53.4-9.2-74-24.8 17.9 23.6 44.1 40.4 74.2 46.2z"
-                                opacity="1" data-original="#08fff9"></path>
-                            <path fill="#08fff9"
-                                d="M202 432.2c9.5.5 18.6-.8 27-3.5 29-9.5 49.9-36.5 49.9-68.3l.1-119V24h57.2c-1.5-7.5-2.3-15.1-2.4-23H255v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-12.1-.7-23.4-4.3-33.2-10.1 12.3 19 33.3 31.9 57.2 33.2z"
-                                opacity="1" data-original="#08fff9"></path>
-                            <path
-                                d="M205 486.2c32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8l-.4-177.9c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9v-57.7c-30.1-5.8-56.3-22.6-74.2-46.2-23.6-17.8-40.6-44-46.5-74.1H279v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-24-1.3-44.9-14.2-57.2-33.1-20.9-12.4-35.1-34.9-35.5-60.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-59.2c-40.4.3-78.3 16-106.8 44.3-28.3 28.1-44.5 66.5-44.4 106.3 0 35.4 12.3 69 35 95.9 26.6 20.5 59.1 31.6 93.3 31.6 7.7.1 15.4-.5 22.9-1.6z"
-                                fill="#000000" opacity="1" data-original="#000000" class=""></path>
-                        </g>
-                    </svg>
-                </div>
-                <div class="home-tiktok-embed">
-                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/tag/fashion" data-tag-id="fashion"
-                        data-embed-from="embed_page" data-embed-type="tag" style="max-width:780px; min-width:288px;">
-                        <section> <a target="_blank"
-                                href="https://www.tiktok.com/tag/fashion?refer=hashtag_embed">#fashion</a> </section>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-    </div> -->
+                        <div class="container">
+                            <div class="home-tiktok-data">
+                                <div class="home-tiktok-icon">
+                                    <div class="home-tiktok-left-header home-product-list-header-wrapper">
+                                        <hr>
+                                        <a href="#" title="F1GENZ Model Fashion TikTok">
+                                            <h2>F1GENZ Model Fashion TikTok</h2>
+                                        </a>
+                                        <hr>
+                                    </div>
+                                    <h3>Theo dõi chúng tôi trên TikTok</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
+                                        style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                        <g>
+                                            <g fill="#f00044">
+                                                <path
+                                                    d="M182.1 265.4c-40.6 0-73.4 32.8-72.8 73 .4 25.8 14.6 48.2 35.5 60.7-7.1-10.9-11.3-23.8-11.5-37.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-80.5c-7.5-1.1-15.2-1.7-22.9-1.7H205V269c-7.2-2.3-14.9-3.6-22.9-3.6zM357.6 24H336.2c6 30.1 22.9 56.3 46.5 74.1C367.2 77.6 357.8 52 357.6 24z"
+                                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
+                                                <path
+                                                    d="M480 146.5c-7.9 0-15.5-.8-23-2.2V202c-27.2 0-53.6-5.3-78.4-15.9-16-6.8-30.9-15.5-44.6-26l.4 177.9c-.2 40-16 77.5-44.6 105.8-23.3 23-52.8 37.7-84.8 42.4-7.5 1.1-15.2 1.7-22.9 1.7-34.2 0-66.8-11.1-93.3-31.6 3 3.6 6.2 7.1 9.7 10.5 28.8 28.4 67 44.1 107.7 44.1 7.7 0 15.4-.6 22.9-1.7 32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8L357 183.1c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9"
+                                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
+                                            </g>
+                                            <path fill="#08fff9"
+                                                d="M98.2 254.1c28.5-28.3 66.4-44 106.8-44.3v-21.3c-7.5-1.1-15.2-1.7-22.9-1.7-40.8 0-79.1 15.7-107.9 44.3-28.3 28.1-44.5 66.5-44.4 106.4 0 40.2 15.9 77.9 44.6 106.4 4.6 4.5 9.3 8.7 14.3 12.5-22.6-26.9-34.9-60.5-35-95.9.1-39.9 16.2-78.3 44.5-106.4zM457 144.3v-21.4h-.2c-27.8 0-53.4-9.2-74-24.8 17.9 23.6 44.1 40.4 74.2 46.2z"
+                                                opacity="1" data-original="#08fff9"></path>
+                                            <path fill="#08fff9"
+                                                d="M202 432.2c9.5.5 18.6-.8 27-3.5 29-9.5 49.9-36.5 49.9-68.3l.1-119V24h57.2c-1.5-7.5-2.3-15.1-2.4-23H255v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-12.1-.7-23.4-4.3-33.2-10.1 12.3 19 33.3 31.9 57.2 33.2z"
+                                                opacity="1" data-original="#08fff9"></path>
+                                            <path
+                                                d="M205 486.2c32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8l-.4-177.9c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9v-57.7c-30.1-5.8-56.3-22.6-74.2-46.2-23.6-17.8-40.6-44-46.5-74.1H279v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-24-1.3-44.9-14.2-57.2-33.1-20.9-12.4-35.1-34.9-35.5-60.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-59.2c-40.4.3-78.3 16-106.8 44.3-28.3 28.1-44.5 66.5-44.4 106.3 0 35.4 12.3 69 35 95.9 26.6 20.5 59.1 31.6 93.3 31.6 7.7.1 15.4-.5 22.9-1.6z"
+                                                fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="home-tiktok-embed">
+                                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/tag/fashion" data-tag-id="fashion"
+                                        data-embed-from="embed_page" data-embed-type="tag" style="max-width:780px; min-width:288px;">
+                                        <section> <a target="_blank"
+                                                href="https://www.tiktok.com/tag/fashion?refer=hashtag_embed">#fashion</a> </section>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
     </main>
 @endsection

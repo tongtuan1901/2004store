@@ -51,21 +51,22 @@ class ClientOrderControler extends Controller
         // Truyền dữ liệu vào view
         return view('Admin.orders.listDonHangHuy', compact('canceledOrders'));
     }
+    
     public function show($userId, $orderId)
 {
     $shippingFee = 40000;
 
     // Lấy thông tin người dùng và đơn hàng
-    $userOrder = User::where('id', $userId)
-        ->with([
-            'orders' => function ($query) use ($orderId) {
-                $query->where('id', $orderId)->where('status', '!=', 'Hủy');
-            },
-            'addresses',
-            'orders.orderItems.variation.size',
-            'orders.orderItems.variation.color',
-        ])
-        ->first();
+    $userOrder = User::findOrFail($userId);
+    $userOrder->load([
+        'orders' => function ($query) use ($orderId) {
+            $query->where('id', $orderId)->where('status', '!=', 'Hủy');
+        },
+        'addresses',
+        'orders.orderItems.variation.size',
+        'orders.orderItems.variation.color',
+    ]);
+
 
     // Kiểm tra null cho $userOrder và đơn hàng
     if (!$userOrder || $userOrder->orders->isEmpty()) {
@@ -74,19 +75,11 @@ class ClientOrderControler extends Controller
 
     // Lấy đơn hàng cụ thể
     $order = $userOrder->orders->first();
-
-    // Bước tiến trình dựa trên trạng thái
-    $steps = [
-        'Chờ xử lý' => 1,
-        'Đang xử lý' => 2,
-        'Đang giao hàng' => 3,
-        'Hoàn thành' => 4,
-    ];
-
-    $currentStep = isset($steps[$order->status]) ? $steps[$order->status] : 0;
+    $order->updateStatusTimes();
+    $order->save();
 
     // Truyền thông tin bước hiện tại và dữ liệu khác sang view
-    return view('Client.ClientOrders.show', compact('userOrder', 'shippingFee', 'currentStep'));
+    return view('Client.ClientOrders.show', compact('userOrder', 'shippingFee', 'order'));
 }
 
     
