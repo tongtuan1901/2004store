@@ -294,13 +294,13 @@
                                                     <form autocomplete="off" action="{{route('dashboard.filterByDate')}}" method="POST">
                                                         @csrf
                                                         <div class="d-flex">
-                                                            <div class="col-md-2 d-flex">
+                                                            <div class="col-md-3 d-flex">
                                                                 <input type="text" id="datepicker" class="form-control" placeholder="Từ ngày">
                                                             </div>
-                                                            <div class="col-md-2 d-flex">
+                                                            <div class="col-md-3 d-flex">
                                                                 <input type="text" id="datepicker2" class="form-control" placeholder="Đến ngày">
                                                             </div>
-                                                            <div class="col-md-2 d-flex">
+                                                            <div class="col-md-3 d-flex">
                                                                 <input type="button" name="" id="btn-dashboard-filter" class="btn btn-primary" value="Lọc">
                                                                 <select id="dashboard-filter" class="form-control">
                                                                     <option value="7day">7 ngày qua</option>
