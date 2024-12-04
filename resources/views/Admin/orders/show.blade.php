@@ -107,7 +107,7 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ number_format($item->price) }} - {{ number_format($order->discount_value) }} VNĐ</p>
+                                                                <p class="sherah-table__product-desc">{{ number_format($item->price) }} VNĐ</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
@@ -134,16 +134,20 @@
                                             <ul class="order-totals__list">
                                                 <li class="order-totals__list--sub">
                                                     <span>Tổng cộng:</span>
-                                                    <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total)}} VNĐ</span>
                                                 </li>
 
                                                 <!-- Hiển thị giá trị giảm giá nếu có -->
                                                 @if ($order->discount_value > 0)
                                                     <li class="order-totals__list--sub">
-                                                        <span>Mã giảm giá:</span>
-                                                        <span class="order-totals__amount">{{ $order->discount_code }}</span>
+                                                        <span>Mã giảm giá({{ $order->discount_code }}):</span>
+                                                        <span class="order-totals__amount">- {{ number_format($order->discount_value)}} VNĐ</span>
                                                     </li>
                                                 @endif
+                                                <li class="order-totals__list--sub">
+                                                    <span>Thành tiền:</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
+                                                </li>
                                             </ul>
                                         </div>
                                         <form action="{{ route('admin-ordersdangvanchuyen.update', $order->id) }}" method="POST" class="mb-3">
