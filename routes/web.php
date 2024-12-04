@@ -288,13 +288,7 @@ Route::get('/transfer-requests', [AdminTransferController::class, 'index'])->nam
 Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 'approve'])->name('admin.transfer-requests.approve');
 Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
-// Yêu cầu rút tiền client
-Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
-//cập nhật yêu cầu rút tiền
-Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
-//lọc các yêu cầu thanh toán
-Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
+
 
 
 
@@ -371,7 +365,13 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 //route sản phẩm danh mục
 Route::get('/client-product-categori', [CardController::class, 'index'])->name('cart.index');
 
-
+// Yêu cầu rút tiền client
+Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+//cập nhật yêu cầu rút tiền
+Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
+//lọc các yêu cầu thanh toán
+Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
 
