@@ -123,7 +123,12 @@ Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
 
-
+// Yêu cầu rút tiền client
+Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
+//cập nhật yêu cầu rút tiền
+Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
+//lọc các yêu cầu thanh toán
+Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
 
 
  // Sản phẩm
@@ -365,13 +370,7 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 //route sản phẩm danh mục
 Route::get('/client-product-categori', [CardController::class, 'index'])->name('cart.index');
 
-// Yêu cầu rút tiền client
-Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
-//cập nhật yêu cầu rút tiền
-Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
-//lọc các yêu cầu thanh toán
-Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
+
 // Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('card.remove');
 //checkout
 
@@ -392,7 +391,7 @@ Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('cli
 Route::resource('client-banks', ClientBanksController::class);
 //rút tiền khách hàng
 Route::get('client-banks-rut-tỉen', [ClientBanksController::class, 'viewRutTien'])->name('client-banks.viewRutTien');
-
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
