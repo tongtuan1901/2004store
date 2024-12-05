@@ -27,9 +27,9 @@
                                     <strong>ID Đơn Hàng:</strong> <span>{{ $order->id }}</span>
                                 </div>
                                 <div class="col-md-6">
-                                    @foreach ($order->products as $product)
+                                 
                                         <strong>Tên người gửi:</strong> <span>{{ $order->user->name }}</span>
-                                    @endforeach
+                                    
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -115,7 +115,7 @@
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">{{ number_format($item->price - $order->discount_value) }} VNĐ</p>
+                                                    <p class="sherah-table__product-desc">{{ number_format($item->price) }} VNĐ</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-4 sherah-table__data-4">

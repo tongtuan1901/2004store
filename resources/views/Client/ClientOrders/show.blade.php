@@ -124,10 +124,12 @@
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered">
                         <tbody>
-                            <tr>
-                                <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
-                                <td class="text-end" style="width: 40%;">{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
-                            </tr>
+                        <tr>
+    <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
+    <td class="text-end" style="width: 40%;">{{ number_format($order->orderItems->sum(function($item) { 
+        return $item->variation->price * $item->quantity;
+    }), 0, ',', '.') }} VND</td>
+</tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phí vận chuyển</td>
                                 <td class="text-end" style="width: 40%;">40.000 VND</td>
@@ -145,8 +147,13 @@
                                 <td class="text-end text-primary fw-bold" style="width: 40%;">{{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }} VND</td>
                             </tr>
                             <tr>
-                                <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phương thức thanh toán</td>
-                                <td class="text-end text-info" style="width: 40%;">{{ $order->payment_method }}</td>
+                                <td class="bg-secondary text-white" style="text-align: right;">Phương thức thanh toán</td>
+                                <td class="text-end text-info">
+                                    {{ $order->payment_method }}
+                                    @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                        <br><small class="text-success">(Đã thanh toán)</small>
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>

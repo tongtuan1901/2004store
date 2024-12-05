@@ -16,8 +16,10 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="" aria-label="Trang chủ" title="Trang chủ">Trang
                                     chủ</a></li>
-                            <li class="breadcrumb-item"><a href="cocktail-dresses.html" aria-label="Cocktail Dresses"
-                                    title="Cocktail Dresses">Danh mục</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('client-categories.index') }}"
+                                    aria-label="Cocktail Dresses"
+                                    title="Cocktail Dresses"><span>{{ $productDetail->category ? $productDetail->category->name : 'Không có' }}</span></a>
+                            </li>
                             <li class="breadcrumb-item active"><span> {{ $productDetail->name }}</span></li>
                         </ol>
                     </div>
@@ -116,8 +118,8 @@
                         <a target="_blank" aria-label="Chia sẻ Facebook" title="Chia sẻ Facebook"
                             href="https://www.facebook.com/sharer.php?u=https://f1genz-model-fashion.mysapo.net/ao-day-twist-drape"><svg
                                 width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M27 0H5a5 5 0 00-5 5v22a5 5 0 005 5h22a5 5 0 005-5V5a5 5 0 00-5-5z"
-                                    fill="#1778F2"></path>
+                                <path d="M27 0H5a5 5 0 00-5 5v22a5 5 0 005 5h22a5 5 0 005-5V5a5 5 0 00-5-5z" fill="#1778F2">
+                                </path>
                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                     d="M20.314 32V19.499h3.255L24 15.19h-3.686l.006-2.156c0-1.123.1-1.725 1.623-1.725h2.034V7h-3.255c-3.91 0-5.285 2.09-5.285 5.604v2.587H13v4.308h2.437V32h4.877z"
                                     fill="#fff"></path>
@@ -190,7 +192,8 @@
                             VND</del>
                         <span class="main-product-price-this">{{ number_format($productDetail->price_sale, 0, ',', '.') }}
                             VND</span>
-                        <span class="main-product-price-discount">Tiết kiệm {{ number_format(100 - (($productDetail->price_sale / $productDetail->price) * 100), 2) }}%</span>
+                        <span class="main-product-price-discount">Tiết kiệm
+                            {{ number_format(100 - ($productDetail->price_sale / $productDetail->price) * 100, 2) }}%</span>
                     </div>
                 </div>
                 {{-- <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
@@ -285,25 +288,26 @@
                     </div>
 
                     <!-- Action buttons -->
-                    @if(auth()->check())
-                    <div class="main-product-cta">
-                        <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
-                            <strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                    <path
-                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                                </svg> Thêm vào giỏ</strong>
-                            <span>Chọn ngay sản phẩm bạn yêu thích</span>
-                        </button>
-                        <button style="color: white; background-color: #e95d00" type="submit" name="action"
-                            value="buyNow" class="buy-now-btn">
-                            <strong>Mua ngay</strong>
-                            <span>Mua ngay sản phẩm này</span>
-                        </button>
-                    </div>
-                        @else
-                            <p >Vui lòng <a class="text-primary" href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
-                        @endif
+                    @if (auth()->check())
+                        <div class="main-product-cta">
+                            <button type="submit" name="action" value="addToCart" class="add-to-cart-btn">
+                                <strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                    </svg> Thêm vào giỏ</strong>
+                                <span>Chọn ngay sản phẩm bạn yêu thích</span>
+                            </button>
+                            <button style="color: white; background-color: #e95d00" type="submit" name="action"
+                                value="buyNow" class="buy-now-btn">
+                                <strong>Mua ngay</strong>
+                                <span>Mua ngay sản phẩm này</span>
+                            </button>
+                        </div>
+                    @else
+                        <p>Vui lòng <a class="text-primary" href="{{ route('client-login.index') }}">đăng nhập</a> để mua
+                            hàng</p>
+                    @endif
                 </form>
                 <br>
                 <!-- HTML remains the same -->
@@ -449,15 +453,14 @@
                     <h2>Sản phẩm liên quan</h2>
                 </div>
                 <div class="main-product-relate-data">
-                    <!-- Sử dụng flexbox để hiển thị các sản phẩm ngang -->
                     <div class="related-products">
                         @foreach ($relatedProducts as $relatedProduct)
-                            <div class="product-item-detail">
+                            <div class="product-item-detail hover-effect">
                                 <div class="product-item-top-image">
                                     <a href="{{ route('client-products.show', $relatedProduct->id) }}"
                                         class="product-item-top-image-showcase">
                                         <img src="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}"
-                                            alt='{{ $relatedProduct->name }}' title='{{ $relatedProduct->name }}'
+                                            alt="{{ $relatedProduct->name }}" title="{{ $relatedProduct->name }}"
                                             width="300" height="480" loading="lazy" decoding="async">
                                     </a>
                                 </div>
@@ -480,11 +483,71 @@
                                     <strong>{{ number_format($relatedProduct->price_sale, 0, ',', '.') }}₫</strong>
                                     <del>{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</del>
                                 </div>
+                                <div class="product-item-actions">
+
+                                    <!-- Modal for Adding to Cart -->
+                                    <label for="modal-toggle-{{ $relatedProduct->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
+                                    <input type="checkbox" id="modal-toggle-{{ $relatedProduct->id }}" class="modal-toggle" />
+
+                                    <!-- Cửa sổ Modal -->
+                                    <div class="modal">
+                                        <div class="modal-content">
+                                            <label for="modal-toggle-{{ $relatedProduct->id }}" class="close">&times;</label>
+                                            <h2>Chọn biến thể và số lượng</h2>
+
+                                            @if (auth()->check())
+                                                <form id="productForm-{{ $relatedProduct->id }}" action="{{ route('cart.add') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+                                                    <input type="hidden" name="name" value="{{ $relatedProduct->name }}">
+                                                    <input type="hidden" name="price" value="{{ $relatedProduct->price_sale }}">
+                                                    <input type="hidden" name="image"
+                                                        value="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
+
+                                                    <div class="form-group">
+                                                        <label for="size-{{ $relatedProduct->id }}">Kích thước:</label>
+                                                        <select id="size-{{ $relatedProduct->id }}" name="size" class="form-control">
+                                                            @foreach ($relatedProduct->variations as $variation)
+                                                                <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="color-{{ $relatedProduct->id }}">Màu:</label>
+                                                        <select id="color-{{ $relatedProduct->id }}" name="color" class="form-control">
+                                                            @foreach ($relatedProduct->variations as $variation)
+                                                                <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="quantity-{{ $relatedProduct->id }}">Số lượng:</label>
+                                                        <input type="number" id="quantity-{{ $relatedProduct->id }}" name="quantity" min="1" value="1" class="form-control">
+                                                    </div>
+                                                    <br>
+                                                    <button type="submit" class="ft1">Thêm vào giỏ</button>
+                                                </form>
+                                            @else
+                                                <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
+                                                <a href="{{ route('client-login.index') }}" class="btn btn-secondary">Đăng nhập</a>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+
+                                    <button class="shop-quickview-button"> <a
+                                            href="{{ route('client-products.show', $relatedProduct->id) }}">Xem
+                                            chi tiết</a></button>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+
 
         </div>
         </div>
@@ -625,6 +688,36 @@
         updateThumbnails();
     </script>
     <style>
+        /* CSS cho các nút "Thêm vào giỏ" và "Xem nhanh" */
+        .shop-addLoop-button,
+        .shop-quickview-button {
+            background-color: #4CAF50;
+            /* Màu xanh */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .shop-addLoop-button:hover,
+        .shop-quickview-button:hover {
+            background-color: #ff69b4;
+            /* Màu hồng khi hover */
+        }
+
+        .product-item-actions {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-item-detail:hover .product-item-actions {
+            display: block;
+            opacity: 1;
+        }
+
         .product-sw-select-item label {
             outline: none;
         }

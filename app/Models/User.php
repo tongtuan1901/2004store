@@ -16,6 +16,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',
@@ -63,6 +64,9 @@ class User extends Authenticatable
     public function transferRequests()
     {
         return $this->hasMany(TransferRequest::class);  // Một người dùng có nhiều yêu cầu chuyển tiền
+    }
+    public function user(){
+        return $this->hasMany(yeu_cau_rut_tien::class);
     }
 
 }

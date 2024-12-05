@@ -325,35 +325,13 @@
                                     </div>
 
                                     <!-- <div class="product-item-detail-gallery-items">
-                                                                                                                            <div class="product-item-detail-gallery-item active"
-                                                                                                                                data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
-                                                                                                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                                    width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                                    alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                            </div>
-                                                                                                                            <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                                    width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                                    alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                            </div>
-                                                                                                                            <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                                    width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                                    alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                            </div>
-                                                                                                                            <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                                <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                                    width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                                    alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                            </div>
-                                                                                                                        </div> -->
+                                                                                      </div> -->
 
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-
     </section>
     <section class="home-banner-lg section-distance">
         <div class="home-banner-lg-wrapper">
@@ -555,9 +533,9 @@
                                         <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
                                     @endif
 
-                                    <button type="button" title="Xem nhanh" class="shop-quickview-button">
-                                        Xem nhanh
-                                    </button>
+                                    <button class="ft4" style="background-color: #4CAF50 ; color: white">
+                                        <a href="{{ route('client-products.show', $product->id) }}">Xem
+                                            chi tiết</a></button>
                                 </div>
                             </div>
 
@@ -603,6 +581,30 @@
             </div>
         </div>
     </div>
+    <section class="home-vendor section-distance">
+        <div class="container">
+            <div class="home-vendor-wrapper">
+                <div class="home-vendor-info"
+                    style="--home_vendor_bg: url(../f599a506.rocketcdn.me/wp_contents/uploads/2019/08/fashion.jpg)">
+                    <h2>Thương hiệu</h2>
+                    <hr>
+                    <h3>Các thương hiệu tin dùng chúng tôi</h3>
+                </div>
+                <div class="home-vendor-item-wrapper">
+                    @foreach ($listBrands as $brand)
+                        <a class="home-vendor-item" href="{{ route('client.categories.brand', $brand->id) }}"
+                            title="{{ $brand->name }}">
+                            <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}"
+                                title="{{ $brand->name }}" width="400" height="165" loading="lazy"
+                                decoding="async" fetchpriority="auto">
+                            {{-- <p style="text-align: center; margin-top: 5px;">{{ $brand->name }}</p> <!-- Căn giữa tên thương hiệu --> --}}
+                        </a>
+                    @endforeach
+                </div>
+
+            </div>
+        </div>
+    </section>
     <div class="home-blogs section-distance">
         <div class="container">
             <div class="home-blogs-wrapper">
