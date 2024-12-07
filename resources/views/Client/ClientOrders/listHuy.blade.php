@@ -2,11 +2,11 @@
 
 @section('contentClient')
 
-<h2 class="text-center mb-4">Danh sách đơn hàng</h2>
+<h2 class="text-center mb-4">Danh sách đơn hàng đã hủy</h2>
 <div class="container text-center">
     <div class="row align-items-start">
       <div class="col">
-        <a class="btn btn-success" href="{{route('client.listHuy',['userId' => Auth::user()->id])}}">Danh sách đơn hành đã hủy</a>
+        <a class="btn btn-success" href="{{ route('client.order', ['userId' => Auth::user()->id]) }}">Quay lại danh sách đơn hàng</a>
       </div>
     </div>
 </div>

@@ -447,6 +447,7 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('Client/order/huy/{userId}',[ClientOrderControler::class,'listHuy'])->name('client.listHuy');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận

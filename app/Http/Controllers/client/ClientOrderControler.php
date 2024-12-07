@@ -27,7 +27,7 @@ class ClientOrderControler extends Controller
     public function cancel($id,Request $request)
     {
         $order = AdminOrder::findOrFail($id);
-        if ($order->payment_method == 'wallet') {
+        if (in_array($order->payment_method, ['wallet', 'vnpay','momo'])) {
             $user = User::findOrFail($order->user_id);
             $user->balance += $order->total; // Hoàn tiền vào ví
             $user->save();
@@ -60,7 +60,7 @@ class ClientOrderControler extends Controller
     $userOrder = User::findOrFail($userId);
     $userOrder->load([
         'orders' => function ($query) use ($orderId) {
-            $query->where('id', $orderId)->where('status', '!=', 'Hủy');
+            $query->where('id', $orderId)->where('status', '!=', '');
         },
         'addresses',
         'orders.orderItems.variation.size',
@@ -69,9 +69,9 @@ class ClientOrderControler extends Controller
 
 
     // Kiểm tra null cho $userOrder và đơn hàng
-    if (!$userOrder || $userOrder->orders->isEmpty()) {
-        return redirect()->back()->with('error', 'Không tìm thấy đơn hàng.');
-    }
+    // if (!$userOrder || $userOrder->orders->isEmpty()) {
+    //     return redirect()->back()->with('error', 'Không tìm thấy đơn hàng.');
+    // }
 
     // Lấy đơn hàng cụ thể
     $order = $userOrder->orders->first();
@@ -81,6 +81,20 @@ class ClientOrderControler extends Controller
     // Truyền thông tin bước hiện tại và dữ liệu khác sang view
     return view('Client.ClientOrders.show', compact('userOrder', 'shippingFee', 'order'));
 }
-
+public function listHuy($userId)
+    {
+        $userOrder = User::where('id', $userId) // Lọc theo $userId
+            ->with([
+                'orders'=> function ($query) {
+                    $query->where('status', '=', 'Hủy'); // Lọc các đơn hàng không bị hủy
+                },
+                'addresses',
+                'orders.orderItems.variation.size',
+                'orders.orderItems.variation.color'
+            ])
+            ->first(); // Lấy dữ liệu của người dùng cụ thể
+        
+        return view('Client.ClientOrders.listHuy', compact('userOrder'));
+    }
     
 }
