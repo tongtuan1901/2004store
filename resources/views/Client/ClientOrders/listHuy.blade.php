@@ -29,6 +29,8 @@
                     <th class="text-center">Thời gian đặt</th>
                     <th class="text-center">Hình ảnh</th>
                     <th>Sản phẩm</th>
+                    <th class="text-center">Hình thức thanh toán đơn hàng</th>
+                    <th class="text-center">Hoàn tiền</th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
@@ -73,6 +75,26 @@
                                     Số lượng: {{ $product['quantity'] }}<br><br>
                                 </div>
                             @endforeach
+                        </td>
+                        <td>
+                            @if ($order->payment_method == 'cod')
+                                <span>Thanh toán khi nhận hàng</span>
+                            @elseif ($order->payment_method == 'wallet')
+                                <span>Thanh toán bằng ví</span>
+                            @elseif ($order->payment_method == 'vnpay')
+                                <span>VN PAY</span>
+                            @elseif ($order->payment_method == 'momo')
+                                <span>MOMO</span>
+                            @else
+                                <span>Phương thức thanh toán không xác định</span>
+                            @endif
+                        </td>                        
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
                         </td>
                         <td class="text-center">
                             <span class="badge badge-{{ $order->status == 'Hoàn thành' ? 'success' : ($order->status == 'Hủy' ? 'danger' : 'warning') }}">
