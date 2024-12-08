@@ -39,8 +39,15 @@
                             <div class="d-flex flex-wrap justify-content-between">
                                 <div class="status-item text-center">
                                     <i class="fa fa-clock text-warning fa-2x"></i>
+                                    @if ($order->status == 'Hủy')
+                                    <p class="mt-2"><strong>Đơn hàng đã hủy</strong></p>
+                                    <p class="text-muted">{{ $order->updated_at ?? 'Chưa cập nhật' }}</p>
+                                    @else
                                     <p class="mt-2"><strong>Chờ xử lý</strong></p>
                                     <p class="text-muted">{{ $order->created_at ?? 'Chưa cập nhật' }}</p>
+                                    @endif
+                                    
+                                    
                                 </div>
                                 <div class="status-item text-center">
                                     <i class="fa fa-cogs text-info fa-2x"></i>

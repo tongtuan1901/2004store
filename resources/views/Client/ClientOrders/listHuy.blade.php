@@ -2,11 +2,11 @@
 
 @section('contentClient')
 
-<h2 class="text-center mb-4">Danh sách đơn hàng</h2>
+<h2 class="text-center mb-4">Danh sách đơn hàng đã hủy</h2>
 <div class="container text-center">
     <div class="row align-items-start">
       <div class="col">
-        <a class="btn btn-success" href="{{route('client.listHuy',['userId' => Auth::user()->id])}}">Danh sách đơn hành đã hủy</a>
+        <a class="btn btn-success" href="{{ route('client.order', ['userId' => Auth::user()->id]) }}">Quay lại danh sách đơn hàng</a>
       </div>
     </div>
 </div>
@@ -29,6 +29,8 @@
                     <th class="text-center">Thời gian đặt</th>
                     <th class="text-center">Hình ảnh</th>
                     <th>Sản phẩm</th>
+                    <th class="text-center">Hình thức thanh toán đơn hàng</th>
+                    <th class="text-center">Hoàn tiền</th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
@@ -73,6 +75,26 @@
                                     Số lượng: {{ $product['quantity'] }}<br><br>
                                 </div>
                             @endforeach
+                        </td>
+                        <td>
+                            @if ($order->payment_method == 'cod')
+                                <span>Thanh toán khi nhận hàng</span>
+                            @elseif ($order->payment_method == 'wallet')
+                                <span>Thanh toán bằng ví</span>
+                            @elseif ($order->payment_method == 'vnpay')
+                                <span>VN PAY</span>
+                            @elseif ($order->payment_method == 'momo')
+                                <span>MOMO</span>
+                            @else
+                                <span>Phương thức thanh toán không xác định</span>
+                            @endif
+                        </td>                        
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
                         </td>
                         <td class="text-center">
                             <span class="badge badge-{{ $order->status == 'Hoàn thành' ? 'success' : ($order->status == 'Hủy' ? 'danger' : 'warning') }}">

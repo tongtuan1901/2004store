@@ -290,7 +290,7 @@ Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, '
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
 // Yêu cầu rút tiền client
 Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+
 //cập nhật yêu cầu rút tiền
 Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
 //lọc các yêu cầu thanh toán
@@ -392,7 +392,7 @@ Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('cli
 Route::resource('client-banks', ClientBanksController::class);
 //rút tiền khách hàng
 Route::get('client-banks-rut-tỉen', [ClientBanksController::class, 'viewRutTien'])->name('client-banks.viewRutTien');
-
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
@@ -447,6 +447,7 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('Client/order/huy/{userId}',[ClientOrderControler::class,'listHuy'])->name('client.listHuy');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận
