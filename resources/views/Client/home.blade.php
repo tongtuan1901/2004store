@@ -302,8 +302,9 @@
 
                                         {{-- <button type="button" title="Xem nhanh" class="shop-quickview-button"
                                             data-type="shop-quickview-button">Xem nhanh</button> --}}
-                                        <button class="ft4" style="background-color: #4CAF50 ; color: white"> Xem
-                                            nhanh</button>
+                                        <button class="ft4" style="background-color: #4CAF50 ; color: white"> <a
+                                                href="{{ route('client-products.show', $product->id) }}">Xem
+                                                chi tiết</a></button>
                                     </div>
                                 </div>
                                 <div class="product-item-detail">
@@ -324,35 +325,13 @@
                                     </div>
 
                                     <!-- <div class="product-item-detail-gallery-items">
-                                                                                                                    <div class="product-item-detail-gallery-item active"
-                                                                                                                        data-image="../bizweb.dktcdn.net/100/520/624/products/2ef5a7f2b23e3eb67636db97ecb631f517a5.jpg?v=1720423781723">
-                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                    </div>
-                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                    </div>
-                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                    </div>
-                                                                                                                    <div class="product-item-detail-gallery-item" data-image="">
-                                                                                                                        <img src="https://ispacedanang.edu.vn/wp-content/uploads/2024/05/hinh-anh-dep-ve-hoc-sinh-cap-3-1.jpg"
-                                                                                                                            width="50" height="50" loading="lazy" decoding="async"
-                                                                                                                            alt='{{ $product->name }}' title='{{ $product->name }}'>
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                      </div> -->
 
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-
     </section>
     <section class="home-banner-lg section-distance">
         <div class="home-banner-lg-wrapper">
@@ -362,9 +341,8 @@
                     <picture>
                         <source media="(max-width:767px)"
                             src="https://vn-test-11.slatic.net/p/d09340cb6a7a9663327d7a5f16839c6f.jpg">
-                        <img src="{{asset('admin/img/banner1.jpg')}}"
-                            alt="F1 Fashion Style" title="F1 Fashion Style" width="1500" height="500"
-                            loading="lazy" decoding="async" fetchpriority="auto">
+                        <img src="{{ asset('admin/img/banner1.jpg') }}" alt="F1 Fashion Style" title="F1 Fashion Style"
+                            width="1500" height="500" loading="lazy" decoding="async" fetchpriority="auto">
                     </picture>
                 </a>
             </div>
@@ -434,16 +412,15 @@
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Vẻ đẹp trường tồn"
                     class="home-banner-small-image-holder face-background">
-                    <img src="{{asset('admin/img/banner3.jpg')}}"
-                        alt="Vẻ đẹp trường tồn" title="Vẻ đẹp trường tồn" width="800" height="400" loading="lazy"
-                        decoding="async" fetchpriority="auto">
+                    <img src="{{ asset('admin/img/banner3.jpg') }}" alt="Vẻ đẹp trường tồn" title="Vẻ đẹp trường tồn"
+                        width="800" height="400" loading="lazy" decoding="async" fetchpriority="auto">
                 </a>
 
             </div>
             <div class="home-banner-small-item">
                 <a href="collections/all.html" title="Xu hướng thời trang"
                     class="home-banner-small-image-holder face-background">
-                    <img src="{{asset('admin/img/banner4.jpg')}}" alt="Xu hướng thời trang"
+                    <img src="{{ asset('admin/img/banner4.jpg') }}" alt="Xu hướng thời trang"
                         title="Xu hướng thời trang" width="800" height="400" loading="lazy" decoding="async"
                         fetchpriority="auto">
                 </a>
@@ -556,9 +533,9 @@
                                         <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
                                     @endif
 
-                                    <button type="button" title="Xem nhanh" class="shop-quickview-button">
-                                        Xem nhanh
-                                    </button>
+                                    <button class="ft4" style="background-color: #4CAF50 ; color: white">
+                                        <a href="{{ route('client-products.show', $product->id) }}">Xem
+                                            chi tiết</a></button>
                                 </div>
                             </div>
 
@@ -597,9 +574,8 @@
                     <picture>
                         <source media="(max-width:767px)"
                             srcset="{{ asset('assets/bizweb.dktcdn.net/thumb/1024x1024/100/520/624/themes/959507/assets/home_banner_second_lg_image_mb1ed.jpg') }}">
-                        <img src="{{asset('admin/img/banner2.jpg')}}"
-                            alt="Always Fashion" title="Always Fashion" width="1000" height="300" loading="lazy"
-                            decoding="async" fetchpriority="auto">
+                        <img src="{{ asset('admin/img/banner2.jpg') }}" alt="Always Fashion" title="Always Fashion"
+                            width="1000" height="300" loading="lazy" decoding="async" fetchpriority="auto">
                     </picture>
                 </a>
             </div>
@@ -674,50 +650,50 @@
     </div>
 
     <!-- <div class="home-tiktok section-distance">
-                        <div class="container">
-                            <div class="home-tiktok-data">
-                                <div class="home-tiktok-icon">
-                                    <div class="home-tiktok-left-header home-product-list-header-wrapper">
-                                        <hr>
-                                        <a href="#" title="F1GENZ Model Fashion TikTok">
-                                            <h2>F1GENZ Model Fashion TikTok</h2>
-                                        </a>
-                                        <hr>
+                                <div class="container">
+                                    <div class="home-tiktok-data">
+                                        <div class="home-tiktok-icon">
+                                            <div class="home-tiktok-left-header home-product-list-header-wrapper">
+                                                <hr>
+                                                <a href="#" title="F1GENZ Model Fashion TikTok">
+                                                    <h2>F1GENZ Model Fashion TikTok</h2>
+                                                </a>
+                                                <hr>
+                                            </div>
+                                            <h3>Theo dõi chúng tôi trên TikTok</h3>
+                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
+                                                style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                                <g>
+                                                    <g fill="#f00044">
+                                                        <path
+                                                            d="M182.1 265.4c-40.6 0-73.4 32.8-72.8 73 .4 25.8 14.6 48.2 35.5 60.7-7.1-10.9-11.3-23.8-11.5-37.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-80.5c-7.5-1.1-15.2-1.7-22.9-1.7H205V269c-7.2-2.3-14.9-3.6-22.9-3.6zM357.6 24H336.2c6 30.1 22.9 56.3 46.5 74.1C367.2 77.6 357.8 52 357.6 24z"
+                                                            fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
+                                                        <path
+                                                            d="M480 146.5c-7.9 0-15.5-.8-23-2.2V202c-27.2 0-53.6-5.3-78.4-15.9-16-6.8-30.9-15.5-44.6-26l.4 177.9c-.2 40-16 77.5-44.6 105.8-23.3 23-52.8 37.7-84.8 42.4-7.5 1.1-15.2 1.7-22.9 1.7-34.2 0-66.8-11.1-93.3-31.6 3 3.6 6.2 7.1 9.7 10.5 28.8 28.4 67 44.1 107.7 44.1 7.7 0 15.4-.6 22.9-1.7 32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8L357 183.1c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9"
+                                                            fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
+                                                    </g>
+                                                    <path fill="#08fff9"
+                                                        d="M98.2 254.1c28.5-28.3 66.4-44 106.8-44.3v-21.3c-7.5-1.1-15.2-1.7-22.9-1.7-40.8 0-79.1 15.7-107.9 44.3-28.3 28.1-44.5 66.5-44.4 106.4 0 40.2 15.9 77.9 44.6 106.4 4.6 4.5 9.3 8.7 14.3 12.5-22.6-26.9-34.9-60.5-35-95.9.1-39.9 16.2-78.3 44.5-106.4zM457 144.3v-21.4h-.2c-27.8 0-53.4-9.2-74-24.8 17.9 23.6 44.1 40.4 74.2 46.2z"
+                                                        opacity="1" data-original="#08fff9"></path>
+                                                    <path fill="#08fff9"
+                                                        d="M202 432.2c9.5.5 18.6-.8 27-3.5 29-9.5 49.9-36.5 49.9-68.3l.1-119V24h57.2c-1.5-7.5-2.3-15.1-2.4-23H255v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-12.1-.7-23.4-4.3-33.2-10.1 12.3 19 33.3 31.9 57.2 33.2z"
+                                                        opacity="1" data-original="#08fff9"></path>
+                                                    <path
+                                                        d="M205 486.2c32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8l-.4-177.9c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9v-57.7c-30.1-5.8-56.3-22.6-74.2-46.2-23.6-17.8-40.6-44-46.5-74.1H279v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-24-1.3-44.9-14.2-57.2-33.1-20.9-12.4-35.1-34.9-35.5-60.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-59.2c-40.4.3-78.3 16-106.8 44.3-28.3 28.1-44.5 66.5-44.4 106.3 0 35.4 12.3 69 35 95.9 26.6 20.5 59.1 31.6 93.3 31.6 7.7.1 15.4-.5 22.9-1.6z"
+                                                        fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="home-tiktok-embed">
+                                            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/tag/fashion" data-tag-id="fashion"
+                                                data-embed-from="embed_page" data-embed-type="tag" style="max-width:780px; min-width:288px;">
+                                                <section> <a target="_blank"
+                                                        href="https://www.tiktok.com/tag/fashion?refer=hashtag_embed">#fashion</a> </section>
+                                            </blockquote>
+                                        </div>
                                     </div>
-                                    <h3>Theo dõi chúng tôi trên TikTok</h3>
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
-                                        style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
-                                        <g>
-                                            <g fill="#f00044">
-                                                <path
-                                                    d="M182.1 265.4c-40.6 0-73.4 32.8-72.8 73 .4 25.8 14.6 48.2 35.5 60.7-7.1-10.9-11.3-23.8-11.5-37.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-80.5c-7.5-1.1-15.2-1.7-22.9-1.7H205V269c-7.2-2.3-14.9-3.6-22.9-3.6zM357.6 24H336.2c6 30.1 22.9 56.3 46.5 74.1C367.2 77.6 357.8 52 357.6 24z"
-                                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
-                                                <path
-                                                    d="M480 146.5c-7.9 0-15.5-.8-23-2.2V202c-27.2 0-53.6-5.3-78.4-15.9-16-6.8-30.9-15.5-44.6-26l.4 177.9c-.2 40-16 77.5-44.6 105.8-23.3 23-52.8 37.7-84.8 42.4-7.5 1.1-15.2 1.7-22.9 1.7-34.2 0-66.8-11.1-93.3-31.6 3 3.6 6.2 7.1 9.7 10.5 28.8 28.4 67 44.1 107.7 44.1 7.7 0 15.4-.6 22.9-1.7 32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8L357 183.1c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9"
-                                                    fill="#f00044" opacity="1" data-original="#f00044" class=""></path>
-                                            </g>
-                                            <path fill="#08fff9"
-                                                d="M98.2 254.1c28.5-28.3 66.4-44 106.8-44.3v-21.3c-7.5-1.1-15.2-1.7-22.9-1.7-40.8 0-79.1 15.7-107.9 44.3-28.3 28.1-44.5 66.5-44.4 106.4 0 40.2 15.9 77.9 44.6 106.4 4.6 4.5 9.3 8.7 14.3 12.5-22.6-26.9-34.9-60.5-35-95.9.1-39.9 16.2-78.3 44.5-106.4zM457 144.3v-21.4h-.2c-27.8 0-53.4-9.2-74-24.8 17.9 23.6 44.1 40.4 74.2 46.2z"
-                                                opacity="1" data-original="#08fff9"></path>
-                                            <path fill="#08fff9"
-                                                d="M202 432.2c9.5.5 18.6-.8 27-3.5 29-9.5 49.9-36.5 49.9-68.3l.1-119V24h57.2c-1.5-7.5-2.3-15.1-2.4-23H255v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-12.1-.7-23.4-4.3-33.2-10.1 12.3 19 33.3 31.9 57.2 33.2z"
-                                                opacity="1" data-original="#08fff9"></path>
-                                            <path
-                                                d="M205 486.2c32-4.7 61.5-19.4 84.8-42.4 28.6-28.3 44.4-65.8 44.6-105.8l-.4-177.9c13.6 10.5 28.5 19.3 44.6 26 24.9 10.5 51.3 15.9 78.4 15.9v-57.7c-30.1-5.8-56.3-22.6-74.2-46.2-23.6-17.8-40.6-44-46.5-74.1H279v217.3l-.1 119c0 31.8-20.9 58.8-49.9 68.3-8.4 2.8-17.5 4.1-27 3.5-24-1.3-44.9-14.2-57.2-33.1-20.9-12.4-35.1-34.9-35.5-60.7-.6-40.2 32.2-73 72.8-73 8 0 15.7 1.3 22.9 3.6v-59.2c-40.4.3-78.3 16-106.8 44.3-28.3 28.1-44.5 66.5-44.4 106.3 0 35.4 12.3 69 35 95.9 26.6 20.5 59.1 31.6 93.3 31.6 7.7.1 15.4-.5 22.9-1.6z"
-                                                fill="#000000" opacity="1" data-original="#000000" class=""></path>
-                                        </g>
-                                    </svg>
                                 </div>
-                                <div class="home-tiktok-embed">
-                                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/tag/fashion" data-tag-id="fashion"
-                                        data-embed-from="embed_page" data-embed-type="tag" style="max-width:780px; min-width:288px;">
-                                        <section> <a target="_blank"
-                                                href="https://www.tiktok.com/tag/fashion?refer=hashtag_embed">#fashion</a> </section>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                            </div> -->
     </main>
 @endsection

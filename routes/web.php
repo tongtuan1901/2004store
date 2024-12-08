@@ -123,12 +123,7 @@ Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
 //  Route::get('/admin-coupons/products/{categoryId}', [AdminCouponsController::class, 'getProductsByCategory']);
 
 
-// Yêu cầu rút tiền client
-Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-//cập nhật yêu cầu rút tiền
-Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
-//lọc các yêu cầu thanh toán
-Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
+
 
 
  // Sản phẩm
@@ -293,7 +288,13 @@ Route::get('/transfer-requests', [AdminTransferController::class, 'index'])->nam
 Route::post('/transfer-requests/{id}/approve', [AdminTransferController::class, 'approve'])->name('admin.transfer-requests.approve');
 Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, 'reject'])->name('admin.transfer-requests.reject');
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
+// Yêu cầu rút tiền client
+Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
 
+//cập nhật yêu cầu rút tiền
+Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
+//lọc các yêu cầu thanh toán
+Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequests'])->name('filter-requests');
 
 
 
@@ -446,6 +447,7 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('Client/order/huy/{userId}',[ClientOrderControler::class,'listHuy'])->name('client.listHuy');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận

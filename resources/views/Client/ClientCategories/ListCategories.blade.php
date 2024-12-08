@@ -45,7 +45,7 @@
                                         </g>
                                     </svg></button>
                             </div>
-                         
+
                             <div class="container">
                                 <form action="{{ route('client.categories.filter') }}" method="GET">
                                     <div class="shop-filter-choose">
@@ -61,9 +61,9 @@
                                             @endforeach
                                         </ul>
                                     </div>
-           
-                                    
-                            
+
+
+
                                     <!-- Bộ lọc danh mục -->
                                     <div class="shop-filter" data-type="vendor">
                                         <h4>Danh mục sản phẩm</h4>
@@ -71,9 +71,9 @@
                                             @foreach($categories as $category)
                                                 <div class="shop-filter-item">
                                                     <!-- Tạo checkbox và giữ trạng thái checked nếu đã chọn -->
-                                                    <input type="checkbox" 
-                                                           id="shop-filter-vendor-{{ $category->id }}" 
-                                                           name="category[]" 
+                                                    <input type="checkbox"
+                                                           id="shop-filter-vendor-{{ $category->id }}"
+                                                           name="category[]"
                                                            value="{{ $category->id }}"
                                                            {{ in_array($category->id, $selectedCategories) ? 'checked' : '' }}>
                                                     <label for="shop-filter-vendor-{{ $category->id }}">{{ $category->name }}</label>
@@ -117,8 +117,12 @@
     font-size: 16px;
     cursor: pointer;
 }
+button.ft4:hover {
+            background-color: #f8b4da !important;
+            /* Màu hồng khi hover */
+        }
                                     </style>
-                            
+
                                     <!-- Bộ lọc giá -->
                                     <div class="shop-filter" data-type="price">
                                         <h4>Giá sản phẩm</h4>
@@ -155,21 +159,21 @@
                                         <div class="shop-filter-list">
                                             @foreach($colors as $color)
                                                 <div class="shop-filter-item">
-                                                    <input type="checkbox" id="shop-filter-color-{{ $color->id }}" name="color[]" 
+                                                    <input type="checkbox" id="shop-filter-color-{{ $color->id }}" name="color[]"
                                                            value="{{ $color->id }}" {{ in_array($color->id, $selectedColors) ? 'checked' : '' }}>
                                                     <label for="shop-filter-color-{{ $color->id }}">{{ ucfirst($color->color) }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Bộ lọc kích thước -->
                                     <div class="shop-filter" data-type="size">
                                         <h4>Kích thước</h4>
                                         <div class="shop-filter-list">
                                             @foreach($sizes as $size)
                                                 <div class="shop-filter-item">
-                                                    <input type="checkbox" id="shop-filter-size-{{ $size->id }}" name="size[]" 
+                                                    <input type="checkbox" id="shop-filter-size-{{ $size->id }}" name="size[]"
                                                            value="{{ $size->id }}" {{ in_array($size->id, $selectedSizes) ? 'checked' : '' }}>
                                                     <label for="shop-filter-size-{{ $size->id }}">{{ strtoupper($size->size) }}</label>
                                                 </div>
@@ -178,16 +182,16 @@
                                     </div>
                                     <button type="submit">Lọc</button>
                                 </form>
-                            
+
                                 <script>
                                     // Cập nhật danh sách các bộ lọc đã chọn
                                     function updateSelectedFilters() {
                                         const selectedFiltersList = document.getElementById("selected-filters-list");
                                         const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
-                            
+
                                         // Xóa các bộ lọc cũ
                                         selectedFiltersList.innerHTML = "";
-                            
+
                                         // Thêm các bộ lọc mới
                                         checkboxes.forEach((checkbox) => {
                                             const label = document.querySelector(`label[for="${checkbox.id}"]`).innerText;
@@ -195,7 +199,7 @@
                                             listItem.textContent = label;
                                             selectedFiltersList.appendChild(listItem);
                                         });
-                            
+
                                         // Hiển thị thông báo nếu không có bộ lọc nào
                                         if (checkboxes.length === 0) {
                                             const listItem = document.createElement("li");
@@ -204,7 +208,7 @@
                                             selectedFiltersList.appendChild(listItem);
                                         }
                                     }
-                            
+
                                     // Xóa tất cả bộ lọc đã chọn khi nhấn nút "Bỏ hết"
                                     document.getElementById("remove-all-filters").addEventListener("click", function(event) {
                                         event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
@@ -212,7 +216,7 @@
                                         checkboxes.forEach((checkbox) => checkbox.checked = false);
                                         updateSelectedFilters();
                                     });
-                            
+
                                     // Cập nhật lại danh sách bộ lọc khi checkbox thay đổi
                                     document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
                                         checkbox.addEventListener("change", updateSelectedFilters);
@@ -235,25 +239,25 @@
 });
 document.getElementById("remove-all-filters").addEventListener("click", function(event) {
     event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
-    
+
     // Tắt tất cả các checkbox
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
     });
-    
+
     // Gửi lại form với các bộ lọc đã bị xóa
     document.querySelector("form").submit();  // Submit form sau khi bỏ tất cả bộ lọc
 });
 
-    
 
 
 
-                                    
+
+
                                 </script>
                             </div>
-                        
+
                         <div class="main-collection-right">
                             <div class="main-collection-head">
                                 <div class="shop-sort-style">
@@ -275,20 +279,20 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             <div class="shop-sort-item" data-show="four"></div>
                         </div>
                         <div class="shop-sort-by">
-                           
+
                         </div>
                     </div>
                     <div class="main-collection-info">
-                       
-                      
+
+
                         <h1 class="titleStyle1">Sản phẩm của chúng tôi</h1>
-                   
-                       
+
+
 
 <div class="main-collection-data four">
-  
+
     @foreach ($products as $product)
-   
+
         <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ $product->slug }}">
             <div class="product-item-wrap">
                 <div class="product-item-top">
@@ -298,9 +302,9 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                                  alt="{{ $product->name }}"
                                  title="{{ $product->name }}" width="480" height="480" loading="lazy" decoding="async">
                         </a>
-            
+
                     </div>
-                    
+
                     @if($product->price > 0 && $product->price_sale < $product->price)
                     <div class="product-item-label-sale">
                         <span>{{ number_format(100 - (($product->price_sale / $product->price) * 100), 2) }}%</span>
@@ -322,7 +326,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             overflow: auto;
                             background-color: rgba(0, 0, 0, 0.5);
                         }
-                    
+
                         .modal-content {
                             background-color: #fff;
                             margin: 10% auto;
@@ -333,7 +337,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             position: relative;
                             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                         }
-                    
+
                         .close {
                             position: absolute;
                             top: 10px;
@@ -343,17 +347,17 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             font-weight: bold;
                             cursor: pointer;
                         }
-                    
+
                         .form-group {
                             margin-bottom: 15px;
                         }
-                    
+
                         .form-group label {
                             display: block;
                             margin-bottom: 5px;
                             font-weight: bold;
                         }
-                    
+
                         .form-group select,
                         .form-group input {
                             width: 100%;
@@ -362,7 +366,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             border-radius: 4px;
                             font-size: 14px;
                         }
-                    
+
                         .ft1 {
                             display: inline-block;
                             padding: 10px 20px;
@@ -384,11 +388,11 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             cursor: pointer;
                             text-decoration: none;
                         }
-                    
+
                         .shop-addLoop-button:hover {
                             background-color: #218838;
                         }
-                    
+
                         .shop-quickview-button {
                             display: inline-block;
                             padding: 10px 15px;
@@ -398,11 +402,11 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             cursor: pointer;
                             text-decoration: none;
                         }
-                    
+
                         .shop-quickview-button:hover {
                             background-color: #e0a800;
                         }
-                    
+
                         /* Toggle Modal */
                         .modal-toggle:checked ~ .modal {
                             display: block;
@@ -414,9 +418,9 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             /* Thay đổi chiều cao theo yêu cầu */
                             object-fit: cover;
                             /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
-                
+
                         }
-                
+
                         /* Styles for the custom buttons */
                         .shop-addLoop-button,
                         .shop-quickview-button {
@@ -431,12 +435,12 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             transition: 0.3s;
                             cursor: pointer;
                         }
-                
+
                         .shop-addLoop-button:hover,
                         .shop-quickview-button:hover {
                             background-color: #f8b4da !important;
                         }
-                
+
                         button.ft1 {
                             display: inline-block;
                             opacity: 1;
@@ -447,7 +451,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             transition: background-color 0.3s ease;
                             /* Hiệu ứng mượt khi đổi màu */
                         }
-                
+
                         button.ft1:hover {
                             background-color: #f8b4da !important;
                             /* Màu hồng khi hover */
@@ -524,12 +528,12 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             </div>
                         </div>
 
-
-                        <button type="button" title="Xem nhanh" class="shop-quickview-button"
-                            data-type="shop-quickview-button">Xem nhanh</button>
+                        <button class="ft4" style="background-color: #4CAF50 ; color: white"> <a
+                            href="{{ route('client-products.show', $product->id) }}">Xem
+                            chi tiết</a></button>
                     </div>
-                    
-                    
+
+
                 </div>
                 <div class="product-item-details">
                            <!-- Hiển thị danh mục -->
@@ -538,15 +542,15 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                    </p>
 
                     <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;"><a href="{{ route('client-products.show', $product->id) }}">{{ $product->name }}</a></h2> <!-- Giảm phông chữ của tên sản phẩm -->
-                
-                 
-                   
-                
+
+
+
+
                     <p class="product-item-price">
                         <span class="original-price" style="color: red; font-size: 1.2em;">
                             {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
                         </span>
-                      
+
                         <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
                             {{ number_format($product->price, 0, ',', '.') }} VNĐ
                         </span>
@@ -554,18 +558,18 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                 </div>
             </div>
         </div>
-       
+
     @endforeach
      </div>
      <div class="pagination">
         {{ $products->links() }} <!-- Hiển thị phân trang -->
     </div>
                 </div>
-               
+
             </div>
         </div>
-        
-                  
-        
+
+
+
     </main>
 @endsection

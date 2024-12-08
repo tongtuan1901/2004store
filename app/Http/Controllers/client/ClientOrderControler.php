@@ -28,7 +28,11 @@ class ClientOrderControler extends Controller
     public function cancel($id,Request $request)
     {
         $order = AdminOrder::findOrFail($id);
-        if ($order->payment_method == 'wallet') {
+        
+        if ($order->status != 'Chờ xử lý') {
+            return back()->withErrors('Đơn hàng không thể hủy vì đã chuyển sang trạng thái khác.');
+        }
+        if (in_array($order->payment_method, ['wallet', 'vnpay','momo'])) {
             $user = User::findOrFail($order->user_id);
             $user->balance += $order->total; // Hoàn tiền vào ví
             $user->save();
@@ -42,16 +46,25 @@ class ClientOrderControler extends Controller
 
     }
     
-    public function canceledOrders($id)
+    public function cancelOrder(Request $request, $orderId)
     {
-        $order = AdminOrder::findOrFail($id);
-        $canceledOrders = AdminOrder::where('status', 'Hủy')
-                                ->with('orderItems.product', 'orderItems.variation') // Eager load các liên kết cần thiết
-                                ->get();
+        $order = AdminOrder::findOrFail($orderId);
     
-        // Truyền dữ liệu vào view
-        return view('Admin.orders.listDonHangHuy', compact('canceledOrders'));
+        // Kiểm tra trạng thái đơn hàng
+        if ($order->status != 'Chờ xử lý') {
+            return back()->withErrors('Đơn hàng không thể hủy vì đã chuyển sang trạng thái khác.');
+        }
+    
+        // Xử lý hủy đơn hàng
+        $order->update([
+            'status' => 'Đã hủy',
+            'cancellation_reason' => $request->cancellation_reason,
+        ]);
+    
+        return back()->with('success', 'Đơn hàng đã được hủy thành công.');
     }
+    
+
     
     public function show($userId, $orderId)
 {
@@ -61,7 +74,7 @@ class ClientOrderControler extends Controller
     $userOrder = User::findOrFail($userId);
     $userOrder->load([
         'orders' => function ($query) use ($orderId) {
-            $query->where('id', $orderId)->where('status', '!=', 'Hủy');
+            $query->where('id', $orderId)->where('status', '!=', '');
         },
         'addresses',
         'orders.orderItems.variation.size',
@@ -69,12 +82,6 @@ class ClientOrderControler extends Controller
     ]);
 
 
-    // Kiểm tra null cho $userOrder và đơn hàng
-    if (!$userOrder || $userOrder->orders->isEmpty()) {
-        return redirect()->back()->with('error', 'Không tìm thấy đơn hàng.');
-    }
-
-    // Lấy đơn hàng cụ thể
     $order = $userOrder->orders->first();
     $order->updateStatusTimes();
     $order->save();
@@ -82,6 +89,20 @@ class ClientOrderControler extends Controller
     // Truyền thông tin bước hiện tại và dữ liệu khác sang view
     return view('Client.ClientOrders.show', compact('userOrder', 'shippingFee', 'order'));
 }
-
+public function listHuy($userId)
+    {
+        $userOrder = User::where('id', $userId) // Lọc theo $userId
+            ->with([
+                'orders'=> function ($query) {
+                    $query->where('status', '=', 'Hủy'); // Lọc các đơn hàng không bị hủy
+                },
+                'addresses',
+                'orders.orderItems.variation.size',
+                'orders.orderItems.variation.color'
+            ])
+            ->first(); // Lấy dữ liệu của người dùng cụ thể
+        
+        return view('Client.ClientOrders.listHuy', compact('userOrder'));
+    }
     
 }
