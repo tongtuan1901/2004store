@@ -11,16 +11,17 @@ class ClientOrderControler extends Controller
 {
     public function listOrder($userId)
     {
-        $userOrder = User::where('id', $userId) // Lọc theo $userId
+        $userOrder = User::where('id', $userId) 
             ->with([
                 'orders' => function ($query) {
-                    $query->where('status', '!=', 'Hủy'); // Lọc các đơn hàng không bị hủy
+                    $query->where('status', '!=', 'Hủy')
+                    ->orderBy('created_at', 'desc'); 
                 },
                 'addresses',
                 'orders.orderItems.variation.size',
                 'orders.orderItems.variation.color'
             ])
-            ->first(); // Lấy dữ liệu của người dùng cụ thể
+            ->first();
         
         return view('Client.ClientOrders.index', compact('userOrder'));
     }

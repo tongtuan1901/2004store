@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\AdminProducts;
+use App\Models\ProductVariation;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -46,6 +47,4 @@ class ProductsController extends Controller
 
         return redirect()->route('client-products.show', $productId)->with('success', 'Bình luận của bạn đã được gửi.');
     }
-
-
 }

@@ -16,10 +16,14 @@
         <table class="table table-bordered table-striped table-hover table-sm rounded">
             <thead class="table-light">
                 <tr>
-                    <th class="text-center">STT</th>
-                    <th>Tài khoản</th>
-                    <th class="text-center">Hình ảnh</th>
+                    <th class="text-center" style="height: 10px; vertical-align: middle;">
+                        STT
+                    </th>
+                    <th>Mã đơn hàng</th>
                     <th>Sản phẩm</th>
+                    <th>Giá trị đơn hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
@@ -44,15 +48,7 @@
                     @endforeach
                     <tr>
                         <td class="text-center">{{ $orderIndex++ }}</td>
-                        <td>{{ $order->name }}</td>
-                        <td class="text-center">
-                        @if ($order->orderItems->isNotEmpty() && $order->orderItems->first()->variation && $order->orderItems->first()->variation->image)
-                            <img src="{{ asset('storage/' . $order->orderItems->first()->variation->image->image_path) }}" alt="Variation Image" class="img-fluid rounded" style="max-width: 60px;">
-                        @else
-                            <span class="text-muted">Không có hình ảnh</span>
-                        @endif
-
-                        </td>
+                        <td>{{ $order->order_code }}</td>
                         <td class="truncate">
                             @foreach ($productDetails as $product)
                                 <div>
@@ -61,6 +57,15 @@
                                     Số lượng: {{ $product['quantity'] }}<br><br>
                                 </div>
                             @endforeach
+                        </td>
+                        <td class="truncate">
+                            {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                        </td>
+                        <td>
+                            {{$order->address}}
+                        </td>
+                        <td class="truncate">
+                            {{$order->created_at}}
                         </td>
                         <td class="text-center">
                             <span class="badge badge-{{ $order->status == 'Hoàn thành' ? 'success' : ($order->status == 'Hủy' ? 'danger' : 'warning') }}">
@@ -115,14 +120,14 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group text-right">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                    <button type="submit" class="btn btn-danger">Xác nhận hủy</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button> <br>
+                                                    <button type="submit" class="btn btn-danger">Xác nhận hủy</button> <br>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> <br>
                             <a href="{{ route('client.orders.show', ['userId' => $userOrder->id, 'orderId' => $order->id]) }}" class="btn btn-primary btn-sm rounded">
                                 Xem chi tiết
                             </a>
@@ -134,3 +139,4 @@
     </div>
 @endif
 @endsection
+

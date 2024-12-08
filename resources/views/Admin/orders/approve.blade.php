@@ -24,7 +24,7 @@
                             <h4>Thông Tin Đơn Hàng</h4>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <strong>ID Đơn Hàng:</strong> <span>{{ $order->id }}</span>
+                                    <strong>Mã đơn Hàng:</strong> <span>{{ $order->order_code }}</span>
                                 </div>
                                 <div class="col-md-6">
                                  

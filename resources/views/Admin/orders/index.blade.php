@@ -53,16 +53,15 @@
                                 <!-- Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Người gửi</th>
+                                        <th>Stt</th>
+                                        <th>Mã đơn</th>
                                         <th>Người nhận</th>
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
                                         <th>Trạng thái</th>
                                         <th>Sản phẩm</th>
-                                        <th>Biến thể</th>
-                                        <th>Số lượng</th>
+                                        <th>Giá trị đơn</th>
+                                        <th>Ngày đặt</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -72,11 +71,10 @@
                                             <td>
                                                 <a href="#" class="sherah-color1">#{{ $order->id }}</a>
                                             </td>
+                                            <td>{{$order->order_code}}</td>
                                             <td>{{ $order->user->name }}</td>
-                                            <td>{{ $order->name }}</td>
                                             <td>{{ $order->email }}</td>
                                             <td>{{ $order->phone }}</td>
-                                            <td>{{ $order->address }}</td>
                                             <td>
                                                 <div class="sherah-table__status sherah-color4 sherah-color4__bg--opactity">
                                                     {{ $order->status }}
@@ -90,19 +88,10 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach ($order->orderItems as $item)
-                                                    <div>
-                                                        {{ $item->variation->size->size ?? 'N/A' }}, 
-                                                        {{ $item->variation->color->color ?? 'N/A' }}
-                                                    </div>
-                                                @endforeach
+                                                {{ number_format($order->total - $order->discount_value)}} VNĐ
                                             </td>
                                             <td>
-                                                @foreach ($order->orderItems as $item)
-                                                    <div>
-                                                       {{ $item->quantity ?? 'N/A' }}
-                                                    </div>
-                                                @endforeach
+                                                {{$order->created_at}}
                                             </td>
                                             <td>
                                                 <div class="sherah-table__status__group">

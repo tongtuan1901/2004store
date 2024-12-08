@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 {
     // Khởi tạo query với các quan hệ cần thiết
     $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
-        ->where('status', '!=', 'Hủy');
+        ->where('status', '!=', 'Hủy')->orderBy('created_at', 'desc');
 
     // Xử lý tìm kiếm
     if ($request->filled('search')) {
