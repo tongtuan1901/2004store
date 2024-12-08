@@ -29,10 +29,10 @@
                                     @endif
 
                                     <!-- <div class="mb-4">
-                <a href="{{ route('inventory.create') }}" class="inline-flex items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-                    Thêm Bản Ghi Tồn Kho
-                </a>
-            </div> -->
+                    <a href="{{ route('inventory.create') }}" class="inline-flex items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+                        Thêm Bản Ghi Tồn Kho
+                    </a>
+                </div> -->
                                     <!-- Form lọc theo ngày -->
                                     <form action="{{ route('inventory.index') }}" method="GET" class="mb-4">
                                         @csrf
@@ -49,15 +49,12 @@
                                                 <input type="date" id="end_date" name="end_date"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                             </div>
-                                            <div class="ml-4 flex items-end">
-                                                <button type="submit"
-                                                    style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: 1px solid #0d6efd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); font-size: 14px; font-weight: 500; color: white; background-color: #0d6efd; cursor: pointer; transition: all 0.3s ease;"
+                                            <div style=" justify-content: flex-end;">
+                                                <button type="submit" class="sherah-btn sherah-gbcolor"
                                                     onmouseover="this.style.backgroundColor='#0b5ed7'"
                                                     onmouseout="this.style.backgroundColor='#0d6efd'">
                                                     Lọc
                                                 </button>
-
-
                                             </div>
                                         </div>
                                     </form>
@@ -65,7 +62,8 @@
                             </div>
                             <div class="mb-4">
                                 <div style="display: flex; justify-content: flex-end;">
-                                    <a href="{{ route('inventory.create') }}" class="sherah-btn sherah-gbcolor">Thêm Bản Ghi Tồn Kho</a>
+                                    <a href="{{ route('inventory.create') }}" class="sherah-btn sherah-gbcolor">Thêm Bản Ghi
+                                        Tồn Kho</a>
                                 </div>
                             </div>
                             <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">

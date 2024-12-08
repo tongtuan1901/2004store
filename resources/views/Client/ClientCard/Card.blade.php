@@ -80,11 +80,11 @@
                 <div class="shop-quantity">
                     <form action="{{ route('cart.update', $item->id) }}" method="POST" style="display: flex;">
                         @csrf
-                        <button type="submit" name="action" value="decrease" 
+                        <button type="submit" name="action" value="decrease"
                                 class="quantity-btn" {{ $item->quantity <= 1 ? 'disabled' : '' }}>-</button>
-                        <input type="number" name="quantity" value="{{ $item->quantity }}" 
+                        <input type="number" name="quantity" value="{{ $item->quantity }}"
                                min="1" readonly>
-                        <button type="submit" name="action" value="increase" 
+                        <button type="submit" name="action" value="increase"
                                 class="quantity-btn">+</button>
                     </form>
                 </div>
