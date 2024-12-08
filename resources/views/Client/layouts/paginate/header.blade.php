@@ -12,7 +12,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="HandheldFriendly" content="true">
     <link rel="shortcut icon"
-        href="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/faviconb1ed.png') }}"
+        href="{{ asset('assets/images/2004Store.png') }}"
         type="image/png">
     <title>2004Store</title>
     <link rel="canonical" href="">
@@ -583,11 +583,11 @@
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>
                     </button>
-                    <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
+                    <!-- <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
                         title="Yêu thích"> <i class="fal fa-heart"></i>
                         <span class="shop-wishlist-count">0</span>
 
-                    </button>
+                    </button> -->
                     <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
                         title="Giỏ hàng">
                         <a href="{{route('client-card.index')}}" class="">
@@ -619,15 +619,15 @@
                             </li>
                             <li class="hasChild">
                                 <a href="{{ route('client-categories.index', ['id' => null]) }}" title="Danh mục sản phẩm"
-                                    aria-label="Danh mục sản phẩm">Danh mục sản phẩm<span>›</span></a>
+                                    aria-label="Danh mục sản phẩm">Sản phẩm<span></span></a>
                                 <ul class="menu1">
-                                    <li class="">
+                                    <!-- <li class="">
                                         <a href="{{ route('client-categories.index', ['id' => null]) }}" title="Cocktail Dresses"
                                             aria-label="Cocktail Dresses">Thay bang danh muc san pham</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
-                            <li class="hasChild">
+                            <!-- <li class="hasChild">
                                 <a href="ao-thun-lop-tencel-m-gray.html" title="Sản phẩm nổi bật"
                                     aria-label="Sản phẩm nổi bật">Sản phẩm nổi bật<span>›</span></a>
                                 <ul class="menu1">
@@ -651,7 +651,7 @@
                                             aria-label="ÁO THUN LỚP Tencel M.GRAY">ÁO THUN LỚP Tencel M.GRAY</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <li class="">
                                 <a href="{{route('client-news.index')}}" title="Xu hướng thời trang"
                                     aria-label="Xu hướng thời trang">Xu hướng thời trang</a>

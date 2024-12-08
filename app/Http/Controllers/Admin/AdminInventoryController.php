@@ -82,23 +82,22 @@ class AdminInventoryController extends Controller
             'variation_id' => 'required',
             'quantity_change' => 'required|integer',
             'note' => 'nullable|string',
-            'date' => 'required|date',
         ]);
-
-        // Create a new inventory log entry
+    
+        // Create a new inventory log entry with current timestamp
         InventoryLog::create([
             'product_id' => $request->product_id,
             'variation_id' => $request->variation_id,
             'quantity_change' => $request->quantity_change,
             'note' => $request->note,
-            'created_at' => $request->date,
+            'created_at' => now(), // This will automatically set the current timestamp
         ]);
-
+    
         // Update the quantity of the selected variation
         $variation = ProductVariation::findOrFail($request->variation_id);
-        $variation->quantity += $request->quantity_change; // Update the quantity based on change
+        $variation->quantity += $request->quantity_change;
         $variation->save();
-
+    
         return redirect()->route('inventory.index')->with('success', 'Bản ghi tồn kho đã được thêm thành công.');
     }
 
@@ -132,18 +131,19 @@ class AdminInventoryController extends Controller
         $quantityChange = $request->quantity_change;
     
         // Cập nhật số lượng trong kho
-        $variation->quantity += $quantityChange; // Hoặc nếu bạn muốn giảm thì dùng -=
+        $variation->quantity += $quantityChange;
     
         // Lưu thay đổi
         $variation->save();
     
-        // Cập nhật bản ghi tồn kho
+        // Cập nhật bản ghi tồn kho với timestamp hiện tại
         $inventoryLog->update([
             'category_id' => $request->category_id,
             'product_id' => $request->product_id,
             'variation_id' => $request->variation_id,
             'quantity_change' => $quantityChange,
             'note' => $request->note,
+            'updated_at' => now(), // This will automatically update the timestamp
         ]);
     
         return redirect()->route('inventory.index')->with('success', 'Cập nhật thành công!');

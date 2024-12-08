@@ -52,12 +52,12 @@
                             <thead class="">
                                 <tr>
                                     {{-- <th>ID</th> --}}
-                                    <th>Customer Name</th>
+                                    <th>Tên tài khoản ngân hàng</th>
                                     {{-- <th>Amount</th> --}}
-                                    <th>Transfer Time</th>
+                                    <th>Thời gian gửi yêu cầu</th>
                                     <th>Trạng thái yêu cầu</th>
                                     {{-- <th>Balance</th> --}}
-                                    <th>Số Dư</th>
+                                    <th>Số Dư Sau Khi Rút</th>
                                     <th>Số Tiền Rút</th>
                                     <th>Ngân Hàng</th>
                                     <th>STK</th>
@@ -80,7 +80,7 @@
                                             @endif
                                         </td>                                        
                                         {{-- <td>{{ $item->balance }}</td> --}}
-                                        <td>{{ number_format($item->so_du, 0, ',', '.') }} đ</td>
+                                        <td>{{ number_format($item->so_du - $item->so_tien_rut, 0, ',', '.') }} đ</td>
                                         <td>{{ number_format($item->so_tien_rut, 0, ',', '.') }} đ</td>
                                         <td>{{ $item->ngan_hang }}</td>
                                         <td>{{ (int) $item->stk }}</td>

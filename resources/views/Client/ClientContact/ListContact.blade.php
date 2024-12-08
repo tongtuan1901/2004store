@@ -76,7 +76,7 @@
                                 id="contactFormMessage"></textarea>
                             <button type="submit" class="btn btn-outline insButton" title="Gửi thông tin">Gửi thông
                                 tin</button>
-                            <ul class="shop-social">
+                            <!-- <ul class="shop-social">
                                 <li>
                                     <a href="collections/all.html" target="_blank"
                                         aria-label="F1GENZ Model Fashion - Facebook"
@@ -129,7 +129,7 @@
                                             alt="F1GENZ Model Fashion - Instagram">
                                     </a>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </form>
                         <div class="page-about-new-contact-map">
                             <iframe

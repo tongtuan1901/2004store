@@ -78,7 +78,7 @@
                                 <th>Hình ảnh</th>
                                 <th>Biến thể</th>
                                 <th>Giá</th>
-                                <th>Giá đã giảm</th>
+                                <!-- <th>Giá đã giảm</th> -->
                                 @if($order->status == 'Hoàn thành')
                                     <th>Thao tác</th>
                                 @endif
@@ -100,7 +100,7 @@
                                         Màu: {{ $item->variation->color->color ?? 'Không có' }} <br>
                                         Số lượng: {{ $item->quantity }}
                                     </td>
-                                    <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
+                                    <!-- <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td> -->
                                     <td>{{ number_format($item->variation->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
                                     @if($order->status == 'Hoàn thành')
                                         @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))

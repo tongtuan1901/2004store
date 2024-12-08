@@ -63,7 +63,11 @@
                                         </td>
                                         <td class="sherah-table__column-2 sherah-table__data-2">
                                             <div class="sherah-table__product-content">
-                                                <p class="sherah-table__product-desc">{{$discount->type}}</p>
+                                                <p class="sherah-table__product-desc">@if ($discount->type == 'fixed')
+                                                    <span>Cố định</span>
+                                                @else
+                                                    <span>Phần trăm</span>
+                                                @endif</p>
                                             </div>
                                         </td>
                                         <td class="sherah-table__column-4 sherah-table__data-4">

@@ -13,7 +13,7 @@
                                 <a href="/" aria-label="Trang chủ" title="Trang chủ">Trang chủ</a>
                             </li>
                             @if (Session::has('success'))
-                                <div class="alert alert-success">{{ Session::get('success') }}</div>
+                                <!-- <div class="alert alert-success">{{ Session::get('success') }}</div> -->
                             @endif
 
                             @if (empty($cart))
@@ -34,7 +34,9 @@
                         <div class="main-cart-data-full">
                             <div class="main-cart-data-full-list">
                             @foreach ($cart as $item)
+                             <input type="checkbox">
     <div class="main-cart-data-full-item">
+       
         <div class="main-cart-data-full-item-image">
             @if ($item->product)
                 <a href="/products/{{ $item->product->slug }}">

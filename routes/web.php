@@ -109,7 +109,7 @@ Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name(
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
-    Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
+    Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); 
 
 
     // Đăng nhập admin và nhân viên
@@ -290,7 +290,7 @@ Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, '
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
 // Yêu cầu rút tiền client
 Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+
 //cập nhật yêu cầu rút tiền
 Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
 //lọc các yêu cầu thanh toán
@@ -299,15 +299,10 @@ Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequ
 
 
 
-//quên mật khẩu
-Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
-Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
 
 
-//reset mật khẩu
-Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
-Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
-Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
+
+
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
@@ -329,6 +324,14 @@ Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('ne
 Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
 Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
 });
+
+//quên mật khẩu
+Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
+//reset mật khẩu
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
+Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
 
 
 // Xóa dữ liệu mua ngay khi thoát ra
@@ -464,6 +467,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'submitReview'])
     ->name('client.product.submitReview');
 });
+
+// yêu càu rút tiền của khách hàng
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+
+
 Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
 //lọc
 Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
