@@ -196,31 +196,10 @@
                             {{ number_format(100 - ($productDetail->price_sale / $productDetail->price) * 100, 2) }}%</span>
                     </div>
                 </div>
-                {{-- <div id="variation-price" style="margin-top: 10px;color:#e95d00; font-size: 20px"></div>
-                <div class="product-sw-line">
-                    <div class="product-sw-select">
-                        <div class="product-sw-title">Color</div>
-                        <div class="variation mb-3">
-                            <div class="variation-content d-flex">
-                                @php $uniqueColors = []; @endphp
-                                @foreach ($productDetail->variations as $variation)
-                                    @if (!in_array($variation->color->color, $uniqueColors))
-                                        <span class="product-sw-select-item">
-                                            <input type="radio" data-color="{{ $variation->color->color }}"
-                                                name="product-choose-color" value="{{ $variation->color->color }}"
-                                                data-image="{{ asset('storage/' . $variation->image->image_path) }}"
-                                                data-price="{{ $variation->price }}" class="trigger-option-sw d-none"
-                                                id="product-choose-color-{{ $variation->color->id }}">
-                                            <label for="product-choose-color-{{ $variation->color->id }}"
-                                                class="product-sw-select-item-span">{{ $variation->color->color }}</label>
-                                        </span>
-                                        @php $uniqueColors[] = $variation->color->color; @endphp
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                <!-- HTML để hiển thị giá biến thể -->
+                <div id="variation-price" class="main-product-price" style="display: none;"></div>
+
+
 
                 <form action="{{ route('cart.add') }}" method="POST" id="cart-form">
                     @csrf
@@ -238,6 +217,7 @@
                                             <span class="product-sw-select-item">
                                                 <input type="radio" name="color" value="{{ $variation->color->id }}"
                                                     data-color="{{ $variation->color->color }}"
+                                                    data-variation="{{ $variation->size->id }}"
                                                     data-image="{{ $variation->image ? asset('storage/' . $variation->image->image_path) : asset('path/to/placeholder/image.jpg') }}"
                                                     data-price="{{ $variation->price }}" class="trigger-option-sw d-none"
                                                     id="product-choose-color-{{ $variation->color->id }}" required>
@@ -264,6 +244,7 @@
                                             <span class="product-sw-select-item">
                                                 <input type="radio" name="size" value="{{ $variation->size->id }}"
                                                     data-size="{{ $variation->size->size }}"
+                                                    data-variation="{{ $variation->color->id }}"
                                                     class="trigger-option-sw d-none"
                                                     id="product-choose-size-{{ $variation->size->id }}" required>
                                                 <label for="product-choose-size-{{ $variation->size->id }}"
@@ -277,6 +258,9 @@
                         </div>
                     </div>
 
+                    <!-- HTML để hiển thị số lượng còn lại -->
+                    <div id="variation-quantity" class="variation-quantity"></div>
+
                     <!-- Quantity -->
                     <div class="main-product-quantity shop-quantity-wrap">
                         <label>Số lượng</label>
@@ -285,6 +269,11 @@
                             <input type="number" name="quantity" value="1" min="1" class="quantity-input">
                             <button type="button" data-type="shop-quantity-plus" class="quantity-btn">+</button>
                         </div>
+                    </div>
+
+                    <!-- Phần tử để hiển thị thông báo -->
+                    <div id="quantity-warning" style="color: red; display: none;">
+                        Vượt quá sô lượng còn lại của sản phẩm .
                     </div>
 
                     <!-- Action buttons -->
@@ -305,10 +294,10 @@
                             </button>
                         </div>
                     @else
-                        <p>Vui lòng <a class="text-primary" href="{{ route('client-login.index') }}">đăng nhập</a> để mua
-                            hàng</p>
+                        <p>Vui lòng <a class="text-primary" href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
                     @endif
                 </form>
+
                 <br>
                 <!-- HTML remains the same -->
                 {{-- <button type="button" data-type="main-product-send-help" title="Tư vấn">
@@ -486,52 +475,66 @@
                                 <div class="product-item-actions">
 
                                     <!-- Modal for Adding to Cart -->
-                                    <label for="modal-toggle-{{ $relatedProduct->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">Thêm vào giỏ</label>
-                                    <input type="checkbox" id="modal-toggle-{{ $relatedProduct->id }}" class="modal-toggle" />
+                                    <label for="modal-toggle-{{ $relatedProduct->id }}" class="shop-addLoop-button"
+                                        title="Thêm vào giỏ">Thêm vào giỏ</label>
+                                    <input type="checkbox" id="modal-toggle-{{ $relatedProduct->id }}"
+                                        class="modal-toggle" />
 
                                     <!-- Cửa sổ Modal -->
                                     <div class="modal">
                                         <div class="modal-content">
-                                            <label for="modal-toggle-{{ $relatedProduct->id }}" class="close">&times;</label>
+                                            <label for="modal-toggle-{{ $relatedProduct->id }}"
+                                                class="close">&times;</label>
                                             <h2>Chọn biến thể và số lượng</h2>
 
                                             @if (auth()->check())
-                                                <form id="productForm-{{ $relatedProduct->id }}" action="{{ route('cart.add') }}" method="POST">
+                                                <form id="productForm-{{ $relatedProduct->id }}"
+                                                    action="{{ route('cart.add') }}" method="POST">
                                                     @csrf
-                                                    <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
-                                                    <input type="hidden" name="name" value="{{ $relatedProduct->name }}">
-                                                    <input type="hidden" name="price" value="{{ $relatedProduct->price_sale }}">
+                                                    <input type="hidden" name="product_id"
+                                                        value="{{ $relatedProduct->id }}">
+                                                    <input type="hidden" name="name"
+                                                        value="{{ $relatedProduct->name }}">
+                                                    <input type="hidden" name="price"
+                                                        value="{{ $relatedProduct->price_sale }}">
                                                     <input type="hidden" name="image"
                                                         value="{{ Storage::url($relatedProduct->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
 
                                                     <div class="form-group">
                                                         <label for="size-{{ $relatedProduct->id }}">Kích thước:</label>
-                                                        <select id="size-{{ $relatedProduct->id }}" name="size" class="form-control">
+                                                        <select id="size-{{ $relatedProduct->id }}" name="size"
+                                                            class="form-control">
                                                             @foreach ($relatedProduct->variations as $variation)
-                                                                <option value="{{ $variation->size_id }}">{{ $variation->size->size }}</option>
+                                                                <option value="{{ $variation->size_id }}">
+                                                                    {{ $variation->size->size }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="color-{{ $relatedProduct->id }}">Màu:</label>
-                                                        <select id="color-{{ $relatedProduct->id }}" name="color" class="form-control">
+                                                        <select id="color-{{ $relatedProduct->id }}" name="color"
+                                                            class="form-control">
                                                             @foreach ($relatedProduct->variations as $variation)
-                                                                <option value="{{ $variation->color_id }}">{{ $variation->color->color }}</option>
+                                                                <option value="{{ $variation->color_id }}">
+                                                                    {{ $variation->color->color }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="quantity-{{ $relatedProduct->id }}">Số lượng:</label>
-                                                        <input type="number" id="quantity-{{ $relatedProduct->id }}" name="quantity" min="1" value="1" class="form-control">
+                                                        <input type="number" id="quantity-{{ $relatedProduct->id }}"
+                                                            name="quantity" min="1" value="1"
+                                                            class="form-control">
                                                     </div>
                                                     <br>
                                                     <button type="submit" class="ft1">Thêm vào giỏ</button>
                                                 </form>
                                             @else
                                                 <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
-                                                <a href="{{ route('client-login.index') }}" class="btn btn-secondary">Đăng nhập</a>
+                                                <a href="{{ route('client-login.index') }}"
+                                                    class="btn btn-secondary">Đăng nhập</a>
                                             @endif
                                         </div>
                                     </div>
@@ -556,137 +559,219 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
-            input.addEventListener('change', updateDetails);
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var variations = @json($productDetail->variations);
+            var colorInputs = document.querySelectorAll('input[name="color"]');
+            var sizeInputs = document.querySelectorAll('input[name="size"]');
 
-        document.querySelectorAll('input[name="product-choose-size"]').forEach(function(input) {
-            input.addEventListener('change', updateDetails);
-        });
+            function updateOptions() {
+                var selectedColor = document.querySelector('input[name="color"]:checked');
+                var selectedSize = document.querySelector('input[name="size"]:checked');
+                var selectedColorId = selectedColor ? selectedColor.value : null;
+                var selectedSizeId = selectedSize ? selectedSize.value : null;
 
-        function updateDetails() {
-            var selectedColor = document.querySelector('input[name="product-choose-color"]:checked');
-            var selectedSize = document.querySelector('input[name="product-choose-size"]:checked');
+                // Enable/Disable size options based on selected color
+                sizeInputs.forEach(function (input) {
+                    var sizeId = input.value;
+                    var exists = variations.some(function (variation) {
+                        return variation.size_id == sizeId && (!selectedColorId || variation.color_id == selectedColorId);
+                    });
+                    input.disabled = !exists;
+                    input.nextElementSibling.style.opacity = exists ? 1 : 0.5;
+                });
 
-            if (selectedColor && selectedSize) {
-                @foreach ($productDetail->variations as $variation)
-                    if (selectedColor.value === "{{ $variation->color->color }}" && selectedSize.value ===
-                        "{{ $variation->size->size }}") {
-                        document.getElementById('variation-quantity').innerText =
-                            "Số lượng còn lại: {{ $variation->quantity }}";
+                // Enable/Disable color options based on selected size
+                colorInputs.forEach(function (input) {
+                    var colorId = input.value;
+                    var exists = variations.some(function (variation) {
+                        return variation.color_id == colorId && (!selectedSizeId || variation.size_id == selectedSizeId);
+                    });
+                    input.disabled = !exists;
+                    input.nextElementSibling.style.opacity = exists ? 1 : 0.5;
+                });
+
+                updateQuantityMessage();
+                updatePrice();
+            }
+
+            function updateQuantityMessage() {
+                var selectedColor = document.querySelector('input[name="color"]:checked');
+                var selectedSize = document.querySelector('input[name="size"]:checked');
+                var quantityElement = document.getElementById('variation-quantity');
+
+                if (selectedColor && selectedSize) {
+                    var selectedColorId = selectedColor.value;
+                    var selectedSizeId = selectedSize.value;
+                    var selectedVariation = variations.find(function (variation) {
+                        return variation.color_id == selectedColorId && variation.size_id == selectedSizeId;
+                    });
+
+                    if (selectedVariation) {
+                        if (selectedVariation.quantity > 0) {
+                            quantityElement.innerText = "Số lượng còn lại: " + selectedVariation.quantity;
+                            quantityElement.style.color = "black";
+                        } else {
+                            quantityElement.innerText = "Hết hàng";
+                            quantityElement.style.color = "red";
+                        }
+                        // Cập nhật số lượng tối đa có thể thêm vào giỏ hàng
+                        document.querySelector('input[name="quantity"]').setAttribute('max', selectedVariation.quantity);
+                    } else {
+                        quantityElement.innerText = '';
+                        document.querySelector('input[name="quantity"]').removeAttribute('max');
                     }
-                @endforeach
-            } else {
-                document.getElementById('variation-quantity').innerText = '';
-            }
-        }
-        document.querySelectorAll('.product-sw-select-item label').forEach(function(label) {
-            label.addEventListener('click', function() {
-                var radio = document.getElementById(label.getAttribute('for'));
-                radio.blur();
-            });
-        });
-        document.querySelector('[data-type="shop-quantity-minus"]').addEventListener('click', function() {
-            var input = document.querySelector('input[name="quantity"]');
-            var currentValue = parseInt(input.value);
-            if (currentValue > 1) {
-                input.value = currentValue - 1;
-            }
-        });
-
-        document.querySelector('[data-type="shop-quantity-plus"]').addEventListener('click', function() {
-            var input = document.querySelector('input[name="quantity"]');
-            input.value = parseInt(input.value) + 1;
-        });
-        // Cập nhật hình ảnh khi chọn màu
-        document.querySelectorAll('input[name="color"]').forEach(function(input) {
-            input.addEventListener('change', function() {
-                if (this.checked) {
-                    var newImage = this.getAttribute('data-image');
-                    document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src =
-                        newImage;
+                } else {
+                    quantityElement.innerText = '';
+                    document.querySelector('input[name="quantity"]').removeAttribute('max');
                 }
-            });
-        });
-
-
-        // Kiểm tra form trước khi submit
-        document.getElementById('cart-form').addEventListener('submit', function(e) {
-            var color = document.querySelector('input[name="color"]:checked');
-            var size = document.querySelector('input[name="size"]:checked');
-
-            if (!color || !size) {
-                e.preventDefault();
-                alert('Vui lòng chọn màu sắc và kích thước');
             }
-        });
-        document.querySelectorAll('input[name="product-choose-color"]').forEach(function(input) {
-            input.addEventListener('change', updatePrice);
-        });
 
-        document.querySelectorAll('input[name="product-choose-size"]').forEach(function(input) {
-            input.addEventListener('change', updatePrice);
-        });
+            function updatePrice() {
+                var selectedColor = document.querySelector('input[name="color"]:checked');
+                var selectedSize = document.querySelector('input[name="size"]:checked');
 
-        function updatePrice() {
-            var selectedColor = document.querySelector('input[name="product-choose-color"]:checked');
-            var selectedSize = document.querySelector('input[name="product-choose-size"]:checked');
+                if (selectedColor && selectedSize) {
+                    var selectedColorId = selectedColor.value;
+                    var selectedSizeId = selectedSize.value;
+                    var selectedVariation = variations.find(function (variation) {
+                        return variation.color_id == selectedColorId && variation.size_id == selectedSizeId;
+                    });
 
-            if (selectedColor && selectedSize) {
-                @foreach ($productDetail->variations as $variation)
-                    if (selectedColor.value === "{{ $variation->color->color }}" && selectedSize.value ===
-                        "{{ $variation->size->size }}") {
+                    if (selectedVariation) {
                         document.getElementById('product-base-price').style.display = 'none';
                         document.getElementById('variation-price').style.display = 'block';
                         document.getElementById('variation-price').innerHTML = `
-                    <div class="main-product-price-wrap">
-                        <span class="main-product-price-compare">{{ number_format($variation->price, 0, ',', '.') }} VND</span>
-
-                    </div>`;
+                            <div class="main-product-price-wrap">
+                                <span class="main-product-price-this">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedVariation.price)} VND</span>
+                            </div>`;
+                    } else {
+                        document.getElementById('product-base-price').style.display = 'block';
+                        document.getElementById('variation-price').style.display = 'none';
                     }
-                @endforeach
-            } else {
-                document.getElementById('product-base-price').style.display = 'block';
-                document.getElementById('variation-price').style.display = 'none';
-                document.getElementById('variation-price').innerHTML = '';
+                } else {
+                    document.getElementById('product-base-price').style.display = 'block';
+                    document.getElementById('variation-price').style.display = 'none';
+                }
             }
-        }
-        const thumbnails = document.querySelector('.thumbnail-container');
-        const thumbnailItems = document.querySelectorAll('.thumbnail-item');
-        const prevButton = document.getElementById('prevThumbnail');
-        const nextButton = document.getElementById('nextThumbnail');
-        let currentIndex = 0;
 
-        function updateThumbnails() {
-            thumbnailItems.forEach((item, index) => {
-                if (index === currentIndex) {
-                    item.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'nearest'
-                    });
+            // Attach event listeners to color and size options
+            colorInputs.forEach(function (input) {
+                input.addEventListener('change', updateOptions);
+            });
+
+            sizeInputs.forEach(function (input) {
+                input.addEventListener('change', updateOptions);
+            });
+
+            // Initial update of options
+            updateOptions();
+
+            document.querySelectorAll('.product-sw-select-item label').forEach(function(label) {
+                label.addEventListener('click', function() {
+                    var radio = document.getElementById(label.getAttribute('for'));
+                    radio.blur();
+                });
+            });
+
+            document.querySelector('[data-type="shop-quantity-minus"]').addEventListener('click', function() {
+                var input = document.querySelector('input[name="quantity"]');
+                var currentValue = parseInt(input.value);
+                if (currentValue > 1) {
+                    input.value = currentValue - 1;
+                }
+                checkQuantityWarning();
+            });
+
+            document.querySelector('[data-type="shop-quantity-plus"]').addEventListener('click', function() {
+                var input = document.querySelector('input[name="quantity"]');
+                var maxQuantity = parseInt(input.getAttribute('max')) || Infinity;
+                var currentValue = parseInt(input.value);
+                if (currentValue < maxQuantity) {
+                    input.value = currentValue + 1;
+                }
+                checkQuantityWarning();
+            });
+
+            document.querySelector('input[name="quantity"]').addEventListener('input', checkQuantityWarning);
+
+            function checkQuantityWarning() {
+                var input = document.querySelector('input[name="quantity"]');
+                var maxQuantity = parseInt(input.getAttribute('max')) || Infinity;
+                var currentValue = parseInt(input.value);
+                var warningElement = document.getElementById('quantity-warning');
+
+                if (currentValue > maxQuantity) {
+                    warningElement.style.display = 'block';
+                } else {
+                    warningElement.style.display = 'none';
+                }
+            }
+
+            // Cập nhật hình ảnh khi chọn màu
+            document.querySelectorAll('input[name="color"]').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    if (this.checked) {
+                        var newImage = this.getAttribute('data-image');
+                        document.querySelector('.main-product-feature-thumbs .carousel-item.active img').src = newImage;
+                    }
+                });
+            });
+
+            // Kiểm tra form trước khi submit
+            document.getElementById('cart-form').addEventListener('submit', function(e) {
+                var color = document.querySelector('input[name="color"]:checked');
+                var size = document.querySelector('input[name="size"]:checked');
+                var quantity = parseInt(document.querySelector('input[name="quantity"]').value);
+                var maxQuantity = parseInt(document.querySelector('input[name="quantity"]').getAttribute('max')) || Infinity;
+
+                if (!color || !size) {
+                    e.preventDefault();
+                    alert('Vui lòng chọn màu sắc và kích thước');
+                } else if (quantity > maxQuantity) {
+                    e.preventDefault();
+                    alert('Số lượng bạn chọn vượt quá số lượng còn lại');
                 }
             });
 
-            prevButton.disabled = currentIndex <= 0;
-            nextButton.disabled = currentIndex >= thumbnailItems.length - 1;
-        }
+            const thumbnails = document.querySelector('.thumbnail-container');
+            const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+            const prevButton = document.getElementById('prevThumbnail');
+            const nextButton = document.getElementById('nextThumbnail');
+            let currentIndex = 0;
 
-        prevButton.onclick = function() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateThumbnails();
+            function updateThumbnails() {
+                thumbnailItems.forEach((item, index) => {
+                    if (index === currentIndex) {
+                        item.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest'
+                        });
+                    }
+                });
+
+                prevButton.disabled = currentIndex <= 0;
+                nextButton.disabled = currentIndex >= thumbnailItems.length - 1;
             }
-        };
 
-        nextButton.onclick = function() {
-            if (currentIndex < thumbnailItems.length - 1) {
-                currentIndex++;
-                updateThumbnails();
-            }
-        };
+            prevButton.onclick = function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateThumbnails();
+                }
+            };
 
-        updateThumbnails();
+            nextButton.onclick = function() {
+                if (currentIndex < thumbnailItems.length - 1) {
+                    currentIndex++;
+                    updateThumbnails();
+                }
+            };
+
+            updateThumbnails();
+        });
     </script>
+
+
     <style>
         /* CSS cho các nút "Thêm vào giỏ" và "Xem nhanh" */
         .shop-addLoop-button,
