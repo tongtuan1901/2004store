@@ -249,9 +249,10 @@ use Illuminate\Support\Facades\Storage;
     }
 public function listDonHangDaHuy()
 {
+    
     $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
     $donHangDaHuy = AdminOrder::where('status', 'Hủy')
-                             ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
+                             ->with([ 'user', 'orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
                              ->get();
     return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
 }

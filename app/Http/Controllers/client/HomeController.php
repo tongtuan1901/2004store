@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
 use App\Http\Controllers\Controller;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -72,10 +73,10 @@ class HomeController extends Controller
 
         // return view('Client.home', compact('listCategories', 'productsSale', 'bestSaller', 'banners', 'categories','listBrands','latestNews'));
 
-        $listBrands = Brand::all();
+      
         $news = News::latest()->limit(5)->get();
 
-        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news','latestNews'));
+        return view('Client.home',compact('listCategories','productsSale','bestSaller','banners','categories','listBrands','news'));
 
 
         // $listBrands = Brand::all();
