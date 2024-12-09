@@ -34,7 +34,6 @@
                         STT
                     </th>
                     <th  style="width:125px">Mã đơn hàng</th>
-                    <th class="text-center" style="width:125px">Hình ảnh</th>
                     <th>Sản phẩm</th>
                     <th>Giá trị đơn hàng</th>
                     <th>Địa chỉ</th>
@@ -65,7 +64,39 @@
                     <tr>
                         <td class="text-center">{{ $orderIndex++ }}</td>
                         <td>{{ $order->order_code }}</td>
-                        <td class="text-center">
+                        <td class="text-center" style="vertical-align: top;">
+                            <div style="max-width: 200px; overflow-wrap: break-word; text-align: left;">
+                                @if ($order->orderItems->isNotEmpty())
+                                    @foreach ($order->orderItems as $item)
+                                        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                            {{-- Hình ảnh sản phẩm --}}
+                                            @if ($item->variation && $item->variation->image)
+                                                <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
+                                                     alt="Variation Image" 
+                                                     class="img-fluid rounded mb-1" 
+                                                     style="max-width: 60px; height: auto; display: block; margin-bottom: 5px;">
+                                            @else
+                                                <span class="text-muted">Không có hình ảnh</span>
+                                            @endif
+                                            
+                                            {{-- Tên và thông tin sản phẩm --}}
+                                            <div>
+                                                <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                <br>
+                                                <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
+                                                <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
+                                                <br>
+                                                <small>Số lượng: {{ $item->quantity ?? 1 }}</small>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <span class="text-muted">Không có sản phẩm</span>
+                                @endif
+                            </div>
+                        </td>
+                        
+                        {{-- <td class="text-center">
                             <div style="display: flex; flex-direction: column; align-items: center;">
                             @if ($order->orderItems->isNotEmpty())
                                 @foreach ($order->orderItems as $item)
@@ -88,7 +119,7 @@
                                     Số lượng: {{ $product['quantity'] }}<br><br>
                                 </div>
                             @endforeach
-                        </td>
+                        </td> --}}
                         <td class="truncate">
                             {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
                         </td>
