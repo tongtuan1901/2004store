@@ -25,6 +25,7 @@
                                                 <th>Số lượng</th>
                                                 <th>Kích thước</th>
                                                 <th>Màu sắc</th>
+                                              <th>Số tiền hoàn</th>
                                               <th>Trạng thái</th>
                                             </tr>
                                         </thead>
@@ -36,10 +37,14 @@
                                                     <td>{{ $order->name }}
                                                         {{ $order->phone }}
                                                         {{ $order->address }}
-                                     
+                                                        
                                                     </td>
                                                     <td>{{ $order->cancellation_reason }}</td>
+<<<<<<< HEAD
                                                     <td>{{ $order->user->name ?? 'Người gửi không tồn tại' }}</td>
+=======
+                                                    <td>{{ $user->name ?? 'Không có thông tin người dùng' }}</td>
+>>>>>>> 9279205ceef4b38d7d647bf6039abfbf5871ca68
                                                     <td>
                                                     @foreach ($order->orderItems as $item)
     <p>{{ $item->product ? $item->product->name : 'Product Name Not Available' }}</p>
@@ -79,6 +84,13 @@
                                                                 <div>Không có màu sắc</div>
                                                                 @endif
                                                         @endforeach
+                                                    </td>
+                                                    <td>
+                                                        @if(in_array($order->payment_method, ['momo', 'wallet', 'vnpay']))
+                                                            <p style="color: red">+{{ number_format($order->total) }}đ</p>
+                                                        @else
+                                                            
+                                                        @endif
                                                     </td>
                                                     <td>{{ $order->status }}</td>
                                                 </tr>

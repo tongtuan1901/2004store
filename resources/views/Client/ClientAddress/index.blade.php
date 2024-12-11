@@ -14,7 +14,7 @@
         @else
             <ul>
                 @foreach($addresses as $address)
-                    <li>
+                    <div class="address_li">
                         <span> Tên:{{ $address->name }}, Số điện thoại:{{ $address->phone_number }},Xã:{{ $address->street }}, Thành phố:{{ $address->city }}, Huyện{{ $address->state }},Địa chỉ nhà{{ $address->house_address }}</span>
                         <a href="{{ route('address.edit', ['id' => $address->id]) }}">
                             <svg width="16" height="16" fill="currentColor" class="icon icon-edit" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                                 Xóa
                             </button>
                         </form>
-                    </li>
+                    </div>
                 @endforeach
             </ul>
         @endif
@@ -43,6 +43,7 @@
             </svg>
             Thêm địa chỉ mới
         </a>
+        <a class="ft2"  class="add-address" href="{{ route('client-checkout.index') }}" title="Thanh toán">Thanh toán</a>
     </div>
 
     <style>
@@ -77,7 +78,7 @@ ul {
     padding: 0;
 }
 
-li {
+.address_li {
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 8px;
@@ -89,12 +90,12 @@ li {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-li:hover {
+.address_li:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-li span {
+.address_li span {
     color: #555;
     line-height: 1.6;
 }

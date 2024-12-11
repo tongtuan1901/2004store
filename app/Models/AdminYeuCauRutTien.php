@@ -12,4 +12,7 @@ class AdminYeuCauRutTien extends Model
     protected $fillable = [
         'customer_name', 'amount', 'transfer_time', 'is_approved', 'balance', 'so_du', 'so_tien_rut', 'ngan_hang', 'stk', 'request_type', 'user_id'
     ];
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

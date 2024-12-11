@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id(); // Trường id tự động tăng
-           
+            $table->string('order_code', 10)->unique()->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('address_id'); // Thêm khóa ngoại cho address
             $table->string('name', 255); // Tên khách hàng
@@ -35,10 +35,10 @@ return new class extends Migration
             $table->timestamps(); // Tạo trường created_at và updated_at
             $table->softDeletes();
             $table->timestamp('pending_time')->nullable();
-    $table->timestamp('processing_time')->nullable();
-    $table->timestamp('shipping_time')->nullable();
-    $table->timestamp('completed_time')->nullable();
-
+            $table->timestamp('processing_time')->nullable();
+            $table->timestamp('shipping_time')->nullable();
+            $table->timestamp('completed_time')->nullable();
+            $table->text('cancellation_reason')->nullable();
           
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade'); // Khóa ngoại cho address

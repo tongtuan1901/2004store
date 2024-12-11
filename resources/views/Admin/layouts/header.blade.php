@@ -19,7 +19,7 @@
         rel="stylesheet">
 
     <!-- Fav Icon -->
-    <link rel="icon" href="{{asset('admin/img/favicon.png')}}">
+    <link rel="icon" href="{{ asset('admin/img/favicon.png') }}">
 
     <!-- sherah Stylesheet -->
     <link rel="stylesheet" href="{{ asset('admin/css/bootstrap.min.css') }}">
@@ -35,7 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
-   
+
 </head>
 
 <body id="sherah-dark-light">
@@ -44,12 +44,12 @@
         <!-- sherah Admin Menu -->
         <div class="sherah-smenu">
             <!-- Admin Menu -->
-            <div class="admin-menu">    
+            <div class="admin-menu">
 
                 <!-- Logo -->
                 <div class="logo sherah-sidebar-padding">
                     <a href='index.html'>
-                        <img class="sherah-logo__main" src="{{asset('admin/img/logo.png')}}" alt="#">
+                        <img class="sherah-logo__main" src="{{ asset('admin/img/logo.png') }}" alt="#">
                     </a>
                     <div class="sherah__sicon close-icon d-xl-none">
                         <svg width="9" height="15" viewBox="0 0 9 15" fill="none"
@@ -65,8 +65,7 @@
                     <!-- Nav Menu -->
                     <div class="menu-bar">
                         <ul class="menu-bar__one sherah-dashboard-menu" id="sherahMenu">
-                            <li><a href="{{route('dashboard.index')}}" ><span
-                                        class="menu-bar__text">
+                            <li><a href="{{ route('dashboard.index') }}"><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="18.075" height="18.075" viewBox="0 0 18.075 18.075">
@@ -112,13 +111,16 @@
                                 <div class="collapse sherah__dropdown" id="menu-item_vendors">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='{{ route('users.index') }}'><span class="menu-bar__text"><span
-                                                        class="menu-bar__name">Danh sách khách hàng</span></span></a></li>
+                                                        class="menu-bar__name">Danh sách khách hàng</span></span></a>
+                                        </li>
                                         <!-- <li><a href='vendor-list.html'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Chi tiết khác hàng</span></span></a></li> -->
-                                        <li><a href='{{route('admin-comments.index')}}'><span class="menu-bar__text"><span
-                                            class="menu-bar__name">Bình luận</span></span></a></li>
-                                        <li><a href='{{route('admin.reviews.index')}}'><span class="menu-bar__text"><span
-                                                                class="menu-bar__name">Đánh giá</span></span></a></li>
+                                        <li><a href='{{ route('admin-comments.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Bình
+                                                        luận</span></span></a></li>
+                                        <li><a href='{{ route('admin.reviews.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Đánh
+                                                        giá</span></span></a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -263,14 +265,15 @@
                                 <div class="collapse sherah__dropdown" id="menu-item_storage"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
-                                        <li><a href='{{ route('inventory.index') }}'><span class="menu-bar__text"><span
-                                                        class="menu-bar__name">Danh sách tồn kho</span></span></a></li>
+                                        <li><a href='{{ route('inventory.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Danh sách tồn
+                                                        kho</span></span></a></li>
                                         <!-- <li><a href='upload-product.html'><span class="menu-bar__text"><span
                                                         class="menu-bar__name">Thêm mới sản phẩm</span></span></a></li> -->
                                     </ul>
                                 </div>
                             </li>
-                            
+
                             <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#menu-item__orders"><span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
@@ -292,50 +295,59 @@
                                 <div class="collapse sherah__dropdown" id="menu-item__orders"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
-                                        <li><a href='{{route('admin-orders.index')}}'><span class="menu-bar__text"><span
-                                                        class="menu-bar__name">Danh sách đơn hàng</span></span></a></li>
-                                        <li><a href='{{route('admin-orders.approve.index')}}'><span class="menu-bar__text"><span
-                                                        class="menu-bar__name">Đơn hàng cần duyệt</span></span></a></li>
+                                        <li><a href='{{ route('admin-orders.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Danh sách đơn
+                                                        hàng</span></span></a></li>
+                                        <li><a href='{{ route('admin-orders.approve.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Đơn hàng cần
+                                                        duyệt</span></span></a></li>
+                                        <li><a href='{{ route('admin-card.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Gio hàng của
+                                                        khách hàng</span></span></a></li>
 
-                                        <li><a href='{{route('admin-card.index')}}'><span class="menu-bar__text"><span
-                                                        class="menu-bar__name">Gio hàng của khách hàng</span></span></a></li>                
+                                        <li><a href='{{ route('admin.address') }}'><span class="menu-bar__text"><span
+                                                        class="menu-bar__name">Địa chỉ khách hàng</span></span></a>
+                                        </li>
+                                        <li><a href="{{ route('admin-orders.cancelled') }}">
+                                                <span class="menu-bar__text">
+                                                    <span class="menu-bar__name">Đơn hàng đã hủy</span>
+                                                </span>
+                                            </a></li>
 
-                                        <li><a href='{{route('admin.address')}}'><span class="menu-bar__text"><span
-                                                            class="menu-bar__name">Địa chỉ khách hàng</span></span></a></li>
-                                                            <li><a href="{{ route('admin-orders.cancelled') }}">
-                                                                <span class="menu-bar__text">
-                                                                    <span class="menu-bar__name">Đơn hàng đã hủy</span>
-                                                                </span>
-                                                            </a></li>
-                                                       
                                     </ul>
                                 </div>
                             </li>
 
                             <li><a href="#!" class="collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#menu-item_coupons"><span class="menu-bar__text">
-                                    <span class="sherah-menu-icon sherah-svg-icon__v1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            <rect x="2" y="4" width="20" height="16" rx="3" ry="3" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
-                                            <text x="12" y="14" text-anchor="middle" font-size="10" fill="#333" font-family="Arial, sans-serif">%</text>
-                                        </svg>
-                                        
-                                    </span>
-                                    <span class="menu-bar__name">Giảm giá </span></span> <span
-                                    class="sherah__toggle"></span></a></span>
-                            <!-- Dropdown Menu -->
-                            <div class="collapse sherah__dropdown" id="menu-item_coupons"
-                                data-bs-parent="#sherahMenu">
-                                <ul class="menu-bar__one-dropdown">
-                                    <li><a href='{{route('discount.index')}}'><span class="menu-bar__text"><span
-                                                    class="menu-bar__name">Mã giảm giá</span></span></a></li>
-                                    <li><a href='{{route('admin-coupons.index')}}'><span class="menu-bar__text"><span
-                                                    class="menu-bar__name">Khuyến mãi</span></span></a></li>
-                                </ul>
-                            </div>
-                        </li>
+                                    data-bs-target="#menu-item_coupons"><span class="menu-bar__text">
+                                        <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24">
+                                                <rect x="2" y="4" width="20" height="16" rx="3"
+                                                    ry="3" fill="#e0e0e0" stroke="#333" stroke-width="1" />
+                                                <text x="12" y="14" text-anchor="middle" font-size="10"
+                                                    fill="#333" font-family="Arial, sans-serif">%</text>
+                                            </svg>
 
-                            <li><a class='collapsed' href='{{route('admin-banners.index')}}'><span class="menu-bar__text">
+                                        </span>
+                                        <span class="menu-bar__name">Giảm giá </span></span> <span
+                                        class="sherah__toggle"></span></a></span>
+                                <!-- Dropdown Menu -->
+                                <div class="collapse sherah__dropdown" id="menu-item_coupons"
+                                    data-bs-parent="#sherahMenu">
+                                    <ul class="menu-bar__one-dropdown">
+                                        <li><a href='{{ route('discount.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Mã giảm
+                                                        giá</span></span></a></li>
+                                        <li><a href='{{ route('admin-coupons.index') }}'><span
+                                                    class="menu-bar__text"><span class="menu-bar__name">Khuyến
+                                                        mãi</span></span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li><a class='collapsed' href='{{ route('admin-banners.index') }}'><span
+                                        class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="19.434" height="19.432" viewBox="0 0 19.434 19.432">
@@ -421,7 +433,7 @@
                                         <span class="menu-bar__name">Pages</span></span><span
                                         class="sherah__toggle"></span></a></span>
                                 Dropdown Menu -->
-                                <!-- <div class="collapse sherah__dropdown" id="menu-item__9"
+                            <!-- <div class="collapse sherah__dropdown" id="menu-item__9"
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='notifications.html'><span class="menu-bar__text"><span
@@ -452,7 +464,8 @@
                                         </span>
                                         <span class="menu-bar__name">Language</span></span></a></span>
                             </li> -->
-                            <li><a class='collapsed' href='{{ route('user-staff.index') }}'><span class="menu-bar__text">
+                            <li><a class='collapsed' href='{{ route('user-staff.index') }}'><span
+                                        class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="19.103" height="23.047" viewBox="0 0 19.103 23.047">
@@ -472,7 +485,8 @@
                                         <span class="menu-bar__name">Quản lí nhân viên</span></span></a></span>
                             </li>
 
-                            <li><a class='collapsed' href='{{route('bank-cards.index')}}'><span class="menu-bar__text">
+                            <li><a class='collapsed' href='{{ route('bank-cards.index') }}'><span
+                                        class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
                                                 width="19.434" height="19.432" viewBox="0 0 19.434 19.432">
@@ -518,26 +532,43 @@
                                     data-bs-parent="#sherahMenu">
                                     <ul class="menu-bar__one-dropdown">
                                         <li><a href='{{ route('admin.transfer-requests.index') }}'><span
-                                                    class="menu-bar__text"><span
-                                                        class="menu-bar__name">Đang chờ duyệt</span></span></a></li>
+                                                    class="menu-bar__text"><span class="menu-bar__name">Đang chờ
+                                                        duyệt</span></span></a></li>
                                         <li><a href='{{ route('admin.approved-customers') }}'><span
-                                                    class="menu-bar__text"><span class="menu-bar__name">Danh sách khách hàng đã nạp
+                                                    class="menu-bar__text"><span class="menu-bar__name">Danh sách
+                                                        khách hàng đã nạp
                                                     </span></span></a></li>
                                         <li><a href='{{ route('admin.listYeuCauRutTien') }}'><span
-                                                    class="menu-bar__text"><span class="menu-bar__name">Yêu cầu rút tiền
+                                                    class="menu-bar__text"><span class="menu-bar__name">Yêu cầu rút
+                                                        tiền
                                                     </span></span></a></li>
                                     </ul>
                                 </div>
                             </li>
-
-                            <li><a class='collapsed' href='{{route('admin.contact.index')}}'><span class="menu-bar__text">
-                                <span class="sherah-menu-icon sherah-svg-icon__v1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm3-4a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm9-7a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Zm-2 2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1h3Zm2 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Z"/>
-                                      </svg>
-                                </span>
-                                <span class="menu-bar__name">Liên hệ</span></span></a></span>
-                    </li>
+                            <li><a class='collapsed' href='{{ route('new.index') }}'><span
+                                        class="menu-bar__text">
+                                        <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" class="bi bi-person-lines-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm3-4a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm9-7a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Zm-2 2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1h3Zm2 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="menu-bar__name">Tin tức</span></span></a></span>
+                            </li>
+                            <li><a class='collapsed' href='{{ route('admin.contact.index') }}'><span
+                                        class="menu-bar__text">
+                                        <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" class="bi bi-person-lines-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm3-4a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm9-7a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Zm-2 2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1h3Zm2 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="menu-bar__name">Liên hệ</span></span></a></span>
+                            </li>
 
                         </ul>
                     </div>
@@ -992,20 +1023,23 @@
                                                 <!-- Header Author -->
                                                 <div class="sherah-header__author sherah-flex__center--top">
                                                     <div class="sherah-header__author-img">
-                                                        <img src="{{asset('admin/img/profile-pic.png')}}" alt="#">
+                                                        <img src="{{ asset('admin/img/profile-pic.png') }}"
+                                                            alt="#">
                                                     </div>
                                                     <div
                                                         class="sherah-header__author--info sherah-dflex sherah-dflex__base">
-                                                        <h4 class="sherah-header__author--title sherah-dflex sherah-dflex__column">
-    @if(Auth::guard('user_staff')->check())
-        {{ Auth::guard('user_staff')->user()->name }}
-        <span class="sherah-header__author--text">
-            {{ Auth::guard('user_staff')->user()->role }}
-        </span>
-    @else
-        <span class="sherah-header__author--text">Guest</span> <!-- Hoặc bạn có thể để trống -->
-    @endif
-</h4>
+                                                        <h4
+                                                            class="sherah-header__author--title sherah-dflex sherah-dflex__column">
+                                                            @if (Auth::guard('user_staff')->check())
+                                                                {{ Auth::guard('user_staff')->user()->name }}
+                                                                <span class="sherah-header__author--text">
+                                                                    {{ Auth::guard('user_staff')->user()->role }}
+                                                                </span>
+                                                            @else
+                                                                <span class="sherah-header__author--text">Guest</span>
+                                                                <!-- Hoặc bạn có thể để trống -->
+                                                            @endif
+                                                        </h4>
                                                         <svg class="sherah-default__fill sherah-default__arrow"
                                                             xmlns="http://www.w3.org/2000/svg" width="10.621"
                                                             height="5.836" viewBox="0 0 10.621 5.836">
@@ -1133,25 +1167,32 @@
                                                                 </div>
                                                             </li>
                                                             <li>
-    <form action="{{ route('admin.logout') }}" method="POST">
-        @csrf
-        <div class="sherah-dropdown-card-info">
-            <div class="sherah-dropdown-card__img sherah-color1__bg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5">
-                    <path id="path52" d="M9.27,291.179a.877.877,0,0,0-.867.889V299.1a.876.876,0,1,0,1.752,0v-7.033a.877.877,0,0,0-.885-.889Zm5.105,1.763c-.028,0-.057,0-.085,0A.88.88,0,0,0,13.8,294.5a7,7,0,1,1-9.076.026.882.882,0,0,0,.1-1.239.873.873,0,0,0-1.234-.1,8.815,8.815,0,0,0,5.691,15.495,8.815,8.815,0,0,0,5.652-15.521.873.873,0,0,0-.561-.216Z"
-                        transform="translate(-0.529 -291.179)" fill="#fff" />
-                </svg>
-            </div>
-            <button type="submit"
-                class="sherah-dropdown-card-name flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
+                                                                <form action="{{ route('admin.logout') }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <div class="sherah-dropdown-card-info">
+                                                                        <div
+                                                                            class="sherah-dropdown-card__img sherah-color1__bg">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="17.5" height="17.5"
+                                                                                viewBox="0 0 17.5 17.5">
+                                                                                <path id="path52"
+                                                                                    d="M9.27,291.179a.877.877,0,0,0-.867.889V299.1a.876.876,0,1,0,1.752,0v-7.033a.877.877,0,0,0-.885-.889Zm5.105,1.763c-.028,0-.057,0-.085,0A.88.88,0,0,0,13.8,294.5a7,7,0,1,1-9.076.026.882.882,0,0,0,.1-1.239.873.873,0,0,0-1.234-.1,8.815,8.815,0,0,0,5.691,15.495,8.815,8.815,0,0,0,5.652-15.521.873.873,0,0,0-.561-.216Z"
+                                                                                    transform="translate(-0.529 -291.179)"
+                                                                                    fill="#fff" />
+                                                                            </svg>
+                                                                        </div>
+                                                                        <button type="submit"
+                                                                            class="sherah-dropdown-card-name flex items-center py-2 px-3 text-sm text-red-500 hover:bg-gray-50 hover:text-red-600
                 dark:text-red-500 dark:hover:bg-gray-900/20
                 dark:hover:text-red-500">
-                <span data-lucide="power" class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
-                Logout
-            </button>
-        </div>
-    </form>
-</li>
+                                                                            <span data-lucide="power"
+                                                                                class="w-4 h-4 inline-block text-red-500 dark:text-red-500 me-2"></span>
+                                                                            Logout
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                     <!-- End sherah Balance Hover -->
@@ -1167,4 +1208,3 @@
                 </div>
             </div>
         </header>
-

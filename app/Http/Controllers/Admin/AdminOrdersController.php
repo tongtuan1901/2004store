@@ -16,29 +16,26 @@ use Illuminate\Support\Facades\Storage;
 
         public function index(Request $request)
 {
-    // Khởi tạo query với các quan hệ cần thiết
-    $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
-        ->where('status', '!=', 'Hủy');
+    $query = AdminOrder::with(['user', 'orderItems.product'])
+        ->orderBy('created_at', 'desc');
 
-    // Xử lý tìm kiếm
+    // Tìm kiếm chung
     if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where(function ($q) use ($search) {
-            $q->where('id', 'like', "%$search%")
-                ->orWhere('name', 'like', "%$search%")
-                ->orWhereHas('user', function ($userQuery) use ($search) {
-                    $userQuery->where('name', 'like', "%$search%");
-                })
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%")
-                ->orWhere('address', 'like', "%$search%")
-                ->orWhere('status', 'like', "%$search%");
+        $query->where(function ($q) use ($request) {
+            $q->where('id', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%')
+              ->orWhere('phone', 'like', '%' . $request->search . '%');
         });
+    }
+
+    // Lọc theo mã đơn hàng
+    if ($request->filled('order_code')) {
+        $query->where('order_code', 'like', '%' . $request->order_code . '%');
     }
 
     // Lọc theo trạng thái
     if ($request->filled('status')) {
-        $query->where('status', $request->input('status'));
+        $query->where('status', $request->status);
     }
 
     // Lấy danh sách đơn hàng
@@ -46,14 +43,35 @@ use Illuminate\Support\Facades\Storage;
 
     return view('Admin.orders.index', compact('orders'));
 }
-        
 
-    public function approveIndex()
-    {
-        // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
-        $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
-        return view('Admin.orders.approve_index', compact('orders'));
+
+public function approveIndex(Request $request)
+{
+    // Khởi tạo query để lấy các đơn hàng có trạng thái 'Chờ xử lý'
+    $query = AdminOrder::where('status', 'Chờ xử lý');
+
+    // Tìm kiếm theo mã đơn hàng
+    if ($request->filled('order_code')) {
+        $query->where('order_code', 'like', '%' . $request->order_code . '%');
     }
+
+    // Tìm kiếm theo thông tin khách hàng (email, phone)
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request) {
+            $q->where('id', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%')
+              ->orWhere('phone', 'like', '%' . $request->search . '%');
+        });
+    }
+
+
+   
+    // Lấy danh sách đơn hàng đã lọc
+    $orders = $query->get();
+
+    // Trả về view với dữ liệu đơn hàng
+    return view('Admin.orders.approve_index', compact('orders'));
+}
 
     public function receivedIndex()
     {
@@ -129,21 +147,43 @@ use Illuminate\Support\Facades\Storage;
         $products = AdminProducts::all();
         return view('admin.orders.edit', compact('order', 'products'));
     }
-
+    
     public function update(Request $request, $id)
     {
-        // Fetch the order first
         $order = AdminOrder::findOrFail($id);
 
         if ($order->status === 'Hoàn thành') {
             return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
         }
 
+        $validStatusFlow = [
+            'Chờ xử lý' => 'Đang xử lý',
+            'Đang xử lý' => 'Đang giao hàng',
+            'Đang giao hàng' => 'Hoàn thành',
+        ];
+
         if ($request->has('status')) {
             $validated = $request->validate([
                 'status' => 'required|string|max:50',
             ]);
-            $order->update(['status' => $validated['status']]);
+
+            $newStatus = $validated['status'];
+
+            if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
+                return redirect()->route('admin-orders.index')->with(
+                    'error',
+                    'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' → ', array_keys($validStatusFlow)) . ' → Hoàn thành.'
+                );
+            }
+            if ($newStatus === 'Đang xử lý' && $order->status === 'Chờ xử lý') {
+                $order->forceFill(['processing_time' => now(), 'status' => $newStatus])->save();
+            } elseif ($newStatus === 'Đang giao hàng' && $order->status === 'Đang xử lý') {
+                $order->forceFill(['shipping_time' => now(), 'status' => $newStatus])->save();
+            } elseif ($newStatus === 'Hoàn thành' && $order->status === 'Đang giao hàng') {
+                $order->forceFill(['completed_time' => now(), 'status' => $newStatus])->save();
+            }
+
+            $order->update(['status' => $newStatus]);
             return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
         }
 
@@ -168,10 +208,12 @@ use Illuminate\Support\Facades\Storage;
         session()->put('cart_total', $order->total);
         return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
     }
+
     public function approve($id)
     {
         $order = AdminOrder::findOrFail($id);
         session()->put('cart_total', $order->total);
+        
         return view('admin.orders.approve', compact('order'));
     }
 
@@ -194,7 +236,7 @@ use Illuminate\Support\Facades\Storage;
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
     }
-   
+
     public function restore($id)
     {
         $order = AdminOrder::onlyTrashed()->findOrFail($id);
@@ -223,7 +265,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-   
+
 
     public function listAdrress()
     {
@@ -243,7 +285,7 @@ use Illuminate\Support\Facades\Storage;
         $order = AdminOrder::findOrFail($orderId);
         $order->status = 'Hủy'; // Change status to "Hủy"
         $order->save();
-    
+
         // Redirect lại trang danh sách đơn hàng
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
     }
@@ -257,5 +299,3 @@ public function listDonHangDaHuy()
     return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
 }
 }
-
-

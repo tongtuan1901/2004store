@@ -42,7 +42,7 @@ class AdminHomeController extends Controller
         ->whereMonth('created_at', Carbon::now()->month)
         ->whereYear('created_at', Carbon::now()->year)
         ->sum('total');
-        // dd($currentMonthRevenue);
+        // dd($doanhThu);
         //end
 
         // doanh thu ngay hôm nay

@@ -1,4 +1,3 @@
-
 @extends('Admin.layouts.master')
 @section('contentAdmin')
 <section class="sherah-adashboard sherah-show">
@@ -19,12 +18,27 @@
                         <form action="{{ route('admin-orders.index') }}" method="GET">
                             <div class="row align-items-center">
                                 <!-- Tìm kiếm đơn hàng -->
-                                <div class="col-md-4">
-                                    <input type="text" name="search" class="form-control form-control-sm" placeholder="Tìm kiếm đơn hàng..." value="{{ request('search') }}">
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text" 
+                                        name="search" 
+                                        class="form-control form-control-sm" 
+                                        placeholder="Tìm kiếm đơn hàng..." 
+                                        value="{{ request('search') }}">
+                                </div>
+                        
+                                <!-- Lọc theo mã đơn hàng -->
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text" 
+                                        name="order_code" 
+                                        class="form-control form-control-sm" 
+                                        placeholder="Lọc theo mã đơn hàng..." 
+                                        value="{{ request('order_code') }}">
                                 </div>
                         
                                 <!-- Lọc theo trạng thái -->
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <select name="status" class="form-control form-control-sm">
                                         <option value="">-- Lọc theo trạng thái --</option>
                                         <option value="Chờ xử lý" {{ request('status') == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
@@ -35,7 +49,7 @@
                                 </div>
                         
                                 <!-- Nút tìm kiếm và reset -->
-                                <div class="col-md-4 d-flex">
+                                <div class="col-md-3 d-flex">
                                     <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
                                     <a href="{{ route('admin-orders.index') }}" class="btn btn-secondary btn-sm">Reset</a>
                                 </div>
@@ -54,60 +68,58 @@
                                 <!-- Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Người gửi</th>
+                                        <th>Stt</th>
+                                        <th>Mã đơn</th>
                                         <th>Người nhận</th>
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
                                         <th>Trạng thái</th>
                                         <th>Sản phẩm</th>
-                                        <th>Biến thể</th>
-                                        <th>Số lượng</th>
+                                        <th>Giá trị đơn</th>
+                                        <th>Ngày đặt</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
                                     @foreach ($orders as $order) <!-- Lặp qua từng đơn hàng -->
-                                        @foreach ($order->orderItems as $item)
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="sherah-color1">#{{ $order->id }}</a>
-                                                </td>
-                                                <td>{{ $order->user->name }}</td>
-                                                <td>{{ $order->name }}</td>
-                                                <td>{{ $order->email }}</td>
-                                                <td>{{ $order->phone }}</td>
-                                                <td>{{ $order->address }}</td>
-                                                <td>
-                                                    <div class="sherah-table__status sherah-color4 sherah-color4__bg--opactity">
-                                                        {{ $order->status }}
+                                        <tr>
+                                            <td>
+                                                <a href="#" class="sherah-color1">#{{ $order->id }}</a>
+                                            </td>
+                                            <td>{{$order->order_code}}</td>
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>{{ $order->email }}</td>
+                                            <td>{{ $order->phone }}</td>
+                                            <td>
+                                                <div class="sherah-table__status sherah-color4 sherah-color4__bg--opactity">
+                                                    {{ $order->status }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @foreach ($order->orderItems as $item)
+                                                    <div>
+                                                        {{ $item->product->name ?? 'N/A' }} 
                                                     </div>
-                                                </td>
-                                                <td>{{ $item->product->name ?? 'N/A' }}</td>
-                                                <td>
-                                                    @if ($item->variation)
-                                                        <div>
-                                                            Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
-                                                            Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
-                                                        </div>
-                                                    @else
-                                                        <div>Không có biến thể</div>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                {{ number_format($order->total - $order->discount_value)}} VNĐ
+                                            </td>
+                                            <td>
+                                                {{$order->created_at}}
+                                            </td>
+                                            <td>
+                                                <div class="sherah-table__status__group">
+                                                    <a href="{{ route('admin-orders.show', $order) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
+                                                    @if ($order->status === 'Chờ xử lý')
+                                                        <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>
                                                     @endif
-                                                </td>
-                                                <td>{{ $item->quantity ?? 'N/A' }}</td>
-                                                <td>
-                                                    <div class="sherah-table__status__group">
-                                                        <a href="{{ route('admin-orders.show', $order) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
-                                                        @if ($order->status === 'Chờ xử lý')
-                                                            <a href="{{ route('admin-order.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
+                                
                             </table>
                         </div>
                     </div>

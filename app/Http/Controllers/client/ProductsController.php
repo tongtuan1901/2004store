@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\AdminProducts;
+use App\Models\ProductVariation;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -17,6 +18,17 @@ class ProductsController extends Controller
             ->where('id', '!=', $id)
             ->take(4)
             ->get();
+
+            //lấy giảm
+            // $ggiaSale = $productDetail->transform(function ($product) {
+            //     if ($product->price > 0) {
+            //         $product->discount_percentage = 100 - (($product->price_sale / $product->price) * 100);
+            //     } else {
+            //         $product->discount_percentage = 0;
+            //     }
+            //     return $product;
+            // });
+        
 
         return view('Client.ClientProducts.ClientDetailProduct', compact('productDetail', 'relatedProducts'));
     }
@@ -35,6 +47,4 @@ class ProductsController extends Controller
 
         return redirect()->route('client-products.show', $productId)->with('success', 'Bình luận của bạn đã được gửi.');
     }
-
-
 }

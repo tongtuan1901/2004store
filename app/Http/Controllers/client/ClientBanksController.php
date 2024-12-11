@@ -10,6 +10,7 @@ use App\Models\AdminYeuCauRutTien;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClientBanksController extends Controller
 {
@@ -121,7 +122,6 @@ class ClientBanksController extends Controller
         // Redirect với thông báo
         return redirect()->back()->with('success', 'Yêu cầu rút tiền của bạn đã được gửi thành công.');
     }
-
 
 
     /**

@@ -104,16 +104,18 @@ use App\Http\Controllers\client\ContactController;
 // Route::prefix('admin')->group(function () {
 //     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
 
-
-
-Route::prefix('admin')->group(function () {
+//đăng nhập admin
+Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
     Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
 
 
     // Đăng nhập admin và nhân viên
-    Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
-    Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+    // Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    // Route::post('login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+    // Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 
  // Mã giảm giá
@@ -143,7 +145,7 @@ Route::post('Admin/Banners/delete/{id}', [AdminBannersController::class, 'delete
  // Đặt hàng
  Route::resource('admin-orders', AdminOrdersController::class);
  // Route để hiển thị trang duyệt đơn hàng
-Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
+// Route::get('admin/orders/{id}/approve', [AdminOrdersController::class, 'approve'])->name('admin-orders.approve');
 Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin-orders.approve.index');
 Route::get('/admin/orders/deleted', [AdminOrdersController::class, 'deletedOrders'])->name('admin-orders.deleted');
 Route::put('/admin/orders/restore/{id}', [AdminOrdersController::class, 'restore'])->name('admin-orders.restore');
@@ -288,7 +290,7 @@ Route::post('/transfer-requests/{id}/reject', [AdminTransferController::class, '
 Route::get('/approved-customers', [AdminTransferController::class, 'approvedCustomers'])->name('admin.approved-customers');
 // Yêu cầu rút tiền client
 Route::get('/list-yeu-cau-rut-tien', [AdminYeuCauRutTienController::class, 'listYeuCauRutTien'])->name('admin.listYeuCauRutTien');
-Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+
 //cập nhật yêu cầu rút tiền
 Route::post('/update-is-approved/{id}', [AdminYeuCauRutTienController::class, 'updateIsApproved'])->name('update-IsApproved');
 //lọc các yêu cầu thanh toán
@@ -307,7 +309,25 @@ Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLin
 Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
 Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
 
+// Danh mục
+Route::resource('admin-categories', AdminCategoriesController::class);
+// Mã giảm giá
+Route::resource('admin-coupons', AdminCouponsController::class);
+// Đặt hàng
+Route::resource('admin-orders', AdminOrdersController::class);
 
+Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
+Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
+
+
+Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
+Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
+Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.edit');
+Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
+Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
+Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
+Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
 });
 
 
@@ -325,7 +345,9 @@ Route::delete('/cart/remove/{id}', [CardController::class, 'remove'])->name('car
 // Route cho view client
 Route::resource('client-home', HomeController::class);
 Route::resource('client-user', UsersController::class);
-Route::resource('client-categories', ClientCategories::class);
+// Route::resource('client-categories', ClientCategories::class);
+Route::get('client-categories/{id?}', [ClientCategories::class, 'index'])->name('client-categories.index');
+
 Route::resource('client-login', LoginController::class);
 Route::resource('client-register', RegisterController::class);
 //quên mật khẩu
@@ -370,7 +392,7 @@ Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('cli
 Route::resource('client-banks', ClientBanksController::class);
 //rút tiền khách hàng
 Route::get('client-banks-rut-tỉen', [ClientBanksController::class, 'viewRutTien'])->name('client-banks.viewRutTien');
-
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
@@ -391,15 +413,9 @@ Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('u
 Route::get('/users/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
 
 
-// Danh mục
-Route::resource('admin-categories', AdminCategoriesController::class);
-// Mã giảm giá
-Route::resource('admin-coupons', AdminCouponsController::class);
-// Đặt hàng
-Route::resource('admin-orders', AdminOrdersController::class);
+
 
 // in pdf
-Route::get('/admin/orders/{id}/pdf', [AdminOrdersController::class, 'generatePDF'])->name('admin-orders.generatePDF');
 
 //contact
 Route::get('client/contact',[ContactController::class,'index'])->name('user.contact');
@@ -419,13 +435,7 @@ Route::get('admin/contact',[AdminContactController::class,'index'])->name('admin
 
 
 
-Route::get('/new', [AdminNewsController::class, 'index'])->name('new.index');
-Route::get('/new/create', [AdminNewsController::class, 'create'])->name('new.create');
-Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.edit');
-Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
-Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
-Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
-Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
+
 
 route::post('/filter-by-date', [HomeAdminController::class, 'filter_by_date']);
 Route::post('/filter-by-select', [HomeAdminController::class, 'filter_by_select']);
@@ -434,10 +444,10 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 
-Route::get('admin/user/address',[AdminOrdersController::class,'listAdrress'])->name('admin.address');
-Route::get('admin/address/show/{userId}',[AdminOrdersController::class,'showAddress'])->name('admin.address.show');
+
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('Client/order/huy/{userId}',[ClientOrderControler::class,'listHuy'])->name('client.listHuy');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận
@@ -587,3 +597,8 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 // Route::resource('admin-categories', AdminCategoriesController::class);
 // // thuonghw hiệu
 
+//thay đổi số lượng
+Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->name('cart.update');
+
+
+Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin.orders.approve.index');

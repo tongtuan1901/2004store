@@ -14,7 +14,7 @@
                                     <!-- Sherah Breadcrumb -->
                                     <div class="sherah-breadcrumb">
                                         <h2 class="sherah-breadcrumb__title">Chi tiết đơn hàng</h2>
-                                        
+
                                     </div>
                                     <!-- End Sherah Breadcrumb -->
                                 </div>
@@ -22,9 +22,9 @@
                             <div class="sherah-page-inner sherah-border sherah-default-bg mg-top-25">
                                 <div class="sherah-table__head sherah-table__main">
 
-                                    <h4 class="sherah-order-title">Items from Order #{{ $order->id }}</h4>
+                                    <h4 class="sherah-order-title">Mã đơn #{{ $order->order_code }}</h4>
                                     <div class="sherah-order-right">
-                                        <p class="sherah-order-text">{{ $order->created_at->format('F j, Y') }} vào {{ $order->created_at->format('h:i A') }} / {{ $order->products->count() }} Sản phẩm / Tổng cộng {{ number_format($order->total) }} VNĐ
+                                        <p class="sherah-order-text">{{ $order->created_at}} / {{ $order->products->count() }} Sản phẩm / Phương thức thanh toán:    {{ $order->payment_method }}
                                         </p>
                                         <div class="sherah-table-status">
                                             <div class="sherah-table__status sherah-color2 sherah-color2__bg--opacity">{{ $order->payment_status }}</div>
@@ -46,11 +46,9 @@
                                                     <th class="sherah-table__column-2 sherah-table__h2">Tên Sản Phẩm</th>
                                                     <th class="sherah-table__column-1 sherah-table__h1">Hình Ảnh</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Biến thể</th>
-                                                    <th class="sherah-table__column-3 sherah-table__h4">Danh mục</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Thương hiệu</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Giá</th>
                                                     <th class="sherah-table__column-4 sherah-table__h5">Số Lượng</th>
-                                                    <th class="sherah-table__column-3 sherah-table__h4">Phương thức thanh toán</th>
                                                     <th class="sherah-table__column-4 sherah-table__h5">Ngày đặt</th>
                                                 </tr>
                                             </thead>
@@ -86,18 +84,13 @@
                                                             <div class="sherah-table__product-name">
                                                                 @if ($item->variation)
                                                                 <div>
-                                                                    Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
+                                                                    Kích thước: {{ $item->variation->size->size ?? 'N/A' }},
                                                                     Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
                                                                 </div>
                                                                 @else
                                                                     <div>Không có biến thể</div>
                                                                 @endif
-                                                                    <hr> 
-                                                            </div>
-                                                        </td>
-                                                        <td class="sherah-table__column-3 sherah-table__data-3">
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $item->product->category->name }}</p>
+                                                                    <hr>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
@@ -107,17 +100,12 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ number_format($item->price) }} - {{ number_format($order->discount_value) }} VNĐ</p>
+                                                                <p class="sherah-table__product-desc">{{ number_format($item->price) }} VNĐ</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
                                                             <div class="sherah-table__product-content">
                                                                 <p class="sherah-table__product-desc">{{ $item->quantity }}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="sherah-table__column-4 sherah-table__data-4">
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $order->payment_method }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
@@ -133,17 +121,21 @@
                                             <!-- Hiển thị thông tin tổng giá trị đơn hàng -->
                                             <ul class="order-totals__list">
                                                 <li class="order-totals__list--sub">
-                                                    <span>Tổng cộng:</span> 
-                                                    <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
+                                                    <span>Tổng cộng:</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total)}} VNĐ</span>
                                                 </li>
 
                                                 <!-- Hiển thị giá trị giảm giá nếu có -->
-                                                @if ($order->discount_value > 0)   
+                                                @if ($order->discount_value > 0)
                                                     <li class="order-totals__list--sub">
-                                                        <span>Mã giảm giá:</span> 
-                                                        <span class="order-totals__amount">{{ $order->discount_code }}</span>
+                                                        <span>Mã giảm giá({{ $order->discount_code }}):</span>
+                                                        <span class="order-totals__amount">- {{ number_format($order->discount_value)}} VNĐ</span>
                                                     </li>
                                                 @endif
+                                                <li class="order-totals__list--sub">
+                                                    <span>Thành tiền:</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
+                                                </li>
                                             </ul>
                                         </div>
                                         <form action="{{ route('admin-ordersdangvanchuyen.update', $order->id) }}" method="POST" class="mb-3">
@@ -195,7 +187,7 @@
                                     </div>
                                 </div>
 
-                            
+
                                 <div class="col-lg-5 col-md-5 col-12">
                                     <div class="sherah-contact-card sherah-default-bg sherah-border mg-top-30">
                                         <h4 class="sherah-contact-card__title">Địa chỉ giao hàng</h4>
@@ -214,7 +206,7 @@
                                         </div>
                                         <!-- End Dashboard Inner -->
                                     </div>
-                                    
+
                                 </div>
 
 

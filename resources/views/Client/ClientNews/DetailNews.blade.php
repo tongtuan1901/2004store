@@ -129,7 +129,7 @@
                     <h1>{{ $news->title }}</h1>
 
                     <div class="main-article-wrap-author">
-                        Tác giả: 2004store - đăng vào 17:53 ngày 01.07.2024
+                        Tác giả: 2004store - đăng vào {{ $news->created_at }}
                     </div>
                     <div class="main-article-menu">
                         <label>Mục lục bài viết
@@ -150,7 +150,7 @@
                         <div class="main-article-menu-data"></div>
                     </div>
                     <div class="main-article-content" data-size="16" style="--share_font: 16px">
-                        <h2>Xu Hướng Thời Trang Mùa Thu 2024</h2>
+                        <h2>Xu Hướng Thời Trang Mùa Đông 2024</h2>
                         <div class="main-article-wrap-avatar">
                             <img loading="lazy" decoding="async" width="600" height="400"
                                 src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}"

@@ -1,57 +1,33 @@
-<footer class="footers2" style="background-image: url({{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/footers2_backgroundb1ed.jpg')}})">
+<footer class="footers2" style="background-image: url({{asset('admin/img/2004Store2.png')}})">
 
-    <section class="section_index--newletter">
-        <div class="container">
-            <div class="section_index--newletter-wrap">
-                <div class="section_index--newletter-wrap-left">
-                    <h2> Nhận ưu đãi và coupon mới nhất!</h2>
-                    <p>Chúng tôi cam kết bảo mật không lộ thông tin của bạn.</p>
-                    <form id="mc-form10" action="">
-                        <input aria-label="Địa chỉ Email" type="email" placeholder="Nhập địa chỉ email của bạn" name="EMAIL" required autocomplete="off">
-                        <button type="submit" aria-label="Đăng ký nhận tin" name="subscribe">Đăng ký</button>
-                    </form>
-                    <p>Nhận ngay coupon giảm <b>15%</b> khi đăng ký ngay</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
         <div class="container">
             <div class="footers2-wrap">
                 <div class="footers2-top">
                     <div class="footers2-top-item footers2-top-one">
                         <a href="index.html" title="F1GENZ Model Fashion" aria-label="F1GENZ Model Fashion">
-                            <img title="F1GENZ Model Fashion" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/footers2_one_logob1ed.png')}}" alt="F1GENZ Model Fashion">
+                            <img title="" loading="lazy" src="{{asset('admin/img/2004Store.png')}}">
                         </a>
-                        <p>F1GENZ luôn cam kết, đảm bảo bàn giao sản phẩm đạt chất lượng tối ưu nhất đến tay người dùng.
+                        <p>2004Store luôn cam kết, đảm bảo bàn giao sản phẩm đạt chất lượng tối ưu nhất đến tay người dùng.
     <br/>
-    Mã số thuế: 01234567891 do Sở Kế hoạch và Đầu tư
-    Tp Hà Nội cấp ngày 13/02/2024</p>
                         <p class="footers2-top-info">
                             <a role="button">
                                 <img src="{{asset('assets/bizweb.dktcdn.net/100/513/520/themes/945688/assets/location1c9c.png')}}" loading="lazy" decoding="async" alt="F1GENZ Model Fashion">
-                                266 Đội Cấn, P. Liễu Giai, Q. Ba Đình, TP Hà Nội
+                                Cao đẳng FPT Polytechnic TP Hà Nội
                             </a>
                         </p>
                         <p class="footers2-top-info">
                             <a href="mailto:support@sapo.vn">
                                 <img src="{{asset('assets/bizweb.dktcdn.net/100/513/520/themes/945688/assets/mail1c9c.png')}}" loading="lazy" decoding="async" alt="F1GENZ Model Fashion">
-                                support@sapo.vn
-                            </a>
-                        </p>
-                        <p class="footers2-top-info">
-                            <a href="tel:19006750">
-                                <img src="{{asset('assets/bizweb.dktcdn.net/100/513/520/themes/945688/assets/phone1c9c.png')}}'" loading="lazy" decoding="async" alt="F1GENZ Model Fashion">
-                                1900 6750
+                                @fpt.edu.vn
                             </a>
                         </p>
                     </div>
                     <div class="footers2-top-item footers2-top-two">
                         <h4>Liên hệ <i class="fa fa-chevron-down"></i></h4>
                         <div class="footers2-top-item-content">
-                            <p>Tư vấn dịch vụ: <a aria-label="Liên hệ" title="Liên hệ" href="tel:18006750">1800 6750</a> <br />
-    Hỗ trợ sử dụng: <a aria-label="Liên hệ" title="Liên hệ" href="tel:19006750">1900 6750</a> <br />
-    Hỗ trợ vận chuyển: <a aria-label="Liên hệ" title="Liên hệ" href="tel:19006719">1900 6719</a> <br />
-    Email: <a aria-label="Liên hệ" title="Liên hệ" href="mailto:support@sapo.vn">support@sapo.vn</a> <br />
+                            <p>Tư vấn dịch vụ: <a aria-label="Liên hệ" title="Liên hệ" href="tel:18006750">1900 2004</a> <br />
+    Email: <a aria-label="Liên hệ" title="Liên hệ" href="mailto:support@sapo.vn">@fpt.edu.vn</a> <br />
     Từ 7h00 – 22h00 các ngày từ thứ 2 đến Chủ nhật</p>
                         </div>
                     </div>
@@ -71,11 +47,11 @@
                         <h4>Danh mục <i class="fa fa-chevron-down"></i></h4>
                         <div class="footers2-top-item-content">
                             <ul>
-                                <li><a href="cocktail-dresses.html" aria-label="Cocktail Dresses" title="Cocktail Dresses">Cocktail Dresses</a></li>
-                                <li><a href="casual-shirts.html" aria-label="Casual Shirts" title="Casual Shirts">Casual Shirts</a></li>
-                                <li><a href="formal-pants.html" aria-label="Formal Pants" title="Formal Pants">Formal Pants</a></li>
-                                <li><a href="casual-jumpsuits.html" aria-label="Casual Jumpsuits" title="Casual Jumpsuits">Casual Jumpsuits</a></li>
-                                <li><a href="knitted-sweaters.html" aria-label="Knitted Sweaters" title="Knitted Sweaters">Knitted Sweaters</a></li>
+                                <li><a href="cocktail-dresses.html" aria-label="Cocktail Dresses" title="Cocktail Dresses">Quần</a></li>
+                                <li><a href="casual-shirts.html" aria-label="Casual Shirts" title="Casual Shirts">Áo</a></li>
+                                <li><a href="formal-pants.html" aria-label="Formal Pants" title="Formal Pants">Quần đài</a></li>
+                                <li><a href="casual-jumpsuits.html" aria-label="Casual Jumpsuits" title="Casual Jumpsuits">Áo dài</a></li>
+                                <li><a href="knitted-sweaters.html" aria-label="Knitted Sweaters" title="Knitted Sweaters">Áo khoác</a></li>
                             </ul>
                         </div>
                     </div>
@@ -123,19 +99,18 @@
                 </div>
                 <div class="footers2-bot">
                     <p class="text-copyright">© 2024 - Bản quyền thuộc về 
-                        <a target="_blank" aria-label="F1GENZ TECHNOLOGY CO., LTD." title="F1GENZ TECHNOLOGY CO., LTD." href=""><strong>F1GENZ TECHNOLOGY CO., LTD.</strong></a> 
-    <a target="_blank" href="" rel="nofollow">Cung cấp bởi <strong>Sapo</strong></a>				</p>
+                        <a target="_blank" aria-label="F1GENZ TECHNOLOGY CO., LTD." title="F1GENZ TECHNOLOGY CO., LTD." href=""><strong>2004Store</strong></a>				</p>
     <ul class="shop-payment"> 
         <li class="shop-payment-item">
             <a href="index.html" aria-label="/ - Payment" title="Visa - Payment">
                 <img width="76" height="48" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/shop_payment_item_image_1b1ed.png')}}" alt="Visa - Payment">
             </a>
         </li>
-        <li class="shop-payment-item">
+        {{-- <li class="shop-payment-item">
             <a href="index.html" aria-label="/ - Payment" title="Master - Payment">
                 <img width="76" height="48" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/shop_payment_item_image_2b1ed.png')}}1724041824574" alt="Master - Payment">
             </a>
-        </li>
+        </li> --}}
         <li class="shop-payment-item">
             <a href="index.html" aria-label="/ - Payment" title="Paypal - Payment">
                 <img width="76" height="48" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/shop_payment_item_image_3b1ed.png')}}" alt="Paypal - Payment">
@@ -192,35 +167,7 @@
             </ul>
         </div>
     </div>
-    <div class="modal" tabindex="-1" role="dialog" id="shop-modal-contact">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="modal-contact">
-                    <div class="modal-contact-wrap">
-                        <div class="modal-contact-wrap-right">
-                            <div class="modal-contact-wrap-right-content">
-                                <div class="section-title-all">
-                                    <span>Đăng ký nhận tin</span>
-                                    <p>Để lại thông tin, để nhận ngay khuyến mãi từ chúng tôi nhé!</p>
-                                </div>
-                                <form id="mc-form2" action="">
-                                    <input title="Địa chỉ Email" type="email" placeholder="Nhập email ưu đãi" name="EMAIL" required autocomplete="off" >
-                                    <button type="submit" title="Đăng ký nhận tin" name="subscribe">Đăng ký</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-contact-wrap-left">
-                            <img width="480" height="480" loading="lazy" src="{{asset('assets/bizweb.dktcdn.net/thumb/large/100/520/624/themes/959507/assets/shop_modal_contact_imageb1ed.jpg')}}" alt=" - Contact">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <div class="modal-phone" id="shop-modal-phone">
         <div class="modal-phone-wrap">
             <div class="section-title-all">
