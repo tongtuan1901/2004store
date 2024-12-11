@@ -395,7 +395,7 @@ Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('cli
 Route::resource('client-banks', ClientBanksController::class);
 //rút tiền khách hàng
 Route::get('client-banks-rut-tỉen', [ClientBanksController::class, 'viewRutTien'])->name('client-banks.viewRutTien');
-
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
 
 Route::resource('client-news',  NewsController::class);
 Route::resource('client-card',  CardController::class);
@@ -450,6 +450,7 @@ Route::resource('admin-home', HomeAdminController::class);
 
 
 Route::get('Client/order/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
+Route::get('Client/order/huy/{userId}',[ClientOrderControler::class,'listHuy'])->name('client.listHuy');
 Route::put('/orders/{id}/cancel', [ClientOrderControler::class, 'cancel'])->name('orders.cancel');
 Route::get('/client/orders/{userId}/{orderId}', [ClientOrderControler::class, 'show'])->name('client.orders.show');
 //bình luận

@@ -74,7 +74,8 @@
                                             <div class="sherah-table__product-content">
                                                 <div
                                                     class="sherah-table__status sherah-color2 sherah-color2__bg--opactity">
-                                                    {{$discount->value}}</div>
+                                                    {{$discount->value}}
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="sherah-table__column-5 sherah-table__data-5">

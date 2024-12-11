@@ -24,11 +24,14 @@
                                     <thead class="sherah-table__head">
                                         <tr>
                                             <th class="sherah-table__column-1">ID</th>
+                                            <th class="sherah-table__column-1">Mã đơn</th>
                                             <th class="sherah-table__column-2">Tên khách hàng</th>
                                             <th class="sherah-table__column-3">Email</th>
+                                            <th class="sherah-table__column-3">Số điện thoại</th>
                                             <th class="sherah-table__column-5">Trang thái đơn hàng</th>
                                             <th class="sherah-table__column-4">Sản phẩm</th>
-                                            <th class="sherah-table__column-4">Biến thể</th>
+                                            <th class="sherah-table__column-4">Giá trị đơn</th>
+                                            <th class="sherah-table__column-4">Ngày đặt</th>
                                             <th class="sherah-table__column-5">thao thác</th>
                                         </tr>
                                     </thead>
@@ -38,8 +41,10 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td class="sherah-table__column-1">{{ $order->id }}</td>
+                                                <td class="sherah-table__column-1">{{ $order->order_code }}</td>
                                                 <td class="sherah-table__column-2">{{ $order->name }}</td>
                                                 <td class="sherah-table__column-3">{{ $order->email }}</td>
+                                                <td class="sherah-table__column-3">{{ $order->phone_number }}</td>
                                                 <td class="sherah-table__column-4">
                                                     <div
                                                         class="sherah-table__status sherah-color4 sherah-color4__bg--opactity">
@@ -55,43 +60,21 @@
                                                         <hr>
                                                     @endforeach
                                                 </td>
-
-                                                <!-- Cột Biến thể -->
-                                                <td class="sherah-table__column-5">
-                                                    @foreach ($order->orderItems as $item)
-                                                        @if ($item->variation)
-                                                            <div>
-                                                                Kích thước: {{ $item->variation->size->size ?? 'N/A' }},
-                                                                Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
-                                                            </div>
-                                                        @else
-                                                            <div>Không có biến thể</div>
-                                                        @endif
-                                                        <hr> <!-- Để phân tách các sản phẩm -->
-                                                    @endforeach
+                                                <td>
+                                                    {{ number_format($order->total - $order->discount_value)}} VNĐ
                                                 </td>
-
+                                                <td>
+                                                    {{$order->created_at}}
+                                                </td>
                                                 <td class="sherah-table__column-6">
                                                     <div class="sherah-table__status__group">
                                                         <a href="{{ route('admin-orders.approve', $order->id) }}"
-                                                            class="sherah-table__action sherah-color2 sherah-color3__bg--opactity"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon-check">
-                                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                                            </svg>
+                                                            class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">
+                                                            Duyệt
                                                         </a>
                                                         <a href="{{ route('admin-orders.show', $order->id) }}"
                                                             class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
-                                                            <svg class="sherah-color2__fill"
-                                                                xmlns="http://www.w3.org/2000/svg" width="18"
-                                                                height="18" viewBox="0 0 24 24">
-                                                                <path
-                                                                    d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0-2C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-.5 17h-1v-1h1v1zm1-12h-2v6h2V5z"
-                                                                    fill="#09ad95" />
-                                                            </svg>
+                                                            Chi tiết
                                                         </a>
                                                         <form action="{{ route('admin-orders.destroy', $order->id) }}"
                                                             method="post" style="display:inline-block;">

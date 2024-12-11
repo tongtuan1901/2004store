@@ -22,9 +22,9 @@
                             <div class="sherah-page-inner sherah-border sherah-default-bg mg-top-25">
                                 <div class="sherah-table__head sherah-table__main">
 
-                                    <h4 class="sherah-order-title">Items from Order #{{ $order->id }}</h4>
+                                    <h4 class="sherah-order-title">Mã đơn #{{ $order->order_code }}</h4>
                                     <div class="sherah-order-right">
-                                        <p class="sherah-order-text">{{ $order->created_at->format('F j, Y') }} vào {{ $order->created_at->format('h:i A') }} / {{ $order->products->count() }} Sản phẩm / Tổng cộng {{ number_format($order->total) }} VNĐ
+                                        <p class="sherah-order-text">{{ $order->created_at}} / {{ $order->products->count() }} Sản phẩm / Phương thức thanh toán:    {{ $order->payment_method }}
                                         </p>
                                         <div class="sherah-table-status">
                                             <div class="sherah-table__status sherah-color2 sherah-color2__bg--opacity">{{ $order->payment_status }}</div>
@@ -46,11 +46,9 @@
                                                     <th class="sherah-table__column-2 sherah-table__h2">Tên Sản Phẩm</th>
                                                     <th class="sherah-table__column-1 sherah-table__h1">Hình Ảnh</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Biến thể</th>
-                                                    <th class="sherah-table__column-3 sherah-table__h4">Danh mục</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Thương hiệu</th>
                                                     <th class="sherah-table__column-3 sherah-table__h4">Giá</th>
                                                     <th class="sherah-table__column-4 sherah-table__h5">Số Lượng</th>
-                                                    <th class="sherah-table__column-3 sherah-table__h4">Phương thức thanh toán</th>
                                                     <th class="sherah-table__column-4 sherah-table__h5">Ngày đặt</th>
                                                 </tr>
                                             </thead>
@@ -97,11 +95,6 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $item->product->category->name }}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="sherah-table__column-3 sherah-table__data-3">
-                                                            <div class="sherah-table__product-content">
                                                                 <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
                                                             </div>
                                                         </td>
@@ -113,11 +106,6 @@
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
                                                             <div class="sherah-table__product-content">
                                                                 <p class="sherah-table__product-desc">{{ $item->quantity }}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="sherah-table__column-4 sherah-table__data-4">
-                                                            <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $order->payment_method }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">

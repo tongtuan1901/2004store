@@ -460,79 +460,75 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             display: left;
                         }
                     </style>
-                    <div class="product-item-actions">
+           <div class="product-item-actions">
+            @if ($product->variations->isNotEmpty())
+                <label for="modal-toggle-best-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">
+                    Thêm vào giỏ
+                </label>
+                <input type="checkbox" id="modal-toggle-best-{{ $product->id }}" class="modal-toggle" />
 
-                        <!-- Modal for Adding to Cart -->
-                        <label for="modal-toggle-{{ $product->id }}" class="shop-addLoop-button"
-                            title="Thêm vào giỏ">Thêm vào giỏ</label>
-                        <input type="checkbox" id="modal-toggle-{{ $product->id }}"
-                            class="modal-toggle" />
+                <div class="modal">
+                    <div class="modal-content">
+                        <label for="modal-toggle-best-{{ $product->id }}" class="close">&times;</label>
+                        <h2>Chọn biến thể và số lượng</h2>
 
-                        <!-- Cửa sổ Modal -->
-                        <div class="modal">
-                            <div class="modal-content">
-                                <label for="modal-toggle-{{ $product->id }}"
-                                    class="close">&times;</label>
-                                <h2>Chọn biến thể và số lượng</h2>
+                        @if (auth()->check())
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                                @if (auth()->check())
-                                    <form id="productForm-{{ $product->id }}"
-                                        action="{{ route('cart.add') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id"
-                                            value="{{ $product->id }}">
-                                        <input type="hidden" name="name"
-                                            value="{{ $product->name }}">
-                                        <input type="hidden" name="price"
-                                            value="{{ $product->price_sale }}">
-                                        <input type="hidden" name="image"
-                                            value="{{ Storage::url($product->images->first()->image_path ?? 'default/path/to/image.jpg') }}">
+                                <div class="form-group">
+                                    <label for="size-best-{{ $product->id }}">Kích thước:</label>
+                                    <select id="size-best-{{ $product->id }}" name="size" class="form-control" required>
+                                        <option value="">Chọn kích thước</option>
+                                        @php
+                                            $uniqueSizes = [];
+                                            foreach ($product->variations as $variation) {
+                                                if (!in_array($variation->size->id, $uniqueSizes)) {
+                                                    $uniqueSizes[] = $variation->size->id;
+                                                    echo '<option value="' . $variation->size->id . '">' . $variation->size->size . '</option>';
+                                                }
+                                            }
+                                        @endphp
+                                    </select>
+                                </div>
 
-                                        <div class="form-group">
-                                            <label for="size-{{ $product->id }}">Kích thước:</label>
-                                            <select id="size-{{ $product->id }}" name="size"
-                                                class="form-control">
-                                                @foreach ($product->variations as $variation)
-                                                    <option value="{{ $variation->size_id }}">
-                                                        {{ $variation->size->size }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="color-best-{{ $product->id }}">Màu sắc:</label>
+                                    <select id="color-best-{{ $product->id }}" name="color" class="form-control" required>
+                                        <option value="">Chọn màu sắc</option>
+                                        @php
+                                            $uniqueColors = [];
+                                            foreach ($product->variations as $variation) {
+                                                if (!in_array($variation->color->id, $uniqueColors)) {
+                                                    $uniqueColors[] = $variation->color->id;
+                                                    echo '<option value="' . $variation->color->id . '">' . $variation->color->color . '</option>';
+                                                }
+                                            }
+                                        @endphp
+                                    </select>
+                                </div>
 
-                                        <div class="form-group">
-                                            <label for="color-{{ $product->id }}">Màu:</label>
-                                            <select id="color-{{ $product->id }}" name="color"
-                                                class="form-control">
-                                                @foreach ($product->variations as $variation)
-                                                    <option value="{{ $variation->color_id }}">
-                                                        {{ $variation->color->color }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
+                                    <input type="number" id="quantity-best-{{ $product->id }}" name="quantity" min="1" value="1" class="form-control" required>
+                                </div>
 
-                                        <div class="form-group">
-                                            <label for="quantity-{{ $product->id }}">Số lượng:</label>
-                                            <input type="number" id="quantity-{{ $product->id }}"
-                                                name="quantity" min="1" value="1"
-                                                class="form-control">
-                                        </div>
-                                        <br>
-                                        <button type="submit" class="ft1">Thêm vào
-                                            giỏ</button>
-                                    </form>
-                                @else
-                                    <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
-                                    <a href="{{ route('client-login.index') }}"
-                                        class="btn btn-secondary">Đăng nhập</a>
-                                @endif
-                            </div>
-                        </div>
-
-                        <button class="ft4" style="background-color: #4CAF50 ; color: white"> <a
-                            href="{{ route('client-products.show', $product->id) }}">Xem
-                            chi tiết</a></button>
+                                <button type="submit" class="ft1">Thêm vào giỏ</button>
+                            </form>
+                        @else
+                            <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
+                        @endif
                     </div>
+                </div>
+            @else
+                <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
+            @endif
 
+            <button class="ft4" style="background-color: #4CAF50 ; color: white">
+                <a href="{{ route('client-products.show', $product->id) }}">Xem chi tiết</a>
+            </button>
+        </div>
 
                 </div>
                 <div class="product-item-details">

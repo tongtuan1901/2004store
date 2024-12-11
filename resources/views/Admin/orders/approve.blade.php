@@ -24,15 +24,19 @@
                             <h4>Thông Tin Đơn Hàng</h4>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <strong>ID Đơn Hàng:</strong> <span>{{ $order->id }}</span>
+                                    <strong>Mã đơn Hàng:</strong> <span>{{ $order->order_code }}</span>
                                 </div>
                                 <div class="col-md-6">
                                  
                                         <strong>Tên người gửi:</strong> <span>{{ $order->user->name }}</span>
                                     
                                 </div>
+                                
                             </div>
                             <div class="row mb-3">
+                            <div class="col-md-6">
+                                    <strong>Địa chỉ:</strong> <span>{{ $order->address }}</span>
+                                </div>
                                 <div class="col-md-6">
                                     <strong>Email:</strong> <span>{{ $order->email }}</span>
                                 </div>

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
+
 
 class AdminOrder extends Model
 {
@@ -83,5 +85,18 @@ class AdminOrder extends Model
         if ($this->status == 'Hoàn thành' && !$this->completed_time) {
             $this->completed_time = now();
         }
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            $order->order_code = self::generateOrderCode();
+        });
+    }
+
+    public static function generateOrderCode(): string
+    {
+        return strtoupper(Str::random(10)); // Tạo chuỗi 10 ký tự ngẫu nhiên (A-Z, 0-9)
     }
 }

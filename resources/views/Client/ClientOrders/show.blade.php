@@ -20,11 +20,17 @@
                     <div class="col-md-3">
                         <div class="border rounded p-3 h-100">
                             <h3 class="text-success mb-3"><i class="fa fa-truck"></i>Địa chỉ nhận hàng</h3>
-                        <p><i class="fa fa-user text-success"></i> <strong>Tên:</strong> 
+                        <p><i class="fa fa-user text-success"></i> <strong>Tài khoản:</strong> 
+                            <span class="text-muted">{{ $order->user->name ?? 'Không có' }}</span>
+                        </p>
+                        <p><i class="fa fa-user text-success"></i> <strong>Người đặt:</strong> 
                             <span class="text-muted">{{ $order->name ?? 'Không có' }}</span>
                         </p>
                         <p><i class="fa fa-phone text-primary"></i> <strong>Số điện thoại:</strong> 
                             <span class="text-muted">{{ $order->phone_number ?? 'Không có' }}</span>
+                        </p>
+                        <p><i class="fa fa-envelope text-dark"></i> <strong>Email:</strong> 
+                            <span class="text-muted">{{ $order->email ?? 'Không có' }}</span>
                         </p>
                         <p><i class="fa fa-map-marker-alt text-danger"></i> <strong>Địa chỉ giao hàng:</strong> 
                             <span class="text-muted">{{ $order->address ?? 'Không có' }}</span>
@@ -39,8 +45,15 @@
                             <div class="d-flex flex-wrap justify-content-between">
                                 <div class="status-item text-center">
                                     <i class="fa fa-clock text-warning fa-2x"></i>
+                                    @if ($order->status == 'Hủy')
+                                    <p class="mt-2"><strong>Đơn hàng đã hủy</strong></p>
+                                    <p class="text-muted">{{ $order->updated_at ?? 'Chưa cập nhật' }}</p>
+                                    @else
                                     <p class="mt-2"><strong>Chờ xử lý</strong></p>
                                     <p class="text-muted">{{ $order->created_at ?? 'Chưa cập nhật' }}</p>
+                                    @endif
+                                    
+                                    
                                 </div>
                                 <div class="status-item text-center">
                                     <i class="fa fa-cogs text-info fa-2x"></i>
@@ -74,6 +87,8 @@
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
+                                <th>STT</th>
+                                <th>Mã đơn hàng</th>
                                 <th>Sản phẩm</th>
                                 <th>Hình ảnh</th>
                                 <th>Biến thể</th>
@@ -87,6 +102,8 @@
                         <tbody>
                             @foreach($order->orderItems as $item)
                                 <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$order->order_code}}</td>
                                     <td>{{ $item->product->name }}</td>
                                     <td>
                                         @if ($item->variation && $item->variation->image)
