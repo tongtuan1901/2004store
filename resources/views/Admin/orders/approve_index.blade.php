@@ -84,11 +84,30 @@
                                                 </td>
 
                                                 <!-- Cột Sản phẩm -->
-                                                <td class="sherah-table__column-4">
+                                                <td>
                                                     @foreach ($order->orderItems as $item)
-                                                        {{ $item->product->name }}
-                                                        <br>
-                                                        <hr>
+                                                        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                                            {{-- Hiển thị hình ảnh sản phẩm --}}
+                                                            @if ($item->variation)
+                                                                @if ($item->variation->image)
+                                                                    <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
+                                                                         alt="Variation Image" 
+                                                                         class="img-fluid rounded mb-1" 
+                                                                         style="max-width: 100px; height: auto; display: block; margin-top: 5px;">
+                                                                @else
+                                                                    <p class="text-muted">Không có hình ảnh</p>
+                                                                @endif
+                                                            @else
+                                                                <p class="text-muted">Không có thông tin biến thể</p>
+                                                            @endif
+                                                            {{-- Hiển thị tên sản phẩm --}}
+                                                            <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                            <br>
+                                                            <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
+                                                            <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
+                                                            <br>
+                                                            <small>Số lượng: {{ $item->quantity ?? 1 }}</small>
+                                                        </div>
                                                     @endforeach
                                                 </td>
                                                 <td>
