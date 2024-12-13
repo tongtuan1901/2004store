@@ -40,7 +40,7 @@
                                                         
                                                     </td>
                                                     <td>{{ $order->cancellation_reason }}</td>
-                                                    <td>{{ $user->name ?? 'Không có thông tin người dùng' }}</td>
+                                                    <td>{{ $order->user->name ?? 'Người gửi không tồn tại' }}</td>
                                                     <td>
                                                     @foreach ($order->orderItems as $item)
     <p>{{ $item->product ? $item->product->name : 'Product Name Not Available' }}</p>

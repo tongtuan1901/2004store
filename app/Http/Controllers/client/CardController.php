@@ -4,15 +4,20 @@ namespace App\Http\Controllers\client;
 
 use App\Models\Cart;
 use App\Models\Size;
+use App\Models\User;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Models\AdminProducts;
+use App\Services\CartService;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
+
+    
+
+  
     public function add(Request $request)
     {
         $action = $request->input('action');
@@ -68,7 +73,8 @@ class CardController extends Controller
                 ]);
             }
 
-            return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+            // Thay đổi ở đây: Trả về trang trước đó với thông báo thành công
+            return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
         }
     }
 

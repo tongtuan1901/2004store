@@ -16,29 +16,26 @@ use Illuminate\Support\Facades\Storage;
 
         public function index(Request $request)
 {
-    // Khởi tạo query với các quan hệ cần thiết
-    $query = AdminOrder::with(['user', 'orderItems.variation.size', 'orderItems.variation.color'])
-        ->where('status', '!=', 'Hủy')->orderBy('created_at', 'desc');
+    $query = AdminOrder::with(['user', 'orderItems.product'])
+        ->orderBy('created_at', 'desc');
 
-    // Xử lý tìm kiếm
+    // Tìm kiếm chung
     if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where(function ($q) use ($search) {
-            $q->where('id', 'like', "%$search%")
-                ->orWhere('name', 'like', "%$search%")
-                ->orWhereHas('user', function ($userQuery) use ($search) {
-                    $userQuery->where('name', 'like', "%$search%");
-                })
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%")
-                ->orWhere('address', 'like', "%$search%")
-                ->orWhere('status', 'like', "%$search%");
+        $query->where(function ($q) use ($request) {
+            $q->where('id', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%')
+              ->orWhere('phone', 'like', '%' . $request->search . '%');
         });
+    }
+
+    // Lọc theo mã đơn hàng
+    if ($request->filled('order_code')) {
+        $query->where('order_code', 'like', '%' . $request->order_code . '%');
     }
 
     // Lọc theo trạng thái
     if ($request->filled('status')) {
-        $query->where('status', $request->input('status'));
+        $query->where('status', $request->status);
     }
 
     // Lấy danh sách đơn hàng
@@ -48,12 +45,33 @@ use Illuminate\Support\Facades\Storage;
 }
 
 
-    public function approveIndex()
-    {
-        // Lấy danh sách các đơn hàng có trạng thái 'Chờ xử lý'
-        $orders = AdminOrder::where('status', 'Chờ xử lý')->get();
-        return view('Admin.orders.approve_index', compact('orders'));
+public function approveIndex(Request $request)
+{
+    // Khởi tạo query để lấy các đơn hàng có trạng thái 'Chờ xử lý'
+    $query = AdminOrder::where('status', 'Chờ xử lý');
+
+    // Tìm kiếm theo mã đơn hàng
+    if ($request->filled('order_code')) {
+        $query->where('order_code', 'like', '%' . $request->order_code . '%');
     }
+
+    // Tìm kiếm theo thông tin khách hàng (email, phone)
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request) {
+            $q->where('id', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%')
+              ->orWhere('phone', 'like', '%' . $request->search . '%');
+        });
+    }
+
+
+   
+    // Lấy danh sách đơn hàng đã lọc
+    $orders = $query->get();
+
+    // Trả về view với dữ liệu đơn hàng
+    return view('Admin.orders.approve_index', compact('orders'));
+}
 
     public function receivedIndex()
     {
@@ -195,6 +213,7 @@ use Illuminate\Support\Facades\Storage;
     {
         $order = AdminOrder::findOrFail($id);
         session()->put('cart_total', $order->total);
+        
         return view('admin.orders.approve', compact('order'));
     }
 
@@ -272,9 +291,10 @@ use Illuminate\Support\Facades\Storage;
     }
 public function listDonHangDaHuy()
 {
+    
     $canceledOrders = AdminOrder::where('status', 'Hủy')->get(); // Fetch all canceled orders
     $donHangDaHuy = AdminOrder::where('status', 'Hủy')
-                             ->with(['orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
+                             ->with([ 'user', 'orderItems', 'orderItems.product', 'orderItems.variation.size', 'orderItems.variation.color'])
                              ->get();
     return view('Admin.orders.listDonHangHuy', compact('canceledOrders','donHangDaHuy'));
 }

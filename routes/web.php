@@ -607,3 +607,6 @@ Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBra
 
 //thay đổi số lượng
 Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->name('cart.update');
+
+
+Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin.orders.approve.index');

@@ -13,7 +13,7 @@
                                 <a href="/" aria-label="Trang chủ" title="Trang chủ">Trang chủ</a>
                             </li>
                             @if (Session::has('success'))
-                                <!-- <div class="alert alert-success">{{ Session::get('success') }}</div> -->
+                                <div class="alert alert-success">{{ Session::get('success') }}</div>
                             @endif
 
                             @if (empty($cart))
@@ -34,9 +34,7 @@
                         <div class="main-cart-data-full">
                             <div class="main-cart-data-full-list">
                             @foreach ($cart as $item)
-                             <input type="checkbox">
     <div class="main-cart-data-full-item">
-       
         <div class="main-cart-data-full-item-image">
             @if ($item->product)
                 <a href="/products/{{ $item->product->slug }}">
@@ -82,11 +80,11 @@
                 <div class="shop-quantity">
                     <form action="{{ route('cart.update', $item->id) }}" method="POST" style="display: flex;">
                         @csrf
-                        <button type="submit" name="action" value="decrease" 
+                        <button type="submit" name="action" value="decrease"
                                 class="quantity-btn" {{ $item->quantity <= 1 ? 'disabled' : '' }}>-</button>
-                        <input type="number" name="quantity" value="{{ $item->quantity }}" 
+                        <input type="number" name="quantity" value="{{ $item->quantity }}"
                                min="1" readonly>
-                        <button type="submit" name="action" value="increase" 
+                        <button type="submit" name="action" value="increase"
                                 class="quantity-btn">+</button>
                     </form>
                 </div>

@@ -15,11 +15,42 @@
                                         <h2 class="sherah-breadcrumb__title">Danh sách đơn hàng cần xử lý</h2>
                                     </div>
                                 </div>
-                            </div>
+                            </div><form action="{{  route('admin-orders.approve.index')}}" method="GET">
+                                <div class="row align-items-center">
+                                    <!-- Tìm kiếm đơn hàng -->
+                                    <div class="col-md-3">
+                                        <input 
+                                            type="text" 
+                                            name="search" 
+                                            class="form-control form-control-sm" 
+                                            placeholder="Tìm kiếm đơn hàng..." 
+                                            value="{{ request('search') }}">
+                                    </div>
+                            
+                                    <!-- Lọc theo mã đơn hàng -->
+                                    <div class="col-md-3">
+                                        <input 
+                                            type="text" 
+                                            name="order_code" 
+                                            class="form-control form-control-sm" 
+                                            placeholder="Lọc theo mã đơn hàng..." 
+                                            value="{{ request('order_code') }}">
+                                    </div>
+                            
+                                 
+                            
+                                    <!-- Nút tìm kiếm và reset -->
+                                    <div class="col-md-3 d-flex">
+                                        <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
+                                        <a href="{{  route('admin-orders.approve.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+                                    </div>
+                                </div>
+                            </form>
 
                             <!-- Table -->
                             <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-25">
                                 <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3">
+                                    
                                     <!-- Table Head -->
                                     <thead class="sherah-table__head">
                                         <tr>
@@ -53,11 +84,30 @@
                                                 </td>
 
                                                 <!-- Cột Sản phẩm -->
-                                                <td class="sherah-table__column-4">
+                                                <td>
                                                     @foreach ($order->orderItems as $item)
-                                                        {{ $item->product->name }}
-                                                        <br>
-                                                        <hr>
+                                                        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                                            {{-- Hiển thị hình ảnh sản phẩm --}}
+                                                            @if ($item->variation)
+                                                                @if ($item->variation->image)
+                                                                    <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
+                                                                         alt="Variation Image" 
+                                                                         class="img-fluid rounded mb-1" 
+                                                                         style="max-width: 100px; height: auto; display: block; margin-top: 5px;">
+                                                                @else
+                                                                    <p class="text-muted">Không có hình ảnh</p>
+                                                                @endif
+                                                            @else
+                                                                <p class="text-muted">Không có thông tin biến thể</p>
+                                                            @endif
+                                                            {{-- Hiển thị tên sản phẩm --}}
+                                                            <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                            <br>
+                                                            <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
+                                                            <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
+                                                            <br>
+                                                            <small>Số lượng: {{ $item->quantity ?? 1 }}</small>
+                                                        </div>
                                                     @endforeach
                                                 </td>
                                                 <td>
