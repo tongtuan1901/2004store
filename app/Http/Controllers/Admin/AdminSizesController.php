@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class AdminSizesController extends Controller
 {
-    // Danh sách kích thước
     public function index()
     {
         $listSizes = Size::all();

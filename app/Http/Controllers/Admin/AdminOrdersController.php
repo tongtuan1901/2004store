@@ -15,34 +15,34 @@ use Illuminate\Support\Facades\Storage;
     {
 
         public function index(Request $request)
-{
-    $query = AdminOrder::with(['user', 'orderItems.product'])
-        ->orderBy('created_at', 'desc');
+    {
+        $query = AdminOrder::with(['user', 'orderItems.product'])->where('status','!=','Hủy')
+            ->orderBy('created_at', 'desc');
 
-    // Tìm kiếm chung
-    if ($request->filled('search')) {
-        $query->where(function ($q) use ($request) {
-            $q->where('id', 'like', '%' . $request->search . '%')
-              ->orWhere('email', 'like', '%' . $request->search . '%')
-              ->orWhere('phone', 'like', '%' . $request->search . '%');
-        });
+        // Tìm kiếm chung
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('id', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Lọc theo mã đơn hàng
+        if ($request->filled('order_code')) {
+            $query->where('order_code', 'like', '%' . $request->order_code . '%');
+        }
+
+        // Lọc theo trạng thái
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Lấy danh sách đơn hàng
+        $orders = $query->get();
+
+        return view('Admin.orders.index', compact('orders'));
     }
-
-    // Lọc theo mã đơn hàng
-    if ($request->filled('order_code')) {
-        $query->where('order_code', 'like', '%' . $request->order_code . '%');
-    }
-
-    // Lọc theo trạng thái
-    if ($request->filled('status')) {
-        $query->where('status', $request->status);
-    }
-
-    // Lấy danh sách đơn hàng
-    $orders = $query->get();
-
-    return view('Admin.orders.index', compact('orders'));
-}
 
 
 public function approveIndex(Request $request)
