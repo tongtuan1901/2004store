@@ -117,8 +117,7 @@
                                         Màu: {{ $item->variation->color->color ?? 'Không có' }} <br>
                                         Số lượng: {{ $item->quantity }}
                                     </td>
-                                    <!-- <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td> -->
-                                    <td>{{ number_format($item->variation->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
+                                    <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
                                     @if($order->status == 'Hoàn thành')
                                         @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
                                             <td>
