@@ -143,12 +143,12 @@
                                                     </td>
                                                     <td class="sherah-table__column-7 sherah-table__data-7">
                                                         <div class="sherah-table__status__group">
-                                                            <a href="{{ route('inventory.edit', $log->id) }}"
+                                                            <!-- <a href="{{ route('inventory.edit', $log->id) }}"
                                                                 class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">
                                                                 <svg class="sherah-color3__fill"
                                                                     xmlns="http://www.w3.org/2000/svg" width="18.29"
                                                                     height="18.252" viewBox="0 0 18.29 18.252">
-                                                                    <!-- SVG path for edit icon -->
+                                                                    SVG path for edit icon
                                                                     <g id="Group_132" data-name="Group 132"
                                                                         transform="translate(-234.958 -37.876)">
                                                                         <path id="Path_481" data-name="Path 481"
@@ -165,7 +165,7 @@
                                                                             fill="#09ad95" />
                                                                     </g>
                                                                 </svg>
-                                                            </a>
+                                                            </a> -->
                                                             <form action="{{ route('inventory.destroy', $log->id) }}"
                                                                 method="POST" style="display:inline;">
                                                                 @csrf

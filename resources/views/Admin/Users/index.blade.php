@@ -84,7 +84,7 @@
                                                                 <button type="submit"
                                                                     class="sherah-table__action sherah-color2"
                                                                     style="border: none; background: none;"
-                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">
+                                                                    onclick="return confirm('Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?');">
                                                                     <svg class="sherah-color2__fill"
                                                                         xmlns="http://www.w3.org/2000/svg" width="16.247"
                                                                         height="18.252" viewBox="0 0 16.247 18.252">

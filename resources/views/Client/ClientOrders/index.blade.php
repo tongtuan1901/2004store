@@ -35,7 +35,7 @@
                     </th>
                     <th  style="width:125px">Mã đơn hàng</th>
                     <th>Sản phẩm</th>
-                    <th>Giá trị đơn hàng</th>
+                    <th> Tổng Giá trị đơn hàng</th>
                     <th>Địa chỉ</th>
                     <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>

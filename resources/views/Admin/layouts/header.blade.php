@@ -259,7 +259,7 @@
                                                     transform="translate(-547.61 -368.076)" />
                                             </svg>
                                         </span>
-                                        <span class="menu-bar__name">Quản lí tồn kho </span></span> <span
+                                        <span class="menu-bar__name">Quản lí các sản phẩm sắp hết hàng </span></span> <span
                                         class="sherah__toggle"></span></a></span>
                                 <!-- Dropdown Menu -->
                                 <div class="collapse sherah__dropdown" id="menu-item_storage"
