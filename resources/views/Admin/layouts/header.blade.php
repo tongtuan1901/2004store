@@ -545,7 +545,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li><a class='collapsed' href='{{ route('new.index') }}'><span
+                            {{-- <li><a class='collapsed' href='{{ route('new.index') }}'><span
                                         class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -556,8 +556,24 @@
                                             </svg>
                                         </span>
                                         <span class="menu-bar__name">Tin tức</span></span></a></span>
+                            </li> --}}
+                            <li>
+                                <a class='collapsed' href='{{ route('new.index') }}'>
+                                    <span class="menu-bar__text">
+                                        <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                            <!-- SVG hoặc logo của Tin tức -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2H0z"/>
+                                                <path fill-rule="evenodd" d="M14 4H2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4zm-4 3H5V5h5v2zm0 2H5v1h5v-1zm-1 2h-4v1h4v-1z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="menu-bar__name">Tin tức</span>
+                                    </span>
+                                </a>
                             </li>
-                            <li><a class='collapsed' href='{{ route('admin.contact.index') }}'><span
+                            
+                            {{-- <li><a class='collapsed' href='{{ route('admin.contact.index') }}'><span
                                         class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -568,7 +584,21 @@
                                             </svg>
                                         </span>
                                         <span class="menu-bar__name">Liên hệ</span></span></a></span>
+                            </li> --}}
+                            <li>
+                                <a class='collapsed' href='{{ route('admin.contact.index') }}'>
+                                    <span class="menu-bar__text">
+                                        <span class="sherah-menu-icon sherah-svg-icon__v1">
+                                            <!-- SVG Logo Liên hệ -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                                                <path d="M8 0a8 8 0 1 1-4.688 14.912L.865 15.793a.5.5 0 0 1-.63-.63l.881-2.447A8 8 0 0 1 8 0zm3.5 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-3 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="menu-bar__name">Liên hệ</span>
+                                    </span>
+                                </a>
                             </li>
+                            
 
                         </ul>
                     </div>

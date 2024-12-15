@@ -12,11 +12,11 @@
                             <div class="col-12 sherah-flex-between">
                                 <!-- Sherah Breadcrumb -->
                                 <div class="sherah-breadcrumb">
-                                    <h2 class="sherah-breadcrumb__title">Danh sách</h2>
+                                    <h2 class="sherah-breadcrumb__title">Danh sách tin tức</h2>
                                     
                                 </div>
                                 <!-- End Sherah Breadcrumb -->
-                                <a href="{{ route('new.create') }}" class="sherah-btn sherah-gbcolor">Thêm</a>
+                                <a href="{{ route('new.create') }}" class="sherah-btn sherah-gbcolor">Thêm tin tức mới</a>
                             </div>
                         </div>
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-25">
