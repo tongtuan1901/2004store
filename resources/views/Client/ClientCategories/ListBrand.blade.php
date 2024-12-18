@@ -81,7 +81,7 @@
 
                         </div>
                     </div>
-                    <div class="main-collection-right">
+                    <div class="main-collection-info">
 
 
                         <h1 class="titleStyle1">Sản phẩm của thương hiệu - {{ $brand->name }}</h1>

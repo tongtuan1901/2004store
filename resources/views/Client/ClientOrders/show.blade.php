@@ -20,18 +20,18 @@
                     <div class="col-md-3">
                         <div class="border rounded p-3 h-100">
                             <h3 class="text-success mb-3"><i class="fa fa-truck"></i>Địa chỉ nhận hàng</h3>
-                        <p><i class="fa fa-user text-success"></i> <strong>Tài khoản:</strong> 
+                        <!-- <p><i class="fa fa-user text-success"></i> <strong>Tài khoản:</strong> 
                             <span class="text-muted">{{ $order->user->name ?? 'Không có' }}</span>
-                        </p>
-                        <p><i class="fa fa-user text-success"></i> <strong>Người đặt:</strong> 
+                        </p> -->
+                        <p><i class="fa fa-user text-success"></i> <strong>Tên người nhận:</strong> 
                             <span class="text-muted">{{ $order->name ?? 'Không có' }}</span>
                         </p>
                         <p><i class="fa fa-phone text-primary"></i> <strong>Số điện thoại:</strong> 
                             <span class="text-muted">{{ $order->phone_number ?? 'Không có' }}</span>
                         </p>
-                        <p><i class="fa fa-envelope text-dark"></i> <strong>Email:</strong> 
+                        <!-- <p><i class="fa fa-envelope text-dark"></i> <strong>Email:</strong> 
                             <span class="text-muted">{{ $order->email ?? 'Không có' }}</span>
-                        </p>
+                        </p> -->
                         <p><i class="fa fa-map-marker-alt text-danger"></i> <strong>Địa chỉ giao hàng:</strong> 
                             <span class="text-muted">{{ $order->address ?? 'Không có' }}</span>
                         </p>
@@ -117,8 +117,7 @@
                                         Màu: {{ $item->variation->color->color ?? 'Không có' }} <br>
                                         Số lượng: {{ $item->quantity }}
                                     </td>
-                                    <!-- <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td> -->
-                                    <td>{{ number_format($item->variation->price_sale * $item->quantity, 0, ',', '.') }} VND</td>
+                                    <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
                                     @if($order->status == 'Hoàn thành')
                                         @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
                                             <td>

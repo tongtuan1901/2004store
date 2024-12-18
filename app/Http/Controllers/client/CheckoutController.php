@@ -5,7 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\AdminOrder;
-use App\Models\Address; // Import the correct Address model
+use App\Models\Address; 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AdminProducts;
@@ -356,14 +356,28 @@ class CheckoutController extends Controller
         }
 
         // Xử lý thanh toán online
-        if ($request->paymentMethod == 'momo') {
-            return $this->momo_payment($order);
-        } elseif ($request->paymentMethod == 'vnpay') {
-            return $this->vnpay_payment($order);
-        }
+        // if ($request->paymentMethod == 'momo') {
+        //     return $this->momo_payment($order);
+        // } elseif ($request->paymentMethod == 'vnpay') {
+        //     return $this->vnpay_payment($order);
+        // }
 
-        // Gửi email xác nhận
+          // Xử lý thanh toán online
+    if ($request->paymentMethod == 'momo') {
+        // Gửi email xác nhận trước khi chuyển hướng
         Mail::to($order->email)->send(new OrderConfirmationMail($order));
+        return $this->momo_payment($order);
+    } elseif ($request->paymentMethod == 'vnpay') {
+        // Gửi email xác nhận trước khi chuyển hướng
+        Mail::to($order->email)->send(new OrderConfirmationMail($order));
+        return $this->vnpay_payment($order);
+    } elseif ($request->paymentMethod == 'wallet') {
+        // Gửi email xác nhận cho thanh toán ví
+        Mail::to($order->email)->send(new OrderConfirmationMail($order));
+    } else {
+        // Gửi email xác nhận cho COD
+        Mail::to($order->email)->send(new OrderConfirmationMail($order));
+    }
 
         // Chuyển hướng đến trang cảm ơn
         return redirect()->route('client-thankyou.index', ['order_id' => $order->id])

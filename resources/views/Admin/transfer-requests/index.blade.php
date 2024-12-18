@@ -29,7 +29,7 @@
                     <table class="sherah-table__main sherah-table__main-v3" id="sherah-table__vendor">
                         <thead class="sherah-table__head">
                             <tr>
-                                <th class="sherah-table__column-1 sherah-table__h1">ID</th>
+                                <th class="sherah-table__column-1 sherah-table__h1">STT</th>
                                 <th class="sherah-table__column-2 sherah-table__h2">Tên Khách Hàng</th>
                                 <th class="sherah-table__column-3 sherah-table__h3">Số Tiền Nạp</th>
                                 <th class="sherah-table__column-4 sherah-table__h4">Nội Dung Chuyển Khoản</th>

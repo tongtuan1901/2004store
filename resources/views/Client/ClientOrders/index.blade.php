@@ -40,6 +40,7 @@
                     <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>
                     <th style="width:100px">Phương thức thanh toán</th>
+                    
                     <th class="text-center">Thao tác</th>
                 </tr>
             </thead>

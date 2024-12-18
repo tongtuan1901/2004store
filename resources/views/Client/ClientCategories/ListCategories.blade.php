@@ -16,7 +16,7 @@
                                     chủ</a></li>
 
 
-                            <li class="breadcrumb-item active"><span>Danh mục</span></li>
+                            <li class="breadcrumb-item active"><span>Sản phẩm</span></li>
                         </ol>
                     </div>
                 </div>

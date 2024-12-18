@@ -23,7 +23,7 @@
 
         <!-- Mã đơn hàng và tổng cộng -->
         <div class="section">
-            <p><strong>Mã đơn hàng:</strong> {{ $order->id }}</p>
+            <p><strong>Mã đơn hàng:</strong> {{ $order->order_code }}</p>
             <p><strong>Tổng cộng:</strong> {{ number_format($order->total, 0, ',', '.') }}₫</p>
         </div>
 
@@ -86,7 +86,21 @@
         <!-- Phương thức thanh toán và vận chuyển -->
         <div class="section">
             <h3>Phương thức thanh toán</h3>
-            <p>{{ $order->payment_method == 'bank_transfer' ? 'Chuyển khoản' : 'Thanh toán khi nhận hàng' }}</p>
+            <p>
+                @switch($order->payment_method)
+                    @case('momo')
+                        Thanh toán qua MoMo
+                        @break
+                    @case('vnpay')
+                        Thanh toán qua VNPAY
+                        @break
+                    @case('wallet')
+                        Thanh toán qua Ví 
+                        @break
+                    @default
+                        Thanh toán khi nhận hàng (COD)
+                @endswitch
+            </p>
 
             <h3>Phương thức vận chuyển</h3>
             <p>Giao hàng tận nơi</p>

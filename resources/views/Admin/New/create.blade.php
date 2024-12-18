@@ -12,7 +12,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="sherah-breadcrumb mg-top-30">
-                                        <h2 class="sherah-breadcrumb__title">Thêm</h2>
+                                        <h2 class="sherah-breadcrumb__title">Thêm mới tin tức</h2>
                                     </div>
                                 </div>
                             </div>
@@ -65,9 +65,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-                                        <button type="submit" class="sherah-btn sherah-btn__primary">Tạo</button>
-                                        <button class="sherah-btn sherah-btn__primary"><a href="{{route('new.index')}}">Quay lại</a></button>
+                                    {{-- <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                        <button type="submit" class="sherah-btn sherah-btn__primary">Tạo mới tin tức</button>
+                                        <button class="sherah-btn sherah-btn__third"><a href="{{route('new.index')}}">Quay lại</a></button>
+                                    </div> --}}
+                                    <div class="mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                        <button type="submit" class="sherah-btn sherah-btn__primary">Lưu tin tức</button>
+                                        <a href="{{ route('new.index') }}"
+                                            class="sherah-btn sherah-btn__third">Hủy</a>
                                     </div>
                                 </form>
                             </div>
