@@ -13,9 +13,8 @@
                         <div class="page-about-new-main-item-right">
                             <div class="section-title-all">
                                 <span>Về Chúng Tôi</span>
-                                <p>F1GENZ BABIE chính là nơi hội tụ những thương hiệu uy tín, những sản phẩm dành cho mẹ và
-                                    bé chính hãng, chất lượng hàng đầu tại Việt Nam. Không những thế, F1GENZ BABIE mang đến
-                                    cho Ba/mẹ những trải nghiệm mua sắm tuyệt vời, đáng tin cậy và cam kết cung cấp các dịch
+                                <p>2004STORE chính là nơi hội tụ những thương hiệu uy tín, những sản phẩm dành cho nam chất lượng hàng đầu tại Việt Nam. Không những thế, 2004STORE mang đến
+                                    cho nam giới những trải nghiệm mua sắm tuyệt vời, đáng tin cậy và cam kết cung cấp các dịch
                                     vụ chăm sóc khách hàng, tư vấn bán hàng, tư vấn sử dụng sản phẩm và các dịch vụ giao
                                     nhận hàng tốt nhất.</p>
                             </div>

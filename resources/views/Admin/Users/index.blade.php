@@ -69,6 +69,7 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="sherah-btn sherah-gbcolor" style="background-color: red" onclick="return confirm('Are you sure?')">Delete</button>
+
                                                         </form>
                                                     @endif
                                                 </td>
@@ -112,7 +113,11 @@
                                     </div>
                                 </td>
                                 <td>
+<<<<<<< HEAD
                                     ${user.deleted_at ?
+=======
+                                    ${user.deleted_at ?
+>>>>>>> fcd3511a2c0b85b28434d95ad5d7586d96bca65b
                                         `<a href="/users/restore/${user.id}" class="btn btn-success btn-sm">Restore</a>` :
                                         `<form action="/users/${user.id}" method="POST" style="display:inline-block;">
                                             @csrf

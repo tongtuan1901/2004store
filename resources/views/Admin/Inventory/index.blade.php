@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="sherah-breadcrumb mg-top-30">
-                                        <h2 class="sherah-breadcrumb__title">Quản lí tồn kho</h2>
+                                        <h2 class="sherah-breadcrumb__title">Quản lí danh sách các sản phẩm sắp hết hàng</h2>
                                     </div>
                                     @if (!empty($lowStockItems))
                                         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 alert alert-danger"
@@ -63,7 +63,7 @@
                             <div class="mb-4">
                                 <div style="display: flex; justify-content: flex-end;">
                                     <a href="{{ route('inventory.create') }}" class="sherah-btn sherah-gbcolor">Thêm Bản Ghi
-                                        Tồn Kho</a>
+                                        </a>
                                 </div>
                             </div>
                             <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
