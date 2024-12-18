@@ -17679,7 +17679,7 @@
 										<h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
 
 										<p class="section__text">
-											Một email xác nhận đã được gửi tới {{ $order->email }}.  <br>
+											Một email bill đơn hàng đã được gửi tới {{ $order->email }}.  <br>
 											Xin vui lòng kiểm tra email của bạn
 										</p>
 
@@ -17691,8 +17691,8 @@
 								<aside class="order-summary order-summary--bordered order-summary--is-collapsed" id="order-summary">
 									<div class="order-summary__header">
 										<div class="order-summary__title">
-											Đơn hàng #{{ $order->id }}
-											<span class="unprintable">(1)</span>
+											Đơn hàng #{{ $order->order_code }}
+											
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
 											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
@@ -17908,7 +17908,7 @@
                                         <h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
 
                                         <p class="section__text">
-                                            Một email xác nhận đã được gửi tới {{ $order->email }}. <br>
+                                            Một email bill đơn hàng đã được gửi tới {{ $order->email }}. <br>
                                             Xin vui lòng kiểm tra email của bạn
                                         </p>
 
@@ -17921,8 +17921,8 @@
                                     id="order-summary">
                                     <div class="order-summary__header">
                                         <div class="order-summary__title">
-                                            Đơn hàng #{{ $order->id }}
-                                            <span class="unprintable">(1)</span>
+                                        Đơn hàng #{{ $order->order_code }}
+                                            
                                         </div>
                                         <div class="order-summary__action hide-on-desktop unprintable">
                                             <a data-toggle="#order-summary"

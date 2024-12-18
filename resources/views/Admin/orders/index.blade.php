@@ -19,24 +19,24 @@
                             <div class="row align-items-center">
                                 <!-- Tìm kiếm đơn hàng -->
                                 <div class="col-md-3">
-                                    <input 
-                                        type="text" 
-                                        name="search" 
-                                        class="form-control form-control-sm" 
-                                        placeholder="Tìm kiếm đơn hàng..." 
+                                    <input
+                                        type="text"
+                                        name="search"
+                                        class="form-control form-control-sm"
+                                        placeholder="Tìm kiếm đơn hàng..."
                                         value="{{ request('search') }}">
                                 </div>
-                        
+
                                 <!-- Lọc theo mã đơn hàng -->
                                 <div class="col-md-3">
-                                    <input 
-                                        type="text" 
-                                        name="order_code" 
-                                        class="form-control form-control-sm" 
-                                        placeholder="Lọc theo mã đơn hàng..." 
+                                    <input
+                                        type="text"
+                                        name="order_code"
+                                        class="form-control form-control-sm"
+                                        placeholder="Lọc theo mã đơn hàng..."
                                         value="{{ request('order_code') }}">
                                 </div>
-                        
+
                                 <!-- Lọc theo trạng thái -->
                                 <div class="col-md-3">
                                     <select name="status" class="form-control form-control-sm">
@@ -47,11 +47,11 @@
                                         <option value="Hoàn thành" {{ request('status') == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
                                     </select>
                                 </div>
-                        
+
                                 <!-- Nút tìm kiếm và reset -->
                                 <div class="col-md-3 d-flex">
-                                    <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
-                                    <a href="{{ route('admin-orders.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+                                    <button type="submit" class="sherah-btn sherah-gbcolor">Tìm kiếm</button>
+                                 <a href="{{ route('admin-orders.index') }}" class="sherah-btn sherah-gbcolor" style="background-color: gray">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -65,7 +65,6 @@
                         @endif
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-25">
                             <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3">
-                                <!-- Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
                                         <th>Stt</th>
@@ -95,16 +94,16 @@
                                                     {{ $order->status }}
                                                 </div>
                                             </td>
-                                            
+
                                             <td>
                                                 @foreach ($order->orderItems as $item)
                                                     <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
                                                         {{-- Hiển thị hình ảnh sản phẩm --}}
                                                         @if ($item->variation)
                                                             @if ($item->variation->image)
-                                                                <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
-                                                                     alt="Variation Image" 
-                                                                     class="img-fluid rounded mb-1" 
+                                                                <img src="{{ asset('storage/' . $item->variation->image->image_path) }}"
+                                                                     alt="Variation Image"
+                                                                     class="img-fluid rounded mb-1"
                                                                      style="max-width: 100px; height: auto; display: block; margin-top: 5px;">
                                                             @else
                                                                 <p class="text-muted">Không có hình ảnh</p>
@@ -122,7 +121,7 @@
                                                     </div>
                                                 @endforeach
                                             </td>
-                                            
+
                                             <td>
                                                 {{ number_format($order->total - $order->discount_value)}} VNĐ
                                             </td>
@@ -131,16 +130,30 @@
                                             </td>
                                             <td>
                                                 <div class="sherah-table__status__group">
-                                                    <a href="{{ route('admin-orders.show', $order) }}" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">Chi tiết</a>
+                                                    <a href="{{ route('admin-orders.show', $order->id) }}"
+                                                        class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
+                                                        <svg class="sherah-color2__fill"
+                                                            xmlns="http://www.w3.org/2000/svg" width="18"
+                                                            height="18" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0-2C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-.5 17h-1v-1h1v1zm1-12h-2v6h2V5z"
+                                                                fill="#09ad95" />
+                                                        </svg>
+                                                    </a>
                                                     @if ($order->status === 'Chờ xử lý')
-                                                        <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">Duyệt</a>
+                                                        <a href="{{ route('admin-orders.approve', $order->id) }}" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon-check">
+                                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                                        </svg></a>
                                                     @endif
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     </div>
