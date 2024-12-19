@@ -17691,8 +17691,7 @@
 								<aside class="order-summary order-summary--bordered order-summary--is-collapsed" id="order-summary">
 									<div class="order-summary__header">
 										<div class="order-summary__title">
-											Đơn hàng #{{ $order->id }}
-											<span class="unprintable">(1)</span>
+											Đơn hàng #{{ $order->order_code }}
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
 											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
@@ -17921,8 +17920,7 @@
                                     id="order-summary">
                                     <div class="order-summary__header">
                                         <div class="order-summary__title">
-                                            Đơn hàng #{{ $order->id }}
-                                            <span class="unprintable">(1)</span>
+                                            Đơn hàng #{{ $order->order_code }}
                                         </div>
                                         <div class="order-summary__action hide-on-desktop unprintable">
                                             <a data-toggle="#order-summary"

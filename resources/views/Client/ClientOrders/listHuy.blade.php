@@ -180,6 +180,7 @@
                     <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>
                     <th style="width:100px">Phương thức thanh toán</th>
+                    <th>Tiền hoàn</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
             </thead>
@@ -251,6 +252,13 @@
                         </td>
                         <td>
                             {{$order->payment_method}}
+                        </td>
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
                         </td>
                         <style>
                             .modal {

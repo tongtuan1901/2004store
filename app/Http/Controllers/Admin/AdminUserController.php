@@ -27,11 +27,6 @@ public function index(Request $request)
         return view('admin.users.index', compact('users'));
     }
 
-//     public function index()
-// {
-//     $users = User::withTrashed()->get();
-//     return view('Customer.users.index', compact('users'));
-// }
 public function search(Request $request)
 {
     $keyword = $request->keyword;

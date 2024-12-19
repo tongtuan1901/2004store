@@ -63,6 +63,16 @@ class ClientOrderControler extends Controller
     
         return back()->with('success', 'Đơn hàng đã được hủy thành công.');
     }
+    public function confirmOrder(Request $request, $orderId){
+        $order = AdminOrder::findOrFail($orderId);
+    
+        $order->update([
+            'status' => 'Hoàn thành',
+            'completed_time' => now(),
+        ]);
+    
+        return back()->with('success', 'Xác nhận thành công.');
+    }
     
 
     

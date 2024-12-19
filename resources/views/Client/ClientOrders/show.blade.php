@@ -66,6 +66,11 @@
                                     <p class="text-muted">{{ $order->shipping_time ?? 'Chưa cập nhật' }}</p>
                                 </div>
                                 <div class="status-item text-center">
+                                    <i class="fa-solid fa-people-carry-box fa-2x"></i>
+                                    <p class="mt-2"><strong>Đã giao hàng</strong></p>
+                                    <p class="text-muted">{{ $order->delivered_time ?? 'Chưa cập nhật' }}</p>
+                                </div>
+                                <div class="status-item text-center">
                                     <i class="fa fa-check-circle text-primary fa-2x"></i>
                                     <p class="mt-2"><strong>Hoàn thành</strong></p>
                                     <p class="text-muted">{{ $order->completed_time ?? 'Chưa cập nhật' }}</p>
@@ -171,6 +176,28 @@
                                     @endif
                                 </td>
                             </tr>
+                            @if ($order->status === 'Đã giao hàng')
+                            <tr>
+                                <td class="bg-secondary text-white" style="text-align: right;">Xác nhận đã nhận hàng</td>
+                                <td class="text-end text-info">
+                                    <p style="font-size: 10px;"> ( Nếu không bấm xác nhận thì <br> 
+                                        đơn hàng sẽ tự động xác nhận sau 3 ngày )</p>
+                                      <form action="{{route('orders.confirm', $order->id)}}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                            <input type="text" value="Hoàn thành" hidden>
+                                            <button type="submit" class="btn btn-success">Xác nhận</button>
+                                      </form>
+                                </td>
+                            </tr>
+                            @else
+                            <tr>
+                                <td class="bg-secondary text-white" style="text-align: right;">Xác nhận đã nhận hàng</td>
+                                <td class="text-end text-success">
+                                      <p>Đã xác nhận đơn hàng</p>
+                                </td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
