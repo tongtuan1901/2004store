@@ -25,7 +25,7 @@ class AdminColorsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'color' => 'required|string|max:50|regex:/^[\pL\s]+$/u', 
+            'color' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
         ]);
 
         Color::create([
@@ -60,7 +60,15 @@ class AdminColorsController extends Controller
     public function destroy(string $id)
     {
         $color = Color::findOrFail($id);
+
+        if ($color->variations()->exists()) {
+            return redirect()->route('admin-color.index')->with('error', 'Không thể xóa màu sắc vì có sản phẩm liên kết.');
+        }
+
         $color->delete();
-        return redirect()->route('admin-color.index')->with('success', 'Color deleted successfully.');
+
+        return redirect()->route('admin-color.index')->with('success', 'Xóa màu sắc thành công.');
     }
+
+
 }
