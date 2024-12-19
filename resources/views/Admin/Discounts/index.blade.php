@@ -45,6 +45,7 @@
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
+                                    <th class="sherah-table__column-1 sherah-table__h1">STT</th>
                                         <th class="sherah-table__column-1 sherah-table__h1">Mã giảm giá</th>
                                         <th class="sherah-table__column-2 sherah-table__h2">Loại</th>
                                         <th class="sherah-table__column-3 sherah-table__h3">Giá Trị</th>
@@ -54,8 +55,13 @@
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
-                                    @foreach($discounts as $discount)
+                                    @foreach($discounts as $key => $discount)
                                     <tr>
+                                    <td class="sherah-table__column-1 sherah-table__data-1">
+                                            <div class="sherah-language-form__input">
+                                                <p class="crany-table__product--number">{{$key+1}}</p>
+                                            </div>
+                                        </td>
                                         <td class="sherah-table__column-1 sherah-table__data-1">
                                             <div class="sherah-language-form__input">
                                                 <p class="crany-table__product--number">{{$discount->code}}</p>

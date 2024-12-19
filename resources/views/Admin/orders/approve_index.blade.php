@@ -101,7 +101,7 @@
                                                                 <p class="text-muted">Không có thông tin biến thể</p>
                                                             @endif
                                                             {{-- Hiển thị tên sản phẩm --}}
-                                                            <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                            <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                             <br>
                                                             <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                             <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
@@ -120,11 +120,23 @@
                                                     <div class="sherah-table__status__group">
                                                         <a href="{{ route('admin-orders.approve', $order->id) }}"
                                                             class="sherah-table__action sherah-color2 sherah-color3__bg--opactity">
-                                                            Duyệt
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon-check">
+                                                        <polyline points="20 6 9 17 4 12"> </polyline>
+                                                    </svg>
+
                                                         </a>
                                                         <a href="{{ route('admin-orders.show', $order->id) }}"
                                                             class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
-                                                            Chi tiết
+                                                            <svg class="sherah-color2__fill"
+                                                            xmlns="http://www.w3.org/2000/svg" width="18"
+                                                            height="18" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0-2C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-.5 17h-1v-1h1v1zm1-12h-2v6h2V5z"
+                                                                fill="#09ad95" />
+                                                        </svg>
                                                         </a>
                                                         <form action="{{ route('admin-orders.destroy', $order->id) }}"
                                                             method="post" style="display:inline-block;">

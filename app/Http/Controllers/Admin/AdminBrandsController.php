@@ -13,11 +13,11 @@ class AdminBrandsController extends Controller
     public function index(Request $request)
     {
         $query = Brand::query();
-    
+
         if ($request->has('search') && $request->search != '') {
             $query->where('name', 'LIKE', '%' . $request->search . '%');
         }
-    
+
         $listBrands = $query->paginate(10); // Sử dụng phân trang nếu cần
         return view('admin.brands.index', compact('listBrands'));
     }
@@ -88,10 +88,17 @@ class AdminBrandsController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
+
+        if ($brand->products()->exists()) {
+            return redirect()->route('admin-brands.index')->with('error', 'Thương hiệu này có sản phẩm liên kết và không thể xóa.');
+        }
+
         if ($brand->image) {
             Storage::disk('public')->delete($brand->image);
         }
+
         $brand->delete();
-        return redirect()->route('admin-brands.index')->with('success', 'Brand deleted successfully.');
+        return redirect()->route('admin-brands.index')->with('success', 'Xoá thương hiệu thành công.');
     }
+
 }

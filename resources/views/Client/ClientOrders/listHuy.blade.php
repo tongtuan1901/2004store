@@ -179,6 +179,7 @@
                     <th>Địa chỉ</th>
                     <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>
+                    <th>Hoàn tiền</th>
                     <th style="width:100px">Phương thức thanh toán</th>
                     <th>Tiền hoàn</th>
                     <th class="text-center">Thao tác</th>
@@ -222,7 +223,7 @@
                                             
                                             {{-- Tên và thông tin sản phẩm --}}
                                             <div>
-                                                <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                 <br>
                                                 <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                 <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
@@ -249,6 +250,13 @@
                             <span class="badge badge-{{ $order->status == 'Hoàn thành' ? 'success' : ($order->status == 'Hủy' ? 'danger' : 'warning') }}">
                                 {{ $order->status }}
                             </span>
+                        </td>
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
                         </td>
                         <td>
                             {{$order->payment_method}}

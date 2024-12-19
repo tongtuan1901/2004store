@@ -27,11 +27,11 @@
                                     <strong>Mã đơn Hàng:</strong> <span>{{ $order->order_code }}</span>
                                 </div>
                                 <div class="col-md-6">
-                                 
+
                                         <strong>Tên người gửi:</strong> <span>{{ $order->user->name }}</span>
-                                    
+
                                 </div>
-                                
+
                             </div>
                             <div class="row mb-3">
                             <div class="col-md-6">
@@ -41,7 +41,7 @@
                                     <strong>Email:</strong> <span>{{ $order->email }}</span>
                                 </div>
                                 <div class="col-md-6">
-                                    <strong>Trạng Thái:</strong> 
+                                    <strong>Trạng Thái:</strong>
                                     <span class="sherah-table__status sherah-color4 sherah-color4__bg--opacity">{{ $order->status }}</span>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                         <tr>
                                             <td class="sherah-table__column-2 sherah-table__data-2">
                                                 <div class="sherah-table__product-name">
-                                                    <h4 class="sherah-table__product-name--title">{{ $item->product->name }}</h4>
+                                                    <h4 class="sherah-table__product-name--title">{{ $item->product_name }}</h4>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-1 sherah-table__data-1">
@@ -98,23 +98,23 @@
                                                 <div class="sherah-table__product-name">
                                                     @if ($item->variation)
                                                     <div>
-                                                        Kích thước: {{ $item->variation->size->size ?? 'N/A' }}, 
+                                                        Kích thước: {{ $item->variation->size->size ?? 'N/A' }},
                                                         Màu sắc: {{ $item->variation->color->color ?? 'N/A' }}
                                                     </div>
                                                     @else
                                                         <div>Không có biến thể</div>
                                                     @endif
-                                                        <hr> 
+                                                        <hr>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">{{ $item->product->category->name }}</p>
+                                                    <p class="sherah-table__product-desc">{{ $item->category_name }}</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
+                                                    <p class="sherah-table__product-desc">{{ $item->brand_name }}</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
@@ -147,7 +147,7 @@
                                 <form action="{{ route('admin-orders.update-status', $order->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn duyệt đơn hàng này?');">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="sherah-btn sherah-color2 sherah-color3__bg--opacity">Duyệt Đơn Hàng</button>
+                                    <button type="submit" class="sherah-btn sherah-gbcolor">Duyệt Đơn Hàng</button>
                                 </form>
                                 <a href="{{ route('admin-orders.index') }}" class="sherah-btn sherah-gbcolor">Trở Lại</a>
                             </div>

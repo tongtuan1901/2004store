@@ -17679,7 +17679,7 @@
 										<h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
 
 										<p class="section__text">
-											Một email xác nhận đã được gửi tới {{ $order->email }}.  <br>
+											Một email bill đơn hàng đã được gửi tới {{ $order->email }}.  <br>
 											Xin vui lòng kiểm tra email của bạn
 										</p>
 
@@ -17692,6 +17692,10 @@
 									<div class="order-summary__header">
 										<div class="order-summary__title">
 											Đơn hàng #{{ $order->order_code }}
+<<<<<<< HEAD
+=======
+											
+>>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
 											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
@@ -17907,7 +17911,7 @@
                                         <h2 class="section__title">Cảm ơn bạn đã đặt hàng</h2>
 
                                         <p class="section__text">
-                                            Một email xác nhận đã được gửi tới {{ $order->email }}. <br>
+                                            Một email bill đơn hàng đã được gửi tới {{ $order->email }}. <br>
                                             Xin vui lòng kiểm tra email của bạn
                                         </p>
 
@@ -17920,7 +17924,12 @@
                                     id="order-summary">
                                     <div class="order-summary__header">
                                         <div class="order-summary__title">
+<<<<<<< HEAD
                                             Đơn hàng #{{ $order->order_code }}
+=======
+                                        Đơn hàng #{{ $order->order_code }}
+                                            
+>>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
                                         </div>
                                         <div class="order-summary__action hide-on-desktop unprintable">
                                             <a data-toggle="#order-summary"

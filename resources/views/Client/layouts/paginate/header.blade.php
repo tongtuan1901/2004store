@@ -504,14 +504,14 @@
 
                 <div class="headers3-wrap">
                     <div class="headers3-left">
-                        <form class="tool-search" action="">
+                        <!-- <form class="tool-search" action="">
                             <input type="hidden" name="type" value="product">
                             <input required name="q" autocomplete="off" type="text"
                                 placeholder="Tìm kiếm sản phẩm...">
                             <button type="submit" title="Tìm kiếm"><i class="fal fa-search"></i></button>
                             <button class="tool-search-overplay" title="Đóng"></button>
                             <div class="tool-search-smart"></div>
-                        </form>
+                        </form> -->
                     </div>
                     <div class="headers3-center">
                         <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">

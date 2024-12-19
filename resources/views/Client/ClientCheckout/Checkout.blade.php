@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
         <meta name="description" content="F1GENZ Model Fashion - Thanh toán đơn hàng">
-        <title>F1GENZ Model Fashion - Thanh toán đơn hàng</title>
+        <title>2004Store- Thanh toán đơn hàng</title>
 
 
 
@@ -377,7 +377,7 @@
                     <span class="wrap">
                         <span class="order-summary-toggle__inner">
                             <span class="order-summary-toggle__text expandable">
-                                Đơn hàng (1 sản phẩm)
+                                Đơn hàng 
                             </span>
                             <span class="order-summary-toggle__total-recap" data-bind="getTextTotalPrice()">1.529.000₫</span>
                         </span>
@@ -709,7 +709,7 @@
 					  <aside class="sidebar">
 						<div class="sidebar__header">
 							<h2 class="sidebar__title">
-								Đơn hàng (1 sản phẩm)
+								Đơn hàng 
 							</h2>
 						</div>
 						<div class="sidebar__content">

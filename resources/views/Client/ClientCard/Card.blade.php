@@ -13,7 +13,7 @@
                                 <a href="/" aria-label="Trang chủ" title="Trang chủ">Trang chủ</a>
                             </li>
                             @if (Session::has('success'))
-                                <div class="alert alert-success">{{ Session::get('success') }}</div>
+                                <!-- <div class="alert alert-success">{{ Session::get('success') }}</div> -->
                             @endif
 
                             @if (empty($cart))

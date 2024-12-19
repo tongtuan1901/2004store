@@ -76,29 +76,52 @@ class ClientOrderControler extends Controller
     
 
     
-    public function show($userId, $orderId)
-{
-    $shippingFee = 40000;
-
-    // Lấy thông tin người dùng và đơn hàng
-    $userOrder = User::findOrFail($userId);
-    $userOrder->load([
-        'orders' => function ($query) use ($orderId) {
-            $query->where('id', $orderId)->where('status', '!=', '');
-        },
-        'addresses',
-        'orders.orderItems.variation.size',
-        'orders.orderItems.variation.color',
-    ]);
-
-
-    $order = $userOrder->orders->first();
-    $order->updateStatusTimes();
-    $order->save();
-
-    // Truyền thông tin bước hiện tại và dữ liệu khác sang view
-    return view('Client.ClientOrders.show', compact('userOrder', 'shippingFee', 'order'));
-}
+    public function show($userId, $orderId) {
+        // Set shipping fee constant
+        $shippingFee = 40000;
+    
+        // Find the user with related order data
+        $userOrder = User::with([
+            'orders' => function ($query) use ($orderId) {
+                $query->where('id', $orderId);
+            },
+            'orders.orderItems' => function ($query) {
+                $query->with([
+                    'product',
+                    'variation.size',
+                    'variation.color',
+                    'variation.image'
+                ]);
+            }
+        ])->findOrFail($userId);
+    
+        // Get the specific order
+        $order = $userOrder->orders->first();
+        
+        if (!$order) {
+            return redirect()->back()->with('error', 'Đơn hàng không tồn tại.');
+        }
+    
+        // Update order status timestamps if needed
+        $order->updateStatusTimes();
+        $order->save();
+    
+        // Calculate totals from order items
+        $subtotal = $order->orderItems->sum(function($item) {
+            return $item->price * $item->quantity;
+        });
+    
+        $finalTotal = ($subtotal + $shippingFee) - ($order->discount_value ?? 0);
+    
+        // Pass data to view
+        return view('Client.ClientOrders.show', compact(
+            'userOrder',
+            'order',
+            'shippingFee',
+            'subtotal',
+            'finalTotal'
+        ));
+    }
 public function listHuy($userId)
     {
         $userOrder = User::where('id', $userId) // Lọc theo $userId

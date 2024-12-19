@@ -87,7 +87,9 @@
                                 @foreach ($product->variations as $variation)
                                     <div class="variation mb-3">
                                         <div class="variation-header d-flex justify-content-between">
-                                            <h5 class="variation-title">Biến thể {{ $loop->iteration }}</h5>
+                                        <h5 class="variation-title">
+                                                Biến thể: {{ $variation->color->color ?? 'Không rõ màu sắc' }} - {{ $variation->size->size ?? 'Không rõ kích thước' }}
+                                            </h5>
                                             <button type="button" class="btn btn-link" data-bs-toggle="modal"
                                                 data-bs-target="#variationModal{{ $variation->id }}">
                                                 <i class="fas fa-chevron-down"></i>

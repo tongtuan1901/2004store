@@ -51,7 +51,7 @@
                         <table class="table table-striped" id="">
                             <thead class="">
                                 <tr>
-                                    {{-- <th>ID</th> --}}
+                                <th>STT</th>
                                     <th>Tên tài khoản ngân hàng</th>
                                     {{-- <th>Amount</th> --}}
                                     <th>Thời gian gửi yêu cầu</th>
@@ -66,9 +66,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($layYeuCauNew as $item)
+                                @foreach ($layYeuCauNew as $key =>  $item)
                                     <tr>
-                                        {{-- <td>{{ $item->id }}</td> --}}
+                                         <td>{{ $key +1 }}</td> 
                                         <td>{{ $item->customer_name }}</td>
                                         {{-- <td>{{ $item->amount }}</td> --}}
                                         <td>{{ $item->transfer_time }}</td>

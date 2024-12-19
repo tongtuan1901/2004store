@@ -228,7 +228,7 @@
         <div class="header">
             <button class="back-button">Quay lại</button>
             @foreach ($bankCards as $index => $bankCard)
-                <h1>Nạp qua {{ $bankCard->bank_name }} <span class="mb-logo">⭐MB</span></h1>
+                <h1>Nạp qua {{ $bankCard->bank_name }} </h1>
         </div>
         <form action="{{ route('client-bank.transfer-request') }}" method="POST">
             @csrf

@@ -35,11 +35,12 @@
                     </th>
                     <th  style="width:125px">Mã đơn hàng</th>
                     <th>Sản phẩm</th>
-                    <th>Giá trị đơn hàng</th>
+                    <th> Tổng Giá trị đơn hàng</th>
                     <th>Địa chỉ</th>
                     <th>Ngày đặt</th>
                     <th class="text-center">Trạng thái</th>
                     <th style="width:100px">Phương thức thanh toán</th>
+                    
                     <th class="text-center">Thao tác</th>
                 </tr>
             </thead>
@@ -81,7 +82,7 @@
                                             
                                             {{-- Tên và thông tin sản phẩm --}}
                                             <div>
-                                                <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                 <br>
                                                 <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                 <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
