@@ -222,7 +222,7 @@
                                             
                                             {{-- Tên và thông tin sản phẩm --}}
                                             <div>
-                                                <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                 <br>
                                                 <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                 <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>

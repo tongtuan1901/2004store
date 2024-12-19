@@ -112,7 +112,7 @@
                                                             <p class="text-muted">Không có thông tin biến thể</p>
                                                         @endif
                                                         {{-- Hiển thị tên sản phẩm --}}
-                                                        <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                        <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                         <br>
                                                         <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                         <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
