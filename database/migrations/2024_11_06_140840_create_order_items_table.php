@@ -15,15 +15,23 @@ return new class extends Migration
             $table->id(); // Trường id tự động tăng
             $table->unsignedBigInteger('order_id'); // ID của đơn hàng
             $table->unsignedBigInteger('product_id'); // ID của sản phẩm
+            $table->foreignId('variation_id')->constrained('product_variations')->onDelete('cascade'); // Biến thể
             $table->integer('quantity'); // Số lượng sản phẩm trong đơn hàng
-            $table->decimal('price', 10, 2); // Giá tiền của sản phẩm
-            $table->string('image')->nullable();
+            $table->decimal('original_price', 10, 2); // Giá gốc
+            $table->decimal('price', 10, 2); // Giá 
+            $table->decimal('discount', 10, 2)->default(0); // Giá trị giảm giá
+            $table->decimal('final_price', 10, 2); // Giá cuối cùng sau giảm giá
+            $table->string('product_name'); // Tên sản phẩm
+            $table->string('variation_name')->nullable(); // Tên biến thể (size, màu sắc)
+            $table->string('category_name')->nullable(); // Tên danh mục sản phẩm
+            $table->string('brand_name')->nullable(); // Tên thương hiệu sản phẩm
+            $table->string('image')->nullable(); // Hình ảnh sản phẩm
             $table->timestamps(); // Tạo trường created_at và updated_at
-            $table->foreignId('variation_id')->constrained('product_variations')->onDelete('cascade');
+
             // Add foreign key constraints
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            
+
             // Index for optimization
             $table->index('order_id');
             $table->index('product_id');

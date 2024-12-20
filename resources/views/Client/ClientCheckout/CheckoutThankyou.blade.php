@@ -17692,7 +17692,10 @@
 									<div class="order-summary__header">
 										<div class="order-summary__title">
 											Đơn hàng #{{ $order->order_code }}
+<<<<<<< HEAD
+=======
 											
+>>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
 											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
@@ -17919,8 +17922,12 @@
                                     id="order-summary">
                                     <div class="order-summary__header">
                                         <div class="order-summary__title">
+<<<<<<< HEAD
+                                            Đơn hàng #{{ $order->order_code }}
+=======
                                         Đơn hàng #{{ $order->order_code }}
                                             
+>>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
                                         </div>
                                         <div class="order-summary__action hide-on-desktop unprintable">
                                             <a data-toggle="#order-summary"

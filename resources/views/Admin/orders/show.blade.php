@@ -57,7 +57,7 @@
                                                     <tr>
                                                         <td class="sherah-table__column-2 sherah-table__data-2">
                                                             <div class="sherah-table__product-name">
-                                                                <h4 class="sherah-table__product-name--title">{{ $item->product->name }}</h4>
+                                                                <h4 class="sherah-table__product-name--title">{{ $item->product_name }}</h4>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-1 sherah-table__data-1">
@@ -95,7 +95,7 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
+                                                                <p class="sherah-table__product-desc">{{ $item->brand_name }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
@@ -147,7 +147,7 @@
                                                     <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
                                                     <option value="Đang xử lý" {{ $order->status == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
                                                     <option value="Đang giao hàng" {{ $order->status == 'Đang giao hàng' ? 'selected' : '' }}>Đang giao hàng</option>
-                                                    <option value="Hoàn thành" {{ $order->status == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
+                                                    <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
                                                 </select>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">

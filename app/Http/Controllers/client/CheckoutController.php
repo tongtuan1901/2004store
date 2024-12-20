@@ -311,7 +311,25 @@ class CheckoutController extends Controller
         foreach ($cartItems as $item) {
             $productId = $item instanceof Cart ? $item->product_id : $item['product_id'];
             $variationId = $item instanceof Cart ? $item->variation_id : $item['variation_id'];
+            $quantity = $item instanceof Cart ? $item->quantity : $item['quantity'];
 
+              // Lấy thông tin sản phẩm và biến thể
+              $product = AdminProducts::with('category', 'brand')->findOrFail($productId); 
+    $variation = ProductVariation::with(['size', 'color'])->findOrFail($variationId);
+
+
+      // Tính toán giá
+      $originalPrice = $variation->price ?? $product->price;
+      $finalPrice = $originalPrice; // Giá cuối sau khi áp dụng giảm giá nếu có
+
+        // Tạo variation name từ size và color
+    $variationName = '';
+    if ($variation->size) {
+        $variationName .= 'Size: ' . $variation->size->size;
+    }
+    if ($variation->color) {
+        $variationName .= ($variationName ? ', ' : '') . 'Color: ' . $variation->color->color;
+    }
             if (!$productId || !AdminProducts::find($productId) || !$variationId || !ProductVariation::find($variationId)) {
                 return redirect()->back()->with('error', 'Sản phẩm không hợp lệ.');
             }
@@ -320,20 +338,25 @@ class CheckoutController extends Controller
                 ? ($item->variation->image->image_path ?? '')
                 : ($item['image'] ?? '');
 
-            OderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'variation_id' => $variationId,
-                'quantity' => $item instanceof Cart ? $item->quantity : $item['quantity'],
-                'price' => $item instanceof Cart
-                    ? ($item->variation->price ?? $item->product->price)
-                    : $item['price'],
-                'image' => $imagePath,
-            ]);
+                OderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'variation_id' => $variationId,
+                    'quantity' => $quantity,
+                    'original_price' => $originalPrice,
+                    'price' => $originalPrice, // Giá hiện tại
+                    'discount' => 0, // Có thể tính toán giảm giá nếu cần
+                    'final_price' => $finalPrice,
+                    'product_name' => $product->name,
+                    'variation_name' => $variationName,
+                    'category_name' => $product->category->name ?? null,
+                   'brand_name' => $product->brand->name ?? null, 
+                    'image' => $imagePath
+                ]);
 
             // Trừ số lượng sản phẩm trong kho
             $variation = ProductVariation::find($variationId);
-            $variation->quantity -= $item instanceof Cart ? $item->quantity : $item['quantity'];
+            $variation->quantity -= $quantity;
             $variation->save();
         }
 

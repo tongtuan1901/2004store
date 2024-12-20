@@ -17,6 +17,13 @@ class OderItem extends Model
         'price',
         'variation_id',
         'image',
+        'original_price',
+        'discount',
+        'final_price',
+        'product_name',
+        'variation_name',
+        'category_name',
+        'brand_name'
     ];
 
     public function product() {
@@ -31,6 +38,15 @@ class OderItem extends Model
     public function image()
     {
         return $this->belongsTo(ProductImage::class, 'image_id');
+    }
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'size_id');
+    }
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'color_id');
     }
 }
 

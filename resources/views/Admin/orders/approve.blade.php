@@ -71,7 +71,7 @@
                                         <tr>
                                             <td class="sherah-table__column-2 sherah-table__data-2">
                                                 <div class="sherah-table__product-name">
-                                                    <h4 class="sherah-table__product-name--title">{{ $item->product->name }}</h4>
+                                                    <h4 class="sherah-table__product-name--title">{{ $item->product_name }}</h4>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-1 sherah-table__data-1">
@@ -109,12 +109,12 @@
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">{{ $item->product->category->name }}</p>
+                                                    <p class="sherah-table__product-desc">{{ $item->category_name }}</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
+                                                    <p class="sherah-table__product-desc">{{ $item->brand_name }}</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3">
