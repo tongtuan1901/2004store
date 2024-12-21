@@ -66,6 +66,11 @@
                                     <p class="text-muted">{{ $order->shipping_time ?? 'Chưa cập nhật' }}</p>
                                 </div>
                                 <div class="status-item text-center">
+                                    <i class="fa-solid fa-people-carry-box fa-2x"></i>
+                                    <p class="mt-2"><strong>Đã giao hàng</strong></p>
+                                    <p class="text-muted">{{ $order->delivered_time ?? 'Chưa cập nhật' }}</p>
+                                </div>
+                                <div class="status-item text-center">
                                     <i class="fa fa-check-circle text-primary fa-2x"></i>
                                     <p class="mt-2"><strong>Hoàn thành</strong></p>
                                     <p class="text-muted">{{ $order->completed_time ?? 'Chưa cập nhật' }}</p>
@@ -100,37 +105,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($order->orderItems as $item)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$order->order_code}}</td>
-                                    <td>{{ $item->product->name }}</td>
-                                    <td>
-                                        @if ($item->variation && $item->variation->image)
-                                            <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" alt="Variation Image">
-                                        @else
-                                            <span class="text-muted">Không có hình ảnh</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        Size: {{ $item->variation->size->size ?? 'Không có' }} <br>
-                                        Màu: {{ $item->variation->color->color ?? 'Không có' }} <br>
-                                        Số lượng: {{ $item->quantity }}
-                                    </td>
-                                    <td>{{ number_format($item->variation->price * $item->quantity, 0, ',', '.') }} VND</td>
-                                    @if($order->status == 'Hoàn thành')
-                                        @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product->id))
-                                            <td>
-                                                <a href="{{ route('client.product.review.form', ['order' => $order->id, 'product' => $item->product->id]) }}" class="btn btn-outline-primary btn-sm">Đánh giá</a>
-                                            </td>
-                                        @else
-                                            <td>
-                                                <span class="text-muted">Đã đánh giá</span>
-                                            </td>
-                                        @endif
-                                    @endif
-                                </tr>
-                            @endforeach
+                        @foreach($order->orderItems as $item)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $order->order_code }}</td>
+        <td>{{ $item->product_name }}</td>
+        <td>
+            @if($item->image)
+                <img src="{{ asset('storage/' . $item->image) }}" 
+                     alt="{{ $item->product_name }}" 
+                     class="img-thumbnail" 
+                     style="max-width: 50px;">
+            @else
+                <span class="text-muted">No image</span>
+            @endif
+        </td>
+        <td>
+            <div>Size: {{ $item->variation->size->size ?? 'N/A' }}</div>
+            <div>Color: {{ $item->variation->color->color ?? 'N/A' }}</div>
+            <div>Số lượng : {{ $item->quantity }}</div>
+        </td>
+        <td>{{ number_format($item->price, 0, ',', '.') }} VND</td>
+        @if($order->status == 'Hoàn thành')
+            <td>
+                @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product_id))
+                    <a href="{{ route('client.product.review.form', [
+                        'order' => $order->id, 
+                        'product' => $item->product_id
+                    ]) }}" 
+                    class="btn btn-outline-primary btn-sm">
+                        Đánh giá
+                    </a>
+                @else
+                    <span class="text-muted">Đã đánh giá</span>
+                @endif
+            </td>
+        @endif
+    </tr>
+@endforeach
                         </tbody>
                     </table>
                 </div>
@@ -142,13 +154,11 @@
                         <tbody>
                         <tr>
     <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
-    <td class="text-end" style="width: 40%;">{{ number_format($order->orderItems->sum(function($item) { 
-        return $item->variation->price * $item->quantity;
-    }), 0, ',', '.') }} VND</td>
+    <td class="text-end" style="width: 40%;">{{ number_format($subtotal, 0, ',', '.') }} VND</td>
 </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phí vận chuyển</td>
-                                <td class="text-end" style="width: 40%;">40.000 VND</td>
+                                <td class="text-end" style="width: 40%;">{{ number_format($shippingFee, 0, ',', '.') }} VND</td>
                             </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Mã giảm giá</td>
@@ -160,17 +170,39 @@
                             </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Thành tiền</td>
-                                <td class="text-end text-primary fw-bold" style="width: 40%;">{{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }} VND</td>
+                                <td class="text-end text-primary fw-bold" style="width: 40%;">{{ number_format($finalTotal, 0, ',', '.') }} VND</td>
                             </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="text-align: right;">Phương thức thanh toán</td>
                                 <td class="text-end text-info">
                                     {{ $order->payment_method }}
                                     @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
-                                        <br><small class="text-success">(Đã thanh toán)</small>
+                                        <br><small class="text-success">(Đã thanh toán )</small>
                                     @endif
                                 </td>
                             </tr>
+                            @if ($order->status === 'Đã giao hàng')
+                            <tr>
+                                <td class="bg-secondary text-white" style="text-align: right;">Xác nhận đã nhận hàng</td>
+                                <td class="text-end text-info">
+                                    <p style="font-size: 10px;"> ( Nếu không bấm xác nhận thì <br> 
+                                        đơn hàng sẽ tự động xác nhận sau 3 ngày )</p>
+                                      <form action="{{route('orders.confirm', $order->id)}}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                            <input type="text" value="Hoàn thành" hidden>
+                                            <button type="submit" class="btn btn-success">Xác nhận</button>
+                                      </form>
+                                </td>
+                            </tr>
+                            @else
+                            <tr>
+                                <td class="bg-secondary text-white" style="text-align: right;">Xác nhận đã nhận hàng</td>
+                                <td class="text-end text-success">
+                                      <p>Đã xác nhận đơn hàng</p>
+                                </td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

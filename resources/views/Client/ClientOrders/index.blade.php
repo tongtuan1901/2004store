@@ -82,7 +82,7 @@
                                             
                                             {{-- Tên và thông tin sản phẩm --}}
                                             <div>
-                                                <strong>{{ $item->product->name ?? 'N/A' }}</strong>
+                                                <strong>{{ $item->product_name ?? 'N/A' }}</strong>
                                                 <br>
                                                 <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
                                                 <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
@@ -123,6 +123,9 @@
                         </td> --}}
                         <td class="truncate">
                             {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
+                            @endif
                         </td>
                         <td>
                             {{$order->address}}

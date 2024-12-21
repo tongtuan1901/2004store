@@ -152,62 +152,47 @@ public function approveIndex(Request $request)
     {
         $order = AdminOrder::findOrFail($id);
 
-        if ($order->status === 'Hoàn thành') {
-            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã hoàn thành, không thể cập nhật!');
+        if ($order->status === 'Đã giao hàng') {
+            return redirect()->route('admin-orders.index')->with('error', 'Trạng thái đơn hàng đã đã giao hàng, không thể cập nhật!');
         }
 
+ 
         $validStatusFlow = [
             'Chờ xử lý' => 'Đang xử lý',
             'Đang xử lý' => 'Đang giao hàng',
-            'Đang giao hàng' => 'Hoàn thành',
+            'Đang giao hàng' => 'Đã giao hàng',
+            'Đã giao hàng' => 'Hoàn thành',
         ];
 
-        if ($request->has('status')) {
-            $validated = $request->validate([
-                'status' => 'required|string|max:50',
-            ]);
-
-            $newStatus = $validated['status'];
-
-            if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
-                return redirect()->route('admin-orders.index')->with(
-                    'error',
-                    'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' → ', array_keys($validStatusFlow)) . ' → Hoàn thành.'
-                );
-            }
-            if ($newStatus === 'Đang xử lý' && $order->status === 'Chờ xử lý') {
-                $order->forceFill(['processing_time' => now(), 'status' => $newStatus])->save();
-            } elseif ($newStatus === 'Đang giao hàng' && $order->status === 'Đang xử lý') {
-                $order->forceFill(['shipping_time' => now(), 'status' => $newStatus])->save();
-            } elseif ($newStatus === 'Hoàn thành' && $order->status === 'Đang giao hàng') {
-                $order->forceFill(['completed_time' => now(), 'status' => $newStatus])->save();
-            }
-
-            $order->update(['status' => $newStatus]);
-            return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
-        }
-
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'total' => 'required|numeric',
             'status' => 'required|string|max:50',
-            'products' => 'required|array',
-            'products.*' => 'exists:products,id',
-            'quantities' => 'required|array',
-            'quantities.*' => 'integer|min:1',
         ]);
 
-        $order->update($validated);
-        $order->products()->detach();
-        foreach ($validated['products'] as $index => $productId) {
-            $order->products()->attach($productId, ['quantity' => $validated['quantities'][$index]]);
+        $newStatus = $validated['status'];
+
+        if (!isset($validStatusFlow[$order->status]) || $validStatusFlow[$order->status] !== $newStatus) {
+            return redirect()->route('admin-orders.index')->with(
+                'error',
+                'Trạng thái không hợp lệ! Bạn phải cập nhật theo thứ tự: ' . implode(' → ', array_keys($validStatusFlow))
+            );
         }
-        session()->put('cart_total', $order->total);
-        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được cập nhật thành công!');
+
+        $timestamps = [
+            'Đang xử lý' => 'processing_time',
+            'Đang giao hàng' => 'shipping_time',
+            'Đã giao hàng' => 'delivered_time',
+            'Hoàn thành' => 'completed_time',
+        ];
+
+        if (isset($timestamps[$newStatus])) {
+            $order->forceFill([$timestamps[$newStatus] => now(), 'status' => $newStatus])->save();
+        } else {
+            $order->update(['status' => $newStatus]);
+        }
+
+        return redirect()->route('admin-orders.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
     }
+
 
     public function approve($id)
     {

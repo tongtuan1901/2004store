@@ -40,13 +40,13 @@ class CheckoutThankyouController extends Controller
         switch ($order->payment_method) {
             case 'wallet':
                 $amountPaidByWallet = $finalTotal;
-                $finalTotal = 0; // Set to 0 if paid by wallet
+                // $finalTotal = 0; // Set to 0 if paid by wallet
                 break;
 
             case 'momo':
             case 'vnpay':
                 $amountPaidByOnline = $finalTotal;
-                $finalTotal = 0; // Set to 0 if paid by MOMO or VNPAY
+                // $finalTotal = 0; // Set to 0 if paid by MOMO or VNPAY
                 break;
 
             default:

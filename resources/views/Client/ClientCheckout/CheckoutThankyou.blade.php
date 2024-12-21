@@ -17650,7 +17650,7 @@
 </div>
 		</div>
 	</header>
-	<div class="content">
+	{{-- <div class="content">
 		<form>
 			<div class="wrap wrap--mobile-fluid">
 				<main class="main main--nosidebar">
@@ -17661,7 +17661,7 @@
 			<a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
 		</h1>
 
-</div>
+                        </div>
 					</header>
 					<div class="main__content">
 						<article class="row">
@@ -17692,7 +17692,10 @@
 									<div class="order-summary__header">
 										<div class="order-summary__title">
 											Đơn hàng #{{ $order->order_code }}
+<<<<<<< HEAD
+=======
 											
+>>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
 										</div>
 										<div class="order-summary__action hide-on-desktop unprintable">
 											<a data-toggle="#order-summary" data-toggle-class="order-summary--is-collapsed" class="expandable">
@@ -17709,9 +17712,7 @@
 														<td class="product__image">
 															<div class="product-thumbnail">
                                                             <div class="product-thumbnail__wrapper">
-                                                            <img src="{{ asset('storage/' . $item->image) }}" alt="" class="product-thumbnail__image">
-
-</div>
+                                                            <img src="{{ asset('storage/' . $item->image) }}" alt="" class="product-thumbnail__image"></div>
 																<span class="product-thumbnail__quantity unprintable">1</span>
 															</div>
 														</td>
@@ -17866,7 +17867,7 @@
 				</main>
 			</div>
 		</form>
-	</div>
+	</div> --}}
 
                 <h1 class="shop__name">
                     <a data-savepage-href="/" href="https://f1genz-model-fashion.mysapo.net/">2004Store</a>
@@ -17974,7 +17975,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="order-summary__section">
+                                        {{-- <div class="order-summary__section">
                                             <table class="total-line-table">
                                                 <tbody class="total-line-table__tbody">
 
@@ -18009,8 +18010,61 @@
 
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div> --}}
                                         <div class="order-summary__section">
+                                            <table class="total-line-table">
+                                                <tbody class="total-line-table__tbody">
+                                                
+                                                    <!-- Tạm tính -->
+                                                    <tr class="total-line total-line--subtotal">
+                                                        <th class="total-line__name">Tổng tiền hàng</th>
+                                                        <td class="total-line__price">
+                                                            {{ number_format($order->total - $shippingFee, 0, ',', '.') }}₫
+                                                        </td>
+                                                    </tr>
+                                        
+                                                    <!-- Phí vận chuyển -->
+                                                    <tr class="total-line total-line--shipping-fee">
+                                                        <th class="total-line__name">Phí vận chuyển</th>
+                                                        <td class="total-line__price">
+                                                            <span>{{ number_format($shippingFee, 0, ',', '.') }}₫</span>
+                                                        </td>
+                                                    </tr>
+                                        
+                                                    <!-- Nếu có mã giảm giá -->
+                                                    @if ($order->discount_code)
+                                                        <tr class="total-line total-line--discount-value">
+                                                            <th class="total-line__name">Mã giảm giá từ shop</th>
+                                                            <td class="total-line__price">
+                                                                @if ($order->discount_type == 'percentage')
+                                                                    -{{ $order->discount_value }}%
+                                                                @else
+                                                                    -{{ number_format($order->discount_value, 0, ',', '.') }}₫
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                        
+                                                    <!-- Số tiền trừ từ ví (Tổng tiền hàng + phí vận chuyển - Mã giảm giá từ shop) -->
+                                                    @if ($order->payment_method == 'wallet')
+                                                        <tr class="total-line total-line--wallet">
+                                                            <th class="total-line__name">Số tiền trừ từ ví</th>
+                                                            <td class="total-line__price">
+                                                                <!-- Tính tổng cộng sau khi đã giảm giá -->
+                                                                @php
+                                                                    $totalAfterDiscount = ($order->total - $shippingFee) + $shippingFee - $order->discount_value;
+                                                                @endphp
+                                                                {{ number_format($totalAfterDiscount, 0, ',', '.') }}₫
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                        
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        
+                                        {{-- <div class="order-summary__section">
                                             <table class="total-line-table">
                                                 <tbody class="total-line-table__tbody">
                                                     <tr class="total-line payment-due">
@@ -18020,12 +18074,34 @@
                                                         <td class="total-line__price">
                                                             <span
                                                                 class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
+                                                                @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                                                   <br><large class="text-success">(Đã thanh toán)</large>
+                                                                @endif
                                                         </td>
                                                     </tr>
 
                                                 </tbody>
                                             </table>
+                                        </div> --}}
+                                        <div class="order-summary__section">
+                                            <table class="total-line-table">
+                                                <tbody class="total-line-table__tbody">
+                                                    <tr class="total-line payment-due">
+                                                        <th class="total-line__name">
+                                                            <span class="payment-due__label-total">Tổng cộng</span>
+                                                        </th>
+                                                        <td class="total-line__price">
+                                                            <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
+                                                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                                                <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
+                                        
+                                        
                                     </div>
                                 </aside>
                             </div>

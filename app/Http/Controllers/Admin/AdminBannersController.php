@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminBannersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     const PATH_VIEW  = 'Admin.banners.';
     public function index()
     {
