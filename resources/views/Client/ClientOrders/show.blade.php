@@ -177,7 +177,7 @@
                                 <td class="text-end text-info">
                                     {{ $order->payment_method }}
                                     @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
-                                        <br><small class="text-success">(Đã thanh toán)</small>
+                                        <br><small class="text-success">(Đã thanh toán )</small>
                                     @endif
                                 </td>
                             </tr>
