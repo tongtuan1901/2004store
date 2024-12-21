@@ -99,6 +99,7 @@ use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 use App\Http\Controllers\client\ClientReviewsController;
 use App\Http\Controllers\client\ContactController;
+use App\Http\Controllers\client\couponsController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -486,6 +487,8 @@ Route::get('/users/search', [AdminUserController::class, 'search'])->name('users
 //search category
 Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
 
+//khuyến mại client
+Route::get('/khuyen-mai', [couponsController::class, 'index'])->name('khuyenMai.index');
 
 
 
