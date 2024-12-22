@@ -32,9 +32,11 @@ class ClientOrderControler extends Controller
         if ($order->status != 'Chờ xử lý') {
             return back()->withErrors('Đơn hàng không thể hủy vì đã chuyển sang trạng thái khác.');
         }
-        if (in_array($order->payment_method, ['wallet', 'vnpay','momo'])) {
+        if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
             $user = User::findOrFail($order->user_id);
-            $user->balance += $order->total; // Hoàn tiền vào ví
+            $refundAmount = $order->total - ($order->discount_value ?? 0);
+            $refundAmount = max(0, $refundAmount);
+            $user->balance += $refundAmount;
             $user->save();
         }
     

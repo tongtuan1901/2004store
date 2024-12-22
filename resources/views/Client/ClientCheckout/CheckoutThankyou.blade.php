@@ -17922,12 +17922,8 @@
                                     id="order-summary">
                                     <div class="order-summary__header">
                                         <div class="order-summary__title">
-<<<<<<< HEAD
-                                            Đơn hàng #{{ $order->order_code }}
-=======
                                         Đơn hàng #{{ $order->order_code }}
                                             
->>>>>>> 3dfbbbcfa4d1d774d406c8f756463517bd7f3c8a
                                         </div>
                                         <div class="order-summary__action hide-on-desktop unprintable">
                                             <a data-toggle="#order-summary"
@@ -18096,10 +18092,8 @@
                                                         </th>
                                                         <td class="total-line__price">
                                                             <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
-                                                            @if(in_array($order->payment_method, ['wallet']))
-                                                                <small class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</small>
-                                                            @elseif(in_array($order->payment_method, ['momo', 'vnpay']))
-                                                                <span class="text-success" style="margin-left: 10px;">{{ number_format($finalTotal, 0, ',', '.') }}đ</span>
+                                                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                                                <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
                                                             @endif
                                                         </td>
                                                     </tr>

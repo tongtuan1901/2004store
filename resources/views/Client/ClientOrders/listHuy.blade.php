@@ -237,9 +237,19 @@
                                 @endif
                             </div>
                         </td>
+                        {{-- <td class="truncate">
+                            {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                                                <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
+                                                            @endif
+                        </td> --}}
                         <td class="truncate">
                             {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                <large class="text-danger" style="color: red; margin-left: 10px;">(Đã hoàn tiền)</large>
+                            @endif
                         </td>
+                        
                         <td>
                             {{$order->address}}
                         </td>
