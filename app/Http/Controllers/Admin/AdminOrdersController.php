@@ -271,8 +271,7 @@ public function approveIndex(Request $request)
         $order->status = 'Hủy'; // Change status to "Hủy"
         $order->save();
 
-        // Redirect lại trang danh sách đơn hàng
-        return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
+        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được hủy');
     }
 public function listDonHangDaHuy()
 {

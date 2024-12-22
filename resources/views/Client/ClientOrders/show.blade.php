@@ -89,60 +89,60 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover" border="1" style="table-layout: fixed; width: 100%;">
                         <thead class="table-light">
                             <tr>
-                                <th>STT</th>
-                                <th>Mã đơn hàng</th>
+                                <th style="width:5%">STT</th>
+                                <th style="width:10%">Mã đơn hàng</th>
                                 <th>Sản phẩm</th>
-                                <th>Hình ảnh</th>
+                                <th style="width:10%">Hình ảnh</th>
                                 <th>Biến thể</th>
-                                <th>Giá</th>
+                                <th style="width:15%">Giá</th>
                                 <!-- <th>Giá đã giảm</th> -->
                                 @if($order->status == 'Hoàn thành')
-                                    <th>Thao tác</th>
+                                    <th style="width:9%">Thao tác</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($order->orderItems as $item)
-    <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td>{{ $order->order_code }}</td>
-        <td>{{ $item->product_name }}</td>
-        <td>
-            @if($item->image)
-                <img src="{{ asset('storage/' . $item->image) }}" 
-                     alt="{{ $item->product_name }}" 
-                     class="img-thumbnail" 
-                     style="max-width: 50px;">
-            @else
-                <span class="text-muted">No image</span>
-            @endif
-        </td>
-        <td>
-            <div>Size: {{ $item->variation->size->size ?? 'N/A' }}</div>
-            <div>Color: {{ $item->variation->color->color ?? 'N/A' }}</div>
-            <div>Số lượng : {{ $item->quantity }}</div>
-        </td>
-        <td>{{ number_format($item->price, 0, ',', '.') }} VND</td>
-        @if($order->status == 'Hoàn thành')
-            <td>
-                @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product_id))
-                    <a href="{{ route('client.product.review.form', [
-                        'order' => $order->id, 
-                        'product' => $item->product_id
-                    ]) }}" 
-                    class="btn btn-outline-primary btn-sm">
-                        Đánh giá
-                    </a>
-                @else
-                    <span class="text-muted">Đã đánh giá</span>
-                @endif
-            </td>
-        @endif
-    </tr>
-@endforeach
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $order->order_code }}</td>
+                                <td>{{ $item->product_name }}</td>
+                                <td>
+                                    @if($item->image)
+                                        <img src="{{ asset('storage/' . $item->image) }}" 
+                                            alt="{{ $item->product_name }}" 
+                                            class="img-thumbnail" 
+                                            style="max-width: 50px;">
+                                    @else
+                                        <span class="text-muted">No image</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div>Size: {{ $item->variation->size->size ?? 'N/A' }}</div>
+                                    <div>Color: {{ $item->variation->color->color ?? 'N/A' }}</div>
+                                    <div>Số lượng : {{ $item->quantity }}</div>
+                                </td>
+                                <td>{{ number_format($item->price, 0, ',', '.') }} VND</td>
+                                @if($order->status == 'Hoàn thành')
+                                    <td>
+                                        @if(!\App\Models\Review::hasUserReviewed(Auth::id(), $item->product_id))
+                                            <a href="{{ route('client.product.review.form', [
+                                                'order' => $order->id, 
+                                                'product' => $item->product_id
+                                            ]) }}" 
+                                            class="btn btn-outline-primary btn-sm">
+                                                Đánh giá
+                                            </a>
+                                        @else
+                                            <span class="text-muted">Đã đánh giá</span>
+                                        @endif
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -153,9 +153,9 @@
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
-    <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
-    <td class="text-end" style="width: 40%;">{{ number_format($subtotal, 0, ',', '.') }} VND</td>
-</tr>
+                            <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Tổng tiền</td>
+                            <td class="text-end" style="width: 40%;">{{ number_format($subtotal, 0, ',', '.') }} VND</td>
+                        </tr>
                             <tr>
                                 <td class="bg-secondary text-white" style="width: 60%; text-align: right;">Phí vận chuyển</td>
                                 <td class="text-end" style="width: 40%;">{{ number_format($shippingFee, 0, ',', '.') }} VND</td>
@@ -195,7 +195,7 @@
                                       </form>
                                 </td>
                             </tr>
-                            @else
+                            @elseif($order->status === 'Hoàn thành')
                             <tr>
                                 <td class="bg-secondary text-white" style="text-align: right;">Xác nhận đã nhận hàng</td>
                                 <td class="text-end text-success">
@@ -218,33 +218,47 @@
         <a href="{{ route('client.order', ['userId' => $userOrder->id]) }}" class="btn btn-secondary">Quay lại</a>
     </div>
 </div>
+
 <style>
-    .table {
-        table-layout: auto; /* Để bảng tự động điều chỉnh chiều rộng theo nội dung */
-        width: 100%; /* Đảm bảo bảng chiếm hết khung chứa */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        table-layout: fixed; /* Cố định độ rộng cột */
     }
 
-    .table th, .table td {
-        padding: 5px; /* Giảm padding để nội dung sát hơn */
-        text-align: center; /* Canh giữa nội dung */
-        vertical-align: middle; /* Canh giữa theo chiều dọc */
-        white-space: nowrap; /* Không xuống dòng */
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center; /* Căn giữa nội dung */
+        word-wrap: break-word; /* Tự động xuống dòng */
+        white-space: normal; /* Cho phép xuống dòng */
     }
 
-    .table img {
-        max-width: 50px; /* Cố định chiều rộng nhỏ gọn cho hình ảnh */
-        height: auto;
+    thead th {
+        background-color: #f8f9fa;
+        font-weight: bold;
     }
 
-    /* Điều chỉnh độ rộng từng cột */
-    .table th:nth-child(1), .table td:nth-child(1) { width: 15%; } /* Sản phẩm */
-    .table th:nth-child(2), .table td:nth-child(2) { width: 10%; } /* Hình ảnh */
-    .table th:nth-child(3), .table td:nth-child(3) { width: 10%; } /* Kích thước */
-    .table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Màu sắc */
-    .table th:nth-child(5), .table td:nth-child(5) { width: 10%; } /* Số lượng */
-    .table th:nth-child(6), .table td:nth-child(6) { width: 15%; } /* Giá */
-    .table th:nth-child(7), .table td:nth-child(7) { width: 15%; } /* Giá đã giảm */
-    .table th:nth-child(8), .table td:nth-child(8) { width: 15%; } /* Thao tác */
+    .img-thumbnail {
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+
+    .text-muted {
+        font-style: italic;
+        color: #6c757d;
+    }
 </style>
+
 
 @endsection

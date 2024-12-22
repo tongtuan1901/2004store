@@ -20,7 +20,7 @@ class AutoCompleteOrders extends Command
      *
      * @var string
      */
-    protected $description = 'Xác ';
+    protected $description = 'Xác nhận';
 
     /**
      * Execute the console command.
@@ -30,14 +30,12 @@ class AutoCompleteOrders extends Command
         $orders = AdminOrder::where('status', 'Đã giao hàng')
                             ->whereNull('completed_time')
                             ->where('delivered_time', '<=', Carbon::now()->subDays(1))
-                            ->get();
+                            ->update([
+                                'status' => 'Hoàn thành',
+                                'completed_time' => Carbon::now(),
+                            ]);
 
-        foreach ($orders as $order) {
-            $order->update([
-                'status' => 'Hoàn thành',
-                'completed_time' => Carbon::now(),
-            ]);
-            $this->info("Đơn hàng ID {$order->id} đã được chuyển trạng thái thành Hoàn thành.");
-        }
+        $this->info("Đơn hàng ID {$orders->id} đã được chuyển trạng thái thành Hoàn thành.");
     }
 }
+

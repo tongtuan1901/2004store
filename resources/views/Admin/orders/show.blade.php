@@ -160,6 +160,15 @@
                                                 </a>
                                             </div>
                                         </form>
+                                        @if($order->status == 'Đang giao hàng')
+                                        <form action="{{ route('admin.orders.cancel', $order->id) }}" method="POST" class="mb-3">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                            </div>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
