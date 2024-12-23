@@ -99,6 +99,7 @@ use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 use App\Http\Controllers\client\ClientReviewsController;
 use App\Http\Controllers\client\ContactController;
+use App\Http\Controllers\client\couponsController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -270,6 +271,7 @@ Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('addr
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::put('/orders/{id}/confirmOrder', [ClientOrderControler::class, 'confirmOrder'])->name('orders.confirm');
 Route::get('Client/orders/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::get('/orders/{id}/show', [ClientOrderControler::class, 'showOrder'])->name('orders.show');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
@@ -486,6 +488,8 @@ Route::get('/users/search', [AdminUserController::class, 'search'])->name('users
 //search category
 Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
 
+//khuyến mại client
+Route::get('/khuyen-mai', [couponsController::class, 'index'])->name('khuyenMai.index');
 
 
 
@@ -610,3 +614,5 @@ Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->nam
 
 
 Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin.orders.approve.index');
+
+

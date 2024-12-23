@@ -659,6 +659,9 @@
                             <li class="">
                                 <a href="{{route('user.contact')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
                             </li>
+                            <li class="">
+                                <a href="{{route('khuyenMai.index')}}" title="Khuyen mai" aria-label="Khuyến mại">Khuyến mại</a>
+                            </li>
                         </ul>
                     </nav>
                     <div class="header-menu-arrow">

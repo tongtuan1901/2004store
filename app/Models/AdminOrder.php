@@ -82,6 +82,9 @@ class AdminOrder extends Model
             $this->shipping_time = now();
         }
 
+        if ($this->status == 'Đã giao hàng' && !$this->delivered_time) {
+            $this->delivered_time = now();
+        }
         if ($this->status == 'Hoàn thành' && !$this->completed_time) {
             $this->completed_time = now();
         }

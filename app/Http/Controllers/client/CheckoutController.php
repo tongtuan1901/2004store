@@ -235,6 +235,36 @@ class CheckoutController extends Controller
             });
         }
 
+        // foreach ($cartItems as $item) {
+        //     $product = $item instanceof Cart ? $item->product : AdminProducts::find($item['product_id']);
+        //     if (!$product || $product->status == 'deleted') {
+        //         return redirect()->back()->with('error', 'Một hoặc nhiều sản phẩm trong giỏ hàng đã bị xóa.');
+        //     }
+        // }
+
+        // Kiểm tra sản phẩm đã bị xóa 
+        $validCartItems = [];
+        foreach ($cartItems as $item) {
+            $product = $item instanceof Cart ? $item->product : AdminProducts::find($item['product_id']);
+            if (!$product || $product->status == 'deleted') {
+
+                if ($item instanceof Cart) {
+                    Cart::where('id', $item->id)->delete(); 
+                }
+                continue; 
+            }
+            $validCartItems[] = $item;
+        }
+
+        // Kiểm tra nếu giỏ hàng không còn sản phẩm hợp lệ
+        if (empty($validCartItems)) {
+            return redirect()->back()->with('error', 'Giỏ hàng không còn sản phẩm hợp lệ.');
+        }
+
+        // Cập nhật giỏ hàng để chỉ chứa sản phẩm hợp lệ
+        $cartItems = $validCartItems;
+
+
         // Tính toán chi phí
         $shippingFee = 40000;
         $discountCode = $request->input('discount_code');
@@ -279,7 +309,18 @@ class CheckoutController extends Controller
                 return redirect()->back()->with('error', 'Không thể lưu giá trị giảm giá vào session.');
             }
 
-            return redirect()->back()->with('success', 'Áp dụng mã giảm giá thành công!');
+            if ($discount->type == 'percent') {
+                $discountValue =number_format( $discount->value); // Phần trăm giảm giá
+                $message = 'Áp dụng mã giảm giá thành công! Bạn được giảm ' . $discountValue . '% trên tổng giá trị.';
+            } elseif ($discount->type == 'fixed') {
+                $discountValue = number_format($discount->value, 0, ',', '.'); // Số tiền giảm
+                $message = 'Áp dụng mã giảm giá thành công! Bạn được giảm ' . $discountValue . ' VND.';
+            } else {
+                $message = 'Áp dụng mã giảm giá thành công!';
+            }
+            
+            return redirect()->back()->with('success', $message);
+            
         }
 
         $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
@@ -385,6 +426,7 @@ class CheckoutController extends Controller
             $user->balance -= $finalTotal;
             $user->save();
         }
+        
 
         // Xóa giỏ hàng/session sau khi đặt hàng thành công
         if (session()->has('buyNow')) {

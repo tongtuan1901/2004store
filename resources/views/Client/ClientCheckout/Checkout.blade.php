@@ -836,7 +836,7 @@
 												</tr>
 											</tbody>
 											<tfoot class="total-line-table__footer">
-												<tr class="total-line payment-due">
+												{{-- <tr class="total-line payment-due">
 													<th>Tổng cộng</th>
 													<td>
 														@if(session('discount_code'))
@@ -850,7 +850,36 @@
 
 														<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
 													</td>
-												</tr>
+												</tr> --}}
+                        <tr class="total-line payment-due">
+                          <th>Tổng cộng</th>
+                          <td>
+                              @if(session('discount_code'))
+                                  <!-- Giá trị ban đầu -->
+                                  <p>Giá trị ban đầu: {{ number_format($totalPrice + $shippingFee, 0, ',', '.') }}₫</p>
+                      
+                                  <!-- Mã giảm giá -->
+                                  <p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+                      
+                                  <!-- Giá trị giảm hoặc phần trăm -->
+                                  <p>
+                                      Giá trị giảm: 
+                                      @if(session('discount_type') === 'percentage')
+                                          -{{ session('discount_value') }}%
+                                      @else
+                                          -{{ number_format(session('discount_value'), 0, ',', '.') }}₫
+                                      @endif
+                                  </p>
+                      
+                                  <!-- Giá sau khi đã giảm -->
+                                  <p>Giá sau khi đã giảm: <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span></p>
+                              @else
+                                  <!-- Chỉ hiển thị tổng cộng nếu chưa có mã giảm giá -->
+                                  <span class="payment-due__price">{{ number_format($totalPrice + $shippingFee, 0, ',', '.') }}₫</span>
+                              @endif
+                          </td>
+                      </tr>
+                      
 											</tfoot>
 										</table>
 									</div>
