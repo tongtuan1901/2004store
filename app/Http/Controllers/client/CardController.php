@@ -124,6 +124,7 @@ class CardController extends Controller
 
         $cartItem = Cart::where('id', $id)
                        ->where('user_id', $userId)
+                       ->with('variation')
                        ->first();
 
         if (!$cartItem) {
@@ -134,7 +135,11 @@ class CardController extends Controller
         $currentQuantity = $cartItem->quantity;
 
         if ($action === 'increase') {
-            $cartItem->quantity = $currentQuantity + 1;
+            $newQuantity = $currentQuantity + 1;
+            if ($newQuantity > $cartItem->variation->quantity) {
+                return redirect()->back()->with('error', 'Số lượng yêu cầu vượt quá số lượng có sẵn.');
+            }
+            $cartItem->quantity = $newQuantity;
         } elseif ($action === 'decrease' && $currentQuantity > 1) {
             $cartItem->quantity = $currentQuantity - 1;
         }
