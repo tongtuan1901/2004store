@@ -28,14 +28,20 @@ class AutoCompleteOrders extends Command
     public function handle()
     {
         $orders = AdminOrder::where('status', 'Đã giao hàng')
-                            ->whereNull('completed_time')
-                            ->where('delivered_time', '<=', Carbon::now()->subDays(1))
-                            ->update([
-                                'status' => 'Hoàn thành',
-                                'completed_time' => Carbon::now(),
-                            ]);
+            ->whereNull('completed_time')
+            ->where('delivered_time', '<=', Carbon::now()->subDays(3))
+            ->get();
 
-        $this->info("Đơn hàng ID {$orders->id} đã được chuyển trạng thái thành Hoàn thành.");
+        foreach ($orders as $order) {
+            $order->update([
+                'status' => 'Hoàn thành',
+                'completed_time' => Carbon::now(),
+            ]);
+
+            $this->info("Đơn hàng ID {$order->id} đã được chuyển trạng thái thành Hoàn thành.");
+        }
+
+            $this->info("Hoàn thành việc xử lý " . count($orders) . " đơn hàng.");
     }
 }
 
