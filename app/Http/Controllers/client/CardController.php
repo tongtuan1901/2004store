@@ -106,7 +106,10 @@ class CardController extends Controller
 
         $cart = Cart::where('user_id', $userId)
                     ->with(['product', 'variation.size', 'variation.color'])
-                    ->get();
+                    ->get()
+                    ->filter(function ($item) {
+                        return $item->product && $item->product->exists && !$item->product->deleted;
+                    });
         return view('client.clientcard.card', compact('cart'));
     }
 
@@ -140,10 +143,11 @@ class CardController extends Controller
                        ->where('user_id', $userId)
                        ->with('variation')
                        ->first();
-
+        
         if (!$cartItem) {
             return redirect()->back()->with('error', 'Không tìm thấy sản phẩm trong giỏ hàng.');
         }
+        
 
         $action = $request->input('action');
         $currentQuantity = $cartItem->quantity;

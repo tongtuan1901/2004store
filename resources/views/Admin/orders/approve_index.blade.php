@@ -45,7 +45,7 @@
                                     <!-- Nút tìm kiếm và reset -->
                                     <div class="col-md-3 d-flex">
                                         <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
-                                        <a href="{{  route('admin-orders.approve.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+                                        {{-- <a href="{{  route('admin-orders.approve.index') }}" class="btn btn-secondary btn-sm">Reset</a> --}}
                                     </div>
                                 </div>
                             </form>

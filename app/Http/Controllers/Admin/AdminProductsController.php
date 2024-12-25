@@ -24,6 +24,7 @@ class AdminProductsController extends Controller
             ->withTrashed()
             ->select('products.*')
             ->get();
+
         $query = AdminProducts::query();
 
         if ($request->filled('search')) {

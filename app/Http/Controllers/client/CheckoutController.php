@@ -12,7 +12,9 @@ use App\Models\AdminProducts;
 use App\Models\OderItem;
 use App\Models\ProductVariation;
 use App\Mail\OrderConfirmationMail;
+use App\Models\CoupontYour;
 use App\Models\Discount;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
@@ -170,13 +172,32 @@ class CheckoutController extends Controller
         // Tính toán chi phí
         $cart = Cart::where('user_id', $userId)
             ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
-            ->get();
-
+            ->get()
+            ->filter(function ($item) {
+                return $item->product && $item->product->exists && !$item->product->deleted;
+            });
+            if ($cart->isEmpty()) {
+                return redirect()->back()->with('error', 'Không có sản phẩm nào trong giỏ hàng.');
+            }
         $email = auth()->user()->email;
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
 
-        return view('Client.clientcheckout.checkOut', compact('cart', 'email', 'addresses'));
+        //ma giam gia da luu
+        $productIds = $cart->pluck('product_id')->toArray();
+        $coupons = CoupontYour::where('user_id', $userId)
+            ->whereIn('product_id', $productIds)
+            ->whereHas('coupont', function ($query) {
+                $query->whereDate('expires_at', '>', Carbon::now());
+            })
+            ->with(['coupont' => function ($query) {
+                $query->whereDate('expires_at', '>', Carbon::now());
+            }])
+            ->get()
+            ->unique(function ($item) {
+                return $item->product_id . '-' . $item->couponts_id;
+            });
+        return view('Client.clientcheckout.checkOut', compact('cart', 'email', 'addresses','coupons'));
     }
 
     public function store(Request $request)
@@ -203,6 +224,8 @@ class CheckoutController extends Controller
             $totalPrice = array_sum(array_map(function ($item) {
                 return $item['price'] * $item['quantity'];
             }, $cartItems));
+           
+           
         } else {
             $cartItems = Cart::where('user_id', $userId)
                 ->with(['product', 'variation.size', 'variation.color', 'variation.image'])

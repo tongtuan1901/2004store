@@ -57,19 +57,25 @@ class ClientBanksController extends Controller
         $userId = auth()->id(); // Lấy ID của người dùng hiện tại
         $customerName = auth()->user()->name; // Lấy tên người dùng hiện tại
 
-        // Lưu trữ dữ liệu nạp tiền vào cơ sở dữ liệu
-        TransferRequest::create([
-            'user_id' => $userId,  // Thêm user_id vào dữ liệu
-            'customer_name' => $customerName,  // Thêm tên khách hàng vào dữ liệu
-            'amount' => $request->amount,
-            'transfer_content' => $request->transfer_content,
-            'transfer_time' => now(), // Lấy thời gian hiện tại
-            'balance' => 0, // Bạn có thể thêm logic tính số dư ở đây nếu cần
-        ]);
+    // Lấy ID của người dùng hiện tại
+    $userId = auth()->id();
+    // Lấy tên người dùng hiện tại
+    $customerName = auth()->user()->name;
 
-        // Chuyển hướng với thông báo thành công
-        return redirect()->back()->with('success', 'Yêu cầu nạp tiền đã được gửi.');
-    }
+    // Lưu trữ dữ liệu nạp tiền vào cơ sở dữ liệu
+    TransferRequest::create([
+        'user_id' => $userId,
+        'customer_name' => $customerName,
+        'amount' => $request->amount,
+        'transfer_content' => $request->transfer_content,
+        'transfer_time' => now(),
+        'balance' => 0,
+    ]);
+
+    // Chuyển hướng với thông báo thành công
+    return redirect()->back()->with('success', 'Yêu cầu nạp tiền đã được gửi.');
+}
+
 
     public function history()
     {

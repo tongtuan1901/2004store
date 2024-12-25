@@ -30,7 +30,10 @@
                                                             <div class="form-group__input">
                                                                 <input class="sherah-wc__form-input"
                                                                     placeholder="Mời nhập tên danh mục" type="text"
-                                                                    name="name" required>
+                                                                    name="name" >
+                                                                    @error('name')
+                                                                    <span style="color: red;">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -42,9 +45,12 @@
                                                                     class="image-preview-container"></div>
                                                                 <div class="upload-section">
                                                                     <input type="file" name="image" class="btn-check"
-                                                                        id="input-img" accept="image/*" required>
+                                                                        id="input-img" accept="image/*" >
                                                                     <label class="image-upload-label" for="input-img">Tải
                                                                         lên ảnh</label>
+                                                                        @error('image')
+                                                                        <span style="color: red;">{{ $message }}</span>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                         </div>

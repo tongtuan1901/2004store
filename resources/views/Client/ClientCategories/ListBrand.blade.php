@@ -218,9 +218,18 @@
                                                                     <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
                                                                     <input type="number" id="quantity-best-{{ $product->id }}" name="quantity" min="1" value="1" class="form-control" required>
                                                                 </div>
+                                                                <div id="quantity-warning-best-{{ $product->id }}" style="color: red; display: none;">
+                                                                    Vượt quá số lượng còn lại của biến thể.
+                                                                </div>
+                                                                
+                                        
+                                                                <div id="quantity-remaining-best-{{ $product->id }}" style="display: none;">
+                                                                    Số lượng còn lại: <span id="remaining-quantity-best-{{ $product->id }}"></span>
+                                                                </div>
 
                                                                 <button type="submit" class="ft1">Thêm vào giỏ</button>
                                                             </form>
+                                                            
                                                         @else
                                                             <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
                                                         @endif
@@ -234,6 +243,60 @@
                                                 <a href="{{ route('client-products.show', $product->id) }}">Xem chi tiết</a>
                                             </button>
                                         </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                var sizeSelect = document.getElementById('size-best-{{ $product->id }}');
+                                                var colorSelect = document.getElementById('color-best-{{ $product->id }}');
+                                                var quantityInput = document.getElementById('quantity-best-{{ $product->id }}');
+                                                var quantityWarning = document.getElementById('quantity-warning-best-{{ $product->id }}');
+                                                var quantityRemainingDiv = document.getElementById('quantity-remaining-best-{{ $product->id }}');
+                                                var remainingQuantitySpan = document.getElementById('remaining-quantity-best-{{ $product->id }}');
+                                        
+                                                function updateQuantityInfo() {
+                                                    var selectedSize = sizeSelect.value;
+                                                    var selectedColor = colorSelect.value;
+                                        
+                                                    if (selectedSize && selectedColor) {
+                                                        var availableQuantity = 0;
+                                        
+                                                        // Duyệt qua tất cả các biến thể để lấy số lượng còn lại
+                                                        @foreach ($product->variations as $variation)
+                                                            if (selectedSize == {{ $variation->size_id }} && selectedColor == {{ $variation->color_id }}) {
+                                                                availableQuantity = {{ $variation->quantity }};
+                                                            }
+                                                        @endforeach
+                                        
+                                                        // Hiển thị số lượng còn lại
+                                                        if (availableQuantity > 0) {
+                                                            quantityRemainingDiv.style.display = 'block';
+                                                            remainingQuantitySpan.textContent = availableQuantity;
+                                                        } else {
+                                                            quantityRemainingDiv.style.display = 'none';
+                                                        }
+                                        
+                                                        // Kiểm tra nếu số lượng nhập vào vượt quá số lượng còn lại
+                                                        if (parseInt(quantityInput.value) > availableQuantity) {
+                                                            quantityWarning.style.display = 'block';
+                                                        } else {
+                                                            quantityWarning.style.display = 'none';
+                                                        }
+                                        
+                                                        // Thiết lập giá trị tối đa của input số lượng
+                                                        quantityInput.setAttribute('max', availableQuantity);
+                                                    }
+                                                }
+                                        
+                                                // Lắng nghe sự kiện thay đổi của kích thước và màu
+                                                sizeSelect.addEventListener('change', updateQuantityInfo);
+                                                colorSelect.addEventListener('change', updateQuantityInfo);
+                                        
+                                                // Lắng nghe sự kiện thay đổi của input số lượng
+                                                quantityInput.addEventListener('input', updateQuantityInfo);
+                                        
+                                                // Kiểm tra ban đầu
+                                                updateQuantityInfo();
+                                            });
+                                        </script>
 
 
                                         </div>
