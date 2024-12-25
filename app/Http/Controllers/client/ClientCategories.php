@@ -55,6 +55,39 @@ class ClientCategories extends Controller
     $selectedColors = [];
     $selectedSizes = [];
 
+    return view("Client.ClientCategories.ListCategoriesAll", compact(
+        'categories',
+        'products',
+        'colors',
+        'sizes',
+        'selectedCategories',
+        'selectedPrices',
+        'selectedFilters',
+        'selectedColors',
+        'selectedSizes',
+        'selectedCategory'
+    ));
+}
+    public function listCategoryOne($id)
+{
+    $categories = Category::all(); // Lấy tất cả danh mục
+    $colors = Color::all();        // Lấy danh sách màu
+    $sizes = Size::all();          // Lấy danh sách kích thước
+
+    // Nếu có ID danh mục, lọc sản phẩm theo danh mục
+    if ($id) {
+        $products = AdminProducts::with(['brand', 'images'])
+            ->where('category_id', $id)
+            ->paginate(8); // Lọc theo category_id
+        $selectedCategory = Category::findOrFail($id); // Lấy danh mục được chọn
+    }
+
+    $selectedCategories = [];
+    $selectedPrices = [];
+    $selectedFilters = [];
+    $selectedColors = [];
+    $selectedSizes = [];
+
     return view("Client.ClientCategories.ListCategories", compact(
         'categories',
         'products',

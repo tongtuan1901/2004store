@@ -265,14 +265,22 @@ public function approveIndex(Request $request)
 
         return view('Admin.orders.showAddress',compact('user','addresses'));
     }
-    public function cancelOrder($orderId)
+    public function cancelOrder(Request $request, $orderId)
     {
         $order = AdminOrder::findOrFail($orderId);
-        $order->status = 'Hủy'; // Change status to "Hủy"
+        if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
+            $user = User::findOrFail($order->user_id);
+            $refundAmount = $order->total - ($order->discount_value ?? 0);
+            $refundAmount = max(0, $refundAmount);
+            $user->balance += $refundAmount;
+            $user->save();
+        }
+    
+        $order->status = 'Hủy';
+        $order->cancellation_reason = $request->cancellation_reason;
         $order->save();
 
-        // Redirect lại trang danh sách đơn hàng
-        return redirect()->back()->with('success', 'Đơn hàng đã được hủy');
+        return redirect()->route('admin-orders.index')->with('success', 'Đơn hàng đã được hủy');
     }
 public function listDonHangDaHuy()
 {

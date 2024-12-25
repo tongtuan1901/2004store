@@ -122,9 +122,12 @@
                                             <ul class="order-totals__list">
                                                 <li class="order-totals__list--sub">
                                                     <span>Tổng cộng:</span>
-                                                    <span class="order-totals__amount">{{ number_format($order->total)}} VNĐ</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total - 40000)}} VNĐ</span>
                                                 </li>
-
+                                                <li class="order-totals__list--sub">
+                                                    <span>Tiền ship:</span>
+                                                    <span class="order-totals__amount">+ 40,000 VNĐ</span>
+                                                </li>
                                                 <!-- Hiển thị giá trị giảm giá nếu có -->
                                                 @if ($order->discount_value > 0)
                                                     <li class="order-totals__list--sub">
@@ -160,6 +163,15 @@
                                                 </a>
                                             </div>
                                         </form>
+                                        @if($order->status == 'Đang giao hàng' || $order->status == 'Đã giao hàng')
+                                        <form action="{{ route('admin.orders.cancel', $order->id) }}" method="POST" class="mb-3">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                            </div>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

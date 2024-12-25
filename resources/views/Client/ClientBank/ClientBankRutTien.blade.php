@@ -16,7 +16,7 @@
                                         <div class="form-group">
                                             <label for="amountHistory">Số tiền hiện còn:</label>
                                             <input type="text" class="form-control" id="amountHistory" name="so_du" value="{{ number_format(Auth::check() ? Auth::user()->balance : 0, 0, ',', '.') }}">
-                                            
+
                                         </div>
                                         <div class="form-group">
                                             <label for="amount">Số tiền cần rút:</label>
@@ -74,13 +74,13 @@
                                         <input type="hidden" name="request_type" value="Rút tiền">
                                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                                         <input type="hidden" name="soDu" value="{{Auth::user()->balance}}">
-                                        
+
                                         <button type="submit" class="btn btn-success btn-block">Xác nhận rút tiền</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                
+
                         <!-- Cột phải: Bảng lịch sử rút tiền -->
                         <div class="col-md-6">
                             <div class="card">
@@ -115,6 +115,6 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 @endsection

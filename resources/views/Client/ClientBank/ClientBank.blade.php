@@ -280,7 +280,11 @@
 
                     <div class="input-row">
                         <label for="amount">Số tiền cần nạp:</label>
-                        <input type="number" id="amount" name="amount" placeholder="Nhập số tiền" required>
+                        <input type="number" id="amount" name="amount" placeholder="Nhập số tiền">
+                        <br> <br>
+                        @error('amount')
+                            <span style="color: red;">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <button type="submit" class="submit-button">Gửi yêu cầu</button>
