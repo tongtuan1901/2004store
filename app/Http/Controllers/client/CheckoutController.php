@@ -12,7 +12,9 @@ use App\Models\AdminProducts;
 use App\Models\OderItem;
 use App\Models\ProductVariation;
 use App\Mail\OrderConfirmationMail;
+use App\Models\CoupontYour;
 use App\Models\Discount;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
@@ -176,7 +178,21 @@ class CheckoutController extends Controller
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
 
-        return view('Client.clientcheckout.checkOut', compact('cart', 'email', 'addresses'));
+        //ma giam gia da luu
+        $productIds = $cart->pluck('product_id')->toArray();
+        $coupons = CoupontYour::where('user_id', $userId)
+            ->whereIn('product_id', $productIds)
+            ->whereHas('coupont', function ($query) {
+                $query->whereDate('expires_at', '>', Carbon::now());
+            })
+            ->with(['coupont' => function ($query) {
+                $query->whereDate('expires_at', '>', Carbon::now());
+            }])
+            ->get()
+            ->unique(function ($item) {
+                return $item->product_id . '-' . $item->couponts_id;
+            });
+        return view('Client.clientcheckout.checkOut', compact('cart', 'email', 'addresses','coupons'));
     }
 
     public function store(Request $request)

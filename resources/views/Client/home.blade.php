@@ -150,7 +150,7 @@
         <h3>List các nhóm sản phẩm nổi bật nhất</h3>
         <div class="home-collection_list-wrapper">
             @foreach ($categories as $category)
-                <a class="home-collection-list-item" href="{{ route('client-categories.index', ['id' => $category->id]) }}"
+                <a class="home-collection-list-item" href="{{ route('client.categories.one', ['id' => $category->id]) }}"
                     title="{{ $category->name }}">
                     <div class="home-collection-list-item-image-holder">
                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
