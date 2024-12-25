@@ -41,6 +41,20 @@ class CardController extends Controller
             return redirect()->back()->with('error', 'Biến thể sản phẩm không hợp lệ.');
         }
 
+        // Kiểm tra số lượng trong giỏ hàng hiện tại
+        $existingCartItem = Cart::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->where('variation_id', $variation->id)
+            ->first();
+
+        $currentCartQuantity = $existingCartItem ? $existingCartItem->quantity : 0;
+        $newTotalQuantity = $currentCartQuantity + $quantity;
+
+        // Kiểm tra nếu tổng số lượng vượt quá số lượng trong kho
+        if ($newTotalQuantity > $variation->quantity) {
+            return redirect()->back()->with('error', 'Số lượng yêu cầu vượt quá số lượng có sẵn trong kho.');
+        }
+
         if ($action === 'buyNow') {
             $cartItem = [
                 'product_id' => $productId,

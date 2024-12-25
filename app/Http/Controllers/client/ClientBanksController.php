@@ -44,6 +44,15 @@ class ClientBanksController extends Controller
     }
     public function storeTransferRequest(Request $request)
     {
+        $request->validate([
+            'amount' => 'required|numeric|min:10000',
+            
+        ], [
+            'amount.required' => 'Vui lòng nhập số tiền.',
+            'amount.numeric' => 'Số tiền phải là một con số.',
+            'amount.min' => 'Số tiền tối thiểu là 10,000.',
+           
+        ]);
         // Giả sử bạn đã xác thực người dùng (vì bạn đang sử dụng user_id)
         $userId = auth()->id(); // Lấy ID của người dùng hiện tại
         $customerName = auth()->user()->name; // Lấy tên người dùng hiện tại

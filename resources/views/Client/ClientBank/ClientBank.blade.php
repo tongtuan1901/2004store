@@ -1,6 +1,16 @@
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @extends('Client.layouts.paginate.master')
 
 @section('contentClient')
+
     <style>
         /* General Body Styles */
 
@@ -226,7 +236,7 @@
 
     <div class="container">
         <div class="header">
-            <button class="back-button">Quay lại</button>
+            <button class="back-button" href="{{ route('client-home.index') }}">Quay lại</button>
             @foreach ($bankCards as $index => $bankCard)
                 <h1>Nạp qua {{ $bankCard->bank_name }} </h1>
         </div>

@@ -80,8 +80,10 @@ class AdminInventoryController extends Controller
             'category_id' => 'required',
             'product_id' => 'required',
             'variation_id' => 'required',
-            'quantity_change' => 'required|integer',
+            'quantity_change' => 'required|integer|min:1',
             'note' => 'nullable|string',
+        ], [
+            'quantity_change.min' => 'Số lượng thay đổi phải lớn hơn hoặc bằng 1.', 
         ]);
     
         // Create a new inventory log entry with current timestamp
@@ -125,7 +127,15 @@ class AdminInventoryController extends Controller
     public function update(Request $request, $id)
     {
         $inventoryLog = InventoryLog::findOrFail($id);
-        
+        $request->validate([
+            'category_id' => 'required',
+            'product_id' => 'required',
+            'variation_id' => 'required',
+            'quantity_change' => 'required|integer|min:1',
+            'note' => 'nullable|string',
+        ], [
+            'quantity_change.min' => 'Số lượng thay đổi phải lớn hơn hoặc bằng 1.',
+        ]);
         // Lấy thông tin biến thể và số lượng thay đổi
         $variation = ProductVariation::findOrFail($request->variation_id);
         $quantityChange = $request->quantity_change;
@@ -155,15 +165,18 @@ class AdminInventoryController extends Controller
      */
     public function destroy($id)
     {
+        // Tìm bản ghi tồn kho theo ID
         $inventoryLog = InventoryLog::findOrFail($id);
-
-        // Điều chỉnh lại số lượng sản phẩm
-        $product = $inventoryLog->product;
-        $product->quantity -= $inventoryLog->quantity_change;
-        $product->save();
-
+    
+        // Tìm biến thể liên quan đến bản ghi
+        $variation = ProductVariation::findOrFail($inventoryLog->variation_id);
+    
+        $variation->quantity -= $inventoryLog->quantity_change;
+        $variation->save();
+    
+        // Xóa bản ghi tồn kho
         $inventoryLog->delete();
-
-        return redirect()->route('inventory.index')->with('success', 'Xóa bản ghi tồn kho thành công.');
+    
+        return redirect()->route('inventory.index')->with('success', 'Bản ghi tồn kho đã được xóa và số lượng sản phẩm đã được điều chỉnh.');
     }
 }

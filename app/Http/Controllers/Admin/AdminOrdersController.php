@@ -214,10 +214,21 @@ public function approveIndex(Request $request)
 
         return redirect()->route('admin-orders.index')->with('error', 'Đơn hàng không thể duyệt!');
     }
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $order = AdminOrder::findOrFail($id);
-        $order->delete();
+        
+        if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
+            $user = User::findOrFail($order->user_id);
+            $refundAmount = $order->total - ($order->discount_value ?? 0);
+            $refundAmount = max(0, $refundAmount);
+            $user->balance += $refundAmount;
+            $user->save();
+        }
+    
+        $order->status = 'Hủy';
+        $order->cancellation_reason = $request->cancellation_reason;
+        $order->save();
 
         return redirect()->route('admin-orders.approve.index')->with('success', 'Đơn hàng đã được xóa thành công!');
     }

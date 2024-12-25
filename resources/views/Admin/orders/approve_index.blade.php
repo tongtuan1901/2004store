@@ -6,6 +6,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sherah-body">
+                    @if (Session::has('success'))
+                                <div class="alert alert-danger">{{ Session::get('success') }}</div>
+                            @endif
                         <!-- Dashboard Inner -->
                         <div class="sherah-dsinner">
                             <div class="row mg-top-30">

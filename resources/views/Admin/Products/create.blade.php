@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.master')
 
 @section('contentAdmin')
@@ -6,7 +7,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sherah-body">
-
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                         <div class="sherah-dsinner">
                             <div class="row">
                                 <div class="col-12">

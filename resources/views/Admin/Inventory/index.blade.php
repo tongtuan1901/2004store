@@ -5,6 +5,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sherah-body">
+                    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
                         <!-- Dashboard Inner -->
                         <div class="sherah-dsinner">
                             <div class="row">

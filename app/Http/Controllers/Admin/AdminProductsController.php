@@ -60,7 +60,7 @@ class AdminProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
+            'price_sale' => 'nullable|numeric|lt:price',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'variation.size.*' => 'required|exists:sizes,id',
@@ -68,6 +68,9 @@ class AdminProductsController extends Controller
             'variation.quantity.*' => 'required|numeric',
             'variation.price.*' => 'required|numeric',
             'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            // Thông báo lỗi tùy chỉnh
+            'price_sale.lt' => 'Giá khuyến mãi phải nhỏ hơn giá gốc.',
         ]);
 
         // Lưu sản phẩm chính
@@ -139,20 +142,23 @@ class AdminProductsController extends Controller
     {
         $product = AdminProducts::findOrFail($id);
 
-        // Xác thực dữ liệu
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'variation.size.*' => 'required|exists:sizes,id',
-            'variation.color.*' => 'required|exists:colors,id',
-            'variation.quantity.*' => 'required|numeric',
-            'variation.price.*' => 'required|numeric',
-            'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ảnh sản phẩm chính
-        ]);
+       
+       // Xác thực dữ liệu
+       $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'price_sale' => 'nullable|numeric|lt:price',
+        'description' => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'variation.size.*' => 'required|exists:sizes,id',
+        'variation.color.*' => 'required|exists:colors,id',
+        'variation.quantity.*' => 'required|numeric',
+        'variation.price.*' => 'required|numeric',
+        'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ], [
+        // Thông báo lỗi tùy chỉnh
+        'price_sale.lt' => 'Giá khuyến mãi phải nhỏ hơn giá gốc.',
+    ]);
 
         // Cập nhật sản phẩm chính
         $product->update($request->only(['name', 'price', 'price_sale', 'description', 'category_id']));
