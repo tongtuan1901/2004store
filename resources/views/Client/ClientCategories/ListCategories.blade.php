@@ -443,7 +443,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                         @else
                             <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
                         @endif
-
+                        <style>
                                                 .shop-addLoop-button:hover,
                                                 .shop-quickview-button:hover {
                                                     background-color: #f8b4da !important;

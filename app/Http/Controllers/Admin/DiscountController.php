@@ -95,7 +95,7 @@ class DiscountController extends Controller
     // Lưu mã giảm giá mới
     public function store(Request $request)
     {   
-         $request->validate([
+        $request->validate([
             'code' => 'required|unique:Discounts|max:255',
             'type' => 'required|in:fixed,percent',
             'value' => 'required|numeric|min:0',
@@ -121,6 +121,13 @@ class DiscountController extends Controller
             'valid_to.date' => 'Ngày kết thúc phải là một ngày hợp lệ.',
             'valid_to.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
+        
+        // Kiểm tra nếu loại giảm giá là phần trăm và giá trị giảm vượt quá 100%
+        if ($request->input('type') === 'percent' && $request->input('value') > 100) {
+            return redirect()->back()->withErrors([
+                'value' => 'Giá trị giảm giá phần trăm không thể vượt quá 100%.'
+            ]);
+        }
 
     // Kiểm tra nếu ngày bắt đầu lớn hơn ngày kết thúc
     $validFrom = $request->input('valid_from');
@@ -151,11 +158,11 @@ class DiscountController extends Controller
         $request->validate([
             'code' => 'required|max:255|unique:Discounts,code,' . $id,
             'type' => 'required|in:fixed,percent',
-            'value' => 'required|numeric|min:0', // Đảm bảo giá trị giảm giá không âm
-            'min_order_value' => 'nullable|numeric|min:0', // Đảm bảo giá trị đơn hàng tối thiểu không âm
-            'max_usage' => 'nullable|integer|min:0', // Đảm bảo số lần sử dụng tối đa không âm
+            'value' => 'required|numeric|min:0',
+            'min_order_value' => 'nullable|numeric|min:0',
+            'max_usage' => 'nullable|integer|min:0',
             'valid_from' => 'required|date',
-            'valid_to' => 'required|date|after_or_equal:valid_from', // Ngày kết thúc phải sau hoặc bằng ngày bắt đầu
+            'valid_to' => 'required|date|after_or_equal:valid_from',
         ], [
             'code.required' => 'Mã giảm giá là bắt buộc.',
             'code.unique' => 'Mã giảm giá đã tồn tại.',
@@ -172,6 +179,13 @@ class DiscountController extends Controller
             'valid_to.date' => 'Ngày kết thúc phải là một ngày hợp lệ.',
             'valid_to.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
+        
+        // Kiểm tra nếu loại giảm giá là phần trăm và giá trị giảm vượt quá 100%
+        if ($request->input('type') === 'percent' && $request->input('value') > 100) {
+            return redirect()->back()->withErrors([
+                'value' => 'Giá trị giảm giá phần trăm không thể vượt quá 100%.'
+            ]);
+        }
 
         // Tìm và cập nhật giảm giá
         $discount = Discount::findOrFail($id);
