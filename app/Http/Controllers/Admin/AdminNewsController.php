@@ -65,7 +65,7 @@ class AdminNewsController extends Controller
     public function show(string $id)
     {
 
-        $new = News::all()->where('id',$id);
+        $new = News::findOrFail($id);
         return view('admin.new.show',compact('new'));
 
     }

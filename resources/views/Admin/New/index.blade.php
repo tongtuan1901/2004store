@@ -48,7 +48,8 @@
                                         </td>
                                         <td class="sherah-table__column-2 sherah-table__data-2">
                                             <div class="sherah-table__product-content">
-                                                <p class="sherah-table__product-desc">{!! nl2br(e($item->content)) !!}</p>
+                                                <p class="sherah-table__product-desc">{{ \Illuminate\Support\Str::limit(strip_tags($item->content), 50, '...') }}
+                                                </p>
                                             </div>
                                         </td>
                                         <td class="sherah-table__column-4 sherah-table__data-4">
@@ -99,8 +100,18 @@
                                                                 d="M266.724,107.63c0-.9,0-1.806,0-2.709a.806.806,0,0,1,.782-.912.818.818,0,0,1,.818.919q0,2.69,0,5.38a.822.822,0,0,1-.806.931c-.488,0-.792-.356-.794-.938C266.721,109.411,266.724,108.521,266.724,107.63Z"
                                                                 transform="translate(-97.561 -78.509)" />
                                                         </g>
-                                                    </svg></button>
+                                                    </svg></button>                                                    
                                                 </form>
+                                                <a href="{{ route('new.show', $item->id) }}"
+                                                    class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
+                                                    <svg class="sherah-color2__fill"
+                                                        xmlns="http://www.w3.org/2000/svg" width="18"
+                                                        height="18" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0-2C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-.5 17h-1v-1h1v1zm1-12h-2v6h2V5z"
+                                                            fill="#09ad95" />
+                                                    </svg>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>

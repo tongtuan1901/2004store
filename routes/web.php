@@ -324,7 +324,7 @@ Route::get('/new/{id}/edit', [AdminNewsController::class, 'edit'])->name('new.ed
 Route::post('/new/store', [AdminNewsController::class, 'store'])->name('new.store');
 Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('new.update');
 Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
-Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
+Route::get('new/{id}/show', [AdminNewsController::class, 'show'])->name('new.show');
 });
 
 //quên mật khẩu
