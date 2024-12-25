@@ -31,5 +31,8 @@ class AdminCoupons extends Model
     {
         return $this->belongsTo(AdminProducts::class);
     }
-
+    public function coupontYour()
+    {
+        return $this->hasMany(CoupontYour::class, 'couponts_id');
+    }
 }

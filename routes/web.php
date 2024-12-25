@@ -483,6 +483,7 @@ Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->na
 Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
+Route::get('/client/list-category-one/{id}', [ClientCategories::class, 'listCategoryOne'])->name('client.categories.one');
 //search user
 Route::get('/users/search', [AdminUserController::class, 'search'])->name('users.search');
 //search category
@@ -490,6 +491,7 @@ Route::get('admin/categories/search', [AdminCategoriesController::class, 'search
 
 //khuyến mại client
 Route::get('/khuyen-mai', [couponsController::class, 'index'])->name('khuyenMai.index');
+Route::post('/post-khuyen-mai', [couponsController::class, 'store'])->name('khuyenMai.store');
 
 
 
