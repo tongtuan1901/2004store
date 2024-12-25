@@ -24,6 +24,7 @@ class AdminProductsController extends Controller
             ->withTrashed()
             ->select('products.*')
             ->get();
+
         $query = AdminProducts::query();
 
         if ($request->filled('search')) {
@@ -57,19 +58,47 @@ class AdminProductsController extends Controller
     public function store(Request $request)
     {
         // Xác thực dữ liệu
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'variation.size.*' => 'required|exists:sizes,id',
-            'variation.color.*' => 'required|exists:colors,id',
-            'variation.quantity.*' => 'required|numeric',
-            'variation.price.*' => 'required|numeric',
-            'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0|gte:price_sale',
+                'price_sale' => 'nullable|numeric|min:0',
+                'description' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
+                'variation.size.*' => 'required|exists:sizes,id',
+                'variation.color.*' => 'required|exists:colors,id',
+                'variation.quantity.*' => 'required|numeric|min:0',
+                'variation.price.*' => 'required|numeric|min:0',
+                'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ],
+            [
+                'name.required' => 'Trường tên sản phẩm không được để trống.',
+                'price.required' => 'Trường giá không được để trống.',
+                'price.numeric' => 'Trường giá phải là một số hợp lệ.',
+                'price_sale.required' => 'Trường giá không được để trống.',
+                'price_sale.numeric' => 'Trường giá phải là một số hợp lệ.',
+                'price.min' => 'Giá không được nhỏ hơn 0.',
+                'price.gte' => 'Giá phải lớn hơn hoặc bằng giá khuyến mãi.',
+                'price_sale.numeric' => 'Giá khuyến mãi phải là một số hợp lệ.',
+                'price_sale.min' => 'Giá khuyến mãi không được nhỏ hơn 0.',
+                'description.required' => 'Trường mô tả không được để trống.',
+                'category_id.required' => 'Bạn cần chọn danh mục sản phẩm.',
+                'category_id.exists' => 'Danh mục không hợp lệ.',
+                'variation.size.*.required' => 'Trường kích thước là bắt buộc.',
+                'variation.size.*.exists' => 'Kích thước không hợp lệ.',
+                'variation.color.*.required' => 'Trường màu sắc là bắt buộc.',
+                'variation.color.*.exists' => 'Màu sắc không hợp lệ.',
+                'variation.quantity.*.required' => 'Trường số lượng là bắt buộc.',
+                'variation.quantity.*.numeric' => 'Số lượng phải là một số hợp lệ.',
+                'variation.quantity.*.min' => 'Số lượng không được nhỏ hơn 0.',
+                'variation.price.*.required' => 'Trường giá là bắt buộc.',
+                'variation.price.*.numeric' => 'Giá phải là một số hợp lệ.',
+                'variation.price.*.min' => 'Giá không được nhỏ hơn 0.',
+                'variation.image.*.image' => 'File tải lên phải là ảnh.',
+                'variation.image.*.mimes' => 'Ảnh phải thuộc định dạng: jpeg, png, jpg, gif.',
+                'variation.image.*.max' => 'Ảnh không được lớn hơn 2MB.',
+            ]
+        );
         // Lưu sản phẩm chính
         $product = AdminProducts::create($request->only(['name', 'price', 'price_sale', 'description', 'category_id', 'brand_id']));
         $this->uploadImages($request, $product->id);
@@ -142,16 +171,27 @@ class AdminProductsController extends Controller
         // Xác thực dữ liệu
         $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
+            'price' => 'required|numeric|min:0|gte:price_sale',
+            'price_sale' => 'nullable|numeric|min:0',
+            'introduction' => 'required|string',
             'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'variation.size.*' => 'required|exists:sizes,id',
-            'variation.color.*' => 'required|exists:colors,id',
-            'variation.quantity.*' => 'required|numeric',
-            'variation.price.*' => 'required|numeric',
-            'variation.image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ảnh sản phẩm chính
+            'quantity' => 'required|integer|min:0',
+            'variations.*.price' => 'nullable|numeric|min:0',
+            'variations.*.price_sale' => 'nullable|numeric|min:0',
+        ], [
+            'name.required' => 'Tiêu đề sản phẩm không được để trống.',
+            'price.required' => 'Giá sản phẩm không được để trống.',
+            'price.numeric' => 'Giá sản phẩm phải là một số.',
+            'price.min' => 'Giá sản phẩm không được để âm.',
+            'price.gte' => 'Giá phải lớn hơn hoặc bằng giá khuyến mãi.',
+            'price_sale.numeric' => 'Giá khuyến mãi phải là một số.',
+            'price_sale.min' => 'Giá khuyến mãi không được để âm.',
+            'introduction.required' => 'Giới thiệu không được để trống.',
+            'description.required' => 'Mô tả không được để trống.',
+            'quantity.required' => 'Số lượng không được để trống.',
+            'quantity.min' => 'Số lượng không được âm.',
+            'variations.*.price.min' => 'Giá ở biến thể không được để âm.',
+            'variations.*.price_sale.min' => 'Giá khuyến mãi ở biến thể không được để âm.',
         ]);
 
         // Cập nhật sản phẩm chính

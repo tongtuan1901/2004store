@@ -36,6 +36,13 @@ class AdminCategoriesController extends Controller
         $validateData = $request->validate([
             'name' => 'required|string|regex:/^[\pL\s]+$/u|max:255',
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+        ], [
+            'name.required' => 'Tên danh mục là bắt buộc.',
+            'name.regex' => 'Tên danh mục chỉ được phép chứa chữ cái và khoảng trắng.',
+            'name.max' => 'Tên danh mục không được vượt quá 255 ký tự.',
+            'image.image' => 'Ảnh phải là một tệp hình ảnh.',
+            'image.mimes' => 'Ảnh phải có định dạng: jpg, png, jpeg, gif.',
+            'image.max' => 'Ảnh không được vượt quá 2MB.',
         ]);
 
         if ($request->hasFile('image')) {
