@@ -691,6 +691,9 @@
 										<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
 											<use href="#spinner"></use>
 										</svg>
+
+
+
 									</button>
 									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
@@ -709,7 +712,7 @@
 					  <aside class="sidebar">
 						<div class="sidebar__header">
 							<h2 class="sidebar__title">
-								Đơn hàng (1 sản phẩm)
+								Đơn hàng 
 							</h2>
 						</div>
 						<div class="sidebar__content">
@@ -731,8 +734,10 @@
                     // Kiểm tra xem có phải là mua ngay không
                     $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
                 @endphp
+                
 
                 @foreach ($cartItems as $item)
+                @if($item->product && !$item->product->deleted)
                     <tr class="product">
                         <td class="product__image">
                             <div class="product-thumbnail">
@@ -783,6 +788,7 @@
                             @endif
                         </td>
                     </tr>
+                    @endif
                 @endforeach
                     </tbody>
                   </table>
@@ -800,116 +806,108 @@
 											<tbody class="total-line-table__tbody">
 												<tr class="total-line total-line--subtotal">
                           @php
-                          $totalPrice = 0;
-                          if (session()->has('buyNow')) {
-                              $buyNow = session('buyNow');
-                              $price = $buyNow['price'] ?? 0;
-                              $quantity = $buyNow['quantity'] ?? 0;
-                              $totalPrice = $price * $quantity;
-                          } else {
-                              foreach ($cartItems as $item) {
-                                  $price = 0;
-                                  $quantity = 0;
-                                  if (is_object($item)) {
-                                      $price = $item->variation->price ?? $item->product->price ?? 0;
-                                      $quantity = $item->quantity ?? 0;
-                                  }
-                                  elseif (is_array($item)) {
-                                      $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
-                                      $quantity = $item['quantity'] ?? 0;
-                                  }
-                                  $totalPrice += $price * $quantity;
-                              }
-                          }
-                          $shippingFee = 40000;
-                          $discountValue = session('discount_value', 0);
-                          $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
-                      @endphp
-                          <th class="total-line__name">
-														Tạm tính
-													</th>
-													<td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
-												</tr>
-												<tr class="total-line total-line--shipping-fee">
-													<th>Phí vận chuyển</th>
-													<td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
-												</tr>
-											</tbody>
-											<tfoot class="total-line-table__footer">
-												<tr class="total-line payment-due">
-													<th>Tổng cộng</th>
-													<td>
-														@if(session('discount_code'))
-															<p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
-															<p>Giá trị giảm: -{{ number_format(session('discount_value'), 0, ',', '.') }}₫</p>
-														@endif
+$totalPrice = 0;
+$shippingFee = 0;
+$cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
 
-														@if(session('discount_error'))
-															<p style="color: red;">{{ session('discount_error') }}</p>
-														@endif
+// Kiểm tra nếu là mua ngay
+if (session()->has('buyNow')) {
+    $buyNow = session('buyNow');
+    $price = $buyNow['price'] ?? 0;
+    $quantity = $buyNow['quantity'] ?? 0;
+    $totalPrice = $price * $quantity;
+} else {
+    // Lặp qua các mặt hàng trong giỏ hàng
+    foreach ($cartItems as $item) {
+        // Kiểm tra nếu sản phẩm tồn tại và chưa bị xóa
+        if (isset($item->product) && $item->product->deleted) {
+            continue; // Bỏ qua sản phẩm đã xóa
+        }
 
-														<span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
-													</td>
-												</tr>
+        $price = 0;
+        $quantity = 0;
+
+        // Nếu là đối tượng sản phẩm
+        if (is_object($item)) {
+            $price = $item->variation->price ?? $item->product->price ?? 0;
+            $quantity = $item->quantity ?? 0;
+        }
+        // Nếu là mảng
+        elseif (is_array($item)) {
+            $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
+            $quantity = $item['quantity'] ?? 0;
+        }
+
+        // Cộng dồn giá trị của sản phẩm vào tổng giá
+        $totalPrice += $price * $quantity;
+    }
+}
+
+// Kiểm tra nếu giỏ hàng trống, không tính phí vận chuyển
+if ($totalPrice > 0) {
+    $shippingFee = 40000; // Chỉ tính phí vận chuyển nếu có sản phẩm hợp lệ
+} else {
+    $shippingFee = 0; // Không tính phí vận chuyển khi giỏ hàng trống
+}
+
+$discountValue = session('discount_value', 0);
+
+// Tính tổng sau khi giảm giá và cộng phí vận chuyển
+$finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
+@endphp
+
+<tr class="total-line total-line--subtotal">
+    <th class="total-line__name">
+        Tạm tính
+    </th>
+    <td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
+</tr>
+<tr class="total-line total-line--shipping-fee">
+    <th>Phí vận chuyển</th>
+    <td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
+</tr>
+<tfoot class="total-line-table__footer">
+    <tr class="total-line payment-due">
+        <th>Tổng cộng</th>
+        <td>
+            @if(session('discount_code'))
+                <p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
+                <p>Giá trị giảm: -{{ number_format(session('discount_value'), 0, ',', '.') }}₫</p>
+            @endif
+
+            @if(session('discount_error'))
+                <p style="color: red;">{{ session('discount_error') }}</p>
+            @endif
+
+            <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
+        </td>
+    </tr>
 											</tfoot>
 										</table>
 									</div>
 									<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
-										<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
+										<button type="submit" id="btnCheckout" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
 											<span class="spinner-label">ĐẶT HÀNG</span>
 											<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
 												<use href="#spinner"></use>
 											</svg>
 										</button>
 										</form>
+                    
+                   
+                    
+                  
+                  
 
 									<a data-savepage-href="/cart" href="{{url('client-home')}}" class="previous-link">
 										<i class="previous-link__arrow">❮</i>
 										<span class="previous-link__content">Quay về giỏ hàng</span>
 									</a>
-									{{-- <div class="order-summary__section" id="discountCode">
-                    <h3 class="visually-hidden">Mã khuyến mại</h3>
-                    <div class="edit_checkout">
-                      <div class="fieldset">
-                        <div class="field">
-                          <div class="field__input-btn-wrapper">
-                            <div class="field__input-wrapper">
-                              <form action="{{ route('client-checkout.store') }}" method="POST">
-                                @csrf
-                                <div class="field__input-wrapper">
-                                  <input name="discount_code" id="discount_code" type="text" class="field__input" autocomplete="off" oninput="toggleApplyButton()" placeholder="Nhập mã giảm giá">
-                                </div>
-                                <button class="field__input-btn btn" type="submit" id="applyDiscountButton">
-                                  <span class="spinner-label">Áp dụng</span>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-                                    <use href="#spinner"></use>
-                                  </svg>
-                                </button>
-                              </form>
-
-                              <!-- Nút Xóa mã giảm giá -->
-                              @if(session('discount_code'))
-                                <form action="{{ route('client-checkout.removeDiscount') }}" method="POST" style="display: inline;">
-                                  @csrf
-                                  <button type="submit" class="btn btn-danger">Xoá mã giảm giá</button>
-                                </form>
-                              @endif
-                            </div>
-
-                            <script>
-                              function toggleApplyButton()
-                              {
-                              const discountCode = document.getElementById('discount_code').value;
-                              const applyButton = document.getElementById('applyDiscountButton');
-                              applyButton.disabled = !discountCode.trim();
-                              }
-                              </script>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> --}}
+									
 								</div>
+                
+              
+              
 								<div id="common-alert-sidebar" data-tg-refresh="refreshError">
 
                   <div class="order-summary__section" id="discountCode">
@@ -976,6 +974,7 @@
 
 			</div>
 		</form>
+    
 
 
 		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

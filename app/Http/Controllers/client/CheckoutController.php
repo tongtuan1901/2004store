@@ -183,8 +183,13 @@ class CheckoutController extends Controller
         // Tính toán chi phí
         $cart = Cart::where('user_id', $userId)
             ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
-            ->get();
-
+            ->get()
+            ->filter(function ($item) {
+                return $item->product && $item->product->exists && !$item->product->deleted;
+            });
+            if ($cart->isEmpty()) {
+                return redirect()->back()->with('error', 'Không có sản phẩm nào trong giỏ hàng.');
+            }
         $email = auth()->user()->email;
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
@@ -206,6 +211,8 @@ class CheckoutController extends Controller
             $totalPrice = array_sum(array_map(function ($item) {
                 return $item['price'] * $item['quantity'];
             }, $cartItems));
+           
+           
         } else {
             $cartItems = Cart::where('user_id', $userId)
                 ->with(['product', 'variation.size', 'variation.color', 'variation.image'])

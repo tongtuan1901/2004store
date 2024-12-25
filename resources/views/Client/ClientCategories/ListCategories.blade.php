@@ -313,105 +313,7 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                     <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
                         <!-- SVG icon for wishlist button -->
                     </button>
-                    {{-- <style>
-                        /* Modal Styles */
-                        .modal {
-                            display: none;
-                            position: fixed;
-                            z-index: 1000;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            height: 100%;
-                            overflow: auto;
-                            background-color: rgba(0, 0, 0, 0.5);
-                        }
-
-                        .modal-content {
-                            background-color: #fff;
-                            margin: 10% auto;
-                            padding: 20px;
-                            border-radius: 8px;
-                            width: 90%;
-                            max-width: 500px;
-                            position: relative;
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                        }
-
-                        .close {
-                            position: absolute;
-                            top: 10px;
-                            right: 15px;
-                            color: #333;
-                            font-size: 24px;
-                            font-weight: bold;
-                            cursor: pointer;
-                        }
-
-                        .form-group {
-                            margin-bottom: 15px;
-                        }
-
-                        .form-group label {
-                            display: block;
-                            margin-bottom: 5px;
-                            font-weight: bold;
-                        }
-
-                        .form-group select,
-                        .form-group input {
-                            width: 100%;
-                            padding: 8px;
-                            border: 1px solid #ccc;
-                            border-radius: 4px;
-                            font-size: 14px;
-                        }
-
-                        .ft1 {
-                            display: inline-block;
-                            padding: 10px 20px;
-                            background-color: #007bff;
-                            color: #fff;
-                            border: none;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-align: center;
-                            font-size: 14px;
-                        }
-
-                        .shop-addLoop-button {
-                            display: inline-block;
-                            padding: 10px 15px;
-                            background-color: #28a745;
-                            color: #fff;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-decoration: none;
-                        }
-
-                        .shop-addLoop-button:hover {
-                            background-color: #218838;
-                        }
-
-                        .shop-quickview-button {
-                            display: inline-block;
-                            padding: 10px 15px;
-                            background-color: #ffc107;
-                            color: #333;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-decoration: none;
-                        }
-
-                        .shop-quickview-button:hover {
-                            background-color: #e0a800;
-                        }
-
-                        /* Toggle Modal */
-                        .modal-toggle:checked ~ .modal {
-                            display: block;
-                        }
-                    </style> --}}
+                    
                     <style>
                         .slide-image {
                             height: 100px;
@@ -513,9 +415,70 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                                     <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
                                     <input type="number" id="quantity-best-{{ $product->id }}" name="quantity" min="1" value="1" class="form-control" required>
                                 </div>
+                                <div id="quantity-warning-best-{{ $product->id }}" style="color: red; display: none;">
+                                    Vượt quá số lượng còn lại của biến thể.
+                                </div>
+        
+                                <div id="quantity-remaining-best-{{ $product->id }}" style="display: none;">
+                                    Số lượng còn lại: <span id="remaining-quantity-best-{{ $product->id }}"></span>
+                                </div>
 
                                 <button type="submit" class="ft1">Thêm vào giỏ</button>
                             </form>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var sizeSelect = document.getElementById('size-best-{{ $product->id }}');
+                                    var colorSelect = document.getElementById('color-best-{{ $product->id }}');
+                                    var quantityInput = document.getElementById('quantity-best-{{ $product->id }}');
+                                    var quantityWarning = document.getElementById('quantity-warning-best-{{ $product->id }}');
+                                    var quantityRemainingDiv = document.getElementById('quantity-remaining-best-{{ $product->id }}');
+                                    var remainingQuantitySpan = document.getElementById('remaining-quantity-best-{{ $product->id }}');
+                            
+                                    function updateQuantityInfo() {
+                                        var selectedSize = sizeSelect.value;
+                                        var selectedColor = colorSelect.value;
+                            
+                                        if (selectedSize && selectedColor) {
+                                            var availableQuantity = 0;
+                            
+                                            // Duyệt qua tất cả các biến thể để lấy số lượng còn lại
+                                            @foreach ($product->variations as $variation)
+                                                if (selectedSize == {{ $variation->size_id }} && selectedColor == {{ $variation->color_id }}) {
+                                                    availableQuantity = {{ $variation->quantity }};
+                                                }
+                                            @endforeach
+                            
+                                            // Hiển thị số lượng còn lại
+                                            if (availableQuantity > 0) {
+                                                quantityRemainingDiv.style.display = 'block';
+                                                remainingQuantitySpan.textContent = availableQuantity;
+                                            } else {
+                                                quantityRemainingDiv.style.display = 'none';
+                                            }
+                            
+                                            // Kiểm tra nếu số lượng nhập vào vượt quá số lượng còn lại
+                                            if (parseInt(quantityInput.value) > availableQuantity) {
+                                                quantityWarning.style.display = 'block';
+                                            } else {
+                                                quantityWarning.style.display = 'none';
+                                            }
+                            
+                                            // Thiết lập giá trị tối đa của input số lượng
+                                            quantityInput.setAttribute('max', availableQuantity);
+                                        }
+                                    }
+                            
+                                    // Lắng nghe sự kiện thay đổi của kích thước và màu
+                                    sizeSelect.addEventListener('change', updateQuantityInfo);
+                                    colorSelect.addEventListener('change', updateQuantityInfo);
+                            
+                                    // Lắng nghe sự kiện thay đổi của input số lượng
+                                    quantityInput.addEventListener('input', updateQuantityInfo);
+                            
+                                    // Kiểm tra ban đầu
+                                    updateQuantityInfo();
+                                });
+                            </script>
                         @else
                             <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
                         @endif

@@ -1,127 +1,152 @@
 @extends('Admin.layouts.master')
 @section('contentAdmin')
-    @if (session('success'))
-        <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
 
-    @if (session('error'))
-        <div class="bg-red-100 text-red-700 p-2 rounded mb-4">
-            {{ session('error') }}
-        </div>
-    @endif
-    <section class="sherah-adashboard sherah-show">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="sherah-body">
-                        <!-- Dashboard Inner -->
-                        <div class="sherah-dsinner">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="sherah-breadcrumb mg-top-30">
-                                        <h2 class="sherah-breadcrumb__title">Danh sách khách hàng</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
-                                <div class="sherah-table p-0">
-                                    <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3">
-                                        <!-- sherah Table Head -->
-                                        <thead class="sherah-table__head">
-                                            <tr>
-                                                <th class="sherah-table__column-1 sherah-table__h1">STT</th>
-                                                <th class="sherah-table__column-1 sherah-table__h1">Họ và tên</th>
-                                                <th class="sherah-table__column-2 sherah-table__h2">Email</th>
-                                                <th class="sherah-table__column-3 sherah-table__h3">Số điện thoại</th>
-                                                <th class="sherah-table__column-4 sherah-table__h4">Mật khẩu</th>
-                                                <th class="sherah-table__column-5 sherah-table__h5">Hoạt động</th>
+@if(session('success'))
+    <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
+        {{ session('success') }}
+    </div>
+@endif
 
-                                            </tr>
-                                        </thead>
-                                        <tbody class="sherah-table__body">
-                                            @foreach ($users as $k => $user)
-                                                <tr>
-
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
-                                                        <div class="sherah-table__vendor">
-                                                            <h4 class="sherah-table__vendor--title"><a
-                                                                    href='vendor-profile.html'> {{ ++$k }}</a></h4>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <div class="sherah-table__product-content">
-                                                            <p class="sherah-table__product-desc">{{ $user->name }}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
-                                                        <div class="sherah-table__product-content">
-                                                            <p class="sherah-table__product-desc">{{ $user->email }}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
-                                                        <div class="sherah-table__product-content">
-                                                            <p class="sherah-table__product-desc">
-                                                                {{ $user->phone_number ?? 'N/A' }}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-6 sherah-table__data-6">
-                                                        <div class="sherah-table__product-content">
-                                                            <p class="sherah-table__product-desc">***********</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="sherah-table__column-6 sherah-table__data-6">
-                                                        @if ($user->trashed())
-                                                            <a href="{{ route('users.restore', $user->id) }}"
-                                                                class="btn btn-success btn-sm">Khôi phục</a>
-                                                        @else
-                                                            <!-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a> -->
-                                                            <form action="{{ route('users.destroy', $user->id) }}"
-                                                                method="post" style="display:inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="sherah-table__action sherah-color2"
-                                                                    style="border: none; background: none;"
-                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">
-                                                                    <svg class="sherah-color2__fill"
-                                                                        xmlns="http://www.w3.org/2000/svg" width="16.247"
-                                                                        height="18.252" viewBox="0 0 16.247 18.252">
-                                                                        <g id="Icon"
-                                                                            transform="translate(-160.007 -18.718)">
-                                                                            <path id="Path_484" data-name="Path 484"
-                                                                                d="M185.344,88.136c0,1.393,0,2.786,0,4.179-.006,1.909-1.523,3.244-3.694,3.248q-3.623.007-7.246,0c-2.15,0-3.682-1.338-3.687-3.216q-.01-4.349,0-8.7a.828.828,0,0,1,.822-.926.871.871,0,0,1,1,.737c.016.162.006.326.006.489q0,4.161,0,8.321c0,1.061.711,1.689,1.912,1.69q3.58,0,7.161,0c1.2,0,1.906-.631,1.906-1.695q0-4.311,0-8.622a.841.841,0,0,1,.708-.907.871.871,0,0,1,1.113.844C185.349,85.1,185.343,86.618,185.344,88.136Z"
-                                                                                transform="translate(-9.898 -58.597)" />
-                                                                            <path id="Path_485" data-name="Path 485"
-                                                                                d="M164.512,21.131c0-.517,0-.98,0-1.443.006-.675.327-.966,1.08-.967q2.537,0,5.074,0c.755,0,1.074.291,1.082.966.005.439.005.878.009,1.317a.615.615,0,0,0,.047.126h.428c1,0,2,0,3,0,.621,0,1.013.313,1.019.788s-.4.812-1.04.813q-7.083,0-14.165,0c-.635,0-1.046-.327-1.041-.811s.4-.786,1.018-.789C162.165,21.127,163.3,21.131,164.512,21.131Zm1.839-.021H169.9v-.764h-3.551Z"
-                                                                                transform="translate(0 0)" />
-                                                                            <path id="Path_486" data-name="Path 486"
-                                                                                d="M225.582,107.622c0,.9,0,1.806,0,2.709a.806.806,0,0,1-.787.908.818.818,0,0,1-.814-.924q0-2.69,0-5.38a.82.82,0,0,1,.81-.927.805.805,0,0,1,.79.9C225.585,105.816,225.582,106.719,225.582,107.622Z"
-                                                                                transform="translate(-58.483 -78.508)" />
-                                                                            <path id="Path_487" data-name="Path 487"
-                                                                                d="M266.724,107.63c0-.9,0-1.806,0-2.709a.806.806,0,0,1,.782-.912.818.818,0,0,1,.818.919q0,2.69,0,5.38a.822.822,0,0,1-.806.931c-.488,0-.792-.356-.794-.938C266.721,109.411,266.724,108.521,266.724,107.63Z"
-                                                                                transform="translate(-97.561 -78.509)" />
-                                                                        </g>
-                                                                    </svg>
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    </td>
-
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+@if(session('error'))
+    <div class="bg-red-100 text-red-700 p-2 rounded mb-4">
+        {{ session('error') }}
+    </div>
+@endif
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="sherah-breadcrumb mg-top-30">
+                                    <h2 class="sherah-breadcrumb__title">Danh sách khách hàng</h2>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Dashboard Inner -->
+
+                        <!-- Search Filters -->
+                        <div class="col-md-12">
+                            <input type="text" id="searchKeyword" name="keyword" class="form-control" placeholder="Tìm theo họ tên, email hoặc số điện thoại">
+                            <button type="button" id="clearSearch" class="btn btn-secondary btn-sm">Xóa tìm kiếm</button>
+                        </div>
+
+                        <div class="sherah-page-inner sherah-default-bg sherah-border mg-top-25">
+                            <div class="sherah-table p-0">
+                                <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3">
+                                    <!-- sherah Table Head -->
+                                    <thead class="sherah-table__head">
+                                        <tr>
+                                            <th class="sherah-table__column-1 sherah-table__h1">STT</th>
+                                            <th class="sherah-table__column-1 sherah-table__h1">Họ và tên</th>
+                                            <th class="sherah-table__column-2 sherah-table__h2">Email</th>
+                                            <th class="sherah-table__column-3 sherah-table__h3">Số điện thoại</th>
+                                            <th class="sherah-table__column-4 sherah-table__h4">Mật khẩu</th> <!-- Thêm cột mật khẩu -->
+                                            <th class="sherah-table__column-5 sherah-table__h5">Hoạt động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userTableBody" class="sherah-table__body">
+                                        @foreach ($users as $k => $user)
+                                            <tr>
+                                                <td>{{ ++$k }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone_number ?? 'N/A' }}</td>
+                                                <td class="sherah-table__column-6 sherah-table__data-6">
+                                                    <div class="sherah-table__product-content">
+                                                        <p class="sherah-table__product-desc">
+                                                            {{ str_repeat('*', 8) }} <!-- Hiển thị mật khẩu dạng dấu * -->
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if($user->trashed())
+                                                        <a href="{{ route('users.restore', $user->id) }}" class="btn btn-success btn-sm">Restore</a>
+                                                    @else
+                                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                                        </form>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+                    <!-- End Dashboard Inner -->
                 </div>
-
-
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchKeyword');
+    const userTableBody = document.getElementById('userTableBody');
+    const clearSearchButton = document.getElementById('clearSearch');
+
+    // Hàm gửi AJAX request để tìm kiếm người dùng
+    function searchUsers(keyword) {
+        fetch(`{{ route('users.search') }}?keyword=${keyword}`)
+            .then(response => response.json())
+            .then(data => {
+                userTableBody.innerHTML = ''; // Xóa dữ liệu cũ
+                if (data.length > 0) {
+                    data.forEach((user, index) => {
+                        const row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.phone_number ?? 'N/A'}</td>
+                                <td>
+                                    <div class="sherah-table__product-content">
+                                        <p class="sherah-table__product-desc">${'*'.repeat(8)}</p> <!-- Hiển thị mật khẩu dạng * -->
+                                    </div>
+                                </td>
+                                <td>
+                                    ${user.deleted_at ? 
+                                        `<a href="/users/restore/${user.id}" class="btn btn-success btn-sm">Restore</a>` :
+                                        `<form action="/users/${user.id}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>`}
+                                </td>
+                            </tr>
+                        `;
+                        userTableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                } else {
+                    userTableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy kết quả</td></tr>';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Sự kiện tìm kiếm khi nhập vào ô input
+    searchInput.addEventListener('input', function () {
+        const keyword = searchInput.value;
+        searchUsers(keyword);
+    });
+
+    // Sự kiện xóa tìm kiếm
+    clearSearchButton.addEventListener('click', function () {
+        searchInput.value = '';  // Xóa nội dung ô tìm kiếm
+        searchUsers('');  // Gửi yêu cầu tìm kiếm với từ khóa rỗng để lấy danh sách đầy đủ người dùng
+    });
+
+    // Nếu có từ khóa tìm kiếm ban đầu, thực hiện tìm kiếm ngay khi trang tải xong
+    if (searchInput.value.trim() !== '') {
+        searchUsers(searchInput.value);
+    }
+});
+</script>
 @endsection
