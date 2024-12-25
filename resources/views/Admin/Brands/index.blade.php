@@ -4,6 +4,18 @@
     <section class="sherah-adashboard sherah-show">
         <div class="container">
             <div class="row">
+                @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
                 <div class="col-12">
                     <div class="sherah-body">
                         <!-- Dashboard Inner -->
@@ -14,19 +26,19 @@
                                         <h2 class="sherah-breadcrumb__title">Danh sách thương hiệu</h2>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-12">
                                         <form action="{{ route('admin-brands.index') }}" method="GET" class="d-flex mb-3">
-                                            <input 
-                                                type="text" 
-                                                name="search" 
-                                                value="{{ request('search') }}" 
-                                                class="form-control" 
+                                            <input
+                                                type="text"
+                                                name="search"
+                                                value="{{ request('search') }}"
+                                                class="form-control"
                                                 placeholder="Tìm kiếm thương hiệu..."
                                             >
-                                            <button 
-                                                type="submit" 
+                                            <button
+                                                type="submit"
                                                 class="btn btn-primary btn-sm ml-1"
                                             >
                                                 Tìm kiếm
@@ -35,7 +47,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div style="display: flex; justify-content: flex-end;">
                                     <a href="{{ route('admin-brands.create') }}" class="sherah-btn sherah-gbcolor">Thêm
                                         mới</a>

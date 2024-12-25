@@ -94,16 +94,44 @@ class DiscountController extends Controller
 
     // Lưu mã giảm giá mới
     public function store(Request $request)
-    {
-        $request->validate([
+    {   
+         $request->validate([
             'code' => 'required|unique:Discounts|max:255',
             'type' => 'required|in:fixed,percent',
-            'value' => 'required|numeric',
-            'min_order_value' => 'nullable|numeric',
-            'max_usage' => 'nullable|integer',
+            'value' => 'required|numeric|min:0',
+            'min_order_value' => 'nullable|numeric|min:0',
+            'max_usage' => 'nullable|integer|min:0',
             'valid_from' => 'required|date',
             'valid_to' => 'required|date|after_or_equal:valid_from',
+        ], [
+            'code.required' => 'Mã giảm giá là bắt buộc.',
+            'code.unique' => 'Mã giảm giá đã tồn tại.',
+            'type.required' => 'Loại giảm giá là bắt buộc.',
+            'type.in' => 'Loại giảm giá không hợp lệ.',
+            'value.required' => 'Giá trị giảm giá là bắt buộc.',
+            'value.numeric' => 'Giá trị giảm giá phải là số.',
+            'value.min' => 'Giá trị giảm giá phải lớn hơn hoặc bằng 0.',
+            'min_order_value.numeric' => 'Giá trị đơn hàng tối thiểu phải là số.',
+            'min_order_value.min' => 'Giá trị đơn hàng tối thiểu phải lớn hơn hoặc bằng 0.',
+            'max_usage.integer' => 'Số lần sử dụng tối đa phải là số nguyên.',
+            'max_usage.min' => 'Số lần sử dụng tối đa phải lớn hơn hoặc bằng 0.',
+            'valid_from.required' => 'Ngày bắt đầu là bắt buộc.',
+            'valid_from.date' => 'Ngày bắt đầu phải là một ngày hợp lệ.',
+            'valid_to.required' => 'Ngày kết thúc là bắt buộc.',
+            'valid_to.date' => 'Ngày kết thúc phải là một ngày hợp lệ.',
+            'valid_to.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
+
+    // Kiểm tra nếu ngày bắt đầu lớn hơn ngày kết thúc
+    $validFrom = $request->input('valid_from');
+    $validTo = $request->input('valid_to');
+
+    if ($validFrom >= $validTo) {
+        return redirect()->back()->withErrors([
+            'valid_to' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu.'
+        ]);
+    }
+        
 
         Discount::create($request->all());
 
@@ -117,25 +145,40 @@ class DiscountController extends Controller
         return view('Admin.Discounts.edit', compact('discount'));
     }
 
-    // Cập nhật mã giảm giá
     public function update(Request $request, $id)
     {
+        // Validate các trường dữ liệu
         $request->validate([
             'code' => 'required|max:255|unique:Discounts,code,' . $id,
             'type' => 'required|in:fixed,percent',
-            'value' => 'required|numeric',
-            'min_order_value' => 'nullable|numeric',
-            'max_usage' => 'nullable|integer',
+            'value' => 'required|numeric|min:0', // Đảm bảo giá trị giảm giá không âm
+            'min_order_value' => 'nullable|numeric|min:0', // Đảm bảo giá trị đơn hàng tối thiểu không âm
+            'max_usage' => 'nullable|integer|min:0', // Đảm bảo số lần sử dụng tối đa không âm
             'valid_from' => 'required|date',
-            'valid_to' => 'required|date|after_or_equal:valid_from',
+            'valid_to' => 'required|date|after_or_equal:valid_from', // Ngày kết thúc phải sau hoặc bằng ngày bắt đầu
+        ], [
+            'code.required' => 'Mã giảm giá là bắt buộc.',
+            'code.unique' => 'Mã giảm giá đã tồn tại.',
+            'value.required' => 'Giá trị giảm giá là bắt buộc.',
+            'value.numeric' => 'Giá trị giảm giá phải là số.',
+            'value.min' => 'Giá trị giảm giá không được âm.',
+            'min_order_value.numeric' => 'Giá trị đơn hàng tối thiểu phải là số.',
+            'min_order_value.min' => 'Giá trị đơn hàng tối thiểu không được âm.',
+            'max_usage.integer' => 'Số lần sử dụng tối đa phải là số nguyên.',
+            'max_usage.min' => 'Số lần sử dụng tối đa không được âm.',
+            'valid_from.required' => 'Ngày bắt đầu là bắt buộc.',
+            'valid_from.date' => 'Ngày bắt đầu phải là một ngày hợp lệ.',
+            'valid_to.required' => 'Ngày kết thúc là bắt buộc.',
+            'valid_to.date' => 'Ngày kết thúc phải là một ngày hợp lệ.',
+            'valid_to.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
         ]);
 
+        // Tìm và cập nhật giảm giá
         $discount = Discount::findOrFail($id);
         $discount->update($request->all());
 
         return redirect()->route('discount.index')->with('success', 'Mã giảm giá đã được cập nhật thành công.');
     }
-
     // Xóa mã giảm giá
     public function destroy($id)
     {

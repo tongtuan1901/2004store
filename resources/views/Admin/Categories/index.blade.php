@@ -6,6 +6,18 @@
                 <div class="col-12">
                     <div class="sherah-body">
                         <!-- Dashboard Inner -->
+                        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
                         <div class="sherah-dsinner">
                             <div class="row">
                                 <div class="col-12">
@@ -22,7 +34,7 @@
                                         </form>
                                     </div>
                                 </div>
-                             
+
                                 <div style="display: flex; justify-content: flex-end;">
                                     <a href="{{ route('admin-categories.create') }}" class="sherah-btn sherah-gbcolor">Add
                                         New</a>

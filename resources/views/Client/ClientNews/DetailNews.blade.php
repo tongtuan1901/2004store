@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="main-article-comment">
-                        <div class="main-article-comment-form">
+                        <!-- <div class="main-article-comment-form">
                             <div class="section-title-all">
                                 <span>Viết bình luận</span>
                             </div>
@@ -181,7 +181,7 @@
                                 <textarea required name="Body" placeholder="Viết bình luận ..."></textarea>
                                 <button type="submit">Gửi bình luận</button>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>
@@ -215,7 +215,7 @@
 
 
                     </div>
-                    <div class="main-article-right-menu">
+                    <!-- <div class="main-article-right-menu">
                         <div class="section-title-all">
                             <span>Danh mục Blog</span>
                         </div>
@@ -278,7 +278,7 @@
                                 <a href="lien-he.html" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -57,7 +57,7 @@
                                                     <tr>
                                                         <td class="sherah-table__column-2 sherah-table__data-2">
                                                             <div class="sherah-table__product-name">
-                                                                <h4 class="sherah-table__product-name--title">{{ $item->product->name }}</h4>
+                                                                <h4 class="sherah-table__product-name--title">{{ $item->product_name }}</h4>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-1 sherah-table__data-1">
@@ -95,7 +95,7 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">{{ $item->product->brand->name }}</p>
+                                                                <p class="sherah-table__product-desc">{{ $item->brand_name }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
@@ -122,9 +122,12 @@
                                             <ul class="order-totals__list">
                                                 <li class="order-totals__list--sub">
                                                     <span>Tổng cộng:</span>
-                                                    <span class="order-totals__amount">{{ number_format($order->total)}} VNĐ</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total - 40000)}} VNĐ</span>
                                                 </li>
-
+                                                <li class="order-totals__list--sub">
+                                                    <span>Tiền ship:</span>
+                                                    <span class="order-totals__amount">+ 40,000 VNĐ</span>
+                                                </li>
                                                 <!-- Hiển thị giá trị giảm giá nếu có -->
                                                 @if ($order->discount_value > 0)
                                                     <li class="order-totals__list--sub">
@@ -147,7 +150,7 @@
                                                     <option value="Chờ xử lý" {{ $order->status == 'Chờ xử lý' ? 'selected' : '' }}>Chờ xử lý</option>
                                                     <option value="Đang xử lý" {{ $order->status == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
                                                     <option value="Đang giao hàng" {{ $order->status == 'Đang giao hàng' ? 'selected' : '' }}>Đang giao hàng</option>
-                                                    <option value="Hoàn thành" {{ $order->status == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
+                                                    <option value="Đã giao hàng" {{ $order->status == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
                                                 </select>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
@@ -160,6 +163,15 @@
                                                 </a>
                                             </div>
                                         </form>
+                                        @if($order->status == 'Đang giao hàng' || $order->status == 'Đã giao hàng')
+                                        <form action="{{ route('admin.orders.cancel', $order->id) }}" method="POST" class="mb-3">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                            </div>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

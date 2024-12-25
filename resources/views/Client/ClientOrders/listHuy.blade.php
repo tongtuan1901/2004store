@@ -18,7 +18,7 @@
 @if (!$hasOrders)
     <p class="alert alert-info text-center">Bạn chưa có đơn hàng nào</p>
 @else
-    <div class="table-responsive">
+    {{-- <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover table-sm rounded">
             <thead class="table-light">
                 <tr>
@@ -161,6 +161,141 @@
                                 Xem chi tiết
                             </a>
                         </td>                        
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div> --}}
+    <div class="table-responsive">
+        <table class="table table-striped" border="1" style="table-layout: fixed; width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width:50px">
+                        STT
+                    </th>
+                    <th  style="width:125px">Mã đơn hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá trị đơn hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày đặt</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th>Hoàn tiền</th>
+                    <th style="width:100px">Phương thức thanh toán</th>
+                    <th>Tiền hoàn</th>
+                    <th class="text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($userOrder->orders as $order)
+                    @php
+                        $orderItems = $order->orderItems;
+                        $productDetails = [];
+                    @endphp
+                    @foreach ($orderItems as $item)
+                        @if ($item->variation)
+                            @php
+                                $productDetails[] = [
+                                    'name' => $item->product->name ?? 'Product Name N/A',
+                                    'size' => $item->variation->size->size ?? 'N/A',
+                                    'color' => $item->variation->color->color ?? 'N/A',
+                                    'quantity' => $item->quantity
+                                ];
+                            @endphp
+                        @endif
+                    @endforeach
+                    <tr>
+                        <td class="text-center">{{ $orderIndex++ }}</td>
+                        <td>{{ $order->order_code }}</td>
+                        <td class="text-center" style="vertical-align: top;">
+                            <div style="max-width: 200px; overflow-wrap: break-word; text-align: left;">
+                                @if ($order->orderItems->isNotEmpty())
+                                    @foreach ($order->orderItems as $item)
+                                        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                            {{-- Hình ảnh sản phẩm --}}
+                                            @if ($item->variation && $item->variation->image)
+                                                <img src="{{ asset('storage/' . $item->variation->image->image_path) }}" 
+                                                     alt="Variation Image" 
+                                                     class="img-fluid rounded mb-1" 
+                                                     style="max-width: 60px; height: auto; display: block; margin-bottom: 5px;">
+                                            @else
+                                                <span class="text-muted">Không có hình ảnh</span>
+                                            @endif
+                                            
+                                            {{-- Tên và thông tin sản phẩm --}}
+                                            <div>
+                                                <strong>{{ $item->product_name ?? 'N/A' }}</strong>
+                                                <br>
+                                                <small>Kích thước: {{ $item->variation->size->size ?? 'Không rõ' }}</small>,
+                                                <small>Màu sắc: {{ $item->variation->color->color ?? 'Không rõ' }}</small>
+                                                <br>
+                                                <small>Số lượng: {{ $item->quantity ?? 1 }}</small>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <span class="text-muted">Không có sản phẩm</span>
+                                @endif
+                            </div>
+                        </td>
+                        {{-- <td class="truncate">
+                            {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                                                <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
+                                                            @endif
+                        </td> --}}
+                        <td class="truncate">
+                            {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
+                                <large class="text-danger" style="color: red; margin-left: 10px;">(Đã hoàn tiền)</large>
+                            @endif
+                        </td>
+                        
+                        <td>
+                            {{$order->address}}
+                        </td>
+                        <td class="truncate">
+                            {{$order->created_at}}
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-{{ $order->status == 'Hoàn thành' ? 'success' : ($order->status == 'Hủy' ? 'danger' : 'warning') }}">
+                                {{ $order->status }}
+                            </span>
+                        </td>
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
+                        </td>
+                        <td>
+                            {{$order->payment_method}}
+                        </td>
+                        <td>
+                            @if (in_array($order->payment_method, ['wallet', 'vnpay','momo']))
+                                <span class="text-center" style="color: green">+ {{number_format($order->total, 0, ',', '.')}} VND</span> 
+                            @else
+                                <span>0</span>
+                            @endif
+                        </td>
+                        <style>
+                            .modal {
+                                z-index: 1050 !important; 
+                            }
+                            .modal-backdrop {
+                                z-index: 1040 !important;
+                                background-color: rgba(0, 0, 0, 0.5);
+                            }
+                            body.modal-open {
+                                overflow: hidden; 
+                            }
+                        </style>
+                        <td class="text-center">
+                            <a href="{{ route('client.orders.show', ['userId' => $userOrder->id, 'orderId' => $order->id]) }}" class="btn btn-primary btn-sm rounded">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                                               
                     </tr>
                 @endforeach
             </tbody>

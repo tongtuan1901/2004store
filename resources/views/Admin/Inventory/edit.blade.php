@@ -72,11 +72,10 @@
                                         class="form-control" required>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="date" class="form-label">Ngày Ghi Nhận</label>
-                                    <input type="date" name="date" value="{{ $inventoryLog->date }}"
-                                        class="form-control" required>
-                                </div>
+                                <!-- <div class="mb-3">
+    <label for="date" class="form-label">Ngày Ghi Nhận</label>
+    <input type="date" name="date" value="{{ $inventoryLog->date }}" class="form-control" required>
+</div> -->
 
                                 <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
                                     <button type="submit" class="sherah-btn sherah-btn__primary">Thêm bản ghi tồn

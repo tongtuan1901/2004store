@@ -12,7 +12,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="HandheldFriendly" content="true">
     <link rel="shortcut icon"
-        href="{{ asset('assets/bizweb.dktcdn.net/100/520/624/themes/959507/assets/faviconb1ed.png') }}"
+        href="{{ asset('assets/images/2004Store.png') }}"
         type="image/png">
     <title>2004Store</title>
     <link rel="canonical" href="">
@@ -504,14 +504,14 @@
 
                 <div class="headers3-wrap">
                     <div class="headers3-left">
-                        <form class="tool-search" action="">
+                        <!-- <form class="tool-search" action="">
                             <input type="hidden" name="type" value="product">
                             <input required name="q" autocomplete="off" type="text"
                                 placeholder="Tìm kiếm sản phẩm...">
                             <button type="submit" title="Tìm kiếm"><i class="fal fa-search"></i></button>
                             <button class="tool-search-overplay" title="Đóng"></button>
                             <div class="tool-search-smart"></div>
-                        </form>
+                        </form> -->
                     </div>
                     <div class="headers3-center">
                         <a href="{{ route('client-home.index') }}" aria-label="F1GENZ Model Fashion">
@@ -583,11 +583,11 @@
                     <button class="shop-tool" type="button" data-type="shop-menu-mobile-header" title="Menu">
                         <i class="fal fa-bars"></i>
                     </button>
-                    <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
+                    <!-- <button class="shop-tool has-count" type="button" data-type="shop-wishlist-header"
                         title="Yêu thích"> <i class="fal fa-heart"></i>
                         <span class="shop-wishlist-count">0</span>
 
-                    </button>
+                    </button> -->
                     <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
                         title="Giỏ hàng">
                         <a href="{{route('client-card.index')}}" class="">
@@ -619,15 +619,15 @@
                             </li>
                             <li class="hasChild">
                                 <a href="{{ route('client-categories.index', ['id' => null]) }}" title="Danh mục sản phẩm"
-                                    aria-label="Danh mục sản phẩm">Danh mục sản phẩm<span>›</span></a>
+                                    aria-label="Danh mục sản phẩm">Sản phẩm<span></span></a>
                                 <ul class="menu1">
-                                    <li class="">
+                                    <!-- <li class="">
                                         <a href="{{ route('client-categories.index', ['id' => null]) }}" title="Cocktail Dresses"
                                             aria-label="Cocktail Dresses">Thay bang danh muc san pham</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
-                            <li class="hasChild">
+                            <!-- <li class="hasChild">
                                 <a href="ao-thun-lop-tencel-m-gray.html" title="Sản phẩm nổi bật"
                                     aria-label="Sản phẩm nổi bật">Sản phẩm nổi bật<span>›</span></a>
                                 <ul class="menu1">
@@ -651,13 +651,16 @@
                                             aria-label="ÁO THUN LỚP Tencel M.GRAY">ÁO THUN LỚP Tencel M.GRAY</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <li class="">
                                 <a href="{{route('client-news.index')}}" title="Xu hướng thời trang"
                                     aria-label="Xu hướng thời trang">Xu hướng thời trang</a>
                             </li>
                             <li class="">
                                 <a href="{{route('user.contact')}}" title="Liên hệ" aria-label="Liên hệ">Liên hệ</a>
+                            </li>
+                            <li class="">
+                                <a href="{{route('khuyenMai.index')}}" title="Khuyen mai" aria-label="Khuyến mại">Khuyến mại</a>
                             </li>
                         </ul>
                     </nav>

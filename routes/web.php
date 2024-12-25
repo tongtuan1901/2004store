@@ -99,6 +99,7 @@ use App\Http\Controllers\client\CheckoutThankyouController;
 use App\Http\Controllers\AdminUserController as ControllersAdminUserController;
 use App\Http\Controllers\client\ClientReviewsController;
 use App\Http\Controllers\client\ContactController;
+use App\Http\Controllers\client\couponsController;
 
 //quản lí admin và nhân viên
 // Route::prefix('admin')->group(function () {
@@ -109,7 +110,7 @@ Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name(
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 Route::prefix('admin')->middleware(['auth:user_staff'])->group(function () {
-    Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); // Thêm middleware vào đây
+    Route::resource('user-staff', AdminUserStaffController::class)->middleware('admin'); 
 
 
     // Đăng nhập admin và nhân viên
@@ -270,6 +271,7 @@ Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('addr
 Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
 Route::get('/user/{userId}/address/select', [AddressController::class, 'showAddressForm'])->name('address.select');
 Route::delete('/orders/{id}/cancel', [ClientOrderControler::class, 'cancelOrder'])->name('orders.cancel');
+Route::put('/orders/{id}/confirmOrder', [ClientOrderControler::class, 'confirmOrder'])->name('orders.confirm');
 Route::get('Client/orders/{userId}',[ClientOrderControler::class,'listOrder'])->name('client.order');
 Route::get('/orders/{id}/show', [ClientOrderControler::class, 'showOrder'])->name('orders.show');
 Route::get('/admin/orders/canceled', [AdminOrdersController::class, 'canceledOrders'])->name('admin.orders.canceled');
@@ -299,15 +301,10 @@ Route::get('/filter-requests', [AdminYeuCauRutTienController::class, 'filterRequ
 
 
 
-//quên mật khẩu
-Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
-Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
 
 
-//reset mật khẩu
-Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
-Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
-Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
+
+
 
 // Danh mục
 Route::resource('admin-categories', AdminCategoriesController::class);
@@ -329,6 +326,14 @@ Route::put('/new/{id}/update', [AdminNewsController::class, 'update'])->name('ne
 Route::delete('/new/{id}', [AdminNewsController::class, 'destroy'])->name('new.destroy');
 Route::get('/new/show/{id}', [AdminNewsController::class, 'show'])->name('new.show');
 });
+
+//quên mật khẩu
+Route::get('admin/forgot-password', [AdminLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.password');
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLink'])->name('admin.password.email');
+//reset mật khẩu
+Route::post('admin/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+Route::get('admin/reset-password/{token}', [AdminLoginController::class, 'showResetForm'])->name('admin.password.reset');
+Route::post('admin/reset-password', [AdminLoginController::class, 'resetPassword'])->name('admin.password.update');
 
 
 // Xóa dữ liệu mua ngay khi thoát ra
@@ -465,6 +470,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/{order}/product/{product}/review', [ClientReviewsController::class, 'submitReview'])
     ->name('client.product.submitReview');
 });
+
+// yêu càu rút tiền của khách hàng
+Route::post('/request-yeu-cau-rut-tien', [ClientBanksController::class, 'RequestRutTien'])->name('requestYeuCauRutTien');
+
+
 Route::get('client-products/{id}/reviews', [ClientReviewsController::class, 'showReviews'])->name('products.reviews');
 //lọc
 Route::get('/categories', [ClientCategories::class, 'filterCategories'])->name('client.categories.filter');
@@ -473,11 +483,15 @@ Route::get('/client/categories/filter', [ClientCategories::class, 'filter'])->na
 Route::get('/client-categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 Route::get('/client/categories/brand/{id}', [ClientCategories::class, 'showByBrand'])->name('client.categories.brand');
 
+Route::get('/client/list-category-one/{id}', [ClientCategories::class, 'listCategoryOne'])->name('client.categories.one');
 //search user
 Route::get('/users/search', [AdminUserController::class, 'search'])->name('users.search');
 //search category
 Route::get('admin/categories/search', [AdminCategoriesController::class, 'search'])->name('admin-categories.search');
 
+//khuyến mại client
+Route::get('/khuyen-mai', [couponsController::class, 'index'])->name('khuyenMai.index');
+Route::post('/post-khuyen-mai', [couponsController::class, 'store'])->name('khuyenMai.store');
 
 
 
@@ -602,3 +616,5 @@ Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->nam
 
 
 Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin.orders.approve.index');
+
+

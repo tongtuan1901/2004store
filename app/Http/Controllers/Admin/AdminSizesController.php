@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class AdminSizesController extends Controller
 {
-    // Danh sách kích thước
     public function index()
     {
         $listSizes = Size::all();
@@ -23,7 +22,7 @@ class AdminSizesController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'size' => 'required|string|max:50|regex:/^[\pL\s]+$/u', 
+            'size' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
         ]);
 
         Size::create([
@@ -51,12 +50,17 @@ class AdminSizesController extends Controller
 
         return redirect()->route('admin-size.index')->with('success', 'Size updated successfully.');
     }
-
-    // Xóa kích thước
     public function destroy(string $id)
     {
         $size = Size::findOrFail($id);
+
+            if ($size->variations()->exists()) {
+            return redirect()->route('admin-size.index')->with('error', 'Không thể xóa kích thước vì có sản phẩm liên kết.');
+        }
+
         $size->delete();
-        return redirect()->route('admin-size.index')->with('success', 'Size deleted successfully.');
+
+        return redirect()->route('admin-size.index')->with('success', 'Xóa kích thước thành công.');
     }
+
 }

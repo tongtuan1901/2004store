@@ -51,13 +51,13 @@
                         <table class="table table-striped" id="">
                             <thead class="">
                                 <tr>
-                                    {{-- <th>ID</th> --}}
-                                    <th>Customer Name</th>
+                                <th>STT</th>
+                                    <th>Tên tài khoản ngân hàng</th>
                                     {{-- <th>Amount</th> --}}
-                                    <th>Transfer Time</th>
+                                    <th>Thời gian gửi yêu cầu</th>
                                     <th>Trạng thái yêu cầu</th>
                                     {{-- <th>Balance</th> --}}
-                                    <th>Số Dư</th>
+                                    <th>Số Dư Sau Khi Rút</th>
                                     <th>Số Tiền Rút</th>
                                     <th>Ngân Hàng</th>
                                     <th>STK</th>
@@ -66,9 +66,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($layYeuCauNew as $item)
+                                @foreach ($layYeuCauNew as $key =>  $item)
                                     <tr>
-                                        {{-- <td>{{ $item->id }}</td> --}}
+                                         <td>{{ $key +1 }}</td> 
                                         <td>{{ $item->customer_name }}</td>
                                         {{-- <td>{{ $item->amount }}</td> --}}
                                         <td>{{ $item->transfer_time }}</td>
@@ -80,7 +80,7 @@
                                             @endif
                                         </td>                                        
                                         {{-- <td>{{ $item->balance }}</td> --}}
-                                        <td>{{ number_format($item->so_du, 0, ',', '.') }} đ</td>
+                                        <td>{{ number_format($item->so_du - $item->so_tien_rut, 0, ',', '.') }} đ</td>
                                         <td>{{ number_format($item->so_tien_rut, 0, ',', '.') }} đ</td>
                                         <td>{{ $item->ngan_hang }}</td>
                                         <td>{{ (int) $item->stk }}</td>

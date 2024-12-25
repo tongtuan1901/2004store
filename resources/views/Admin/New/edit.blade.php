@@ -1,7 +1,6 @@
 
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 @section('contentAdmin')
-
     <section class="sherah-adashboard sherah-show">
         <div class="container">
             <div class="row">
@@ -12,7 +11,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="sherah-breadcrumb mg-top-30">
-                                        <h2 class="sherah-breadcrumb__title">Sửa</h2>
+                                        <h2 class="sherah-breadcrumb__title">Sửa tin tức</h2>
                                     </div>
                                 </div>
                             </div>
@@ -67,9 +66,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-                                        <button type="submit" class="sherah-btn sherah-btn__primary">Sửa</button>
+                                    {{-- <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                        <button type="submit" class="sherah-btn sherah-btn__primary">Sửa tin tức</button>
                                         <button class="sherah-btn sherah-btn__primary"><a href="{{route('new.index')}}">Quay lại</a></button>
+                                    </div> --}}
+                                    <div class="mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                        <button type="submit" class="sherah-btn sherah-btn__primary">Cập nhật tin tức</button>
+                                        <a href="{{ route('new.index') }}"
+                                            class="sherah-btn sherah-btn__third">Hủy</a>
                                     </div>
                                 </form>
                             </div>
@@ -81,5 +85,6 @@
 
             </div>
         </div>
-
     </section>
+@endsection
+
