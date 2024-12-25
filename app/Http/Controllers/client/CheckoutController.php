@@ -169,19 +169,6 @@ class CheckoutController extends Controller
             return redirect()->route('login')->with('error', 'Please log in to view your cart.');
         }
 
-        // $cart = Cart::where('user_id', $userId)
-        //     ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
-        //     ->get();
-        // if ($cart->isEmpty())
-        // {
-        //     return redirect()->back()->with('error', 'Gio hang rong.');
-        // }
-
-        // $totalPrice = $cart->sum(function ($item)
-        // {
-        //     $price = $item->variation->price ?? $item->product->price;
-        //     return $price * $item->quantity;
-        // });
         // Tính toán chi phí
         $cart = Cart::where('user_id', $userId)
             ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
@@ -215,9 +202,19 @@ class CheckoutController extends Controller
         if (!$userId) {
             return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để đặt hàng.');
         }
-
+ // Kiểm tra sản phẩm tồn tại
+ $invalidProducts = [];
         // Lấy thông tin giỏ hàng
         if (session()->has('buyNow')) {
+            $buyNowItem = session()->get('buyNow');
+            $product = AdminProducts::find($buyNowItem['product_id']);
+            $variation = ProductVariation::find($buyNowItem['variation_id']);
+            
+            if (!$product || !$variation) {
+                session()->forget('buyNow');
+                return redirect()->route('client-home')->with('error', 'Sản phẩm không còn tồn tại trong hệ thống.');
+            }
+            
             $cartItems = [session()->get('buyNow')];
             $totalPrice = array_sum(array_map(function ($item) {
                 return $item['price'] * $item['quantity'];
@@ -230,7 +227,25 @@ class CheckoutController extends Controller
             if ($cartItems->isEmpty()) {
                 return redirect()->back()->with('error', 'Giỏ hàng trống');
             }
-
+    // Kiểm tra từng sản phẩm trong giỏ hàng
+    foreach ($cartItems as $item) {
+        $product = AdminProducts::find($item->product_id);
+        $variation = ProductVariation::find($item->variation_id);
+        
+        if (!$product || !$variation) {
+            $invalidProducts[] = $item;
+        }
+    }
+      // Nếu có sản phẩm không hợp lệ
+      if (!empty($invalidProducts)) {
+        // Xóa các sản phẩm không hợp lệ khỏi giỏ hàng
+        foreach ($invalidProducts as $item) {
+            Cart::where('id', $item->id)->delete();
+        }
+        
+        return redirect()->route('client-home.index')
+            ->with('error', 'Một số sản phẩm trong giỏ hàng không còn tồn tại và đã được xóa.');
+    }
             $totalPrice = $cartItems->sum(function ($item) {
                 return ($item->variation->price ?? $item->product->price) * $item->quantity;
             });
@@ -269,7 +284,7 @@ class CheckoutController extends Controller
         // Tính toán chi phí
         $shippingFee = 40000;
         $discountCode = $request->input('discount_code');
-        $discountValue = 0;
+        $discountValue = session('discount_value', 0);
         $discountId = null;
 
         if ($discountCode) {
