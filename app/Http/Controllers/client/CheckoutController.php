@@ -169,16 +169,24 @@ class CheckoutController extends Controller
             return redirect()->route('login')->with('error', 'Please log in to view your cart.');
         }
 
-        // Tính toán chi phí
+         // Kiểm tra xem có sản phẩm nào trong session 'buyNow' không
+    if (session()->has('buyNow')) {
+        // Nếu có, lấy thông tin sản phẩm từ session và chuyển sang checkout
+        $cart = collect([session()->get('buyNow')]);  // Chuyển thông tin từ session thành collection
+    } else {
+        // Nếu không có 'buyNow', lấy sản phẩm trong giỏ hàng của người dùng
         $cart = Cart::where('user_id', $userId)
             ->with(['product', 'variation.size', 'variation.color', 'variation.image'])
             ->get()
             ->filter(function ($item) {
                 return $item->product && $item->product->exists && !$item->product->deleted;
             });
-            if ($cart->isEmpty()) {
-                return redirect()->back()->with('error', 'Không có sản phẩm nào trong giỏ hàng.');
-            }
+    }
+
+    // Kiểm tra nếu giỏ hàng trống
+    if ($cart->isEmpty()) {
+        return redirect()->back()->with('error', 'Không có sản phẩm nào trong giỏ hàng.');
+    }
         $email = auth()->user()->email;
         $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
@@ -217,7 +225,7 @@ class CheckoutController extends Controller
             
             if (!$product || !$variation) {
                 session()->forget('buyNow');
-                return redirect()->route('client-home')->with('error', 'Sản phẩm không còn tồn tại trong hệ thống.');
+                return redirect()->route('client-home.index')->with('error', 'Sản phẩm không còn tồn tại trong hệ thống.');
             }
             
             $cartItems = [session()->get('buyNow')];

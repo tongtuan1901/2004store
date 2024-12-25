@@ -10574,23 +10574,6 @@
                                             </h2>
                                         </div>
                                     </div>
-
-                                </article>
-								<div class="field__input-btn-wrapper field__input-btn-wrapper--vertical hide-on-desktop">
-									<button type="submit" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-										<span class="spinner-label">ĐẶT HÀNG</span>
-										<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-											<use href="#spinner"></use>
-										</svg>
-
-
-
-									</button>
-									<a data-savepage-href="/cart" href="https://f1genz-model-fashion.mysapo.net/cart" class="previous-link">
-										<i class="previous-link__arrow">❮</i>
-										<span class="previous-link__content">Quay về giỏ hàng</span>
-									</a>
-
                                     <div class="section__content" data-tg-refresh="refreshShipping"
                                         id="shippingMethodList"
                                         data-define="{isAddressSelecting: false, shippingMethods: []}">
@@ -10600,7 +10583,6 @@
                                                 <use href="#spinner"></use>
                                             </svg>
                                         </div>
-
 
 
                                         <div class="alert alert-retry alert--danger hide"
@@ -10761,211 +10743,6 @@
                                 <i class="previous-link__arrow">❮</i>
                                 <span class="previous-link__content">Quay về giỏ hàng</span>
                             </a>
-
-
-                        </main>
-                      <!-- aside -->
-
-					  <aside class="sidebar">
-						<div class="sidebar__header">
-							<h2 class="sidebar__title">
-								Đơn hàng 
-							</h2>
-						</div>
-						<div class="sidebar__content">
-							<div id="order-summary" class="order-summary order-summary--is-collapsed">
-								<div class="order-summary__sections">
-									<div class="order-summary__section order-summary__section--product-list order-summary__section--is-scrollable order-summary--collapse-element">
-									<table class="product-table" id="product-table" data-tg-refresh="refreshDiscount">
-                    <caption class="visually-hidden">Chi tiết đơn hàng</caption>
-                    <thead class="product-table__header">
-                      <tr>
-                        <th><span class="visually-hidden">Ảnh sản phẩm</span></th>
-                        <th><span class="visually-hidden">Tên và biến thể</span></th>
-                        <th><span class="visually-hidden">Số lượng</span></th>
-                        <th><span class="visually-hidden">Đơn giá</span></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    @php
-                    // Kiểm tra xem có phải là mua ngay không
-                    $cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
-                @endphp
-                
-
-                @foreach ($cartItems as $item)
-                @if($item->product && !$item->product->deleted)
-                    <tr class="product">
-                        <td class="product__image">
-                            <div class="product-thumbnail">
-                                <div class="product-thumbnail__wrapper">
-                        @if(session()->has('buyNow'))
-                    <img src="{{ Storage::url($item['image']) }}" alt="" class="product-thumbnail__image">
-                @else
-                    @if($item->variation && $item->variation->image)
-                        <img src="{{ Storage::url($item->variation->image->image_path) }}" alt="" class="product-thumbnail__image">
-                    @endif
-                @endif
-                                </div>
-                            </div>
-                        </td>
-                        <th class="product__description">
-                        @if(session()->has('buyNow'))
-    <span class="product__description__name">
-        {{ $item['name'] ?? 'Sản phẩm không tồn tại' }}
-    </span>
-    <span class="product__description__property">
-        {{ App\Models\Color::find($item['color'])->color ?? 'Không xác định' }} /
-        {{ App\Models\Size::find($item['size'])->size ?? 'Không xác định' }}
-    </span>
-@else
-    @if ($item->product)
-        <span class="product__description__name">
-            {{ $item->product->name }}
-        </span>
-        <span class="product__description__property">
-            {{ $item->variation->color->color ?? 'Không xác định' }} /
-            {{ $item->variation->size->size ?? 'Không xác định' }}
-        </span>
-    @else
-        <span class="product__description__name">Sản phẩm không tồn tại</span>
-        <span class="product__description__property">Không có thông tin</span>
-    @endif
-@endif
-                        </th>
-                        <td class="product__quantity">
-                            <em>Số lượng:</em>
-                            {{ session()->has('buyNow') ? $item['quantity'] : $item->quantity }}
-                        </td>
-                        <td class="product__price">
-                            @if(session()->has('buyNow'))
-                                {{ number_format($item['price'], 0, ',', '.') }}₫
-                            @else
-                                {{ number_format($item->variation->price ?? $item->product->price, 0, ',', '.') }}₫
-                            @endif
-                        </td>
-                    </tr>
-                    @endif
-                @endforeach
-                    </tbody>
-                  </table>
-									</div>
-
-									<div class="order-summary__section order-summary__section--total-lines order-summary--collapse-element" data-define="{subTotalPriceText: '1.489.000₫'}" data-tg-refresh="refreshOrderTotalPrice" id="orderSummary">
-										<table class="total-line-table">
-											<caption class="visually-hidden">Tổng giá trị</caption>
-											<thead>
-												<tr>
-													<td>Mô tả</td>
-													<td>Giá tiền</td>
-												</tr>
-											</thead>
-											<tbody class="total-line-table__tbody">
-												<tr class="total-line total-line--subtotal">
-                          @php
-$totalPrice = 0;
-$shippingFee = 0;
-$cartItems = session()->has('buyNow') ? [session()->get('buyNow')] : $cart;
-
-// Kiểm tra nếu là mua ngay
-if (session()->has('buyNow')) {
-    $buyNow = session('buyNow');
-    $price = $buyNow['price'] ?? 0;
-    $quantity = $buyNow['quantity'] ?? 0;
-    $totalPrice = $price * $quantity;
-} else {
-    // Lặp qua các mặt hàng trong giỏ hàng
-    foreach ($cartItems as $item) {
-        // Kiểm tra nếu sản phẩm tồn tại và chưa bị xóa
-        if (isset($item->product) && $item->product->deleted) {
-            continue; // Bỏ qua sản phẩm đã xóa
-        }
-
-        $price = 0;
-        $quantity = 0;
-
-        // Nếu là đối tượng sản phẩm
-        if (is_object($item)) {
-            $price = $item->variation->price ?? $item->product->price ?? 0;
-            $quantity = $item->quantity ?? 0;
-        }
-        // Nếu là mảng
-        elseif (is_array($item)) {
-            $price = $item['variation']['price'] ?? $item['product']['price'] ?? 0;
-            $quantity = $item['quantity'] ?? 0;
-        }
-
-        // Cộng dồn giá trị của sản phẩm vào tổng giá
-        $totalPrice += $price * $quantity;
-    }
-}
-
-// Kiểm tra nếu giỏ hàng trống, không tính phí vận chuyển
-if ($totalPrice > 0) {
-    $shippingFee = 40000; // Chỉ tính phí vận chuyển nếu có sản phẩm hợp lệ
-} else {
-    $shippingFee = 0; // Không tính phí vận chuyển khi giỏ hàng trống
-}
-
-$discountValue = session('discount_value', 0);
-
-// Tính tổng sau khi giảm giá và cộng phí vận chuyển
-$finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
-@endphp
-
-<tr class="total-line total-line--subtotal">
-    <th class="total-line__name">
-        Tạm tính
-    </th>
-    <td class="total-line__price">{{ number_format($totalPrice, 0, ',', '.') }}₫</td>
-</tr>
-<tr class="total-line total-line--shipping-fee">
-    <th>Phí vận chuyển</th>
-    <td>{{ number_format($shippingFee, 0, ',', '.') }}₫</td>
-</tr>
-<tfoot class="total-line-table__footer">
-    <tr class="total-line payment-due">
-        <th>Tổng cộng</th>
-        <td>
-            @if(session('discount_code'))
-                <p>Đã áp dụng mã giảm giá: {{ session('discount_code') }}</p>
-                <p>Giá trị giảm: -{{ number_format(session('discount_value'), 0, ',', '.') }}₫</p>
-            @endif
-
-            @if(session('discount_error'))
-                <p style="color: red;">{{ session('discount_error') }}</p>
-            @endif
-
-            <span class="payment-due__price">{{ number_format($finalTotal, 0, ',', '.') }}₫</span>
-        </td>
-    </tr>
-											</tfoot>
-										</table>
-									</div>
-									<div class="order-summary__nav field__input-btn-wrapper hide-on-mobile layout-flex--row-reverse">
-										<button type="submit" id="btnCheckout" class="btn btn-checkout spinner" data-bind-class="{'spinner--active': isSubmitingCheckout}" data-bind-disabled="isSubmitingCheckout || isLoadingReductionCode">
-											<span class="spinner-label">ĐẶT HÀNG</span>
-											<svg xmlns="http://www.w3.org/2000/svg" class="spinner-loader">
-												<use href="#spinner"></use>
-											</svg>
-										</button>
-										</form>
-                    
-                   
-                    
-                  
-                  
-
-									<a data-savepage-href="/cart" href="{{url('client-home')}}" class="previous-link">
-										<i class="previous-link__arrow">❮</i>
-										<span class="previous-link__content">Quay về giỏ hàng</span>
-									</a>
-									
-								</div>
-                
-              
-              
-								<div id="common-alert-sidebar" data-tg-refresh="refreshError">
 
                         </div>
                         <div id="common-alert" data-tg-refresh="refreshError">
@@ -11239,7 +11016,6 @@ $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
                   </div> --}}
     </div>
     <div id="common-alert-sidebar" data-tg-refresh="refreshError">
->>>>>>> baf2883bd1fb91cee499d59f21426a126e886900
 
         <div class="order-summary__section" id="discountCode">
             <h3 class="visually-hidden">Mã khuyến mại</h3>
@@ -11330,14 +11106,8 @@ $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
     </div>
     </aside>
 
-
-			</div>
-		</form>
-    
-
     </div>
     </form>
-
 
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

@@ -43,7 +43,7 @@
                                         </td>
                                         <td class="sherah-table__column-1 sherah-table__data-1">
                                             <div class="sherah-language-form__input">
-                                                <p class="crany-table__product--number">{{$item->title}}</p>
+                                                <p class="crany-table__product--number">{{ \Illuminate\Support\Str::limit(strip_tags($item->title), 10, '...') }}</p>
                                             </div>
                                         </td>
                                         <td class="sherah-table__column-2 sherah-table__data-2">
