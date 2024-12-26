@@ -294,7 +294,7 @@ class CheckoutController extends Controller
         // Tính toán chi phí
         $shippingFee = 40000;
         $discountCode = $request->input('discount_code');
-        $discountValue = session('discount_value', 0);
+        $discountValue = 0;
         $discountId = null;
 
         if ($discountCode) {
@@ -387,7 +387,19 @@ class CheckoutController extends Controller
 
         // Lưu đơn hàng
         $order->save();
-
+// Giảm số lần sử dụng mã giảm giá (usage_count) nếu có mã giảm giá
+if ($discountId) {
+    $discount = Discount::find($discountId);
+    if ($discount) {
+        // Kiểm tra xem số lần sử dụng mã giảm giá có còn hạn hay không
+        if ($discount->usage_count < $discount->max_usage) {
+            $discount->increment('usage_count'); // Đã sử dụng, tăng usage_count
+        } else {
+            // Nếu mã giảm giá đã hết lượt sử dụng, bạn có thể thông báo lỗi hoặc không làm gì
+            return redirect()->back()->with('error', 'Mã giảm giá đã hết lượt sử dụng.');
+        }
+    }
+}
         session()->forget('discount_code');
         session()->forget('discount_value');
 

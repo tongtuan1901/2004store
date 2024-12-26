@@ -16,7 +16,14 @@ class CardController extends Controller
 {
 
     
-
+    public function getCartCount()
+    {
+        if (auth()->check()) {
+            // Count unique products instead of sum of quantities
+            return Cart::where('user_id', auth()->id())->count();
+        }
+        return 0;
+    }
   
     public function add(Request $request)
     {

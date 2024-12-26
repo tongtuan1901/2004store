@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Barryvdh\DomPDF\Facade\Pdf;
-
-use App\Http\Controllers\Controller;
-use App\Models\AdminOrder;
-use App\Models\AdminProducts;
 use App\Models\User;
+
+use App\Models\Discount;
+use App\Models\AdminOrder;
 use Illuminate\Http\Request;
+use App\Models\AdminProducts;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
     class AdminOrdersController extends Controller
@@ -225,6 +226,23 @@ public function approveIndex(Request $request)
             $user->balance += $refundAmount;
             $user->save();
         }
+            // Hoàn lại số lượng biến thể của sản phẩm
+    foreach ($order->orderItems as $item) {
+        $variation = $item->variation;
+        if ($variation) {
+            $variation->quantity += $item->quantity; // Cộng lại số lượng đã đặt vào biến thể
+            $variation->save();
+        }
+    }
+      // Hoàn lại lượt sử dụng mã giảm giá
+      if ($order->discount_code) {
+        $discount = Discount::where('code', $order->discount_code)->first();
+        if ($discount) {
+            $discount->decrement('usage_count');
+            
+        }
+    }
+
     
         $order->status = 'Hủy';
         $order->cancellation_reason = $request->cancellation_reason;
@@ -286,6 +304,23 @@ public function approveIndex(Request $request)
             $user->balance += $refundAmount;
             $user->save();
         }
+            // Hoàn lại số lượng biến thể của sản phẩm
+    foreach ($order->orderItems as $item) {
+        $variation = $item->variation;
+        if ($variation) {
+            $variation->quantity += $item->quantity; // Cộng lại số lượng đã đặt vào biến thể
+            $variation->save();
+        }
+    }
+      // Hoàn lại lượt sử dụng mã giảm giá
+      if ($order->discount_code) {
+        $discount = Discount::where('code', $order->discount_code)->first();
+        if ($discount) {
+            $discount->decrement('usage_count'); // Giảm số lượt sử dụng của mã giảm giá
+            // Nếu mã giảm giá còn lượt sử dụng, có thể làm thêm xử lý
+        }
+    }
+
     
         $order->status = 'Hủy';
         $order->cancellation_reason = $request->cancellation_reason;

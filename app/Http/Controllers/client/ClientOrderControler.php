@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\client;
 
-use App\Http\Controllers\Controller;
-use App\Models\AdminOrder;
 use App\Models\User;
+use App\Models\Discount;
+use App\Models\AdminOrder;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ClientOrderControler extends Controller
 {
@@ -32,6 +33,7 @@ class ClientOrderControler extends Controller
         if ($order->status != 'Chờ xử lý') {
             return back()->withErrors('Đơn hàng không thể hủy vì đã chuyển sang trạng thái khác.');
         }
+        
         if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
             $user = User::findOrFail($order->user_id);
             $refundAmount = $order->total - ($order->discount_value ?? 0);
@@ -39,6 +41,22 @@ class ClientOrderControler extends Controller
             $user->balance += $refundAmount;
             $user->save();
         }
+         // Hoàn lại số lượng biến thể của sản phẩm
+    foreach ($order->orderItems as $item) {
+        $variation = $item->variation;
+        if ($variation) {
+            $variation->quantity += $item->quantity; // Cộng lại số lượng đã đặt vào biến thể
+            $variation->save();
+        }
+    }
+      // Hoàn lại lượt sử dụng mã giảm giá
+      if ($order->discount_code) {
+        $discount = Discount::where('code', $order->discount_code)->first();
+        if ($discount) {
+            $discount->decrement('usage_count'); // Giảm số lượt sử dụng của mã giảm giá
+            // Nếu mã giảm giá còn lượt sử dụng, có thể làm thêm xử lý
+        }
+    }
     
         $order->status = 'Hủy';
         $order->cancellation_reason = $request->cancellation_reason;

@@ -588,13 +588,12 @@
                         <span class="shop-wishlist-count">0</span>
 
                     </button> -->
-                    <button class="shop-tool has-count" type="button" data-type="shop-cart-header"
-                        title="Giỏ hàng">
-                        <a href="{{route('client-card.index')}}" class="">
-                        <i class="fal fa-shopping-bag"></i>
-                        <span class="shop-cart-count">0</span>
-                        </a>
-                    </button>
+                    <button class="shop-tool has-count" type="button" data-type="shop-cart-header" title="Giỏ hàng">
+    <a href="{{route('client-card.index')}}" class="">
+        <i class="fal fa-shopping-bag"></i>
+        <span class="shop-cart-count" style="color:red">{{ Auth::check() ? App\Models\Cart::where('user_id', Auth::id())->count() : '0' }}</span>
+    </a>
+</button>
                 </div>
                 <div class="headers3-bot">
                     <nav class="headers3-bot-menu">
@@ -674,3 +673,4 @@
             </div>
         </div>
     </header>
+ 

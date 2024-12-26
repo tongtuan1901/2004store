@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('usage_count')->default(0); // số lần mã giảm giá đã được sử dụng
             $table->date('valid_from'); // ngày bắt đầu hiệu lực
             $table->date('valid_to'); // ngày kết thúc hiệu lực
+            $table->softDeletes();
             $table->timestamps();
         });
     }

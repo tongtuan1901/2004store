@@ -617,4 +617,10 @@ Route::post('/cart/update/{id}', [CardController::class, 'updateQuantity'])->nam
 
 Route::get('/admin/orders/approve', [AdminOrdersController::class, 'approveIndex'])->name('admin.orders.approve.index');
 
+// số lượng sản phẩm trong icon giỏ hàng
+Route::get('/cart/count', function () {
+    $count = Auth::check() ? App\Models\Cart::where('user_id', Auth::id())->sum('quantity') : 0;
+    return response()->json(['count' => $count]);
+});
+
 
