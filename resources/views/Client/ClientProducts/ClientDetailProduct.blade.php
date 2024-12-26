@@ -528,9 +528,70 @@
                                                             name="quantity" min="1" value="1"
                                                             class="form-control">
                                                     </div>
+                                                    <div id="quantity-warning-{{ $relatedProduct->id }}" style="color: red; display: none;">
+                                                        Vượt quá số lượng còn lại của biến thể.
+                                                    </div>
+                                    
+                                                    <div id="quantity-remaining-{{ $relatedProduct->id }}" style="display: none;">
+                                                        Số lượng còn lại: <span id="remaining-quantity-{{ $relatedProduct->id }}"></span>
+                                                    </div>
                                                     <br>
                                                     <button type="submit" class="ft1">Thêm vào giỏ</button>
                                                 </form>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        var sizeSelect = document.getElementById('size-{{ $relatedProduct->id }}');
+                                                        var colorSelect = document.getElementById('color-{{ $relatedProduct->id }}');
+                                                        var quantityInput = document.getElementById('quantity-{{ $relatedProduct->id }}');
+                                                        var quantityWarning = document.getElementById('quantity-warning-{{ $relatedProduct->id }}');
+                                                        var quantityRemainingDiv = document.getElementById('quantity-remaining-{{ $relatedProduct->id }}');
+                                                        var remainingQuantitySpan = document.getElementById('remaining-quantity-{{ $relatedProduct->id }}');
+                                                
+                                                        function updateQuantityInfo() {
+                                                            var selectedSize = sizeSelect.value;
+                                                            var selectedColor = colorSelect.value;
+                                                
+                                                            if (selectedSize && selectedColor) {
+                                                                var availableQuantity = 0;
+                                                
+                                                                // Duyệt qua tất cả các biến thể để lấy số lượng còn lại
+                                                                @foreach ($relatedProduct->variations as $variation)
+                                                                    if (selectedSize == {{ $variation->size_id }} && selectedColor == {{ $variation->color_id }}) {
+                                                                        availableQuantity = {{ $variation->quantity }};
+                                                                    }
+                                                                @endforeach
+                                                
+                                                                // Hiển thị số lượng còn lại
+                                                                if (availableQuantity > 0) {
+                                                                    quantityRemainingDiv.style.display = 'block';
+                                                                    remainingQuantitySpan.textContent = availableQuantity;
+                                                                } else {
+                                                                    quantityRemainingDiv.style.display = 'none';
+                                                                }
+                                                
+                                                                // Kiểm tra nếu số lượng nhập vào vượt quá số lượng còn lại
+                                                                if (parseInt(quantityInput.value) > availableQuantity) {
+                                                                    quantityWarning.style.display = 'block';
+                                                                } else {
+                                                                    quantityWarning.style.display = 'none';
+                                                                }
+                                                
+                                                                // Thiết lập giá trị tối đa của input số lượng
+                                                                quantityInput.setAttribute('max', availableQuantity);
+                                                            }
+                                                        }
+                                                
+                                                        // Lắng nghe sự kiện thay đổi của kích thước và màu
+                                                        sizeSelect.addEventListener('change', updateQuantityInfo);
+                                                        colorSelect.addEventListener('change', updateQuantityInfo);
+                                                
+                                                        // Lắng nghe sự kiện thay đổi của input số lượng
+                                                        quantityInput.addEventListener('input', updateQuantityInfo);
+                                                
+                                                        // Kiểm tra ban đầu
+                                                        updateQuantityInfo();
+                                                    });
+                                                </script>
                                             @else
                                                 <p>Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.</p>
                                                 <a href="{{ route('client-login.index') }}"

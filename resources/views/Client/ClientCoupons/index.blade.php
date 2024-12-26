@@ -50,8 +50,10 @@
                                             VND
                                         @endif
                                     </h3>
+                                    <span>Số lượng: {{$coupon->soLuongConLai}}</span>
                                 </div>
                             </div>
+                            @if ($coupon->soLuongConLai>0)
                             <div class="kanan">
                                 <div class="info m-3 d-flex align-items-center">
                                     <div class="w-500">
@@ -71,6 +73,9 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                                <span class="badge badge-danger">Mã đã hết</span>
+                            @endif
                         </div>
                     </div>
                 @endforeach

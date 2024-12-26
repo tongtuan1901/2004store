@@ -6,6 +6,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sherah-body">
+                    @if (Session::has('success'))
+                                <div class="alert alert-danger">{{ Session::get('success') }}</div>
+                            @endif
                         <!-- Dashboard Inner -->
                         <div class="sherah-dsinner">
                             <div class="row mg-top-30">
@@ -42,7 +45,7 @@
                                     <!-- Nút tìm kiếm và reset -->
                                     <div class="col-md-3 d-flex">
                                         <button type="submit" class="btn btn-primary btn-sm mr-2">Tìm kiếm</button>
-                                        <a href="{{  route('admin-orders.approve.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+                                        {{-- <a href="{{  route('admin-orders.approve.index') }}" class="btn btn-secondary btn-sm">Reset</a> --}}
                                     </div>
                                 </div>
                             </form>

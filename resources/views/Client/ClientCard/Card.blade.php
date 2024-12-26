@@ -58,6 +58,7 @@
                        title="{{ $item->product->name }}">{{ $item->product->name }}</a>
                 </h3>
                 <div class="main-cart-data-full-item-info-price">
+                    
                     <label>Giá: </label>
                     @if ($item->variation)
                         {{ number_format($item->variation->price, 0, ',', '.') }}₫
@@ -141,8 +142,22 @@
                                     <a href="{{ route('client-home.index') }}" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
                                 </div>
                                 <div class="text-center" style="padding-bottom: 40px">
-                                    <a class="ft2" href="{{ route('client-checkout.index') }}" title="Thanh toán">Thanh toán</a>
+                                    <a class="ft2" 
+                                       href="javascript:void(0);" 
+                                       title="Thanh toán" 
+                                       id="checkoutButton">Thanh toán</a>
                                 </div>
+                                
+                                <script>
+                                    document.getElementById('checkoutButton').addEventListener('click', function () {
+                                        @if ($cart->isEmpty())
+                                            alert('Không có sản phẩm nào để thanh toán.');
+                                        @else
+                                            // Nếu có sản phẩm, chuyển hướng đến trang thanh toán
+                                            window.location.href = "{{ route('client-checkout.index') }}";
+                                        @endif
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

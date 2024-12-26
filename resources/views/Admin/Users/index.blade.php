@@ -114,10 +114,14 @@
                                 </td>
                                 <td>
 <<<<<<< HEAD
+                                    ${user.deleted_at ? 
+=======
+<<<<<<< HEAD
                                     ${user.deleted_at ?
 =======
                                     ${user.deleted_at ?
 >>>>>>> fcd3511a2c0b85b28434d95ad5d7586d96bca65b
+>>>>>>> baf2883bd1fb91cee499d59f21426a126e886900
                                         `<a href="/users/restore/${user.id}" class="btn btn-success btn-sm">Restore</a>` :
                                         `<form action="/users/${user.id}" method="POST" style="display:inline-block;">
                                             @csrf

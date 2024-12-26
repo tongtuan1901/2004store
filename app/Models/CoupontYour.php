@@ -18,6 +18,6 @@ class CoupontYour extends Model
     ];
     public function coupont()
     {
-        return $this->belongsTo(AdminCoupons::class, 'couponts_id');
+        return $this->belongsTo(Discount::class, 'couponts_id');
     }
 }

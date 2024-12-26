@@ -23,6 +23,7 @@ class couponsController extends Controller
         $khuyenMai->each(function ($coupon) {
             $endDate = Carbon::parse($coupon->valid_to);
             $coupon->days_remaining = $endDate->diffInDays(Carbon::now());
+            $coupon->soLuongConLai = $coupon->max_usage - $coupon->usage_count;
         });
 
         return view('Client.ClientCoupons.index', compact('khuyenMai'));

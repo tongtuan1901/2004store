@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.master')
 
 @section('contentAdmin')
@@ -6,7 +7,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sherah-body">
-
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                         <div class="sherah-dsinner">
                             <div class="row">
                                 <div class="col-12">
@@ -33,7 +42,9 @@
                                                                 <input class="sherah-wc__form-input"
                                                                     placeholder="Mời nhập tên" type="text"
                                                                     name="name">
-
+                                                                @error('name')
+                                                                    <span style="color: red;">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -45,7 +56,9 @@
                                                                 <input class="sherah-wc__form-input"
                                                                     placeholder="Mời nhập giá" type="number"
                                                                     name="price">
-
+                                                                @error('price')
+                                                                    <span style="color: red;">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -57,7 +70,9 @@
                                                                 <input class="sherah-wc__form-input"
                                                                     placeholder="Mời nhập giá" type="number"
                                                                     name="price_sale">
-
+                                                                 @error('price_sale')
+                                                                    <span style="color: red;">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -67,7 +82,9 @@
                                                             <label class="sherah-wc__form-label">Giới thiệu Mô tả</label>
                                                             <div class="form-group__input">
                                                                 <textarea class="sherah-wc__form-input" placeholder="Mời nhập mô tả" type="text" name="description"></textarea>
-
+                                                                @error('description')
+                                                                <span style="color: red;">{{ $message }}</span>
+                                                            @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -133,7 +150,7 @@
                                                                         <div class="col-md-4">
                                                                             <label class="form-label">Kích thước</label>
                                                                             <select name="variation[size][]"
-                                                                                class="form-select" required>
+                                                                                class="form-select">
                                                                                 <option value="">Chọn kích thước
                                                                                 </option>
                                                                                 @foreach ($sizes as $size)
@@ -141,11 +158,14 @@
                                                                                         {{ $size->size }}</option>
                                                                                 @endforeach
                                                                             </select>
+                                                                            @error('variation[size][]')
+                                                                            <span style="color: red;">{{ $message }}</span>
+                                                                        @enderror
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label class="form-label">Màu sắc</label>
                                                                             <select name="variation[color][]"
-                                                                                class="form-select" required>
+                                                                                class="form-select">
                                                                                 <option value="">Chọn màu sắc
                                                                                 </option>
                                                                                 @foreach ($colors as $color)
@@ -153,6 +173,9 @@
                                                                                         {{ $color->color }}</option>
                                                                                 @endforeach
                                                                             </select>
+                                                                            @error('variation[color][]')
+                                                                            <span style="color: red;">{{ $message }}</span>
+                                                                        @enderror
                                                                         </div>
                                                                     </div>
                                                                     <div class="row mt-2">
@@ -161,14 +184,21 @@
                                                                                 class="form-label">Số lượng</label>
                                                                             <input type="number"
                                                                                 name="variation[quantity][]"
-                                                                                class="form-control" required>
+                                                                                class="form-control" value="1">
+                                                                                @error('variation[quantity][]')
+                                                                                <span style="color: red;">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label for="variation[price][]"
                                                                                 class="form-label">Giá</label>
                                                                             <input type="number"
                                                                                 name="variation[price][]"
-                                                                                class="form-control" required>
+                                                                                class="form-control" value="0"
+                                                                                >
+                                                                                @error('variation[price][]')
+                                                                                <span style="color: red;">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <label class="form-label">Hình ảnh biến
@@ -176,8 +206,12 @@
                                                                             <input type="file"
                                                                                 name="variation[image][]"
                                                                                 class="form-control" multiple>
+                                                                                @error('variation[image][]')
+                                                                                <span style="color: red;">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
                                                                     </div>
+
                                                                     <button type="button" class="remove-variation mt-2">
                                                                         <svg class="sherah-color2__fill"
                                                                             xmlns="http://www.w3.org/2000/svg"
@@ -212,13 +246,14 @@
 
                                             </div>
 
-                                            <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-                                                <button type="submit" class="sherah-btn sherah-btn__primary">Lưu sản
-                                                    phẩm</button>
-                                                <a class="sherah-btn sherah-btn__third"
-                                                    href="{{ route('admin-products.index') }}">
-                                                    Cancel</a>
+                                            <div class="mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                                <button type="submit" class="sherah-btn sherah-btn__primary">Lưu sản phẩm
+                                                </button>
+                                                <a href="{{ route('admin-products.index') }}"
+                                                    class="sherah-btn sherah-btn__third">Hủy</a>
                                             </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

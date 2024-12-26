@@ -41,6 +41,20 @@ class CardController extends Controller
             return redirect()->back()->with('error', 'Biến thể sản phẩm không hợp lệ.');
         }
 
+        // Kiểm tra số lượng trong giỏ hàng hiện tại
+        $existingCartItem = Cart::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->where('variation_id', $variation->id)
+            ->first();
+
+        $currentCartQuantity = $existingCartItem ? $existingCartItem->quantity : 0;
+        $newTotalQuantity = $currentCartQuantity + $quantity;
+
+        // Kiểm tra nếu tổng số lượng vượt quá số lượng trong kho
+        if ($newTotalQuantity > $variation->quantity) {
+            return redirect()->back()->with('error', 'Số lượng yêu cầu vượt quá số lượng có sẵn trong kho.');
+        }
+
         if ($action === 'buyNow') {
             $cartItem = [
                 'product_id' => $productId,
@@ -92,7 +106,10 @@ class CardController extends Controller
 
         $cart = Cart::where('user_id', $userId)
                     ->with(['product', 'variation.size', 'variation.color'])
-                    ->get();
+                    ->get()
+                    ->filter(function ($item) {
+                        return $item->product && $item->product->exists && !$item->product->deleted;
+                    });
         return view('client.clientcard.card', compact('cart'));
     }
 
@@ -126,10 +143,11 @@ class CardController extends Controller
                        ->where('user_id', $userId)
                        ->with('variation')
                        ->first();
-
+        
         if (!$cartItem) {
             return redirect()->back()->with('error', 'Không tìm thấy sản phẩm trong giỏ hàng.');
         }
+        
 
         $action = $request->input('action');
         $currentQuantity = $cartItem->quantity;

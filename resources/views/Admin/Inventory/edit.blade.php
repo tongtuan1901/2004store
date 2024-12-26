@@ -6,6 +6,15 @@
             <div class="row">
                 <div class="col-12 sherah-main__column">
                     <div class="sherah-body">
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                         <div class="container">
                             <h2 class="mt-4">Chỉnh sửa bản ghi tồn kho</h2>
                             <form action="{{ route('inventory.update', $inventoryLog->id) }}" method="POST"
