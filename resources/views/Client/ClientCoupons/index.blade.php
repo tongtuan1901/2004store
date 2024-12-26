@@ -44,13 +44,12 @@
                                     {{-- <span class="badge badge-success">{{ $coupon->name }}</span> --}}
                                     <h3 class="lead">Mã: {{ $coupon->code }} <br> Giảm:
                                         {{ number_format($coupon->value) }}
-                                        @if ($coupon->type == 'percentage')
-                                            %
+                                        @if ($coupon->type == 'percent')
+                                            % 
                                         @else
                                             VND
                                         @endif
                                     </h3>
-                                    <p>Dành cho: {{ $coupon->product->name }}</p>
                                 </div>
                             </div>
                             <div class="kanan">
@@ -66,7 +65,6 @@
                                             <form action="{{ route('khuyenMai.store') }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="couponts_id" value="{{ $coupon->id }}">
-                                                <input type="hidden" name="product_id" value="{{ $coupon->product_id }}">
                                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? ''}}">
                                                 <button class="btn btn-success" type="submit" id="submit-button" onclick="disableButton()">Lưu mã khuyến mại</button>
                                             </form>                                            

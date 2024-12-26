@@ -387,7 +387,7 @@ Route::get('/checkout/momo/return', [CheckoutController::class, 'momoReturn'])->
 
 
 
-// Route::resource('client-checkout', CheckoutController::class);
+Route::resource('client-checkout', CheckoutController::class);
 
 // Route::resource('client-thankyou', CheckoutThankyouController::class);
 Route::get('thank-you', [CheckoutThankyouController::class, 'index'])->name('client-thankyou.index');

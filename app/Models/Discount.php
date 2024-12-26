@@ -22,5 +22,4 @@ class Discount extends Model
         // Trả về true nếu tất cả các điều kiện đều thỏa mãn
         return $isValidDate && $isUnderUsageLimit && $isAboveMinOrderValue;
     }
-    
 }

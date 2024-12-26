@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use App\Models\AdminCoupons;
 use App\Models\CoupontYour;
+use App\Models\Discount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -15,13 +16,12 @@ class couponsController extends Controller
      */
     public function index()
     {
-        $khuyenMai = AdminCoupons::whereDate('starts_at', '<=', Carbon::now())
-            ->whereDate('expires_at', '>', Carbon::now())
+        $khuyenMai = Discount::whereDate('valid_from', '<=', Carbon::now())
+            ->whereDate('valid_to', '>', Carbon::now())
             ->orderBy('created_at', 'desc')
-            ->with('product')
             ->get();
         $khuyenMai->each(function ($coupon) {
-            $endDate = Carbon::parse($coupon->expires_at);
+            $endDate = Carbon::parse($coupon->valid_to);
             $coupon->days_remaining = $endDate->diffInDays(Carbon::now());
         });
 
@@ -41,10 +41,8 @@ class couponsController extends Controller
      */
     public function store(Request $request)
     {
-        $exists = CoupontYour::where('product_id', $request->product_id)
-            ->where('couponts_id', $request->couponts_id)
+        $exists = CoupontYour::where('couponts_id', $request->couponts_id)
             ->exists();
-
         if ($exists) {
             return redirect()->back()->with('error', 'Bạn đã có mã này rồi!');
         }
