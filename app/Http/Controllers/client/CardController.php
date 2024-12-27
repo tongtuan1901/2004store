@@ -38,7 +38,12 @@ class CardController extends Controller
             return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
         }
 
-        $product = AdminProducts::findOrFail($productId);
+        $product = AdminProducts::where('id', $productId)->first();
+
+        // Kiểm tra nếu sản phẩm không tồn tại hoặc đã bị xóa
+        if (!$product || $product->deleted) {
+            return redirect()->back()->with('error', 'Sản phẩm này không tồn tại hoặc đã bị xóa.');
+        }
         $variation = $product->variations()
             ->where('size_id', $sizeId)
             ->where('color_id', $colorId)

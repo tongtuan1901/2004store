@@ -16,15 +16,15 @@
                                     chủ</a></li>
 
 
-                            <li class="breadcrumb-item active"><span>Sản phẩm</span></li>
+                            <li class="breadcrumb-item active"><span>Cocktail Dresses</span></li>
                         </ol>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="main-collection-banner">
-                    <img loading="eager" decoding="sync" fetchpriority="high" width="1000" height="300"
-                        src="{{asset('admin/img/banner4.jpg')}}"
+                    <img loading="eager" decoding="sync" fetchpriority="high" width="1920" height="640"
+                        src="{{asset('assets/bizweb.dktcdn.net/thumb/2048x2048/100/520/624/collections/h3bfbc9d6abb74530820bd8a71dccc8d-07aaeb016e4a475e97daf80cb8459361b9a8.jpg')}}"
                         alt="Cocktail Dresses" />
                 </div>
                 <div class="main-collection-wrap vertical">
@@ -45,12 +45,13 @@
                                         </g>
                                     </svg></button>
                             </div>
-
+                         
                             <div class="container">
                                 <form action="{{ route('client.categories.filter') }}" method="GET">
+                                    @csrf
                                     <div class="shop-filter-choose">
                                         <label>Bạn chọn:
-                                            <button type="button" id="remove-all-filters" title="Bỏ hết">Bỏ hết</button>
+                                           
                                         </label>
                                         <ul class="shop-filter-choose-data" id="selected-filters-list">
                                             @foreach($selectedFilters as $key => $value)
@@ -61,9 +62,9 @@
                                             @endforeach
                                         </ul>
                                     </div>
-
-
-
+           
+                                    
+                            
                                     <!-- Bộ lọc danh mục -->
                                     <div class="shop-filter" data-type="vendor">
                                         <h4>Danh mục sản phẩm</h4>
@@ -71,9 +72,9 @@
                                             @foreach($categories as $category)
                                                 <div class="shop-filter-item">
                                                     <!-- Tạo checkbox và giữ trạng thái checked nếu đã chọn -->
-                                                    <input type="checkbox"
-                                                           id="shop-filter-vendor-{{ $category->id }}"
-                                                           name="category[]"
+                                                    <input type="checkbox" 
+                                                           id="shop-filter-vendor-{{ $category->id }}" 
+                                                           name="category[]" 
                                                            value="{{ $category->id }}"
                                                            {{ in_array($category->id, $selectedCategories) ? 'checked' : '' }}>
                                                     <label for="shop-filter-vendor-{{ $category->id }}">{{ $category->name }}</label>
@@ -117,12 +118,8 @@
     font-size: 16px;
     cursor: pointer;
 }
-button.ft4:hover {
-            background-color: #f8b4da !important;
-            /* Màu hồng khi hover */
-        }
                                     </style>
-
+                            
                                     <!-- Bộ lọc giá -->
                                     <div class="shop-filter" data-type="price">
                                         <h4>Giá sản phẩm</h4>
@@ -159,39 +156,44 @@ button.ft4:hover {
                                         <div class="shop-filter-list">
                                             @foreach($colors as $color)
                                                 <div class="shop-filter-item">
-                                                    <input type="checkbox" id="shop-filter-color-{{ $color->id }}" name="color[]"
+                                                    <input type="checkbox" id="shop-filter-color-{{ $color->id }}" name="color[]" 
                                                            value="{{ $color->id }}" {{ in_array($color->id, $selectedColors) ? 'checked' : '' }}>
                                                     <label for="shop-filter-color-{{ $color->id }}">{{ ucfirst($color->color) }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
-
+                                    
                                     <!-- Bộ lọc kích thước -->
                                     <div class="shop-filter" data-type="size">
                                         <h4>Kích thước</h4>
                                         <div class="shop-filter-list">
                                             @foreach($sizes as $size)
                                                 <div class="shop-filter-item">
-                                                    <input type="checkbox" id="shop-filter-size-{{ $size->id }}" name="size[]"
+                                                    <input type="checkbox" id="shop-filter-size-{{ $size->id }}" name="size[]" 
                                                            value="{{ $size->id }}" {{ in_array($size->id, $selectedSizes) ? 'checked' : '' }}>
                                                     <label for="shop-filter-size-{{ $size->id }}">{{ strtoupper($size->size) }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
-                                    <button type="submit">Lọc</button>
+                                    <div class="filter-actions">
+                                        <button type="submit" style="background-color: #007BFF; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Lọc</button>
+                                        <a href="{{ url()->current() }}" class="btn-reset" title="Reset bộ lọc" style="background-color: #DC3545; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; display: inline-block;">
+                                            Reset
+                                        </a>
+                                    </div>
                                 </form>
-
+                            
                                 <script>
                                     // Cập nhật danh sách các bộ lọc đã chọn
                                     function updateSelectedFilters() {
                                         const selectedFiltersList = document.getElementById("selected-filters-list");
                                         const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
-
+                            
                                         // Xóa các bộ lọc cũ
                                         selectedFiltersList.innerHTML = "";
-
+                            
                                         // Thêm các bộ lọc mới
                                         checkboxes.forEach((checkbox) => {
                                             const label = document.querySelector(`label[for="${checkbox.id}"]`).innerText;
@@ -199,7 +201,7 @@ button.ft4:hover {
                                             listItem.textContent = label;
                                             selectedFiltersList.appendChild(listItem);
                                         });
-
+                            
                                         // Hiển thị thông báo nếu không có bộ lọc nào
                                         if (checkboxes.length === 0) {
                                             const listItem = document.createElement("li");
@@ -208,15 +210,9 @@ button.ft4:hover {
                                             selectedFiltersList.appendChild(listItem);
                                         }
                                     }
-
-                                    // Xóa tất cả bộ lọc đã chọn khi nhấn nút "Bỏ hết"
-                                    document.getElementById("remove-all-filters").addEventListener("click", function(event) {
-                                        event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
-                                        const checkboxes = document.querySelectorAll("input[type='checkbox']");
-                                        checkboxes.forEach((checkbox) => checkbox.checked = false);
-                                        updateSelectedFilters();
-                                    });
-
+                            
+                                 
+                                  
                                     // Cập nhật lại danh sách bộ lọc khi checkbox thay đổi
                                     document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
                                         checkbox.addEventListener("change", updateSelectedFilters);
@@ -239,25 +235,25 @@ button.ft4:hover {
 });
 document.getElementById("remove-all-filters").addEventListener("click", function(event) {
     event.preventDefault(); // Ngăn chặn submit form khi nhấn nút "Bỏ hết"
-
+    
     // Tắt tất cả các checkbox
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
     });
-
+    
     // Gửi lại form với các bộ lọc đã bị xóa
     document.querySelector("form").submit();  // Submit form sau khi bỏ tất cả bộ lọc
 });
 
+    
 
 
 
-
-
+                                    
                                 </script>
                             </div>
-
+                        
                         <div class="main-collection-right">
                             <div class="main-collection-head">
                                 <div class="shop-sort-style">
@@ -279,293 +275,266 @@ document.getElementById("remove-all-filters").addEventListener("click", function
                             <div class="shop-sort-item" data-show="four"></div>
                         </div>
                         <div class="shop-sort-by">
-
+                           
                         </div>
                     </div>
-                    <div class="main-collection-right">
-
-
+                    <div class="main-collection-info">
+                       
+                      
                         <h1 class="titleStyle1">Sản phẩm của chúng tôi</h1>
+                   
+                       
 
+                        <div class="main-collection-data four">
 
+                            @foreach ($products as $product)
+                                <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ $product->slug }}">
+                                    <div class="product-item-wrap">
+                                        <div class="product-item-top">
+                                            <div class="product-item-top-image">
+                                                <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
+                                                    <img src="{{ Storage::url($product->images->first()->image_path) }}"
+                                                        alt="{{ $product->name }}" title="{{ $product->name }}"
+                                                        width="480" height="480" loading="lazy" decoding="async">
+                                                </a>
 
-<div class="main-collection-data four">
+                                            </div>
 
-    @foreach ($products as $product)
+                                            {{-- @if ($product->sale_percentage > 0)
+                        <div class="product-item-label-sale"><span>-{{ $product->sale_percentage }}%</span></div>
+                    @endif --}}
+                                            <button type="button" title="Yêu thích" class="shop-wishlist-button-add"
+                                                data-type="shop-wishlist-button-add">
+                                                <!-- SVG icon for wishlist button -->
+                                            </button>
+                                            <style>
+                                                .slide-image {
+                                                    height: 100px;
+                                                    /* Thay đổi chiều cao theo yêu cầu */
+                                                    object-fit: cover;
+                                                    /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
 
-        <div class="product-item" data-id="{{ $product->id }}" data-handle="{{ $product->slug }}">
-            <div class="product-item-wrap">
-                <div class="product-item-top">
-                    <div class="product-item-top-image">
-                        <a href="{{ route('client-products.show', $product->id) }}" class="product-item-top-image-showcase">
-                            <img src="{{ Storage::url($product->images->first()->image_path) }}"
-                                 alt="{{ $product->name }}"
-                                 title="{{ $product->name }}" width="480" height="480" loading="lazy" decoding="async">
-                        </a>
-
-                    </div>
-
-                    @if($product->price > 0 && $product->price_sale < $product->price)
-                    <div class="product-item-label-sale">
-                        <span>{{ number_format(100 - (($product->price_sale / $product->price) * 100), 2) }}%</span>
-                    </div>
-                @endif
-                    <button type="button" title="Yêu thích" class="shop-wishlist-button-add" data-type="shop-wishlist-button-add">
-                        <!-- SVG icon for wishlist button -->
-                    </button>
-                    {{-- <style>
-                        /* Modal Styles */
-                        .modal {
-                            display: none;
-                            position: fixed;
-                            z-index: 1000;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            height: 100%;
-                            overflow: auto;
-                            background-color: rgba(0, 0, 0, 0.5);
-                        }
-
-                        .modal-content {
-                            background-color: #fff;
-                            margin: 10% auto;
-                            padding: 20px;
-                            border-radius: 8px;
-                            width: 90%;
-                            max-width: 500px;
-                            position: relative;
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                        }
-
-                        .close {
-                            position: absolute;
-                            top: 10px;
-                            right: 15px;
-                            color: #333;
-                            font-size: 24px;
-                            font-weight: bold;
-                            cursor: pointer;
-                        }
-
-                        .form-group {
-                            margin-bottom: 15px;
-                        }
-
-                        .form-group label {
-                            display: block;
-                            margin-bottom: 5px;
-                            font-weight: bold;
-                        }
-
-                        .form-group select,
-                        .form-group input {
-                            width: 100%;
-                            padding: 8px;
-                            border: 1px solid #ccc;
-                            border-radius: 4px;
-                            font-size: 14px;
-                        }
-
-                        .ft1 {
-                            display: inline-block;
-                            padding: 10px 20px;
-                            background-color: #007bff;
-                            color: #fff;
-                            border: none;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-align: center;
-                            font-size: 14px;
-                        }
-
-                        .shop-addLoop-button {
-                            display: inline-block;
-                            padding: 10px 15px;
-                            background-color: #28a745;
-                            color: #fff;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-decoration: none;
-                        }
-
-                        .shop-addLoop-button:hover {
-                            background-color: #218838;
-                        }
-
-                        .shop-quickview-button {
-                            display: inline-block;
-                            padding: 10px 15px;
-                            background-color: #ffc107;
-                            color: #333;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            text-decoration: none;
-                        }
-
-                        .shop-quickview-button:hover {
-                            background-color: #e0a800;
-                        }
-
-                        /* Toggle Modal */
-                        .modal-toggle:checked ~ .modal {
-                            display: block;
-                        }
-                    </style> --}}
-                    <style>
-                        .slide-image {
-                            height: 100px;
-                            /* Thay đổi chiều cao theo yêu cầu */
-                            object-fit: cover;
-                            /* Đảm bảo hình ảnh giữ tỉ lệ mà không bị méo */
-
-                        }
-
-                        /* Styles for the custom buttons */
-                        .shop-addLoop-button,
-                        .shop-quickview-button {
-                            background-color: #4CAF50;
-                            /* Green */
-                            border: none;
-                            color: white;
-                            padding: 5px 7px;
-                            text-align: center;
-                            text-decoration: none;
-                            display: inline-block;
-                            transition: 0.3s;
-                            cursor: pointer;
-                        }
-
-                        .shop-addLoop-button:hover,
-                        .shop-quickview-button:hover {
-                            background-color: #f8b4da !important;
-                        }
-
-                        button.ft1 {
-                            display: inline-block;
-                            opacity: 1;
-                            visibility: visible;
-                            z-index: 10;
-                            background-color: initial;
-                            /* Màu nền mặc định */
-                            transition: background-color 0.3s ease;
-                            /* Hiệu ứng mượt khi đổi màu */
-                        }
-
-                        button.ft1:hover {
-                            background-color: #f8b4da !important;
-                            /* Màu hồng khi hover */
-                        }
-                        .form-group{
-                            display: left;
-                        }
-                    </style>
-           <div class="product-item-actions">
-            @if ($product->variations->isNotEmpty())
-                <label for="modal-toggle-best-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">
-                    Thêm vào giỏ
-                </label>
-                <input type="checkbox" id="modal-toggle-best-{{ $product->id }}" class="modal-toggle" />
-
-                <div class="modal">
-                    <div class="modal-content">
-                        <label for="modal-toggle-best-{{ $product->id }}" class="close">&times;</label>
-                        <h2>Chọn biến thể và số lượng</h2>
-
-                        @if (auth()->check())
-                            <form action="{{ route('cart.add') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                                <div class="form-group">
-                                    <label for="size-best-{{ $product->id }}">Kích thước:</label>
-                                    <select id="size-best-{{ $product->id }}" name="size" class="form-control" required>
-                                        <option value="">Chọn kích thước</option>
-                                        @php
-                                            $uniqueSizes = [];
-                                            foreach ($product->variations as $variation) {
-                                                if (!in_array($variation->size->id, $uniqueSizes)) {
-                                                    $uniqueSizes[] = $variation->size->id;
-                                                    echo '<option value="' . $variation->size->id . '">' . $variation->size->size . '</option>';
                                                 }
-                                            }
-                                        @endphp
-                                    </select>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="color-best-{{ $product->id }}">Màu sắc:</label>
-                                    <select id="color-best-{{ $product->id }}" name="color" class="form-control" required>
-                                        <option value="">Chọn màu sắc</option>
-                                        @php
-                                            $uniqueColors = [];
-                                            foreach ($product->variations as $variation) {
-                                                if (!in_array($variation->color->id, $uniqueColors)) {
-                                                    $uniqueColors[] = $variation->color->id;
-                                                    echo '<option value="' . $variation->color->id . '">' . $variation->color->color . '</option>';
+                                                /* Styles for the custom buttons */
+                                                .shop-addLoop-button,
+                                                .shop-quickview-button {
+                                                    background-color: #4CAF50;
+                                                    /* Green */
+                                                    border: none;
+                                                    color: white;
+                                                    padding: 5px 7px;
+                                                    text-align: center;
+                                                    text-decoration: none;
+                                                    display: inline-block;
+                                                    transition: 0.3s;
+                                                    cursor: pointer;
                                                 }
-                                            }
-                                        @endphp
-                                    </select>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
-                                    <input type="number" id="quantity-best-{{ $product->id }}" name="quantity" min="1" value="1" class="form-control" required>
-                                </div>
+                                                .shop-addLoop-button:hover,
+                                                .shop-quickview-button:hover {
+                                                    background-color: #f8b4da !important;
+                                                }
 
-                                <button type="submit" class="ft1">Thêm vào giỏ</button>
-                            </form>
-                        @else
-                            <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
-                        @endif
+                                                button.ft1 {
+                                                    display: inline-block;
+                                                    opacity: 1;
+                                                    visibility: visible;
+                                                    z-index: 10;
+                                                    background-color: initial;
+                                                    /* Màu nền mặc định */
+                                                    transition: background-color 0.3s ease;
+                                                    /* Hiệu ứng mượt khi đổi màu */
+                                                }
+
+                                                button.ft1:hover {
+                                                    background-color: #f8b4da !important;
+                                                    /* Màu hồng khi hover */
+                                                }
+
+                                                button.ft4:hover {
+                                                    background-color: #f8b4da !important;
+                                                    /* Màu hồng khi hover */
+                                                }
+
+                                                .form-group {
+                                                    display: left;
+                                                }
+                                            </style>
+                                         <div class="product-item-actions">
+                                            @if ($product->variations->isNotEmpty())
+                                                <label for="modal-toggle-best-{{ $product->id }}" class="shop-addLoop-button" title="Thêm vào giỏ">
+                                                    Thêm vào giỏ
+                                                </label>
+                                                <input type="checkbox" id="modal-toggle-best-{{ $product->id }}" class="modal-toggle" />
+
+                                                <div class="modal">
+                                                    <div class="modal-content">
+                                                        <label for="modal-toggle-best-{{ $product->id }}" class="close">&times;</label>
+                                                        <h2>Chọn biến thể và số lượng</h2>
+
+                                                        @if (auth()->check())
+                                                            <form action="{{ route('cart.add') }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                                                <div class="form-group">
+                                                                    <label for="size-best-{{ $product->id }}">Kích thước:</label>
+                                                                    <select id="size-best-{{ $product->id }}" name="size" class="form-control" required>
+                                                                        <option value="">Chọn kích thước</option>
+                                                                        @php
+                                                                            $uniqueSizes = [];
+                                                                            foreach ($product->variations as $variation) {
+                                                                                if (!in_array($variation->size->id, $uniqueSizes)) {
+                                                                                    $uniqueSizes[] = $variation->size->id;
+                                                                                    echo '<option value="' . $variation->size->id . '">' . $variation->size->size . '</option>';
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="color-best-{{ $product->id }}">Màu sắc:</label>
+                                                                    <select id="color-best-{{ $product->id }}" name="color" class="form-control" required>
+                                                                        <option value="">Chọn màu sắc</option>
+                                                                        @php
+                                                                            $uniqueColors = [];
+                                                                            foreach ($product->variations as $variation) {
+                                                                                if (!in_array($variation->color->id, $uniqueColors)) {
+                                                                                    $uniqueColors[] = $variation->color->id;
+                                                                                    echo '<option value="' . $variation->color->id . '">' . $variation->color->color . '</option>';
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="quantity-best-{{ $product->id }}">Số lượng:</label>
+                                                                    <input type="number" id="quantity-best-{{ $product->id }}" name="quantity" min="1" value="1" class="form-control" required>
+                                                                </div>
+                                                                <div id="quantity-warning-best-{{ $product->id }}" style="color: red; display: none;">
+                                                                    Vượt quá số lượng còn lại của biến thể.
+                                                                </div>
+                                                                
+                                        
+                                                                <div id="quantity-remaining-best-{{ $product->id }}" style="display: none;">
+                                                                    Số lượng còn lại: <span id="remaining-quantity-best-{{ $product->id }}"></span>
+                                                                </div>
+
+                                                                <button type="submit" class="ft1">Thêm vào giỏ</button>
+                                                            </form>
+                                                            
+                                                        @else
+                                                            <p>Vui lòng <a href="{{ route('client-login.index') }}">đăng nhập</a> để mua hàng</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
+                                            @endif
+
+                                            <button class="ft4" style="background-color: #4CAF50 ; color: white">
+                                                <a href="{{ route('client-products.show', $product->id) }}">Xem chi tiết</a>
+                                            </button>
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                var sizeSelect = document.getElementById('size-best-{{ $product->id }}');
+                                                var colorSelect = document.getElementById('color-best-{{ $product->id }}');
+                                                var quantityInput = document.getElementById('quantity-best-{{ $product->id }}');
+                                                var quantityWarning = document.getElementById('quantity-warning-best-{{ $product->id }}');
+                                                var quantityRemainingDiv = document.getElementById('quantity-remaining-best-{{ $product->id }}');
+                                                var remainingQuantitySpan = document.getElementById('remaining-quantity-best-{{ $product->id }}');
+                                        
+                                                function updateQuantityInfo() {
+                                                    var selectedSize = sizeSelect.value;
+                                                    var selectedColor = colorSelect.value;
+                                        
+                                                    if (selectedSize && selectedColor) {
+                                                        var availableQuantity = 0;
+                                        
+                                                        // Duyệt qua tất cả các biến thể để lấy số lượng còn lại
+                                                        @foreach ($product->variations as $variation)
+                                                            if (selectedSize == {{ $variation->size_id }} && selectedColor == {{ $variation->color_id }}) {
+                                                                availableQuantity = {{ $variation->quantity }};
+                                                            }
+                                                        @endforeach
+                                        
+                                                        // Hiển thị số lượng còn lại
+                                                        if (availableQuantity > 0) {
+                                                            quantityRemainingDiv.style.display = 'block';
+                                                            remainingQuantitySpan.textContent = availableQuantity;
+                                                        } else {
+                                                            quantityRemainingDiv.style.display = 'none';
+                                                        }
+                                        
+                                                        // Kiểm tra nếu số lượng nhập vào vượt quá số lượng còn lại
+                                                        if (parseInt(quantityInput.value) > availableQuantity) {
+                                                            quantityWarning.style.display = 'block';
+                                                        } else {
+                                                            quantityWarning.style.display = 'none';
+                                                        }
+                                        
+                                                        // Thiết lập giá trị tối đa của input số lượng
+                                                        quantityInput.setAttribute('max', availableQuantity);
+                                                    }
+                                                }
+                                        
+                                                // Lắng nghe sự kiện thay đổi của kích thước và màu
+                                                sizeSelect.addEventListener('change', updateQuantityInfo);
+                                                colorSelect.addEventListener('change', updateQuantityInfo);
+                                        
+                                                // Lắng nghe sự kiện thay đổi của input số lượng
+                                                quantityInput.addEventListener('input', updateQuantityInfo);
+                                        
+                                                // Kiểm tra ban đầu
+                                                updateQuantityInfo();
+                                            });
+                                        </script>
+
+
+                                        </div>
+                                        <div class="product-item-details">
+                                            <!-- Hiển thị danh mục -->
+                                            <p class="product-item-category"
+                                                style="font-size: 0.7em; color: #888; opacity: 0.7; margin-bottom: 10px;">
+                                                {{ $product->category->name }}
+                                                <!-- Lấy tên danh mục từ mối quan hệ với Category -->
+                                            </p>
+
+                                            <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;">
+                                                {{ $product->name }}</h2> <!-- Giảm phông chữ của tên sản phẩm -->
+
+
+
+
+                                            <p class="product-item-price">
+                                                <span class="original-price" style="color: red; font-size: 1.2em;">
+                                                    {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
+                                                </span>
+
+                                                <span class="sale-price"
+                                                    style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
+                                                    {{ number_format($product->price, 0, ',', '.') }} VNĐ
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="pagination">
+                            {{ $products->links() }} <!-- Hiển thị phân trang -->
+                        </div>
                     </div>
-                </div>
-            @else
-                <span class="shop-addLoop-button disabled" title="Hết hàng">Hết hàng</span>
-            @endif
 
-            <button class="ft4" style="background-color: #4CAF50 ; color: white">
-                <a href="{{ route('client-products.show', $product->id) }}">Xem chi tiết</a>
-            </button>
-        </div>
-
-                </div>
-                <div class="product-item-details">
-                           <!-- Hiển thị danh mục -->
-                    <p class="product-item-category" style="font-size: 0.7em; color: #888; opacity: 0.7; margin-bottom: 10px;">
-                        <a href="{{ route('client-products.show', $product->id) }}">{{ $product->name }}</a> <!-- Lấy tên danh mục từ mối quan hệ với Category -->
-                   </p>
-
-                    <h2 class="product-item-name" style="font-size: 0.8em; font-weight: 500;"><a href="{{ route('client-products.show', $product->id) }}">{{ $product->name }}</a></h2> <!-- Giảm phông chữ của tên sản phẩm -->
-
-
-
-
-                    <p class="product-item-price">
-                        <span class="original-price" style="color: red; font-size: 1.2em;">
-                            {{ number_format($product->price_sale, 0, ',', '.') }} VNĐ
-                        </span>
-
-                        <span class="sale-price" style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-left: 10px;">
-                            {{ number_format($product->price, 0, ',', '.') }} VNĐ
-                        </span>
-                    </p>
                 </div>
             </div>
-        </div>
 
-    @endforeach
-     </div>
-     <div class="pagination">
-        {{ $products->links() }} <!-- Hiển thị phân trang -->
-    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-
+        
+                  
+        
     </main>
 @endsection

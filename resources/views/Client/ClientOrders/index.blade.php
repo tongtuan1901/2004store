@@ -122,7 +122,7 @@
                             @endforeach
                         </td> --}}
                         <td class="truncate">
-                            {{ number_format(($order->total + $order->shipping_fee - $order->discount_value) ?? 0, 0, ',', '.') }}
+                            {{ number_format(($order->total) ?? 0, 0, ',', '.') }}
                             @if(in_array($order->payment_method, ['momo', 'vnpay', 'wallet']))
                                 <large class="text-success" style="color: green; margin-left: 10px;">(Đã thanh toán)</large>
                             @endif

@@ -120,10 +120,10 @@
                                         <div class="order-totals">
                                             <!-- Hiển thị thông tin tổng giá trị đơn hàng -->
                                             <ul class="order-totals__list">
-                                                <li class="order-totals__list--sub">
+                                                <!-- <li class="order-totals__list--sub">
                                                     <span>Tổng cộng:</span>
                                                     <span class="order-totals__amount">{{ number_format($order->total - 40000)}} VNĐ</span>
-                                                </li>
+                                                </li> -->
                                                 <li class="order-totals__list--sub">
                                                     <span>Tiền ship:</span>
                                                     <span class="order-totals__amount">+ 40,000 VNĐ</span>
@@ -137,7 +137,7 @@
                                                 @endif
                                                 <li class="order-totals__list--sub">
                                                     <span>Thành tiền:</span>
-                                                    <span class="order-totals__amount">{{ number_format($order->total - $order->discount_value)}} VNĐ</span>
+                                                    <span class="order-totals__amount">{{ number_format($order->total)}} VNĐ</span>
                                                 </li>
                                             </ul>
                                         </div>

@@ -29,7 +29,7 @@
                 <div class="main-collection-wrap vertical">
                     <div class="container">
                         <div class="container"> 
-                                <h1 class="titleStyle1">Sản phẩm {{ $selectedCategory->name }} của chúng tôi </h1>
+                        <h1 class="titleStyle1">Sản phẩm của danh mục - {{ $categories->name }}</h1>
                                 <div class="main-collection-data four">
 
                                     @foreach ($products as $product)

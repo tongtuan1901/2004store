@@ -294,7 +294,7 @@ class CheckoutController extends Controller
         // Tính toán chi phí
         $shippingFee = 40000;
         $discountCode = $request->input('discount_code');
-        $discountValue = 0;
+        $discountValue = session('discount_value',0);
         $discountId = null;
 
         if ($discountCode) {

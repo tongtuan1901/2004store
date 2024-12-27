@@ -36,8 +36,8 @@ class ClientOrderControler extends Controller
         
         if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
             $user = User::findOrFail($order->user_id);
-            $refundAmount = $order->total - ($order->discount_value ?? 0);
-            $refundAmount = max(0, $refundAmount);
+            $refundAmount = $order->total;
+          
             $user->balance += $refundAmount;
             $user->save();
         }

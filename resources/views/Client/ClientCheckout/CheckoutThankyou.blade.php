@@ -18054,7 +18054,7 @@
                                                                 @php
                                                                     $totalAfterDiscount = ($order->total - $shippingFee) + $shippingFee - $order->discount_value;
                                                                 @endphp
-                                                                {{ number_format($totalAfterDiscount, 0, ',', '.') }}₫
+                                                                {{ number_format($order->total, 0, ',', '.') }}₫
                                                             </td>
                                                         </tr>
                                                     @endif

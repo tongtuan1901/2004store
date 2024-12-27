@@ -111,13 +111,17 @@
                                                     </td>
 
                                                     <td class="sherah-table__column-6 sherah-table__data-6">
-                                                        <div class="sherah-table__product-content">
-                                                            <span
-                                                                class="{{ $product->status == 0 ? 'bg-green-600/5 text-green-600' : 'bg-red-600/5 text-red-600' }} text-[11px] font-medium px-2.5 py-0.5 rounded h-5">
-                                                                {{ $product->status == 0 ? 'Tồn hàng' : 'Hết hàng' }}
-                                                            </span>
-                                                        </div>
-                                                    </td>
+    <div class="sherah-table__product-content">
+        @php
+            $totalQuantity = $product->variations->sum('quantity');
+            $status = $totalQuantity > 0 ? 'in_stock' : 'out_of_stock';
+        @endphp
+        <span class="status-badge {{ $status == 'in_stock' ? 'status-in-stock' : 'status-out-of-stock' }}">
+            {{ $status == 'in_stock' ? 'Tồn hàng' : 'Hết hàng' }}
+            <small>({{ $totalQuantity }})</small>
+        </span>
+    </div>
+</td>
                                                     <td class="sherah-table__column-7 sherah-table__data-7">
                                                         <div class="sherah-table__product-content">
                                                             <div>
@@ -231,4 +235,29 @@
             </div>
         </div>
     </section>
+    <style>
+        .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-in-stock {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: rgb(16, 185, 129);
+}
+
+.status-out-of-stock {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: rgb(239, 68, 68);
+}
+
+.status-badge small {
+    margin-left: 4px;
+    opacity: 0.8;
+}
+    </style>
 @endsection

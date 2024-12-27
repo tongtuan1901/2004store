@@ -27,7 +27,7 @@ class CheckoutThankyouController extends Controller
 
         // Apply discount if exists
         $discountValue = $order->discount_value ?? 0;
-        $finalTotal = max(0, $order->total - $order->discount_value);
+        $finalTotal = $order->total;
 
         // Get user's wallet balance
         $walletBalance = $user->balance;

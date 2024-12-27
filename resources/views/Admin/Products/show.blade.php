@@ -62,8 +62,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="product-detail-body__stock sherah-color3">{{ $product->stock }} In
-                                                stock</p>
+                                            @php
+        $totalStock = $product->variations->sum('quantity');
+    @endphp
+    <p class="product-detail-body__stock {{ $totalStock > 0 ? 'text-success' : 'text-danger' }}">
+         {{ $totalStock > 0 ? 'Còn hàng' : 'Đã hết hàng' }}
+    </p>
                                             <div class="product-detail-body__text">{{ $product->description }}</div>
 
                                             <div class="sherah-border-btm pd-top-40 mg-btm-40"></div>

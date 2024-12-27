@@ -25,6 +25,9 @@
         <div class="section">
             <p><strong>Mã đơn hàng:</strong> {{ $order->order_code }}</p>
             <p><strong>Tổng cộng:</strong> {{ number_format($order->total, 0, ',', '.') }}₫</p>
+            @if(in_array($order->payment_method, ['vnpay', 'momo', 'wallet']))
+        <span class="text-green-600 ml-2">(Đã thanh toán)</span>
+    @endif
         </div>
 
         <!-- Thông tin chi tiết sản phẩm -->

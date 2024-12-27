@@ -221,8 +221,8 @@ public function approveIndex(Request $request)
         
         if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
             $user = User::findOrFail($order->user_id);
-            $refundAmount = $order->total - ($order->discount_value ?? 0);
-            $refundAmount = max(0, $refundAmount);
+            $refundAmount = $order->total;
+          
             $user->balance += $refundAmount;
             $user->save();
         }
@@ -299,8 +299,8 @@ public function approveIndex(Request $request)
         $order = AdminOrder::findOrFail($orderId);
         if (in_array($order->payment_method, ['wallet', 'vnpay', 'momo'])) {
             $user = User::findOrFail($order->user_id);
-            $refundAmount = $order->total - ($order->discount_value ?? 0);
-            $refundAmount = max(0, $refundAmount);
+            $refundAmount = $order->total;
+          
             $user->balance += $refundAmount;
             $user->save();
         }

@@ -114,7 +114,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    {{ number_format($order->total - $order->discount_value)}} VNĐ
+                                                    {{ number_format($order->total)}} VNĐ
                                                 </td>
                                                 <td>
                                                     {{$order->created_at}}

@@ -12,8 +12,18 @@ class ProductsController extends Controller
 {
     public function show(string $id)
     {
-        $productDetail = AdminProducts::with(['category', 'brand', 'images', 'variations.size', 'variations.color', 'comments.user','reviews.user'])->latest()
-            ->findOrFail($id);
+        $productDetail = AdminProducts::with([
+            'category', 'brand', 'images', 
+            'variations.size', 'variations.color', 
+            'comments.user', 'reviews.user'
+        ])
+        ->where('id', $id)
+        ->first();
+
+    // Kiểm tra nếu sản phẩm không tồn tại hoặc đã bị xóa
+    if (!$productDetail || $productDetail->deleted) {
+        return redirect()->back()->with('error', 'Sản phẩm này không tồn tại hoặc đã bị xóa.');
+    }
         $relatedProducts = AdminProducts::where('category_id', $productDetail->category_id)
             ->where('id', '!=', $id)
             ->take(4)
