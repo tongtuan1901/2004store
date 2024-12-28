@@ -21,11 +21,7 @@
     <section class="bread-crumb margin-bottom-10">
         <div class="container">
             <div id="alert-box" class="alert alert-success" style="display: none;"></div>
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
+            
             <div class="row">
 
                 @foreach ($khuyenMai as $coupon)

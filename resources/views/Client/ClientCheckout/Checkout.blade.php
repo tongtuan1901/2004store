@@ -10248,6 +10248,29 @@
                 opacity: 1;
             }
         }
+        .custom-alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: relative;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.custom-alert.error {
+    background-color: #f44336; /* Màu đỏ */
+    border-color: #f44336;
+}
+
+.custom-alert .close-btn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
     </style>
     <style id="savepage-cssvariables">
         :root {
@@ -10304,6 +10327,12 @@
 </head>
 
 <body data-no-turbolink="">
+@if (session('error'))
+    <div class="custom-alert error">
+        {{ session('error') }}
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+@endif
 
     <header class="banner">
         <div class="wrap">
@@ -11044,7 +11073,7 @@
                                     @if ($coupon->coupont)
                                         <option value="{{ $coupon->coupont->code }}">
                                             Mã: {{ $coupon->coupont->code }} | Giảm: 
-                                            {{ $coupon->coupont->type === 'percentage' ? $coupon->coupont->value . '%' : $coupon->coupont->value . ' VNĐ' }}
+                                            {{ $coupon->coupont->type === 'percent' ?  number_format($coupon->coupont->value, 0, ',', '.') . '%' : number_format($coupon->coupont->value, 0, ',', '.') . ' VNĐ' }}
                                         </option>
                                     @endif
                                 @endforeach

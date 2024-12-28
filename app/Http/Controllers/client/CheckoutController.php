@@ -357,13 +357,17 @@ class CheckoutController extends Controller
 
         $finalTotal = max(0, $totalPrice - $discountValue) + $shippingFee;
 
-        // Validate và lấy địa chỉ
-        $addressId = $request->input('address_id');
-        $address = Address::where('user_id', $userId)->findOrFail($addressId);
+       // Validate và lấy địa chỉ
+$addressId = $request->input('address_id');
+if (!$addressId) {
+    return redirect()->back()->with('error', 'Vui lòng chọn địa chỉ để tiếp tục.');
+}
 
-        if (!$address) {
-            return redirect()->back()->with('error', 'Không tìm thấy địa chỉ.');
-        }
+$address = Address::where('user_id', $userId)->find($addressId);
+
+if (!$address) {
+    return redirect()->back()->with('error', 'Không tìm thấy địa chỉ. Vui lòng kiểm tra lại.');
+}
 
         // Tạo đơn hàng mới
         $order = new AdminOrder();
