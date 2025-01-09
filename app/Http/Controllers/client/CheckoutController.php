@@ -44,7 +44,7 @@ class CheckoutController extends Controller
     public function momo_payment(AdminOrder $order)
     {
         // Lấy tổng tiền đã giảm giá từ đơn hàng
-        $amount = $order->total + $order->shipping_fee - $order->discount_value;
+        $amount = (int)($order->total);
 
         // Cấu hình MoMo
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
@@ -118,7 +118,7 @@ class CheckoutController extends Controller
         $vnp_TxnRef = $order->id;
         $vnp_OrderInfo = "Thanh toán đơn hàng #" . $order->id;
         $vnp_OrderType = "billpayment";
-        $vnp_Amount = ($order->total + $order->shipping_fee - $order->discount_value) * 100;
+        $vnp_Amount = (int)($order->total * 100);
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = request()->ip();
@@ -187,8 +187,17 @@ class CheckoutController extends Controller
     if ($cart->isEmpty()) {
         return redirect()->back()->with('error', 'Không có sản phẩm nào trong giỏ hàng.');
     }
+    $user = User::with('addresses')->find($userId);
+
+    if (!$user) {
+       
+        session()->flash('error', 'Người dùng không tồn tại hoặc đã bị xóa.');
+        
+        
+        return redirect()->back();
+    }
         $email = auth()->user()->email;
-        $user = User::with('addresses')->findOrFail($userId);
+        // $user = User::with('addresses')->findOrFail($userId);
         $addresses = $user->addresses;
 
         //ma giam gia da luu

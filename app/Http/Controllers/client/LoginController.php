@@ -27,8 +27,13 @@ class LoginController extends Controller
 
 
         // Kiểm tra người dùng
-        $user = User::where('email', $request->email)->first();
-
+        $user = User::withTrashed()
+        ->where('email', $request->email)
+        ->first();
+        //tài khoản vô hiệu hóa
+        if ($user && $user->trashed()) {
+            return back()->with('error', 'Tài khoản này đã bị vô hiệu hóa.');
+        }
         if ($user && Hash::check($request->password, $user->password)) { // So sánh mật khẩu đã mã hóa
             Auth::login($user);
             return redirect()->route('client-home.index')->with('success', 'Đăng nhập thành công!');
